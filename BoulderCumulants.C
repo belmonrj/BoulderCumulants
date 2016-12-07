@@ -13,8 +13,6 @@
 #include <TMath.h>
 #include <TString.h>
 
-#include <TLorentzVector.h>
-#include <TVector3.h>
 
 // Fun4All includes...
 #include <Fun4AllReturnCodes.h>
@@ -27,31 +25,12 @@
 #include <PHGlobalv9.h>
 #include <EventHeader.h>
 #include <TrigLvl1.h>
-#include <SvxSegmentList.h>
-#include <SvxSegment.h>
 #include <VtxOut.h>
 #include <PHPoint.h>
-#include <PHAngle.h>
 #include <RunHeader.h>
-//#include <BbcLL1Out.h>
 #include <TFvtxCompactTrkMap.h>
-#include <BbcRaw.h>
-#include <BbcOut.h>
-#include <BbcCalib.hh>
-#include <BbcGeo.hh>
-
-#include "SvxClusterList.h"
-#include "SvxCluster.h"
-
-#include "RpSnglSumXY.h"
-#include "RpSumXYObject.h"
-#include "ReactionPlaneObject.h"
-#include "RpConst.h"
-#include "recoConsts.h"
 #include <TFvtxCompactCoordMap.h>
-
 #include <PreviousEvent.h>
-
 #include "dAuBES_utils.h"
 
 
@@ -78,8 +57,6 @@ BoulderCumulants::BoulderCumulants():
 {
   ResetEvent(NULL);
 
-  m_bbccalib = new BbcCalib();
-  m_bbcgeo   = new BbcGeo();
   return;
 }
 
@@ -87,8 +64,6 @@ BoulderCumulants::BoulderCumulants():
 // --- class destructor
 BoulderCumulants::~BoulderCumulants()
 {
-  delete m_bbccalib;
-  delete m_bbcgeo;
   if ( _utils ) delete _utils;
 }
 
@@ -266,22 +241,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     return ABORTEVENT;
   }
 
-  RpSumXYObject* d_rp = findNode::getClass<RpSumXYObject>(topNode, "RpSumXYObject");
-  if (!d_rp)
-  {
-    if ( _verbosity > 4 ) cout << PHWHERE << "Could not find the RPSumXYObject" << endl;
-    //return ABORTEVENT;
-  }
-
-  BbcRaw *bbcraw = findNode::getClass<BbcRaw>(topNode, "BbcRaw");
-  if (!bbcraw)
-  {
-    cout << PHWHERE << "Could not find Bbcraw!" << endl;
-    if (_write_bbc)
-      return ABORTEVENT;
-  }
-
-
   //---------------------------------------------------------//
   //
   //         Make Event Selection
@@ -411,11 +370,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   if ( ctrk )
   {
     int ntrk = ctrk->get_npart();
-    if ( ntrk > N_CTRK_MAX )
-    {
-      cout << PHWHERE << " WARNING: too many tracks, skipping event" << endl;
-      return ABORTEVENT;
-    }
     int counter = 0;
     for ( int itrk = 0; itrk < ntrk; ++itrk)
     {
@@ -471,7 +425,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   //---------------------------------------------------------//
 
 
-  if ( _create_ttree ) _ntp_event->Fill();
+  //if ( _create_ttree ) _ntp_event->Fill();
 
   if ( _verbosity > 0 ) cout << "sucessfully processed this event" << endl;
 
