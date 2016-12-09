@@ -647,12 +647,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   float ac_fvtxs_tracks_qy4 = fvtxs_tracks_qy4[0];
   float ac_fvtxs_tracks_qq2 = calc2_event(ac_fvtxs_tracks_qx2,ac_fvtxs_tracks_qy2,ac_fvtxs_tracks_qw);
   float ac_fvtxs_tracks_qq3 = calc2_event(ac_fvtxs_tracks_qx3,ac_fvtxs_tracks_qy3,ac_fvtxs_tracks_qw);
-  nfvtxt_ac_fvtxs_tracks_c22->Fill(nfvtxt_south,ac_fvtxs_tracks_qq2);
-  nfvtxt_ac_fvtxs_tracks_cos21->Fill(nfvtxt_south,ac_fvtxs_tracks_qx2/ac_fvtxs_tracks_qw);
-  nfvtxt_ac_fvtxs_tracks_sin21->Fill(nfvtxt_south,ac_fvtxs_tracks_qy2/ac_fvtxs_tracks_qw);
-  nfvtxt_ac_fvtxs_tracks_c32->Fill(nfvtxt_south,ac_fvtxs_tracks_qq3);
-  nfvtxt_ac_fvtxs_tracks_cos31->Fill(nfvtxt_south,ac_fvtxs_tracks_qx3/ac_fvtxs_tracks_qw);
-  nfvtxt_ac_fvtxs_tracks_sin31->Fill(nfvtxt_south,ac_fvtxs_tracks_qy3/ac_fvtxs_tracks_qw);
+  nfvtxt_ac_fvtxs_tracks_c22->Fill(nfvtxt,ac_fvtxs_tracks_qq2);
+  nfvtxt_ac_fvtxs_tracks_cos21->Fill(nfvtxt,ac_fvtxs_tracks_qx2/ac_fvtxs_tracks_qw);
+  nfvtxt_ac_fvtxs_tracks_sin21->Fill(nfvtxt,ac_fvtxs_tracks_qy2/ac_fvtxs_tracks_qw);
+  nfvtxt_ac_fvtxs_tracks_c32->Fill(nfvtxt,ac_fvtxs_tracks_qq3);
+  nfvtxt_ac_fvtxs_tracks_cos31->Fill(nfvtxt,ac_fvtxs_tracks_qx3/ac_fvtxs_tracks_qw);
+  nfvtxt_ac_fvtxs_tracks_sin31->Fill(nfvtxt,ac_fvtxs_tracks_qy3/ac_fvtxs_tracks_qw);
   TComplex tc_ac_fvtxs_tracks_Q2(ac_fvtxs_tracks_qx2,ac_fvtxs_tracks_qy2);
   TComplex tc_ac_fvtxs_tracks_Q4(ac_fvtxs_tracks_qx4,ac_fvtxs_tracks_qy4);
   float ac_fvtxs_tracks_cossum2 = calccossum2_event(tc_ac_fvtxs_tracks_Q2,tc_ac_fvtxs_tracks_Q4,ac_fvtxs_tracks_qw);
@@ -674,12 +674,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   float ac_fvtxn_tracks_qy4 = fvtxn_tracks_qy4[0];
   float ac_fvtxn_tracks_qq2 = calc2_event(ac_fvtxn_tracks_qx2,ac_fvtxn_tracks_qy2,ac_fvtxn_tracks_qw);
   float ac_fvtxn_tracks_qq3 = calc2_event(ac_fvtxn_tracks_qx3,ac_fvtxn_tracks_qy3,ac_fvtxn_tracks_qw);
-  nfvtxt_ac_fvtxn_tracks_c22->Fill(nfvtxt_north,ac_fvtxn_tracks_qq2);
-  nfvtxt_ac_fvtxn_tracks_cos21->Fill(nfvtxt_north,ac_fvtxn_tracks_qx2/ac_fvtxn_tracks_qw);
-  nfvtxt_ac_fvtxn_tracks_sin21->Fill(nfvtxt_north,ac_fvtxn_tracks_qy2/ac_fvtxn_tracks_qw);
-  nfvtxt_ac_fvtxn_tracks_c32->Fill(nfvtxt_north,ac_fvtxn_tracks_qq3);
-  nfvtxt_ac_fvtxn_tracks_cos31->Fill(nfvtxt_north,ac_fvtxn_tracks_qx3/ac_fvtxn_tracks_qw);
-  nfvtxt_ac_fvtxn_tracks_sin31->Fill(nfvtxt_north,ac_fvtxn_tracks_qy3/ac_fvtxn_tracks_qw);
+  nfvtxt_ac_fvtxn_tracks_c22->Fill(nfvtxt,ac_fvtxn_tracks_qq2);
+  nfvtxt_ac_fvtxn_tracks_cos21->Fill(nfvtxt,ac_fvtxn_tracks_qx2/ac_fvtxn_tracks_qw);
+  nfvtxt_ac_fvtxn_tracks_sin21->Fill(nfvtxt,ac_fvtxn_tracks_qy2/ac_fvtxn_tracks_qw);
+  nfvtxt_ac_fvtxn_tracks_c32->Fill(nfvtxt,ac_fvtxn_tracks_qq3);
+  nfvtxt_ac_fvtxn_tracks_cos31->Fill(nfvtxt,ac_fvtxn_tracks_qx3/ac_fvtxn_tracks_qw);
+  nfvtxt_ac_fvtxn_tracks_sin31->Fill(nfvtxt,ac_fvtxn_tracks_qy3/ac_fvtxn_tracks_qw);
   TComplex tc_ac_fvtxn_tracks_Q2(ac_fvtxn_tracks_qx2,ac_fvtxn_tracks_qy2);
   TComplex tc_ac_fvtxn_tracks_Q4(ac_fvtxn_tracks_qx4,ac_fvtxn_tracks_qy4);
   float ac_fvtxn_tracks_cossum2 = calccossum2_event(tc_ac_fvtxn_tracks_Q2,tc_ac_fvtxn_tracks_Q4,ac_fvtxn_tracks_qw);
@@ -729,8 +729,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   float ac_fvtxs_tracks_qqqq4 = calc4_event(ac_fvtxs_tracks_qx2,ac_fvtxs_tracks_qy2,ac_fvtxs_tracks_qx4,ac_fvtxs_tracks_qy4,ac_fvtxs_tracks_qw);
   float ac_fvtxn_tracks_qqqq4 = calc4_event(ac_fvtxn_tracks_qx2,ac_fvtxn_tracks_qy2,ac_fvtxn_tracks_qx4,ac_fvtxn_tracks_qy4,ac_fvtxn_tracks_qw);
   float ac_fvtxc_tracks_qqqq4 = calc4_event(ac_fvtxc_tracks_qx2,ac_fvtxc_tracks_qy2,ac_fvtxc_tracks_qx4,ac_fvtxc_tracks_qy4,ac_fvtxc_tracks_qw);
-  nfvtxt_ac_fvtxs_tracks_c24->Fill(nfvtxt_south,ac_fvtxs_tracks_qqqq4);
-  nfvtxt_ac_fvtxn_tracks_c24->Fill(nfvtxt_north,ac_fvtxn_tracks_qqqq4);
+  nfvtxt_ac_fvtxs_tracks_c24->Fill(nfvtxt,ac_fvtxs_tracks_qqqq4);
+  nfvtxt_ac_fvtxn_tracks_c24->Fill(nfvtxt,ac_fvtxn_tracks_qqqq4);
   nfvtxt_ac_fvtxc_tracks_c24->Fill(nfvtxt,ac_fvtxc_tracks_qqqq4);
 
   //---------------------------------------------------------//
@@ -846,12 +846,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     // --- FVTX south
     float os_fvtxs_tracks_qq2 = calc2_event(os_fvtxs_tracks_qx2,os_fvtxs_tracks_qy2,os_fvtxs_tracks_qw);
     float os_fvtxs_tracks_qq3 = calc2_event(os_fvtxs_tracks_qx3,os_fvtxs_tracks_qy3,os_fvtxs_tracks_qw);
-    nfvtxt_os_fvtxs_tracks_c22->Fill(nfvtxt_south,os_fvtxs_tracks_qq2);
-    nfvtxt_os_fvtxs_tracks_cos21->Fill(nfvtxt_south,os_fvtxs_tracks_qx2/os_fvtxs_tracks_qw);
-    nfvtxt_os_fvtxs_tracks_sin21->Fill(nfvtxt_south,os_fvtxs_tracks_qy2/os_fvtxs_tracks_qw);
-    nfvtxt_os_fvtxs_tracks_c32->Fill(nfvtxt_south,os_fvtxs_tracks_qq3);
-    nfvtxt_os_fvtxs_tracks_cos31->Fill(nfvtxt_south,os_fvtxs_tracks_qx3/os_fvtxs_tracks_qw);
-    nfvtxt_os_fvtxs_tracks_sin31->Fill(nfvtxt_south,os_fvtxs_tracks_qy3/os_fvtxs_tracks_qw);
+    nfvtxt_os_fvtxs_tracks_c22->Fill(nfvtxt,os_fvtxs_tracks_qq2);
+    nfvtxt_os_fvtxs_tracks_cos21->Fill(nfvtxt,os_fvtxs_tracks_qx2/os_fvtxs_tracks_qw);
+    nfvtxt_os_fvtxs_tracks_sin21->Fill(nfvtxt,os_fvtxs_tracks_qy2/os_fvtxs_tracks_qw);
+    nfvtxt_os_fvtxs_tracks_c32->Fill(nfvtxt,os_fvtxs_tracks_qq3);
+    nfvtxt_os_fvtxs_tracks_cos31->Fill(nfvtxt,os_fvtxs_tracks_qx3/os_fvtxs_tracks_qw);
+    nfvtxt_os_fvtxs_tracks_sin31->Fill(nfvtxt,os_fvtxs_tracks_qy3/os_fvtxs_tracks_qw);
     TComplex tc_os_fvtxs_tracks_Q2(os_fvtxs_tracks_qx2,os_fvtxs_tracks_qy2);
     TComplex tc_os_fvtxs_tracks_Q4(os_fvtxs_tracks_qx4,os_fvtxs_tracks_qy4);
     float os_fvtxs_tracks_cossum2 = calccossum2_event(tc_os_fvtxs_tracks_Q2,tc_os_fvtxs_tracks_Q4,os_fvtxs_tracks_qw);
@@ -866,12 +866,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     // --- FVTX north
     float os_fvtxn_tracks_qq2 = calc2_event(os_fvtxn_tracks_qx2,os_fvtxn_tracks_qy2,os_fvtxn_tracks_qw);
     float os_fvtxn_tracks_qq3 = calc2_event(os_fvtxn_tracks_qx3,os_fvtxn_tracks_qy3,os_fvtxn_tracks_qw);
-    nfvtxt_os_fvtxn_tracks_c22->Fill(nfvtxt_north,os_fvtxn_tracks_qq2);
-    nfvtxt_os_fvtxn_tracks_cos21->Fill(nfvtxt_north,os_fvtxn_tracks_qx2/os_fvtxn_tracks_qw);
-    nfvtxt_os_fvtxn_tracks_sin21->Fill(nfvtxt_north,os_fvtxn_tracks_qy2/os_fvtxn_tracks_qw);
-    nfvtxt_os_fvtxn_tracks_c32->Fill(nfvtxt_north,os_fvtxn_tracks_qq3);
-    nfvtxt_os_fvtxn_tracks_cos31->Fill(nfvtxt_north,os_fvtxn_tracks_qx3/os_fvtxn_tracks_qw);
-    nfvtxt_os_fvtxn_tracks_sin31->Fill(nfvtxt_north,os_fvtxn_tracks_qy3/os_fvtxn_tracks_qw);
+    nfvtxt_os_fvtxn_tracks_c22->Fill(nfvtxt,os_fvtxn_tracks_qq2);
+    nfvtxt_os_fvtxn_tracks_cos21->Fill(nfvtxt,os_fvtxn_tracks_qx2/os_fvtxn_tracks_qw);
+    nfvtxt_os_fvtxn_tracks_sin21->Fill(nfvtxt,os_fvtxn_tracks_qy2/os_fvtxn_tracks_qw);
+    nfvtxt_os_fvtxn_tracks_c32->Fill(nfvtxt,os_fvtxn_tracks_qq3);
+    nfvtxt_os_fvtxn_tracks_cos31->Fill(nfvtxt,os_fvtxn_tracks_qx3/os_fvtxn_tracks_qw);
+    nfvtxt_os_fvtxn_tracks_sin31->Fill(nfvtxt,os_fvtxn_tracks_qy3/os_fvtxn_tracks_qw);
     TComplex tc_os_fvtxn_tracks_Q2(os_fvtxn_tracks_qx2,os_fvtxn_tracks_qy2);
     TComplex tc_os_fvtxn_tracks_Q4(os_fvtxn_tracks_qx4,os_fvtxn_tracks_qy4);
     float os_fvtxn_tracks_cossum2 = calccossum2_event(tc_os_fvtxn_tracks_Q2,tc_os_fvtxn_tracks_Q4,os_fvtxn_tracks_qw);
@@ -921,8 +921,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     float os_fvtxs_tracks_qqqq4 = calc4_event(os_fvtxs_tracks_qx2,os_fvtxs_tracks_qy2,os_fvtxs_tracks_qx4,os_fvtxs_tracks_qy4,os_fvtxs_tracks_qw);
     float os_fvtxn_tracks_qqqq4 = calc4_event(os_fvtxn_tracks_qx2,os_fvtxn_tracks_qy2,os_fvtxn_tracks_qx4,os_fvtxn_tracks_qy4,os_fvtxn_tracks_qw);
     float os_fvtxc_tracks_qqqq4 = calc4_event(os_fvtxc_tracks_qx2,os_fvtxc_tracks_qy2,os_fvtxc_tracks_qx4,os_fvtxc_tracks_qy4,os_fvtxc_tracks_qw);
-    nfvtxt_os_fvtxs_tracks_c24->Fill(nfvtxt_south,os_fvtxs_tracks_qqqq4);
-    nfvtxt_os_fvtxn_tracks_c24->Fill(nfvtxt_north,os_fvtxn_tracks_qqqq4);
+    nfvtxt_os_fvtxs_tracks_c24->Fill(nfvtxt,os_fvtxs_tracks_qqqq4);
+    nfvtxt_os_fvtxn_tracks_c24->Fill(nfvtxt,os_fvtxn_tracks_qqqq4);
     nfvtxt_os_fvtxc_tracks_c24->Fill(nfvtxt,os_fvtxc_tracks_qqqq4);
 
   } // of end check on whether to do offsets
