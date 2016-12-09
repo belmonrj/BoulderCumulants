@@ -98,45 +98,45 @@ class BoulderCumulants: public SubsysReco
   //-- Other variables
 
 
-  TProfile* nfvtxt_zzyzx_fvtxs_tracks_c22;
-  TProfile* nfvtxt_zzyzx_fvtxn_tracks_c22;
-  TProfile* nfvtxt_zzyzx_fvtxc_tracks_c22;
-  TProfile* nfvtxt_zzyzx_fvtxs_tracks_c24;
-  TProfile* nfvtxt_zzyzx_fvtxn_tracks_c24;
-  TProfile* nfvtxt_zzyzx_fvtxc_tracks_c24;
-  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c22 ;
-  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24 ;
-  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24a;
-  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24b;
-  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24c;
-  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24d;
+  TProfile* nfvtxt_ac_fvtxs_tracks_c22;
+  TProfile* nfvtxt_ac_fvtxn_tracks_c22;
+  TProfile* nfvtxt_ac_fvtxc_tracks_c22;
+  TProfile* nfvtxt_ac_fvtxs_tracks_c24;
+  TProfile* nfvtxt_ac_fvtxn_tracks_c24;
+  TProfile* nfvtxt_ac_fvtxc_tracks_c24;
+  TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c22 ;
+  TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24 ;
+  TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24a;
+  TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24b;
+  TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24c;
+  TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24d;
 
   // --- correction histograms
 
   // --- <<cos(n(phi1))>>
-  TProfile* nfvtxt_zzyzx_fvtxs_tracks_cos21;
-  TProfile* nfvtxt_zzyzx_fvtxn_tracks_cos21;
-  TProfile* nfvtxt_zzyzx_fvtxc_tracks_cos21;
+  TProfile* nfvtxt_ac_fvtxs_tracks_cos21;
+  TProfile* nfvtxt_ac_fvtxn_tracks_cos21;
+  TProfile* nfvtxt_ac_fvtxc_tracks_cos21;
   // --- <<sin(n(phi1))>>
-  TProfile* nfvtxt_zzyzx_fvtxs_tracks_sin21;
-  TProfile* nfvtxt_zzyzx_fvtxn_tracks_sin21;
-  TProfile* nfvtxt_zzyzx_fvtxc_tracks_sin21;
+  TProfile* nfvtxt_ac_fvtxs_tracks_sin21;
+  TProfile* nfvtxt_ac_fvtxn_tracks_sin21;
+  TProfile* nfvtxt_ac_fvtxc_tracks_sin21;
   // --- <<cos(n(phi1+phi2))>>
-  TProfile* nfvtxt_zzyzx_fvtxs_tracks_cossum22;
-  TProfile* nfvtxt_zzyzx_fvtxn_tracks_cossum22;
-  TProfile* nfvtxt_zzyzx_fvtxc_tracks_cossum22;
+  TProfile* nfvtxt_ac_fvtxs_tracks_cossum22;
+  TProfile* nfvtxt_ac_fvtxn_tracks_cossum22;
+  TProfile* nfvtxt_ac_fvtxc_tracks_cossum22;
   // --- <<sin(n(phi1+phi2))>>
-  TProfile* nfvtxt_zzyzx_fvtxs_tracks_sinsum22;
-  TProfile* nfvtxt_zzyzx_fvtxn_tracks_sinsum22;
-  TProfile* nfvtxt_zzyzx_fvtxc_tracks_sinsum22;
+  TProfile* nfvtxt_ac_fvtxs_tracks_sinsum22;
+  TProfile* nfvtxt_ac_fvtxn_tracks_sinsum22;
+  TProfile* nfvtxt_ac_fvtxc_tracks_sinsum22;
   // --- <<cos(n(phi1-phi2-phi3))>>
-  TProfile* nfvtxt_zzyzx_fvtxs_tracks_cos23;
-  TProfile* nfvtxt_zzyzx_fvtxn_tracks_cos23;
-  TProfile* nfvtxt_zzyzx_fvtxc_tracks_cos23;
+  TProfile* nfvtxt_ac_fvtxs_tracks_cos23;
+  TProfile* nfvtxt_ac_fvtxn_tracks_cos23;
+  TProfile* nfvtxt_ac_fvtxc_tracks_cos23;
   // --- <<sin(n(phi1-phi2-phi3))>>
-  TProfile* nfvtxt_zzyzx_fvtxs_tracks_sin23;
-  TProfile* nfvtxt_zzyzx_fvtxn_tracks_sin23;
-  TProfile* nfvtxt_zzyzx_fvtxc_tracks_sin23;
+  TProfile* nfvtxt_ac_fvtxs_tracks_sin23;
+  TProfile* nfvtxt_ac_fvtxn_tracks_sin23;
+  TProfile* nfvtxt_ac_fvtxc_tracks_sin23;
 
   // ---------------------------------------------------------------------------------------------------------
   TProfile* tp1f_special_fvtx_tracks_ab[8];
