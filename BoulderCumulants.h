@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <TFile.h>
+#include <TProfile.h>
+#include <TComplex.h>
 #include <SubsysReco.h>
 
 
@@ -37,6 +39,15 @@ class BoulderCumulants: public SubsysReco
  protected:
 
   // ---
+
+  float calc2_event(float, float, float);
+  float calc4_event(float, float, float, float, float);
+
+  float calccossum2_event(TComplex&, TComplex&, float);
+  float calcsinsum2_event(TComplex&, TComplex&, float);
+  float calccos3_event(TComplex&, TComplex&, float);
+  float calcsin3_event(TComplex&, TComplex&, float);
+
 
   bool pass_eta_cut(float eta, int bbcz_bin);
 
@@ -85,6 +96,53 @@ class BoulderCumulants: public SubsysReco
 
 
   //-- Other variables
+
+
+  TProfile* nfvtxt_zzyzx_fvtxs_tracks_c22;
+  TProfile* nfvtxt_zzyzx_fvtxn_tracks_c22;
+  TProfile* nfvtxt_zzyzx_fvtxc_tracks_c22;
+  TProfile* nfvtxt_zzyzx_fvtxs_tracks_c24;
+  TProfile* nfvtxt_zzyzx_fvtxn_tracks_c24;
+  TProfile* nfvtxt_zzyzx_fvtxc_tracks_c24;
+  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c22 ;
+  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24 ;
+  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24a;
+  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24b;
+  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24c;
+  TProfile* nfvtxt_zzyzx_fvtxsfvtxn_tracks_c24d;
+
+  // --- correction histograms
+
+  // --- <<cos(n(phi1))>>
+  TProfile* nfvtxt_zzyzx_fvtxs_tracks_cos21;
+  TProfile* nfvtxt_zzyzx_fvtxn_tracks_cos21;
+  TProfile* nfvtxt_zzyzx_fvtxc_tracks_cos21;
+  // --- <<sin(n(phi1))>>
+  TProfile* nfvtxt_zzyzx_fvtxs_tracks_sin21;
+  TProfile* nfvtxt_zzyzx_fvtxn_tracks_sin21;
+  TProfile* nfvtxt_zzyzx_fvtxc_tracks_sin21;
+  // --- <<cos(n(phi1+phi2))>>
+  TProfile* nfvtxt_zzyzx_fvtxs_tracks_cossum22;
+  TProfile* nfvtxt_zzyzx_fvtxn_tracks_cossum22;
+  TProfile* nfvtxt_zzyzx_fvtxc_tracks_cossum22;
+  // --- <<sin(n(phi1+phi2))>>
+  TProfile* nfvtxt_zzyzx_fvtxs_tracks_sinsum22;
+  TProfile* nfvtxt_zzyzx_fvtxn_tracks_sinsum22;
+  TProfile* nfvtxt_zzyzx_fvtxc_tracks_sinsum22;
+  // --- <<cos(n(phi1-phi2-phi3))>>
+  TProfile* nfvtxt_zzyzx_fvtxs_tracks_cos23;
+  TProfile* nfvtxt_zzyzx_fvtxn_tracks_cos23;
+  TProfile* nfvtxt_zzyzx_fvtxc_tracks_cos23;
+  // --- <<sin(n(phi1-phi2-phi3))>>
+  TProfile* nfvtxt_zzyzx_fvtxs_tracks_sin23;
+  TProfile* nfvtxt_zzyzx_fvtxn_tracks_sin23;
+  TProfile* nfvtxt_zzyzx_fvtxc_tracks_sin23;
+
+  // ---------------------------------------------------------------------------------------------------------
+  TProfile* tp1f_special_fvtx_tracks_ab[8];
+  TProfile* tp1f_special_fvtx_tracks_aa;
+  TProfile* tp1f_special_fvtx_tracks_aa_cos;
+  TProfile* tp1f_special_fvtx_tracks_aa_sin;
 
 
 
