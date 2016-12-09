@@ -129,6 +129,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   nfvtxt_ac_fvtxs_tracks_c32 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c32"),"",500, -0.5, 499.5, -1.1, 1.1);
   nfvtxt_ac_fvtxn_tracks_c32 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c32"),"",500, -0.5, 499.5, -1.1, 1.1);
   nfvtxt_ac_fvtxc_tracks_c32 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c32"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxsfvtxn_tracks_c32  = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c32"),"",500, -0.5, 499.5, -1.1, 1.1);
   // --- <<cos(n(phi1))>>
   nfvtxt_ac_fvtxs_tracks_cos31 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cos31"),"",500, -0.5, 499.5, -1.1, 1.1);
   nfvtxt_ac_fvtxn_tracks_cos31 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cos31"),"",500, -0.5, 499.5, -1.1, 1.1);
@@ -300,6 +301,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // Run Number Selection Capability
   //---------------------------------
 
+  if ( _verbosity > 1 ) cout << "getting the run information" << endl;
+
   int runnumber = 0;
 
   RunHeader *rh = findNode::getClass<RunHeader>(topNode, "RunHeader");
@@ -328,6 +331,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   //-------------------------------
   // Grab info off of the node tree
   //-------------------------------
+
+  if ( _verbosity > 1 ) cout << "getting the info from the node tree" << endl;
 
   // --- trigger object
   TrigLvl1 *triggers = findNode::getClass<TrigLvl1>(topNode, "TrigLvl1");
@@ -374,6 +379,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   //         Make Event Selection
   //
   //---------------------------------------------------------//
+
+  if ( _verbosity > 1 ) cout << "applying event selection criteria" << endl;
 
   if (!_utils->is_event_ok(topNode))
     return EVENT_OK;
@@ -486,6 +493,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   int nfvtxt_south = 0;
   int nfvtxt_north = 0;
   // --- first fvtx track loop
+  if ( _verbosity > 1 ) cout << "entering fvtx track loop" << endl;
   TFvtxCompactTrkMap::const_iterator trk_iter = trkfvtx_map->range();
   while ( TFvtxCompactTrkMap::const_pointer trk_ptr = trk_iter.next() )
     {
@@ -627,6 +635,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // --- calculations and histograms designed to be used with/for acceptance corrections --- //
   // --------------------------------------------------------------------------------------- //
 
+  if ( _verbosity > 1 ) cout << "doing cumulant calculations and filling histograms" << endl;
+
   // --- FVTX south
   float ac_fvtxs_tracks_qw = fvtxs_tracks_qw[0];
   float ac_fvtxs_tracks_qx2 = fvtxs_tracks_qx2[0];
@@ -729,6 +739,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // --- calculations and histograms designed to be used with/for q-vector recentering --- //
   // ------------------------------------------------------------------------------------- //
 
+
   nfvtxt_tracks_south_qx2->Fill(nfvtxt,fvtxs_tracks_qx2[0]/fvtxs_tracks_qw[0]);
   nfvtxt_tracks_south_qx3->Fill(nfvtxt,fvtxs_tracks_qx3[0]/fvtxs_tracks_qw[0]);
   nfvtxt_tracks_south_qx4->Fill(nfvtxt,fvtxs_tracks_qx4[0]/fvtxs_tracks_qw[0]);
@@ -770,6 +781,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_tracks_north_outer_qy2->Fill(nfvtxt,fvtxn_tracks_qy2[2]/fvtxn_tracks_qw[2]);
   nfvtxt_tracks_north_outer_qy3->Fill(nfvtxt,fvtxn_tracks_qy3[2]/fvtxn_tracks_qw[2]);
   nfvtxt_tracks_north_outer_qy4->Fill(nfvtxt,fvtxn_tracks_qy4[2]/fvtxn_tracks_qw[2]);
+
 
   if ( dooffsets )
   {
