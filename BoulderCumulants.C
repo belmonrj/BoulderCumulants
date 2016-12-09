@@ -81,45 +81,45 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   // --- initialize histograms
   // ---
 
-  nfvtxt_ac_fvtxs_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c22"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxn_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c22"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxc_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c22"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxs_tracks_c24 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c24"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxn_tracks_c24 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c24"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxc_tracks_c24 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c24"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxsfvtxn_tracks_c22  = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c22"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxsfvtxn_tracks_c24  = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxsfvtxn_tracks_c24a = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24a"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxsfvtxn_tracks_c24b = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24b"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxsfvtxn_tracks_c24c = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24c"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxsfvtxn_tracks_c24d = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24d"),"",80, -0.5, 79.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxs_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c22"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxn_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c22"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxc_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c22"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxs_tracks_c24 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c24"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxn_tracks_c24 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c24"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxc_tracks_c24 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c24"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxsfvtxn_tracks_c22  = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c22"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24  = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24a = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24a"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24b = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24b"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24c = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24c"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24d = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24d"),"",500, -0.5, 499.5, -1.1, 1.1);
 
   // --- correction histograms
 
   // --- <<cos(n(phi1))>>
-  nfvtxt_ac_fvtxs_tracks_cos21 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cos21"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxn_tracks_cos21 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cos21"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxc_tracks_cos21 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_cos21"),"",80, -0.5, 79.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxs_tracks_cos21 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cos21"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxn_tracks_cos21 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cos21"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxc_tracks_cos21 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_cos21"),"",500, -0.5, 499.5, -1.1, 1.1);
   // --- <<sin(n(phi1))>>
-  nfvtxt_ac_fvtxs_tracks_sin21 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_sin21"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxn_tracks_sin21 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_sin21"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxc_tracks_sin21 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_sin21"),"",80, -0.5, 79.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxs_tracks_sin21 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_sin21"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxn_tracks_sin21 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_sin21"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxc_tracks_sin21 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_sin21"),"",500, -0.5, 499.5, -1.1, 1.1);
   // --- <<cos(n(phi1+phi2))>>
-  nfvtxt_ac_fvtxs_tracks_cossum22 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cossum22"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxn_tracks_cossum22 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cossum22"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxc_tracks_cossum22 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_cossum22"),"",80, -0.5, 79.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxs_tracks_cossum22 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cossum22"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxn_tracks_cossum22 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cossum22"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxc_tracks_cossum22 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_cossum22"),"",500, -0.5, 499.5, -1.1, 1.1);
   // --- <<sin(n(phi1+phi2))>>
-  nfvtxt_ac_fvtxs_tracks_sinsum22 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_sinsum22"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxn_tracks_sinsum22 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_sinsum22"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxc_tracks_sinsum22 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_sinsum22"),"",80, -0.5, 79.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxs_tracks_sinsum22 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_sinsum22"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxn_tracks_sinsum22 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_sinsum22"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxc_tracks_sinsum22 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_sinsum22"),"",500, -0.5, 499.5, -1.1, 1.1);
   // --- <<cos(n(phi1-phi2-phi3))>>
-  nfvtxt_ac_fvtxs_tracks_cos23 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cos23"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxn_tracks_cos23 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cos23"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxc_tracks_cos23 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_cos23"),"",80, -0.5, 79.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxs_tracks_cos23 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cos23"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxn_tracks_cos23 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cos23"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxc_tracks_cos23 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_cos23"),"",500, -0.5, 499.5, -1.1, 1.1);
   // --- <<sin(n(phi1-phi2-phi3))>>
-  nfvtxt_ac_fvtxs_tracks_sin23 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_sin23"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxn_tracks_sin23 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_sin23"),"",80, -0.5, 79.5, -1.1, 1.1);
-  nfvtxt_ac_fvtxc_tracks_sin23 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_sin23"),"",80, -0.5, 79.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxs_tracks_sin23 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_sin23"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxn_tracks_sin23 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_sin23"),"",500, -0.5, 499.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxc_tracks_sin23 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_sin23"),"",500, -0.5, 499.5, -1.1, 1.1);
 
   // ---------------------------------------------------------------------------------------------------------
   for ( int i = 0; i < 8; ++i ) tp1f_special_fvtx_tracks_ab[i] = new TProfile(Form("tp1f_special_fvtx_tracks_ab%d",i),"",12,-3,3,-1.1,1.1,"");
@@ -157,6 +157,12 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
   // This is done in init run so that the collision system can be
   // determined from the run number
   TString _collsys = "Run16dAu200"; // default to 200 GeV
+  // --- Run15pAu200
+  if ( runnumber >= 432637 && runnumber <= 436647 )
+    _collsys = "Run15pAu200";
+  // --- Run15pAl200
+  if ( runnumber >= 436759 && runnumber <= 438422 )
+    _collsys = "Run15pAl200";
   // --- Run16dAu200
   if ( runnumber >= 454774 && runnumber <= 455639 )
     _collsys = "Run16dAu200";
