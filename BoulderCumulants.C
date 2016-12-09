@@ -746,7 +746,7 @@ int BoulderCumulants::End(PHCompositeNode *topNode)
 
   cout << "total events: " << _ievent << " fraction passing vtx cut: " << tmp_evt * 1.0 / _ievent << endl;
 
-  _output_file->cd();
+  _output_file->Write();
 
 
   _output_file->Close();
