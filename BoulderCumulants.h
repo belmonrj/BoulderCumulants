@@ -3,17 +3,15 @@
 
 // standard includes
 #include <string>
-#include <vector>
-#include <TFile.h>
-#include <TProfile.h>
-#include <TComplex.h>
 #include <SubsysReco.h>
 
 
 
 class Fun4AllHistoManager;
 class dAuBES_utils;
-
+class TFile;
+class TProfile;
+class TComplex;
 
 class BoulderCumulants: public SubsysReco
 {
@@ -31,25 +29,25 @@ class BoulderCumulants: public SubsysReco
   void Verbosity    (int verbosity) {_verbosity = verbosity;}
 
   /// Single particle ntuple output...
-  void set_output_filename(std::string filename) {_output_filename = filename;} // select output file name externally
+  void set_output_filename(std::string filename) { _output_filename = filename; } // select output file name externally
   void set_use_runlist(bool b){ _use_runlist = b;} // text file for runs to analyze
-  void set_runlist_file(std::string filename) {_runlist_filename = filename;} // name of file for above
+  void set_runlist_file(std::string filename) { _runlist_filename = filename; } // name of file for above
+  void set_do_offsets(bool b) { dooffsets = b; }
   bool is_run_in_list(int runnumber);
 
  protected:
 
   // ---
 
+  // --- cumulants functions
   float calc2_event(float, float, float);
   float calc4_event(float, float, float, float, float);
-
+  // --- acceptance correction functions
   float calccossum2_event(TComplex&, TComplex&, float);
   float calcsinsum2_event(TComplex&, TComplex&, float);
   float calccos3_event(TComplex&, TComplex&, float);
   float calcsin3_event(TComplex&, TComplex&, float);
 
-
-  bool pass_eta_cut(float eta, int bbcz_bin);
 
   /// current event
   unsigned long _ievent;
@@ -57,17 +55,13 @@ class BoulderCumulants: public SubsysReco
   /// verbosity level
   int _verbosity;
 
-  //changes what is being written out
-  //bool _create_ttree;
-  Fun4AllHistoManager* HistoManager;
+  // --- check on whether to do offsets
+  bool dooffsets;
 
-  bool _write_bbc;
-  bool _write_cnt;
-  bool _write_fvtx;
-  bool _write_fvtx_clusters;
   /// module output filename
   std::string _output_filename;
-  TFile *_output_file;
+  TFile* _output_file;
+  TFile* offset_file;
 
   //run list stuff
   bool _use_runlist;
@@ -98,21 +92,26 @@ class BoulderCumulants: public SubsysReco
   //-- Other variables
 
 
+
+  // --- correlation histograms
+  // --- <<cos(n(phi1-phi2))>>
   TProfile* nfvtxt_ac_fvtxs_tracks_c22;
   TProfile* nfvtxt_ac_fvtxn_tracks_c22;
   TProfile* nfvtxt_ac_fvtxc_tracks_c22;
+  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
   TProfile* nfvtxt_ac_fvtxs_tracks_c24;
   TProfile* nfvtxt_ac_fvtxn_tracks_c24;
   TProfile* nfvtxt_ac_fvtxc_tracks_c24;
+  // --- 2-particle scalr product
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c22 ;
+  // --- experimental 4-particle correlations
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24 ;
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24a;
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24b;
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24c;
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c24d;
 
-  // --- correction histograms
-
+  // --- acceptance correction histograms
   // --- <<cos(n(phi1))>>
   TProfile* nfvtxt_ac_fvtxs_tracks_cos21;
   TProfile* nfvtxt_ac_fvtxn_tracks_cos21;
@@ -138,11 +137,125 @@ class BoulderCumulants: public SubsysReco
   TProfile* nfvtxt_ac_fvtxn_tracks_sin23;
   TProfile* nfvtxt_ac_fvtxc_tracks_sin23;
 
-  // ---------------------------------------------------------------------------------------------------------
+  // --- 3rd harmonic stuff
+  TProfile* nfvtxt_ac_fvtxs_tracks_c32;
+  TProfile* nfvtxt_ac_fvtxn_tracks_c32;
+  TProfile* nfvtxt_ac_fvtxc_tracks_c32;
+  TProfile* nfvtxt_ac_fvtxs_tracks_cos31;
+  TProfile* nfvtxt_ac_fvtxn_tracks_cos31;
+  TProfile* nfvtxt_ac_fvtxc_tracks_cos31;
+  TProfile* nfvtxt_ac_fvtxs_tracks_sin31;
+  TProfile* nfvtxt_ac_fvtxn_tracks_sin31;
+  TProfile* nfvtxt_ac_fvtxc_tracks_sin31;
+  TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c32;
+
+  // --- event plane decorrelation stuff
   TProfile* tp1f_special_fvtx_tracks_ab[8];
   TProfile* tp1f_special_fvtx_tracks_aa;
   TProfile* tp1f_special_fvtx_tracks_aa_cos;
   TProfile* tp1f_special_fvtx_tracks_aa_sin;
+
+
+
+  // --- correlation histograms
+  // --- <<cos(n(phi1-phi2))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_c22;
+  TProfile* nfvtxt_os_fvtxn_tracks_c22;
+  TProfile* nfvtxt_os_fvtxc_tracks_c22;
+  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_c24;
+  TProfile* nfvtxt_os_fvtxn_tracks_c24;
+  TProfile* nfvtxt_os_fvtxc_tracks_c24;
+  // --- 2-particle scalr product
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c22 ;
+  // --- experimental 4-particle correlations
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24 ;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24a;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24b;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24c;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24d;
+
+  // --- acceptance correction histograms
+  // --- <<cos(n(phi1))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_cos21;
+  TProfile* nfvtxt_os_fvtxn_tracks_cos21;
+  TProfile* nfvtxt_os_fvtxc_tracks_cos21;
+  // --- <<sin(n(phi1))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_sin21;
+  TProfile* nfvtxt_os_fvtxn_tracks_sin21;
+  TProfile* nfvtxt_os_fvtxc_tracks_sin21;
+  // --- <<cos(n(phi1+phi2))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_cossum22;
+  TProfile* nfvtxt_os_fvtxn_tracks_cossum22;
+  TProfile* nfvtxt_os_fvtxc_tracks_cossum22;
+  // --- <<sin(n(phi1+phi2))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_sinsum22;
+  TProfile* nfvtxt_os_fvtxn_tracks_sinsum22;
+  TProfile* nfvtxt_os_fvtxc_tracks_sinsum22;
+  // --- <<cos(n(phi1-phi2-phi3))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_cos23;
+  TProfile* nfvtxt_os_fvtxn_tracks_cos23;
+  TProfile* nfvtxt_os_fvtxc_tracks_cos23;
+  // --- <<sin(n(phi1-phi2-phi3))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_sin23;
+  TProfile* nfvtxt_os_fvtxn_tracks_sin23;
+  TProfile* nfvtxt_os_fvtxc_tracks_sin23;
+
+  // --- 3rd harmonic stuff
+  TProfile* nfvtxt_os_fvtxs_tracks_c32;
+  TProfile* nfvtxt_os_fvtxn_tracks_c32;
+  TProfile* nfvtxt_os_fvtxc_tracks_c32;
+  TProfile* nfvtxt_os_fvtxs_tracks_cos31;
+  TProfile* nfvtxt_os_fvtxn_tracks_cos31;
+  TProfile* nfvtxt_os_fvtxc_tracks_cos31;
+  TProfile* nfvtxt_os_fvtxs_tracks_sin31;
+  TProfile* nfvtxt_os_fvtxn_tracks_sin31;
+  TProfile* nfvtxt_os_fvtxc_tracks_sin31;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c32;
+
+  TProfile* nfvtxt_tracks_south_qx2;
+  TProfile* nfvtxt_tracks_south_qx3;
+  TProfile* nfvtxt_tracks_south_qx4;
+  TProfile* nfvtxt_tracks_south_qy2;
+  TProfile* nfvtxt_tracks_south_qy3;
+  TProfile* nfvtxt_tracks_south_qy4;
+
+  TProfile* nfvtxt_tracks_south_inner_qx2;
+  TProfile* nfvtxt_tracks_south_inner_qx3;
+  TProfile* nfvtxt_tracks_south_inner_qx4;
+  TProfile* nfvtxt_tracks_south_inner_qy2;
+  TProfile* nfvtxt_tracks_south_inner_qy3;
+  TProfile* nfvtxt_tracks_south_inner_qy4;
+
+  TProfile* nfvtxt_tracks_south_outer_qx2;
+  TProfile* nfvtxt_tracks_south_outer_qx3;
+  TProfile* nfvtxt_tracks_south_outer_qx4;
+  TProfile* nfvtxt_tracks_south_outer_qy2;
+  TProfile* nfvtxt_tracks_south_outer_qy3;
+  TProfile* nfvtxt_tracks_south_outer_qy4;
+
+  TProfile* nfvtxt_tracks_north_qx2;
+  TProfile* nfvtxt_tracks_north_qx3;
+  TProfile* nfvtxt_tracks_north_qx4;
+  TProfile* nfvtxt_tracks_north_qy2;
+  TProfile* nfvtxt_tracks_north_qy3;
+  TProfile* nfvtxt_tracks_north_qy4;
+
+  TProfile* nfvtxt_tracks_north_inner_qx2;
+  TProfile* nfvtxt_tracks_north_inner_qx3;
+  TProfile* nfvtxt_tracks_north_inner_qx4;
+  TProfile* nfvtxt_tracks_north_inner_qy2;
+  TProfile* nfvtxt_tracks_north_inner_qy3;
+  TProfile* nfvtxt_tracks_north_inner_qy4;
+
+  TProfile* nfvtxt_tracks_north_outer_qx2;
+  TProfile* nfvtxt_tracks_north_outer_qx3;
+  TProfile* nfvtxt_tracks_north_outer_qx4;
+  TProfile* nfvtxt_tracks_north_outer_qy2;
+  TProfile* nfvtxt_tracks_north_outer_qy3;
+  TProfile* nfvtxt_tracks_north_outer_qy4;
+
+
 
 
 
