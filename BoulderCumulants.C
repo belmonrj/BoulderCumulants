@@ -85,6 +85,10 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   // --- initialize histograms
   // ---
 
+  th1d_nfvtxt_combined = new TH1D("th1d_nfvtxt_combined","",500, -0.5, 499.5);
+  th1d_nfvtxt_north = new TH1D("th1d_nfvtxt_north","",500, -0.5, 499.5);
+  th1d_nfvtxt_south = new TH1D("th1d_nfvtxt_south","",500, -0.5, 499.5);
+
   nfvtxt_ac_fvtxs_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c22"),"",500, -0.5, 499.5, -1.1, 1.1);
   nfvtxt_ac_fvtxn_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c22"),"",500, -0.5, 499.5, -1.1, 1.1);
   nfvtxt_ac_fvtxc_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c22"),"",500, -0.5, 499.5, -1.1, 1.1);
@@ -625,7 +629,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
     } // end while loop over tracks
 
-
+  th1d_nfvtxt_combined->Fill(nfvtxt);
+  th1d_nfvtxt_north->Fill(nfvtxt_north);
+  th1d_nfvtxt_south->Fill(nfvtxt_south);
 
   //---------------------------------------------------------//
   //                 finished Get FVTX Tracks
