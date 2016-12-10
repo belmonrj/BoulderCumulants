@@ -34,5 +34,6 @@ void Run_BoulderCumulants(const char *outFile = "test_train_output.root")
 void InputData(vector<string> &indata)
 {
   indata.push_back("CNT");
+  indata.push_back("DST_EVE");
   return;
 }
