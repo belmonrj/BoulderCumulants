@@ -234,6 +234,9 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
   // This is done in init run so that the collision system can be
   // determined from the run number
   TString _collsys = "Run16dAu200"; // default to 200 GeV
+  // --- Run14AuAu200
+  if ( runnumber >= 405839 && runnumber <= 414988 )
+    _collsys = "Run14AuAu200";
   // --- Run15pAu200
   if ( runnumber >= 432637 && runnumber <= 436647 )
     _collsys = "Run15pAu200";
@@ -496,6 +499,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   int nfvtxt = 0;
   int nfvtxt_south = 0;
   int nfvtxt_north = 0;
+  int nfvtxt_raw = 0;
   // --- first fvtx track loop
   if ( _verbosity > 1 ) cout << "entering fvtx track loop" << endl;
   TFvtxCompactTrkMap::const_iterator trk_iter = trkfvtx_map->range();
@@ -503,6 +507,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     {
       TFvtxCompactTrk* fvtx_trk = trk_ptr->get();
 
+      ++nfvtxt_raw;
       // --- use the utility class to make the track selections
       if ( !_utils->is_fvtx_track_ok(fvtx_trk, zvtx) ) continue;
 
@@ -933,7 +938,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
   } // of end check on whether to do offsets
 
-  if ( _verbosity > 0 ) cout << "sucessfully processed this event" << endl;
+  if ( _verbosity > 0 ) cout << "sucessfully processed this event, number of fvtx tracks is " << nfvtxt_raw << ", number of fvtx tracks passing cuts is " << nfvtxt << endl;
 
   ++tmp_evt;//to keep track of how many events pass event cuts
   return EVENT_OK;
