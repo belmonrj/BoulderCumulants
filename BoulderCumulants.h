@@ -162,61 +162,6 @@ class BoulderCumulants: public SubsysReco
 
 
 
-  // --- correlation histograms
-  // --- <<cos(n(phi1-phi2))>>
-  TProfile* nfvtxt_os_fvtxs_tracks_c22;
-  TProfile* nfvtxt_os_fvtxn_tracks_c22;
-  TProfile* nfvtxt_os_fvtxc_tracks_c22;
-  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
-  TProfile* nfvtxt_os_fvtxs_tracks_c24;
-  TProfile* nfvtxt_os_fvtxn_tracks_c24;
-  TProfile* nfvtxt_os_fvtxc_tracks_c24;
-  // --- 2-particle scalr product
-  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c22 ;
-  // --- experimental 4-particle correlations
-  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24 ;
-  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24a;
-  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24b;
-  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24c;
-  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24d;
-
-  // --- acceptance correction histograms
-  // --- <<cos(n(phi1))>>
-  TProfile* nfvtxt_os_fvtxs_tracks_cos21;
-  TProfile* nfvtxt_os_fvtxn_tracks_cos21;
-  TProfile* nfvtxt_os_fvtxc_tracks_cos21;
-  // --- <<sin(n(phi1))>>
-  TProfile* nfvtxt_os_fvtxs_tracks_sin21;
-  TProfile* nfvtxt_os_fvtxn_tracks_sin21;
-  TProfile* nfvtxt_os_fvtxc_tracks_sin21;
-  // --- <<cos(n(phi1+phi2))>>
-  TProfile* nfvtxt_os_fvtxs_tracks_cossum22;
-  TProfile* nfvtxt_os_fvtxn_tracks_cossum22;
-  TProfile* nfvtxt_os_fvtxc_tracks_cossum22;
-  // --- <<sin(n(phi1+phi2))>>
-  TProfile* nfvtxt_os_fvtxs_tracks_sinsum22;
-  TProfile* nfvtxt_os_fvtxn_tracks_sinsum22;
-  TProfile* nfvtxt_os_fvtxc_tracks_sinsum22;
-  // --- <<cos(n(phi1-phi2-phi3))>>
-  TProfile* nfvtxt_os_fvtxs_tracks_cos23;
-  TProfile* nfvtxt_os_fvtxn_tracks_cos23;
-  TProfile* nfvtxt_os_fvtxc_tracks_cos23;
-  // --- <<sin(n(phi1-phi2-phi3))>>
-  TProfile* nfvtxt_os_fvtxs_tracks_sin23;
-  TProfile* nfvtxt_os_fvtxn_tracks_sin23;
-  TProfile* nfvtxt_os_fvtxc_tracks_sin23;
-
-  // --- 3rd harmonic stuff
-  TProfile* nfvtxt_os_fvtxs_tracks_c32;
-  TProfile* nfvtxt_os_fvtxn_tracks_c32;
-  TProfile* nfvtxt_os_fvtxc_tracks_c32;
-  TProfile* nfvtxt_os_fvtxs_tracks_cos31;
-  TProfile* nfvtxt_os_fvtxn_tracks_cos31;
-  TProfile* nfvtxt_os_fvtxc_tracks_cos31;
-  TProfile* nfvtxt_os_fvtxs_tracks_sin31;
-  TProfile* nfvtxt_os_fvtxn_tracks_sin31;
-  TProfile* nfvtxt_os_fvtxc_tracks_sin31;
-  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c32;
 
   TProfile* nfvtxt_tracks_south_qx2;
   TProfile* nfvtxt_tracks_south_qx3;
