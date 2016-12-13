@@ -24,7 +24,7 @@ class BoulderCumulants: public SubsysReco
   int  Init         (PHCompositeNode *topNode);
   int  InitRun      (PHCompositeNode *topNode);
   int  process_event(PHCompositeNode *topNode);
-  int  ResetEvent   (PHCompositeNode *topNode);
+  //  int  ResetEvent   (PHCompositeNode *topNode);
   int  End          (PHCompositeNode *topNode);
   int  EndRun       (PHCompositeNode *topNode);
   void Verbosity    (int verbosity) {_verbosity = verbosity;}
@@ -33,7 +33,6 @@ class BoulderCumulants: public SubsysReco
   void set_output_filename(std::string filename) { _output_filename = filename; } // select output file name externally
   void set_use_runlist(bool b){ _use_runlist = b;} // text file for runs to analyze
   void set_runlist_file(std::string filename) { _runlist_filename = filename; } // name of file for above
-  void set_do_offsets(bool b) { dooffsets = b; }
   bool is_run_in_list(int runnumber);
 
  protected:
@@ -56,13 +55,9 @@ class BoulderCumulants: public SubsysReco
   /// verbosity level
   int _verbosity;
 
-  // --- check on whether to do offsets
-  bool dooffsets;
-
   /// module output filename
   std::string _output_filename;
   TFile* _output_file;
-  TFile* offset_file;
 
   //run list stuff
   bool _use_runlist;

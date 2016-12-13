@@ -48,7 +48,7 @@ using namespace std;
 // --- class constructor
 BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
 {
-  ResetEvent(NULL);
+  //ResetEvent(NULL);
 
   _ievent = 0;
   _verbosity = 0;
@@ -59,7 +59,93 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   _utils = NULL;
   tmp_evt = 0;
 
-  dooffsets = false;
+  FVTX_X = -9999.9;
+  FVTX_Y = -9999.9;
+  FVTX_Z = -9999.9;
+
+  th1d_nfvtxt_combined = NULL;
+  th1d_nfvtxt_north = NULL;
+  th1d_nfvtxt_south = NULL;
+  nfvtxt_ac_fvtxs_tracks_c22 = NULL;
+  nfvtxt_ac_fvtxn_tracks_c22 = NULL;
+  nfvtxt_ac_fvtxc_tracks_c22 = NULL;
+  nfvtxt_ac_fvtxs_tracks_c24 = NULL;
+  nfvtxt_ac_fvtxn_tracks_c24 = NULL;
+  nfvtxt_ac_fvtxc_tracks_c24 = NULL;
+  nfvtxt_ac_fvtxsfvtxn_tracks_c22  = NULL;
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24  = NULL;
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24a = NULL;
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24b = NULL;
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24c = NULL;
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24d = NULL;
+  nfvtxt_ac_fvtxs_tracks_cos21 = NULL;
+  nfvtxt_ac_fvtxn_tracks_cos21 = NULL;
+  nfvtxt_ac_fvtxc_tracks_cos21 = NULL;
+  nfvtxt_ac_fvtxs_tracks_sin21 = NULL;
+  nfvtxt_ac_fvtxn_tracks_sin21 = NULL;
+  nfvtxt_ac_fvtxc_tracks_sin21 = NULL;
+  nfvtxt_ac_fvtxs_tracks_cossum22 = NULL;
+  nfvtxt_ac_fvtxn_tracks_cossum22 = NULL;
+  nfvtxt_ac_fvtxc_tracks_cossum22 = NULL;
+  nfvtxt_ac_fvtxs_tracks_sinsum22 = NULL;
+  nfvtxt_ac_fvtxn_tracks_sinsum22 = NULL;
+  nfvtxt_ac_fvtxc_tracks_sinsum22 = NULL;
+  nfvtxt_ac_fvtxs_tracks_cos23 = NULL;
+  nfvtxt_ac_fvtxn_tracks_cos23 = NULL;
+  nfvtxt_ac_fvtxc_tracks_cos23 = NULL;
+  nfvtxt_ac_fvtxs_tracks_sin23 = NULL;
+  nfvtxt_ac_fvtxn_tracks_sin23 = NULL;
+  nfvtxt_ac_fvtxc_tracks_sin23 = NULL;
+  nfvtxt_ac_fvtxs_tracks_c32 = NULL;
+  nfvtxt_ac_fvtxn_tracks_c32 = NULL;
+  nfvtxt_ac_fvtxc_tracks_c32 = NULL;
+  nfvtxt_ac_fvtxsfvtxn_tracks_c32  = NULL;
+  nfvtxt_ac_fvtxs_tracks_cos31 = NULL;
+  nfvtxt_ac_fvtxn_tracks_cos31 = NULL;
+  nfvtxt_ac_fvtxc_tracks_cos31 = NULL;
+  nfvtxt_ac_fvtxs_tracks_sin31 = NULL;
+  nfvtxt_ac_fvtxn_tracks_sin31 = NULL;
+  nfvtxt_ac_fvtxc_tracks_sin31 = NULL;
+  for ( int i = 0; i < 8; ++i ) tp1f_special_fvtx_tracks_ab[i] = NULL;
+  tp1f_special_fvtx_tracks_aa = NULL;
+  tp1f_special_fvtx_tracks_aa_cos = NULL;
+  tp1f_special_fvtx_tracks_aa_sin = NULL;
+  nfvtxt_tracks_south_qx2 = NULL;
+  nfvtxt_tracks_south_qx3 = NULL;
+  nfvtxt_tracks_south_qx4 = NULL;
+  nfvtxt_tracks_south_qy2 = NULL;
+  nfvtxt_tracks_south_qy3 = NULL;
+  nfvtxt_tracks_south_qy4 = NULL;
+  nfvtxt_tracks_south_inner_qx2 = NULL;
+  nfvtxt_tracks_south_inner_qx3 = NULL;
+  nfvtxt_tracks_south_inner_qx4 = NULL;
+  nfvtxt_tracks_south_inner_qy2 = NULL;
+  nfvtxt_tracks_south_inner_qy3 = NULL;
+  nfvtxt_tracks_south_inner_qy4 = NULL;
+  nfvtxt_tracks_south_outer_qx2 = NULL;
+  nfvtxt_tracks_south_outer_qx3 = NULL;
+  nfvtxt_tracks_south_outer_qx4 = NULL;
+  nfvtxt_tracks_south_outer_qy2 = NULL;
+  nfvtxt_tracks_south_outer_qy3 = NULL;
+  nfvtxt_tracks_south_outer_qy4 = NULL;
+  nfvtxt_tracks_north_qx2 = NULL;
+  nfvtxt_tracks_north_qx3 = NULL;
+  nfvtxt_tracks_north_qx4 = NULL;
+  nfvtxt_tracks_north_qy2 = NULL;
+  nfvtxt_tracks_north_qy3 = NULL;
+  nfvtxt_tracks_north_qy4 = NULL;
+  nfvtxt_tracks_north_inner_qx2 = NULL;
+  nfvtxt_tracks_north_inner_qx3 = NULL;
+  nfvtxt_tracks_north_inner_qx4 = NULL;
+  nfvtxt_tracks_north_inner_qy2 = NULL;
+  nfvtxt_tracks_north_inner_qy3 = NULL;
+  nfvtxt_tracks_north_inner_qy4 = NULL;
+  nfvtxt_tracks_north_outer_qx2 = NULL;
+  nfvtxt_tracks_north_outer_qx3 = NULL;
+  nfvtxt_tracks_north_outer_qx4 = NULL;
+  nfvtxt_tracks_north_outer_qy2 = NULL;
+  nfvtxt_tracks_north_outer_qy3 = NULL;
+  nfvtxt_tracks_north_outer_qy4 = NULL;
 
 }
 
@@ -75,7 +161,7 @@ BoulderCumulants::~BoulderCumulants()
 int BoulderCumulants::Init(PHCompositeNode *topNode)
 {
 
-  ResetEvent(topNode); // is this needed?
+  //  ResetEvent(topNode); // is this needed?
 
   if (_verbosity > 1) cout << PHWHERE << "::Init() - entered." << endl;
 
@@ -253,27 +339,27 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
 
 
 // --- ResetEvent, part of Fun4All inheritance, called after every event by Fun4All
-int BoulderCumulants::ResetEvent(PHCompositeNode *topNode)
-{
-  if (_verbosity > 1) cout << PHWHERE << "::ResetEvent() - entered." << endl;
+// int BoulderCumulants::ResetEvent(PHCompositeNode *topNode)
+// {
+//   if (_verbosity > 1) cout << PHWHERE << "::ResetEvent() - entered." << endl;
 
-  event         = -9999;
-  centrality    = -9999;
-  npc1          = -9999;
-  trigger_scaled = -9999;
-  trigger_live   = -9999;
-  // bbc_qn        = -9999;
-  // bbc_qs        = -9999;
-  bbc_z         = -9999;
-  vtx_z         = -9999;
-  bc_x          = -9999;
-  bc_y          = -9999;
-  //  ntracklets    = -9999;
+//   event         = -9999;
+//   centrality    = -9999;
+//   npc1          = -9999;
+//   trigger_scaled = -9999;
+//   trigger_live   = -9999;
+//   // bbc_qn        = -9999;
+//   // bbc_qs        = -9999;
+//   bbc_z         = -9999;
+//   vtx_z         = -9999;
+//   bc_x          = -9999;
+//   bc_y          = -9999;
+//   //  ntracklets    = -9999;
 
 
-  return EVENT_OK;
+//   return EVENT_OK;
 
-}
+// }
 
 
 
@@ -794,7 +880,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 int BoulderCumulants::EndRun(PHCompositeNode *topNode)
 {
   if ( _utils ) delete _utils;
-  offset_file->Close();
   return EVENT_OK;
 }
 
