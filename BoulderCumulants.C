@@ -63,6 +63,16 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   FVTX_Y = -9999.9;
   FVTX_Z = -9999.9;
 
+  event = -9999;
+  bbc_z = -9999.9;
+  centrality = -9999;
+  npc1 = -9999;
+  trigger_scaled = -9999;
+  trigger_live = -9999;
+  bc_x = -9999.9;
+  bc_y = -9999.9;
+  vtx_z = -9999.9;
+
   th1d_nfvtxt_combined = NULL;
   th1d_nfvtxt_north = NULL;
   th1d_nfvtxt_south = NULL;
