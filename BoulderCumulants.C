@@ -347,7 +347,7 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
     _collsys = "Run16dAu39";
 
   // --- delete this pointer in EndRun
-  _utils = new dAuBES_utils(_collsys, true);
+  if ( use_utils ) _utils = new dAuBES_utils(_collsys, true);
   // _utils->is_sim(_is_sim);
 
 
