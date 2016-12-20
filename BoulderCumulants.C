@@ -57,6 +57,9 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   _use_runlist = false;
   _runlist_filename = "NULL";
   _utils = NULL;
+
+  use_utils = true;
+
   tmp_evt = 0;
 
   FVTX_X = -9999.9;
@@ -317,9 +320,13 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
   // This is done in init run so that the collision system can be
   // determined from the run number
   TString _collsys = "Run16dAu200"; // default to 200 GeV
+  use_utils = true;
   // --- Run14AuAu200
   if ( runnumber >= 405839 && runnumber <= 414988 )
-    _collsys = "Run14AuAu200";
+    {
+      _collsys = "Run14AuAu200";
+      use_utils = false;
+    }
   // --- Run15pAu200
   if ( runnumber >= 432637 && runnumber <= 436647 )
     _collsys = "Run15pAu200";
@@ -472,8 +479,10 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
   if ( _verbosity > 1 ) cout << "applying event selection criteria" << endl;
 
-  if (!_utils->is_event_ok(topNode))
-    return EVENT_OK;
+  if ( use_utils )
+    {
+      if (!_utils->is_event_ok(topNode)) return EVENT_OK;
+    }
 
 
 
@@ -516,7 +525,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
   // cout << endl;
   // cout << "--- starting vertex checking ---" << endl;
-  float zvtx = _utils->get_vrtx(topNode);
+  float zvtx = bbc_z;
+  if ( use_utils ) zvtx = _utils->get_vrtx(topNode);
 
 
   if ( _verbosity > 1 ) cout << "FVTX vertex points: " << FVTX_X << " " << FVTX_Y << " " << FVTX_Z << endl;
@@ -592,7 +602,10 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
       ++nfvtxt_raw;
       // --- use the utility class to make the track selections
-      if ( !_utils->is_fvtx_track_ok(fvtx_trk, zvtx) ) continue;
+      if ( use_utils )
+	{
+	  if ( !_utils->is_fvtx_track_ok(fvtx_trk, zvtx) ) continue;
+	}
 
       float the = fvtx_trk->get_fvtx_theta();
       float eta = fvtx_trk->get_fvtx_eta();
@@ -608,14 +621,17 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       double py = 1.0 * sin(the) * sin(phi);
       double pz = 1.0 * cos(the);
 
-      // rotate based on beamtilt, need to do both rotations with lab frame coordinates
-      double pxprime = _utils->rotate_x(px, pz);
-      double pzprime = _utils->rotate_z(px, pz);
-      // now reassign px and pz to the new rotated frame coordinates
-      px = pxprime;
-      pz = pzprime;
-      phi = TMath::ATan2(py, px);
-      the = TMath::ACos(pz / TMath::Sqrt(px * px + py * py + pz * pz));
+      if ( use_utils )
+	{
+	  // rotate based on beamtilt, need to do both rotations with lab frame coordinates
+	  double pxprime = _utils->rotate_x(px, pz);
+	  double pzprime = _utils->rotate_z(px, pz);
+	  // now reassign px and pz to the new rotated frame coordinates
+	  px = pxprime;
+	  pz = pzprime;
+	  phi = TMath::ATan2(py, px);
+	  the = TMath::ACos(pz / TMath::Sqrt(px * px + py * py + pz * pz));
+	}
 
       // float vertex_z = zvtx;
       // if ( FVTX_Z > -999 ) vertex_z = FVTX_Z;
