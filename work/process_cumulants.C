@@ -124,6 +124,16 @@ void process_cumulants()
     }
 
   // --- now we have all the histograms with proper uncertainties, so let's make some plots
+  th1d_corr_v22->SetLineColor(kBlack);
+  th1d_corr_v22->SetMarkerColor(kRed);
+  th1d_corr_v22->SetMarkerStyle(kFullDiamond);
+  th1d_corr_v2G->SetLineColor(kBlack);
+  th1d_corr_v2G->SetMarkerColor(kMagenta+2);
+  th1d_corr_v2G->SetMarkerStyle(kOpenDiamond);
+  th1d_corr_v24->SetLineColor(kBlack);
+  th1d_corr_v24->SetMarkerColor(kBlue);
+  th1d_corr_v24->SetMarkerStyle(kFullSquare);
+
 
 
 }
