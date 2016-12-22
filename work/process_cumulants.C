@@ -1,12 +1,25 @@
 double calc_corr_four(double,double,double,double,double,double,double,double);
 
-
+void do_process(const char*,int); // get it? :)
 
 void process_cumulants()
 {
+  // do_process("Run16dAu200",1);
+  // do_process("Run16dAu200",5);
+  // do_process("Run16dAu200",10);
+  do_process("Run15pAu200",1);
+  do_process("Run15pAu200",5);
+  do_process("Run15pAu200",10);
+  do_process("Run14AuAu200",1);
+  do_process("Run14AuAu200",10);
+  do_process("Run14AuAu200",20);
+}
+
+void do_process(const char* type, int rebin)
+{
 
   // --- get the file with the cumulants (considering making a function with a flag to take the collision system)
-  TFile* fin = TFile::Open("input/cumulants_AuAu200.root");
+  TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
 
   // --- get the histograms from the file
   TProfile* tp1f_four = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
@@ -24,7 +37,6 @@ void process_cumulants()
   TProfile* tp1f_sin1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_sin21");
 
   // --- rebin as desired, rebinning on TProfile ensure weighted averages and uncertainties are done correctly
-  int rebin = 10;
   tp1f_four->Rebin(rebin);
   tp1f_two->Rebin(rebin);
   tp1f_cos1->Rebin(rebin);
@@ -134,7 +146,32 @@ void process_cumulants()
   th1d_corr_v24->SetMarkerColor(kBlue);
   th1d_corr_v24->SetMarkerStyle(kFullSquare);
 
-
+  double xmin = 0.0;
+  double xmax = 500.0;
+  double ymin = 0.0;
+  double ymax = 0.199;
+  if ( strcmp(type,"Run15pAu200") == 0 ) xmax = 70.0;
+  if ( strcmp(type,"Run16dAu200") == 0 ) xmax = 70.0;
+  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  empty->GetYaxis()->SetTitle("v_{2}");
+  th1d_corr_v22->Draw("ex0p same");
+  th1d_corr_v24->Draw("ex0p same");
+  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
+  leg->SetHeader(type);
+  leg->SetTextSize(0.045);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
+  leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
+  leg->Draw();
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.pdf",rebin,type));
+  th1d_corr_v2G->Draw("ex0p same");
+  leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
+  leg->Draw();
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
 
 }
 
