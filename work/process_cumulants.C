@@ -4,14 +4,23 @@ void do_process(const char*,int); // get it? :)
 
 void process_cumulants()
 {
-  // do_process("Run16dAu200",1);
-  // do_process("Run16dAu200",5);
-  // do_process("Run16dAu200",10);
+  do_process("Run16dAu200",1);
+  do_process("Run16dAu200",5);
+  do_process("Run16dAu200",10);
+  do_process("Run16dAu62",1);
+  do_process("Run16dAu62",5);
+  do_process("Run16dAu62",10);
+  do_process("Run16dAu39",1);
+  do_process("Run16dAu39",5);
+  do_process("Run16dAu39",10);
+  do_process("Run16dAu20",1);
+  do_process("Run16dAu20",5);
+  do_process("Run16dAu20",10);
   do_process("Run15pAu200",1);
-  // do_process("Run15pAu200",5);
-  // do_process("Run15pAu200",10);
+  do_process("Run15pAu200",5);
+  do_process("Run15pAu200",10);
   do_process("Run14AuAu200",1);
-  // do_process("Run14AuAu200",10);
+  do_process("Run14AuAu200",10);
   do_process("Run14AuAu200",20);
 }
 
@@ -152,6 +161,9 @@ void do_process(const char* type, int rebin)
   double ymax = 0.199;
   if ( strcmp(type,"Run15pAu200") == 0 ) xmax = 70.0;
   if ( strcmp(type,"Run16dAu200") == 0 ) xmax = 70.0;
+  if ( strcmp(type,"Run16dAu62") == 0 ) xmax = 70.0;
+  if ( strcmp(type,"Run16dAu39") == 0 ) xmax = 70.0;
+  if ( strcmp(type,"Run16dAu20") == 0 ) xmax = 70.0;
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
