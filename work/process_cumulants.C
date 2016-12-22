@@ -8,10 +8,10 @@ void process_cumulants()
   // do_process("Run16dAu200",5);
   // do_process("Run16dAu200",10);
   do_process("Run15pAu200",1);
-  do_process("Run15pAu200",5);
-  do_process("Run15pAu200",10);
+  // do_process("Run15pAu200",5);
+  // do_process("Run15pAu200",10);
   do_process("Run14AuAu200",1);
-  do_process("Run14AuAu200",10);
+  // do_process("Run14AuAu200",10);
   do_process("Run14AuAu200",20);
 }
 
@@ -172,6 +172,32 @@ void do_process(const char* type, int rebin)
   leg->Draw();
   c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.png",rebin,type));
   c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
+
+  th1d_corr_222->SetLineColor(kBlack);
+  th1d_corr_222->SetMarkerColor(kGreen+2);
+  th1d_corr_222->SetMarkerStyle(kFullCircle);
+  th1d_corr_four->SetLineColor(kBlack);
+  th1d_corr_four->SetMarkerColor(kOrange-5);
+  th1d_corr_four->SetMarkerStyle(kFullSquare);
+  ymax = 3.0e-4;
+  delete empty;
+  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  empty->GetYaxis()->SetTitle("v_{2}");
+  th1d_corr_222->Draw("ex0p same");
+  th1d_corr_four->Draw("ex0p same");
+  delete leg;
+  leg = new TLegend(0.62,0.68,0.88,0.88);
+  leg->SetHeader(type);
+  leg->SetTextSize(0.045);
+  //leg->SetFillStyle(0);
+  leg->AddEntry(th1d_corr_222,"2#LT#LT2#GT#GT^{2}","p");
+  leg->AddEntry(th1d_corr_four,"#LT#LT4#GT#GT","p");
+  leg->Draw();
+  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.pdf",rebin,type));
+
 
 }
 
