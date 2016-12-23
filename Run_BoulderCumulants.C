@@ -33,10 +33,10 @@ void Run_BoulderCumulants(const char *outFile = "test_train_output.root")
 
 void InputData(vector<string> &indata)
 {
-  // indata.push_back("CNT");
-  // indata.push_back("DST_EVE"); // must have for Run15 and Run16
+  indata.push_back("CNT");
+  indata.push_back("DST_EVE"); // must have for Run15 and Run16
   // indata.push_back("DST_FVTX"); // must have for Run15 and must remove for Run16
-  indata.push_back("MWG"); // must have for Run14 (only)
-  indata.push_back("MuonDST"); // must have for Run14 (only)
+  // indata.push_back("MWG"); // must have for Run14 (only)
+  // indata.push_back("MuonDST"); // must have for Run14 (only)
   return;
 }
