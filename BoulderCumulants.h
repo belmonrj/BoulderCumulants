@@ -89,6 +89,7 @@ class BoulderCumulants: public SubsysReco
   //-- Other variables
 
 
+  TH1D* th1d_nfvtxt_combinedER;
   TH1D* th1d_nfvtxt_combined;
   TH1D* th1d_nfvtxt_north;
   TH1D* th1d_nfvtxt_south;
@@ -155,6 +156,63 @@ class BoulderCumulants: public SubsysReco
   TProfile* tp1f_special_fvtx_tracks_aa;
   TProfile* tp1f_special_fvtx_tracks_aa_cos;
   TProfile* tp1f_special_fvtx_tracks_aa_sin;
+
+  // --- centrality stuff
+
+  // --- correlation histograms
+  // --- <<cos(n(phi1-phi2))>>
+  TProfile* centrality_ac_fvtxs_tracks_c22;
+  TProfile* centrality_ac_fvtxn_tracks_c22;
+  TProfile* centrality_ac_fvtxc_tracks_c22;
+  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
+  TProfile* centrality_ac_fvtxs_tracks_c24;
+  TProfile* centrality_ac_fvtxn_tracks_c24;
+  TProfile* centrality_ac_fvtxc_tracks_c24;
+  // --- 2-particle scalr product
+  TProfile* centrality_ac_fvtxsfvtxn_tracks_c22 ;
+  // --- experimental 4-particle correlations
+  TProfile* centrality_ac_fvtxsfvtxn_tracks_c24 ;
+  TProfile* centrality_ac_fvtxsfvtxn_tracks_c24a;
+  TProfile* centrality_ac_fvtxsfvtxn_tracks_c24b;
+  TProfile* centrality_ac_fvtxsfvtxn_tracks_c24c;
+  TProfile* centrality_ac_fvtxsfvtxn_tracks_c24d;
+
+  // --- acceptance correction histograms
+  // --- <<cos(n(phi1))>>
+  TProfile* centrality_ac_fvtxs_tracks_cos21;
+  TProfile* centrality_ac_fvtxn_tracks_cos21;
+  TProfile* centrality_ac_fvtxc_tracks_cos21;
+  // --- <<sin(n(phi1))>>
+  TProfile* centrality_ac_fvtxs_tracks_sin21;
+  TProfile* centrality_ac_fvtxn_tracks_sin21;
+  TProfile* centrality_ac_fvtxc_tracks_sin21;
+  // --- <<cos(n(phi1+phi2))>>
+  TProfile* centrality_ac_fvtxs_tracks_cossum22;
+  TProfile* centrality_ac_fvtxn_tracks_cossum22;
+  TProfile* centrality_ac_fvtxc_tracks_cossum22;
+  // --- <<sin(n(phi1+phi2))>>
+  TProfile* centrality_ac_fvtxs_tracks_sinsum22;
+  TProfile* centrality_ac_fvtxn_tracks_sinsum22;
+  TProfile* centrality_ac_fvtxc_tracks_sinsum22;
+  // --- <<cos(n(phi1-phi2-phi3))>>
+  TProfile* centrality_ac_fvtxs_tracks_cos23;
+  TProfile* centrality_ac_fvtxn_tracks_cos23;
+  TProfile* centrality_ac_fvtxc_tracks_cos23;
+  // --- <<sin(n(phi1-phi2-phi3))>>
+  TProfile* centrality_ac_fvtxs_tracks_sin23;
+  TProfile* centrality_ac_fvtxn_tracks_sin23;
+  TProfile* centrality_ac_fvtxc_tracks_sin23;
+  // --- 3rd harmonic stuff
+  TProfile* centrality_ac_fvtxs_tracks_c32;
+  TProfile* centrality_ac_fvtxn_tracks_c32;
+  TProfile* centrality_ac_fvtxc_tracks_c32;
+  TProfile* centrality_ac_fvtxs_tracks_cos31;
+  TProfile* centrality_ac_fvtxn_tracks_cos31;
+  TProfile* centrality_ac_fvtxc_tracks_cos31;
+  TProfile* centrality_ac_fvtxs_tracks_sin31;
+  TProfile* centrality_ac_fvtxn_tracks_sin31;
+  TProfile* centrality_ac_fvtxc_tracks_sin31;
+  TProfile* centrality_ac_fvtxsfvtxn_tracks_c32;
 
 
 
