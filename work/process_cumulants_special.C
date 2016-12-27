@@ -2,26 +2,26 @@ double calc_corr_four(double,double,double,double,double,double,double,double);
 
 void do_process(const char*,int); // get it? :)
 
-void process_cumulants()
+void process_cumulants_special()
 {
-  do_process("Run16dAu200",1);
-  do_process("Run16dAu200",5);
-  do_process("Run16dAu200",10);
-  do_process("Run16dAu62",1);
-  do_process("Run16dAu62",5);
-  do_process("Run16dAu62",10);
-  do_process("Run16dAu39",1);
-  do_process("Run16dAu39",5);
-  do_process("Run16dAu39",10);
-  do_process("Run16dAu20",1);
-  do_process("Run16dAu20",5);
-  do_process("Run16dAu20",10);
-  do_process("Run15pAu200",1);
-  do_process("Run15pAu200",5);
-  do_process("Run15pAu200",10);
+  //  do_process("Run16dAu200",1);
+  // do_process("Run16dAu200",5);
+  // do_process("Run16dAu200",10);
+  // do_process("Run16dAu62",1);
+  // do_process("Run16dAu62",5);
+  // do_process("Run16dAu62",10);
+  // do_process("Run16dAu39",1);
+  // do_process("Run16dAu39",5);
+  // do_process("Run16dAu39",10);
+  // do_process("Run16dAu20",1);
+  // do_process("Run16dAu20",5);
+  // do_process("Run16dAu20",10);
+  //  do_process("Run15pAu200",1);
+  // do_process("Run15pAu200",5);
+  // do_process("Run15pAu200",10);
   do_process("Run14AuAu200",1);
-  do_process("Run14AuAu200",10);
-  do_process("Run14AuAu200",20);
+  // do_process("Run14AuAu200",10);
+  // do_process("Run14AuAu200",20);
 }
 
 void do_process(const char* type, int rebin)
@@ -31,19 +31,19 @@ void do_process(const char* type, int rebin)
   TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
 
   // --- get the histograms from the file
-  TProfile* tp1f_four = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
-  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
-  TProfile* tp1f_cos1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos21");
-  TProfile* tp1f_sin1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin21");
-  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cossum22");
-  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sinsum22");
-  TProfile* tp1f_cos3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos23");
-  TProfile* tp1f_sin3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin23");
-  TProfile* tp1f_G_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxsfvtxn_tracks_c22"); // scalar product north*south
-  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_cos21");
-  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_sin21");
-  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_cos21");
-  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_sin21");
+  TProfile* tp1f_four = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_c24");
+  TProfile* tp1f_two = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_c22");
+  TProfile* tp1f_cos1 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cos21");
+  TProfile* tp1f_sin1 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sin21");
+  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cossum22");
+  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sinsum22");
+  TProfile* tp1f_cos3 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cos23");
+  TProfile* tp1f_sin3 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sin23");
+  TProfile* tp1f_G_two = (TProfile*)fin->Get("centrality_ac_fvtxsfvtxn_tracks_c22"); // scalar product north*south
+  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("centrality_ac_fvtxn_tracks_cos21");
+  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("centrality_ac_fvtxn_tracks_sin21");
+  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("centrality_ac_fvtxs_tracks_cos21");
+  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("centrality_ac_fvtxs_tracks_sin21");
 
   // --- rebin as desired, rebinning on TProfile ensure weighted averages and uncertainties are done correctly
   tp1f_four->Rebin(rebin);
@@ -156,17 +156,18 @@ void do_process(const char* type, int rebin)
   th1d_corr_v24->SetMarkerStyle(kFullSquare);
 
   double xmin = 0.0;
-  double xmax = 500.0;
+  double xmax = 100.0;
   double ymin = 0.0;
   double ymax = 0.199;
-  if ( strcmp(type,"Run15pAu200") == 0 ) xmax = 70.0;
-  if ( strcmp(type,"Run16dAu200") == 0 ) xmax = 70.0;
-  if ( strcmp(type,"Run16dAu62") == 0 ) xmax = 70.0;
-  if ( strcmp(type,"Run16dAu39") == 0 ) xmax = 70.0;
-  if ( strcmp(type,"Run16dAu20") == 0 ) xmax = 70.0;
+  // if ( strcmp(type,"Run15pAu200") == 0 ) xmax = 70.0;
+  // if ( strcmp(type,"Run16dAu200") == 0 ) xmax = 70.0;
+  // if ( strcmp(type,"Run16dAu62") == 0 ) xmax = 70.0;
+  // if ( strcmp(type,"Run16dAu39") == 0 ) xmax = 70.0;
+  // if ( strcmp(type,"Run16dAu20") == 0 ) xmax = 70.0;
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
   th1d_corr_v22->Draw("ex0p same");
   th1d_corr_v24->Draw("ex0p same");
@@ -177,13 +178,13 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
   leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24_%s.png",rebin,type));
+  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24_%s.pdf",rebin,type));
   th1d_corr_v2G->Draw("ex0p same");
   leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgap_%s.png",rebin,type));
+  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
 
   th1d_corr_222->SetLineColor(kBlack);
   th1d_corr_222->SetMarkerColor(kGreen+2);
@@ -195,7 +196,8 @@ void do_process(const char* type, int rebin)
   delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
   th1d_corr_222->Draw("ex0p same");
   th1d_corr_four->Draw("ex0p same");
@@ -207,8 +209,8 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_corr_222,"2#LT#LT2#GT#GT^{2}","p");
   leg->AddEntry(th1d_corr_four,"#LT#LT4#GT#GT","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.png",rebin,type));
+  c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.pdf",rebin,type));
 
 
 }
