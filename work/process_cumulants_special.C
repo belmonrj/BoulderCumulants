@@ -174,9 +174,9 @@ void do_process(const char* type, int rebin)
   TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
   leg->SetHeader(type);
   leg->SetTextSize(0.045);
-  leg->SetFillStyle(0);
-  leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
-  leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
+  //leg->SetFillStyle(0);
+  leg->AddEntry(th1d_corr_v22,"v_{2}{2} 1<|#eta|<3","p");
+  leg->AddEntry(th1d_corr_v24,"v_{2}{4} 1<|#eta|<3","p");
   leg->Draw();
   c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24_%s.png",rebin,type));
   c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24_%s.pdf",rebin,type));
@@ -185,6 +185,78 @@ void do_process(const char* type, int rebin)
   leg->Draw();
   c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgap_%s.png",rebin,type));
   c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
+  // --- STAR data
+  // v_{2}{2}
+  // 1(70-80%) 6.88 0.052
+  // 2(60-70%) 7.25 0.029
+  // 3(50-60%) 7.59 0.018
+  // 4(40-50%) 7.64 0.013
+  // 5(30-40%) 7.29 0.0094
+  // 6(20-30%) 6.42 0.0075
+  // 7(10-20%) 4.97 0.0066
+  // 8(5-10%)  3.55 0.0088
+  // 9(0-5%)   2.41 0.0096
+  // v_{2}{4}
+  // 2(60-70%) 5.68 0.35
+  // 3(50-60%) 6.18 0.1
+  // 4(40-50%) 6.43 0.045
+  // 5(30-40%) 6.33 0.026
+  // 6(20-30%) 5.66 0.02
+  // 7(10-20%) 4.27 0.022
+  // 8(5-10%)  2.53 0.066
+  double cent[9] = {75,65,55,45,35,25,15,7.5,2.5};
+  double star_v22[9]={0};
+  double star_v24[9]={0};
+  double star_ev22[9]={0};
+  double star_ev24[9]={0};
+  star_v22[0] = 6.88;  star_ev22[0] = 0.052 ;  star_v24[0] = -9.0;  star_ev24[0] = 0    ;
+  star_v22[1] = 7.25;  star_ev22[1] = 0.029 ;  star_v24[1] = 5.68;  star_ev24[1] = 0.35 ;
+  star_v22[2] = 7.59;  star_ev22[2] = 0.018 ;  star_v24[2] = 6.18;  star_ev24[2] = 0.1  ;
+  star_v22[3] = 7.64;  star_ev22[3] = 0.013 ;  star_v24[3] = 6.43;  star_ev24[3] = 0.045;
+  star_v22[4] = 7.29;  star_ev22[4] = 0.0094;  star_v24[4] = 6.33;  star_ev24[4] = 0.026;
+  star_v22[5] = 6.42;  star_ev22[5] = 0.0075;  star_v24[5] = 5.66;  star_ev24[5] = 0.02 ;
+  star_v22[6] = 4.97;  star_ev22[6] = 0.0066;  star_v24[6] = 4.27;  star_ev24[6] = 0.022;
+  star_v22[7] = 3.55;  star_ev22[7] = 0.0088;  star_v24[7] = 2.53;  star_ev24[7] = 0.066;
+  star_v22[8] = 2.41;  star_ev22[8] = 0.0096;  star_v24[8] = -9.0;  star_ev24[8] = 0    ;
+  for ( int i = 0; i < 9; ++i )
+    {
+      star_v22[i] /= 100.0;
+      star_v24[i] /= 100.0;
+      star_ev22[i] /= 100.0;
+      star_ev24[i] /= 100.0;
+      cout << star_v22[i] << " " << star_v24[i] << endl;
+    }
+  TGraphErrors* tge_star_v22 = new TGraphErrors(9,cent,star_v22,0,star_ev22);
+  TGraphErrors* tge_star_v24 = new TGraphErrors(9,cent,star_v24,0,star_ev24);
+  tge_star_v22->SetMarkerStyle(kOpenStar);
+  tge_star_v22->SetMarkerColor(kRed);
+  tge_star_v22->SetMarkerSize(1.99);
+  tge_star_v22->SetLineColor(kRed);
+  tge_star_v24->SetMarkerStyle(kOpenStar);
+  tge_star_v24->SetMarkerColor(kBlue);
+  tge_star_v24->SetMarkerSize(1.99);
+  tge_star_v24->SetLineColor(kBlue);
+  // ---
+  ymax = 0.12;
+  delete empty;
+  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetYaxis()->SetTitle("v_{2}");
+  th1d_corr_v22->Draw("ex0p same");
+  th1d_corr_v24->Draw("ex0p same");
+  th1d_corr_v2G->Draw("ex0p same");
+  tge_star_v22->Draw("p");
+  tge_star_v24->Draw("p");
+  leg->Draw();
+  TLegend* leg2 = new TLegend(0.18,0.68,0.38,0.88);
+  leg2->SetHeader("STAR");
+  leg2->AddEntry(tge_star_v22,"v_{2}{2} |#eta|<1","p");
+  leg2->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1","p");
+  leg2->SetTextSize(0.045);
+  leg2->Draw();
+  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgapandSTAR_%s.png",rebin,type));
+  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgapandSTAR_%s.pdf",rebin,type));
 
   th1d_corr_222->SetLineColor(kBlack);
   th1d_corr_222->SetMarkerColor(kGreen+2);
@@ -231,4 +303,5 @@ double calc_corr_four(double four, double two, double cos1, double sin1, double 
   double result = uncorr - corr_term1 + corr_term2 - corr_term3 - corr_term4 + corr_term5 + corr_term6 + corr_term7 - corr_term8;
   return result;
 }
+
 
