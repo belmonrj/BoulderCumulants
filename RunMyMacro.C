@@ -24,12 +24,12 @@ using std::vector;
 void InputData(vector<string> &indata);
 #endif
 
-void RunMyMacro(const char *modulemacro = "Run_BoulderCumulants.C",  // your anataxi macro name
+void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun16.C",  // your anataxi macro name
                 const char *outfile     = "output_test.root",   // <module_name>_<run>-<sequence>.root
                 //const int nevnt         = 2000,               // number of events for valgrind checking
                 //const int nevnt         = 100000,               // number of events for gatekeeper test
                 const int nevnt         = 10000,               // number of events for test
-                const char *system      = "Run16dAu60CAnVXMBP107") // system type
+                const char *system      = "Run16dAu200CAnVXMBP107") // system type
                 //const char *system      = "Run15pAu200FvtxMBPro107") // system type
                 //const char *system      = "Run14AuAu200MuonsMBPro104") // system type
 {
