@@ -2,26 +2,31 @@ double calc_corr_four(double,double,double,double,double,double,double,double);
 
 void do_process(const char*,int); // get it? :)
 
+TFile* fout;
+
 void process_cumulants()
 {
+
+  fout = TFile::Open("all_cumulants_out.root","recreate");
   do_process("Run16dAu200",1);
+  do_process("Run16dAu200",2);
   do_process("Run16dAu200",5);
-  do_process("Run16dAu200",10);
   do_process("Run16dAu62",1);
+  do_process("Run16dAu62",2);
   do_process("Run16dAu62",5);
-  do_process("Run16dAu62",10);
   do_process("Run16dAu39",1);
+  do_process("Run16dAu39",2);
   do_process("Run16dAu39",5);
-  do_process("Run16dAu39",10);
   do_process("Run16dAu20",1);
+  do_process("Run16dAu20",2);
   do_process("Run16dAu20",5);
-  do_process("Run16dAu20",10);
   do_process("Run15pAu200",1);
+  do_process("Run15pAu200",2);
   do_process("Run15pAu200",5);
-  do_process("Run15pAu200",10);
   do_process("Run14AuAu200",1);
   do_process("Run14AuAu200",10);
   do_process("Run14AuAu200",20);
+  fout->Close();
 }
 
 void do_process(const char* type, int rebin)
@@ -210,6 +215,17 @@ void do_process(const char* type, int rebin)
   c1->Print(Form("FigsFour/simpleR%d_222and4_%s.png",rebin,type));
   c1->Print(Form("FigsFour/simpleR%d_222and4_%s.pdf",rebin,type));
 
+  fout->cd();
+  th1d_corr_v22->SetName(Form("th1dR%d_v22_%s",rebin,type));
+  th1d_corr_v2G->SetName(Form("th1dR%d_v22gap_%s",rebin,type));
+  th1d_corr_v24->SetName(Form("th1dR%d_v24_%s",rebin,type));
+  th1d_corr_222->SetName(Form("th1dR%d_222_%s",rebin,type));
+  th1d_corr_four->SetName(Form("th1dR%d_four_%s",rebin,type));
+  th1d_corr_v22->Write();
+  th1d_corr_v2G->Write();
+  th1d_corr_v24->Write();
+  th1d_corr_222->Write();
+  th1d_corr_four->Write();
 
 }
 
