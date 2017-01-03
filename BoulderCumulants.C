@@ -207,7 +207,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
 // --- class destructor
 BoulderCumulants::~BoulderCumulants()
 {
-  if ( _utils ) delete _utils;
+  //if ( _utils ) delete _utils;
 }
 
 
