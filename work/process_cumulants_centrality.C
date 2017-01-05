@@ -2,7 +2,7 @@ double calc_corr_four(double,double,double,double,double,double,double,double);
 
 void do_process(const char*,int); // get it? :)
 
-void process_cumulants_special()
+void process_cumulants_centrality()
 {
   //  do_process("Run16dAu200",1);
   // do_process("Run16dAu200",5);
