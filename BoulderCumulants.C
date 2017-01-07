@@ -482,6 +482,63 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
 
 
 
+  centrality_tracks_south_qx2 = new TProfile("centrality_tracks_south_qx2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_qx3 = new TProfile("centrality_tracks_south_qx3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_qx4 = new TProfile("centrality_tracks_south_qx4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_qx6 = new TProfile("centrality_tracks_south_qx6","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_qy2 = new TProfile("centrality_tracks_south_qy2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_qy3 = new TProfile("centrality_tracks_south_qy3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_qy4 = new TProfile("centrality_tracks_south_qy4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_qy6 = new TProfile("centrality_tracks_south_qy6","",500, -0.5, 499.5, -1.1, 1.1);
+
+  centrality_tracks_south_inner_qx2 = new TProfile("centrality_tracks_south_inner_qx2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_inner_qx3 = new TProfile("centrality_tracks_south_inner_qx3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_inner_qx4 = new TProfile("centrality_tracks_south_inner_qx4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_inner_qx6 = new TProfile("centrality_tracks_south_inner_qx6","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_inner_qy2 = new TProfile("centrality_tracks_south_inner_qy2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_inner_qy3 = new TProfile("centrality_tracks_south_inner_qy3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_inner_qy4 = new TProfile("centrality_tracks_south_inner_qy4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_inner_qy6 = new TProfile("centrality_tracks_south_inner_qy6","",500, -0.5, 499.5, -1.1, 1.1);
+
+  centrality_tracks_south_outer_qx2 = new TProfile("centrality_tracks_south_outer_qx2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_outer_qx3 = new TProfile("centrality_tracks_south_outer_qx3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_outer_qx4 = new TProfile("centrality_tracks_south_outer_qx4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_outer_qx6 = new TProfile("centrality_tracks_south_outer_qx6","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_outer_qy2 = new TProfile("centrality_tracks_south_outer_qy2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_outer_qy3 = new TProfile("centrality_tracks_south_outer_qy3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_outer_qy4 = new TProfile("centrality_tracks_south_outer_qy4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_south_outer_qy6 = new TProfile("centrality_tracks_south_outer_qy6","",500, -0.5, 499.5, -1.1, 1.1);
+
+  centrality_tracks_north_qx2 = new TProfile("centrality_tracks_north_qx2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_qx3 = new TProfile("centrality_tracks_north_qx3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_qx4 = new TProfile("centrality_tracks_north_qx4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_qx6 = new TProfile("centrality_tracks_north_qx6","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_qy2 = new TProfile("centrality_tracks_north_qy2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_qy3 = new TProfile("centrality_tracks_north_qy3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_qy4 = new TProfile("centrality_tracks_north_qy4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_qy6 = new TProfile("centrality_tracks_north_qy6","",500, -0.5, 499.5, -1.1, 1.1);
+
+  centrality_tracks_north_inner_qx2 = new TProfile("centrality_tracks_north_inner_qx2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_inner_qx3 = new TProfile("centrality_tracks_north_inner_qx3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_inner_qx4 = new TProfile("centrality_tracks_north_inner_qx4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_inner_qx6 = new TProfile("centrality_tracks_north_inner_qx6","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_inner_qy2 = new TProfile("centrality_tracks_north_inner_qy2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_inner_qy3 = new TProfile("centrality_tracks_north_inner_qy3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_inner_qy4 = new TProfile("centrality_tracks_north_inner_qy4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_inner_qy6 = new TProfile("centrality_tracks_north_inner_qy6","",500, -0.5, 499.5, -1.1, 1.1);
+
+  centrality_tracks_north_outer_qx2 = new TProfile("centrality_tracks_north_outer_qx2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_outer_qx3 = new TProfile("centrality_tracks_north_outer_qx3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_outer_qx4 = new TProfile("centrality_tracks_north_outer_qx4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_outer_qx6 = new TProfile("centrality_tracks_north_outer_qx6","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_outer_qy2 = new TProfile("centrality_tracks_north_outer_qy2","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_outer_qy3 = new TProfile("centrality_tracks_north_outer_qy3","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_outer_qy4 = new TProfile("centrality_tracks_north_outer_qy4","",500, -0.5, 499.5, -1.1, 1.1);
+  centrality_tracks_north_outer_qy6 = new TProfile("centrality_tracks_north_outer_qy6","",500, -0.5, 499.5, -1.1, 1.1);
+
+
+
+
   return EVENT_OK;
 }
 
