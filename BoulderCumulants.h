@@ -261,6 +261,50 @@ class BoulderCumulants: public SubsysReco
 
 
 
+  TProfile* centrality_tracks_south_qx2;
+  TProfile* centrality_tracks_south_qx3;
+  TProfile* centrality_tracks_south_qx4;
+  TProfile* centrality_tracks_south_qy2;
+  TProfile* centrality_tracks_south_qy3;
+  TProfile* centrality_tracks_south_qy4;
+
+  TProfile* centrality_tracks_south_inner_qx2;
+  TProfile* centrality_tracks_south_inner_qx3;
+  TProfile* centrality_tracks_south_inner_qx4;
+  TProfile* centrality_tracks_south_inner_qy2;
+  TProfile* centrality_tracks_south_inner_qy3;
+  TProfile* centrality_tracks_south_inner_qy4;
+
+  TProfile* centrality_tracks_south_outer_qx2;
+  TProfile* centrality_tracks_south_outer_qx3;
+  TProfile* centrality_tracks_south_outer_qx4;
+  TProfile* centrality_tracks_south_outer_qy2;
+  TProfile* centrality_tracks_south_outer_qy3;
+  TProfile* centrality_tracks_south_outer_qy4;
+
+  TProfile* centrality_tracks_north_qx2;
+  TProfile* centrality_tracks_north_qx3;
+  TProfile* centrality_tracks_north_qx4;
+  TProfile* centrality_tracks_north_qy2;
+  TProfile* centrality_tracks_north_qy3;
+  TProfile* centrality_tracks_north_qy4;
+
+  TProfile* centrality_tracks_north_inner_qx2;
+  TProfile* centrality_tracks_north_inner_qx3;
+  TProfile* centrality_tracks_north_inner_qx4;
+  TProfile* centrality_tracks_north_inner_qy2;
+  TProfile* centrality_tracks_north_inner_qy3;
+  TProfile* centrality_tracks_north_inner_qy4;
+
+  TProfile* centrality_tracks_north_outer_qx2;
+  TProfile* centrality_tracks_north_outer_qx3;
+  TProfile* centrality_tracks_north_outer_qx4;
+  TProfile* centrality_tracks_north_outer_qy2;
+  TProfile* centrality_tracks_north_outer_qy3;
+  TProfile* centrality_tracks_north_outer_qy4;
+
+
+
 
 
 };
