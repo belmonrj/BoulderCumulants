@@ -1352,7 +1352,7 @@ float BoulderCumulants::calc4_event(float Xn, float Yn, float X2n, float Y2n, fl
 
 }
 
-float calc6_event(TComplex& qn, TComplex& q2n, TComplex& q3n, float M)
+float BoulderCumulants::calc6_event(TComplex& qn, TComplex& q2n, TComplex& q3n, float M)
 {
 
   if ( M < 6 ) return -9999;
