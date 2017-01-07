@@ -42,6 +42,7 @@ class BoulderCumulants: public SubsysReco
   // --- cumulants functions
   float calc2_event(float, float, float);
   float calc4_event(float, float, float, float, float);
+  float calc6_event(TComplex&, TComplex&, TComplex&, float);
   // --- acceptance correction functions
   float calccossum2_event(TComplex&, TComplex&, float);
   float calcsinsum2_event(TComplex&, TComplex&, float);
@@ -104,6 +105,9 @@ class BoulderCumulants: public SubsysReco
   TProfile* nfvtxt_ac_fvtxs_tracks_c24;
   TProfile* nfvtxt_ac_fvtxn_tracks_c24;
   TProfile* nfvtxt_ac_fvtxc_tracks_c24;
+  TProfile* nfvtxt_ac_fvtxs_tracks_c26;
+  TProfile* nfvtxt_ac_fvtxn_tracks_c26;
+  TProfile* nfvtxt_ac_fvtxc_tracks_c26;
   // --- 2-particle scalr product
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c22 ;
   // --- experimental 4-particle correlations
@@ -168,6 +172,9 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_ac_fvtxs_tracks_c24;
   TProfile* centrality_ac_fvtxn_tracks_c24;
   TProfile* centrality_ac_fvtxc_tracks_c24;
+  TProfile* centrality_ac_fvtxs_tracks_c26;
+  TProfile* centrality_ac_fvtxn_tracks_c26;
+  TProfile* centrality_ac_fvtxc_tracks_c26;
   // --- 2-particle scalr product
   TProfile* centrality_ac_fvtxsfvtxn_tracks_c22 ;
   // --- experimental 4-particle correlations
