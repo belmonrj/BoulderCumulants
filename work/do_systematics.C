@@ -2,6 +2,17 @@ void do_systematics()
 {
 
   process("dca","Run16dAu200");
+  process("dtc","Run16dAu200");
+  process("zvtx","Run16dAu200");
+  process("dca","Run16dAu62");
+  process("dtc","Run16dAu62");
+  process("zvtx","Run16dAu62");
+  process("dca","Run16dAu39");
+  process("dtc","Run16dAu39");
+  process("zvtx","Run16dAu39");
+  process("dca","Run16dAu20");
+  process("dtc","Run16dAu20");
+  process("zvtx","Run16dAu20");
 
 }
 
@@ -40,9 +51,39 @@ void process(const char* systematic, const char* collision)
   v22gap_syst->SetMinimum(0.0);
   v22gap_syst->Fit(fun,"R");
   num = fun->GetParameter(0);
-  tex->DrawLatex(0.2,0.8,Form("%s systematc, %.2f%%",systematic,(num-1)*100));
-  c1->Print(Form("SysFigsFour/sys_%s_%s.png",systematic,collision));
-  c1->Print(Form("SysFigsFour/sys_%s_%s.pdf",systematic,collision));
+  tex->DrawLatex(0.2,0.8,Form("%s systematic, %.2f%%", systematic, fabs((num-1)*100) ));
+  c1->Print(Form("SysFigsFour/sys_v22gap_%s_%s.png",systematic,collision));
+  c1->Print(Form("SysFigsFour/sys_v22gap_%s_%s.pdf",systematic,collision));
+
+  v22_syst->Divide(v22_base);
+  v22_syst->SetMarkerStyle(kFullCircle);
+  v22_syst->SetMarkerColor(kBlack);
+  v22_syst->SetLineColor(kBlack);
+  v22_syst->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  v22_syst->GetYaxis()->SetTitle("ratio (sytematic)");
+  v22_syst->GetXaxis()->SetRangeUser(0,70);
+  v22_syst->SetMaximum(2.0);
+  v22_syst->SetMinimum(0.0);
+  v22_syst->Fit(fun,"R");
+  num = fun->GetParameter(0);
+  tex->DrawLatex(0.2,0.8,Form("%s systematic, %.2f%%", systematic, fabs((num-1)*100) ));
+  c1->Print(Form("SysFigsFour/sys_v22_%s_%s.png",systematic,collision));
+  c1->Print(Form("SysFigsFour/sys_v22_%s_%s.pdf",systematic,collision));
+
+  v24_syst->Divide(v24_base);
+  v24_syst->SetMarkerStyle(kFullCircle);
+  v24_syst->SetMarkerColor(kBlack);
+  v24_syst->SetLineColor(kBlack);
+  v24_syst->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  v24_syst->GetYaxis()->SetTitle("ratio (sytematic)");
+  v24_syst->GetXaxis()->SetRangeUser(0,70);
+  v24_syst->SetMaximum(2.0);
+  v24_syst->SetMinimum(0.0);
+  v24_syst->Fit(fun,"R");
+  num = fun->GetParameter(0);
+  tex->DrawLatex(0.2,0.8,Form("%s systematic, %.2f%%", systematic, fabs((num-1)*100) ));
+  c1->Print(Form("SysFigsFour/sys_v24_%s_%s.png",systematic,collision));
+  c1->Print(Form("SysFigsFour/sys_v24_%s_%s.pdf",systematic,collision));
 
 }
 
