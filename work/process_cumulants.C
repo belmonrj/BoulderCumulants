@@ -20,12 +20,12 @@ void process_cumulants()
   do_process("Run16dAu20",1);
   do_process("Run16dAu20",2);
   do_process("Run16dAu20",5);
-  do_process("Run15pAu200",1);
-  do_process("Run15pAu200",2);
-  do_process("Run15pAu200",5);
-  do_process("Run14AuAu200",1);
-  do_process("Run14AuAu200",10);
-  do_process("Run14AuAu200",20);
+  // do_process("Run15pAu200",1);
+  // do_process("Run15pAu200",2);
+  // do_process("Run15pAu200",5);
+  // do_process("Run14AuAu200",1);
+  // do_process("Run14AuAu200",10);
+  // do_process("Run14AuAu200",20);
   fout->Close();
 }
 
