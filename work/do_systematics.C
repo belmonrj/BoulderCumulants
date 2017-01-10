@@ -49,7 +49,8 @@ void process(const char* systematic, const char* collision)
   v22gap_syst->GetXaxis()->SetRangeUser(0,70);
   v22gap_syst->SetMaximum(2.0);
   v22gap_syst->SetMinimum(0.0);
-  v22gap_syst->Fit(fun,"R");
+  fun->SetParameter(0,1);
+  v22gap_syst->Fit(fun,"QWR");
   num = fun->GetParameter(0);
   tex->DrawLatex(0.2,0.8,Form("%s systematic, %.2f%%", systematic, fabs((num-1)*100) ));
   c1->Print(Form("SysFigsFour/sys_v22gap_%s_%s.png",systematic,collision));
@@ -64,7 +65,8 @@ void process(const char* systematic, const char* collision)
   v22_syst->GetXaxis()->SetRangeUser(0,70);
   v22_syst->SetMaximum(2.0);
   v22_syst->SetMinimum(0.0);
-  v22_syst->Fit(fun,"R");
+  fun->SetParameter(0,1);
+  v22_syst->Fit(fun,"QWR");
   num = fun->GetParameter(0);
   tex->DrawLatex(0.2,0.8,Form("%s systematic, %.2f%%", systematic, fabs((num-1)*100) ));
   c1->Print(Form("SysFigsFour/sys_v22_%s_%s.png",systematic,collision));
@@ -79,7 +81,8 @@ void process(const char* systematic, const char* collision)
   v24_syst->GetXaxis()->SetRangeUser(0,70);
   v24_syst->SetMaximum(2.0);
   v24_syst->SetMinimum(0.0);
-  v24_syst->Fit(fun,"R");
+  fun->SetParameter(0,1);
+  v24_syst->Fit(fun,"","",10,60);
   num = fun->GetParameter(0);
   tex->DrawLatex(0.2,0.8,Form("%s systematic, %.2f%%", systematic, fabs((num-1)*100) ));
   c1->Print(Form("SysFigsFour/sys_v24_%s_%s.png",systematic,collision));
