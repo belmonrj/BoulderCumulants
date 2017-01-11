@@ -6,6 +6,12 @@ void do_acceptance()
 {
   process("U","Run16dAu200");
   process("Z","Run16dAu200");
+  process("U","Run16dAu62");
+  process("Z","Run16dAu62");
+  process("U","Run16dAu39");
+  process("Z","Run16dAu39");
+  process("U","Run16dAu20");
+  process("Z","Run16dAu20");
 }
 
 
@@ -38,8 +44,8 @@ void process(const char* systematic, const char* collision)
   v22gap_syst->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   v22gap_syst->GetYaxis()->SetTitle("ratio (sytematic)");
   v22gap_syst->GetXaxis()->SetRangeUser(0,70);
-  v22gap_syst->SetMaximum(1.2);
-  v22gap_syst->SetMinimum(0.8);
+  v22gap_syst->SetMaximum(1.5);
+  v22gap_syst->SetMinimum(0.5);
   //fun->SetParameter(0,1);
   //fun->FixParameter(0,get_mean(v22gap_syst));
   v22gap_syst->Fit(fun,"","",10,50);
@@ -57,8 +63,8 @@ void process(const char* systematic, const char* collision)
   v22_syst->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   v22_syst->GetYaxis()->SetTitle("ratio (sytematic)");
   v22_syst->GetXaxis()->SetRangeUser(0,70);
-  v22_syst->SetMaximum(1.2);
-  v22_syst->SetMinimum(0.8);
+  v22_syst->SetMaximum(1.5);
+  v22_syst->SetMinimum(0.5);
   //fun->SetParameter(0,1);
   //fun->FixParameter(0,get_mean(v22_syst));
   v22_syst->Fit(fun,"","",10,50);
