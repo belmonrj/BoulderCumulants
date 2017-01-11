@@ -30,6 +30,50 @@ void process(const char* systematic, const char* collision)
   TH1D* v22_syst    = (TH1D*)finbase->Get(Form("th1dR1%s_v22_%s",systematic,collision));
   TH1D* v24_syst    = (TH1D*)finbase->Get(Form("th1dR1%s_v24_%s",systematic,collision));
 
+  // ---
+
+  v22gap_base->SetMarkerStyle(kFullDiamond);
+  v22_base->SetMarkerStyle(kFullCircle);
+  v24_base->SetMarkerStyle(kFullSquare);
+  v22gap_base->SetMarkerColor(kMagenta+2);
+  v22_base->SetMarkerColor(kRed);
+  v24_base->SetMarkerColor(kBlue);
+  v22gap_syst->SetMarkerStyle(kOpenDiamond);
+  v22_syst->SetMarkerStyle(kOpenCircle);
+  v24_syst->SetMarkerStyle(kOpenSquare);
+  v22gap_syst->SetMarkerColor(kMagenta+2);
+  v22_syst->SetMarkerColor(kRed);
+  v24_syst->SetMarkerColor(kBlue);
+
+  v22_base->Draw("ex0p");
+  v22_base->SetMinimum(0.0);
+  v22_base->SetMaximum(0.199);
+  v22_base->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  v22_base->GetYaxis()->SetTitle("v_{2}");
+  v24_base->Draw("ex0p same");
+  v22gap_base->Draw("ex0p same");
+  v22_syst->Draw("ex0p same");
+  v24_syst->Draw("ex0p same");
+  v22gap_syst->Draw("ex0p same");
+  TLegend* leg1 = new TLegend(0.48,0.68,0.68,0.88);
+  leg1->SetHeader("Alternate");
+  leg1->AddEntry(v22_syst,"v_{2}{2}","p");
+  leg1->AddEntry(v22gap_syst,"v_{2}{2,|#Delta#eta|>2}","p");
+  leg1->AddEntry(v24_syst,"v_{2}{4}","p");
+  leg1->SetTextSize(0.045);
+  leg1->Draw();
+  TLegend* leg2 = new TLegend(0.68,0.68,0.88,0.88);
+  leg2->SetHeader("Corr. terms");
+  leg2->AddEntry(v22_base,"v_{2}{2}","p");
+  leg2->AddEntry(v22gap_base,"v_{2}{2,|#Delta#eta|>2}","p");
+  leg2->AddEntry(v24_base,"v_{2}{4}","p");
+  leg2->SetTextSize(0.045);
+  leg2->Draw();
+  c1->Print(Form("SysFigsFour/accsys_v2all_%s_%s.png",systematic,collision));
+  c1->Print(Form("SysFigsFour/accsys_v2all_%s_%s.pdf",systematic,collision));
+
+  // ---
+
   TF1* fun = new TF1("fun","pol0",0,70);
   double num = -9;
   TLatex* tex = new TLatex();
