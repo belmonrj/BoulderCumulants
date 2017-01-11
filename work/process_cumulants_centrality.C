@@ -1,10 +1,14 @@
+TFile* fout;
+
 double calc_corr_four(double,double,double,double,double,double,double,double);
 
 void do_process(const char*,int); // get it? :)
 
 void process_cumulants_centrality()
 {
-  //  do_process("Run16dAu200",1);
+
+  fout = TFile::Open("all_cumulants_cent.root","recreate");
+  // do_process("Run16dAu200",1);
   // do_process("Run16dAu200",5);
   // do_process("Run16dAu200",10);
   // do_process("Run16dAu62",1);
@@ -22,6 +26,7 @@ void process_cumulants_centrality()
   do_process("Run14AuAu200",1);
   // do_process("Run14AuAu200",10);
   // do_process("Run14AuAu200",20);
+  fout->Close();
 }
 
 void do_process(const char* type, int rebin)
@@ -70,6 +75,14 @@ void do_process(const char* type, int rebin)
   TH1D* th1d_corr_v24  = (TH1D*)th1d_four->Clone("th1d_corr_v24");
   TH1D* th1d_corr_v22  = (TH1D*)th1d_four->Clone("th1d_corr_v22");
   TH1D* th1d_corr_v2G  = (TH1D*)th1d_four->Clone("th1d_corr_v2G");
+  TH1D* th1d_uncorr_four = (TH1D*)th1d_four->Clone("th1d_uncorr_four");
+  TH1D* th1d_uncorr_222  = (TH1D*)th1d_four->Clone("th1d_uncorr_222");
+  TH1D* th1d_uncorr_c24  = (TH1D*)th1d_four->Clone("th1d_uncorr_c24");
+  TH1D* th1d_uncorr_c22  = (TH1D*)th1d_four->Clone("th1d_uncorr_c22");
+  TH1D* th1d_uncorr_c2G  = (TH1D*)th1d_four->Clone("th1d_uncorr_c2G");
+  TH1D* th1d_uncorr_v24  = (TH1D*)th1d_four->Clone("th1d_uncorr_v24");
+  TH1D* th1d_uncorr_v22  = (TH1D*)th1d_four->Clone("th1d_uncorr_v22");
+  TH1D* th1d_uncorr_v2G  = (TH1D*)th1d_four->Clone("th1d_uncorr_v2G");
 
   // --- get the number of bins and do a loop
   int nbinsx = tp1f_four->GetNbinsX();
@@ -96,6 +109,11 @@ void do_process(const char* type, int rebin)
       double uncorr_four = four;
       double uncorr_222 = 2*two*two;
       double uncorr_c24 = four - 2*two*two;
+      // --- also useful to look at some things without the corrections
+      double uncorr_four = four;
+      double uncorr_222 = 2*two*two;
+      double uncorr_c24 = four - 2*two*two;
+      double uncorr_c22 = two;
       // --- now look at G
       double cos1_north = tp1f_cos1_north->GetBinContent(i+1);
       double sin1_north = tp1f_sin1_north->GetBinContent(i+1);
@@ -112,6 +130,12 @@ void do_process(const char* type, int rebin)
       if ( corr_c22 > 0 ) corr_v22 = sqrt(corr_c22);
       if ( corr_c2G > 0 ) corr_v2G = sqrt(corr_c2G);
       if ( corr_c24 < 0 ) corr_v24 = sqrt(sqrt(-corr_c24));
+      double uncorr_v24 = -9;
+      double uncorr_v22 = -9;
+      double uncorr_v2G = -9;
+      if ( uncorr_c22 > 0 ) uncorr_v22 = sqrt(uncorr_c22);
+      if ( uncorr_c2G > 0 ) uncorr_v2G = sqrt(uncorr_c2G);
+      if ( uncorr_c24 < 0 ) uncorr_v24 = sqrt(sqrt(-uncorr_c24));
       // --- calculate statistical uncertainties
       double ecorr_four = efour;
       double ecorr_222 = 4*two*etwo;
@@ -133,6 +157,14 @@ void do_process(const char* type, int rebin)
       th1d_corr_v24->SetBinContent(i+1,corr_v24);
       th1d_corr_v22->SetBinContent(i+1,corr_v22);
       th1d_corr_v2G->SetBinContent(i+1,corr_v2G);
+      th1d_uncorr_four->SetBinContent(i+1,uncorr_four);
+      th1d_uncorr_222->SetBinContent(i+1,uncorr_222);
+      th1d_uncorr_c24->SetBinContent(i+1,uncorr_c24);
+      th1d_uncorr_c22->SetBinContent(i+1,uncorr_c22);
+      th1d_uncorr_c2G->SetBinContent(i+1,uncorr_c2G);
+      th1d_uncorr_v24->SetBinContent(i+1,uncorr_v24);
+      th1d_uncorr_v22->SetBinContent(i+1,uncorr_v22);
+      th1d_uncorr_v2G->SetBinContent(i+1,uncorr_v2G);
       // --- now set the histogram uncertainties
       th1d_corr_four->SetBinError(i+1,ecorr_four);
       th1d_corr_222->SetBinError(i+1,ecorr_222);
@@ -142,6 +174,14 @@ void do_process(const char* type, int rebin)
       th1d_corr_v24->SetBinError(i+1,ecorr_v24);
       th1d_corr_v22->SetBinError(i+1,ecorr_v22);
       th1d_corr_v2G->SetBinError(i+1,ecorr_v2G);
+      th1d_uncorr_four->SetBinError(i+1,ecorr_four);
+      th1d_uncorr_222->SetBinError(i+1,ecorr_222);
+      th1d_uncorr_c24->SetBinError(i+1,ecorr_c24);
+      th1d_uncorr_c22->SetBinError(i+1,ecorr_c22);
+      th1d_uncorr_c2G->SetBinError(i+1,ecorr_c2G);
+      th1d_uncorr_v24->SetBinError(i+1,ecorr_v24);
+      th1d_uncorr_v22->SetBinError(i+1,ecorr_v22);
+      th1d_uncorr_v2G->SetBinError(i+1,ecorr_v2G);
     }
 
   // --- now we have all the histograms with proper uncertainties, so let's make some plots
@@ -309,6 +349,41 @@ void do_process(const char* type, int rebin)
   c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.png",rebin,type));
   c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.pdf",rebin,type));
 
+  // --- back out the scaling when writing to file
+
+  th1d_corr_v22->GetXaxis()->SetRangeUser(0,100);
+  th1d_corr_v24->GetXaxis()->SetRangeUser(0,100);
+  th1d_corr_v2G->GetXaxis()->SetRangeUser(0,100);
+
+  th1d_corr_v22->Scale(1.0/1.35);
+  th1d_corr_v24->Scale(1.0/1.35);
+  th1d_corr_v2G->Scale(1.0/1.35);
+
+  fout->cd();
+  tge_star_v22->SetName("tgrapherrors_v22_STAR");
+  tge_star_v24->SetName("tgrapherrors_v24_STAR");
+  tge_star_v22->Write();
+  tge_star_v24->Write();
+  th1d_corr_v22->SetName(Form("th1dR%d_v22_%s",rebin,type));
+  th1d_corr_v2G->SetName(Form("th1dR%d_v22gap_%s",rebin,type));
+  th1d_corr_v24->SetName(Form("th1dR%d_v24_%s",rebin,type));
+  th1d_corr_222->SetName(Form("th1dR%d_222_%s",rebin,type));
+  th1d_corr_four->SetName(Form("th1dR%d_four_%s",rebin,type));
+  th1d_corr_v22->Write();
+  th1d_corr_v2G->Write();
+  th1d_corr_v24->Write();
+  th1d_corr_222->Write();
+  th1d_corr_four->Write();
+  th1d_uncorr_v22->SetName(Form("th1dR%dU_v22_%s",rebin,type));
+  th1d_uncorr_v2G->SetName(Form("th1dR%dU_v22gap_%s",rebin,type));
+  th1d_uncorr_v24->SetName(Form("th1dR%dU_v24_%s",rebin,type));
+  th1d_uncorr_222->SetName(Form("th1dR%dU_222_%s",rebin,type));
+  th1d_uncorr_four->SetName(Form("th1dR%dU_four_%s",rebin,type));
+  th1d_uncorr_v22->Write();
+  th1d_uncorr_v2G->Write();
+  th1d_uncorr_v24->Write();
+  th1d_uncorr_222->Write();
+  th1d_uncorr_four->Write();
 
 }
 
