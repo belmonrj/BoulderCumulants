@@ -148,6 +148,17 @@ void do_process(const char* type, int rebin)
       if ( corr_c2G > 0 ) ecorr_v2G = sqrt(1.0/corr_v2G)*ecorr_c2G;
       if ( corr_c22 > 0 ) ecorr_v22 = sqrt(1.0/corr_v22)*ecorr_c22;
       if ( corr_c24 < 0 ) ecorr_v24 = (1.0/pow(-corr_c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
+      double euncorr_four = efour;
+      double euncorr_222 = 4*two*etwo;
+      double euncorr_c2G = etwo_G;
+      double euncorr_c22 = etwo;
+      double euncorr_c24 = (efour/four)*uncorr_c24;
+      double euncorr_v2G = 0;
+      double euncorr_v22 = 0;
+      double euncorr_v24 = 0;
+      if ( uncorr_c2G > 0 ) euncorr_v2G = sqrt(1.0/uncorr_v2G)*euncorr_c2G;
+      if ( uncorr_c22 > 0 ) euncorr_v22 = sqrt(1.0/uncorr_v22)*euncorr_c22;
+      if ( uncorr_c24 < 0 ) euncorr_v24 = (1.0/pow(-uncorr_c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
       // --- now set the histogram values
       th1d_corr_four->SetBinContent(i+1,corr_four);
       th1d_corr_222->SetBinContent(i+1,corr_222);
@@ -174,14 +185,14 @@ void do_process(const char* type, int rebin)
       th1d_corr_v24->SetBinError(i+1,ecorr_v24);
       th1d_corr_v22->SetBinError(i+1,ecorr_v22);
       th1d_corr_v2G->SetBinError(i+1,ecorr_v2G);
-      th1d_uncorr_four->SetBinError(i+1,ecorr_four);
-      th1d_uncorr_222->SetBinError(i+1,ecorr_222);
-      th1d_uncorr_c24->SetBinError(i+1,ecorr_c24);
-      th1d_uncorr_c22->SetBinError(i+1,ecorr_c22);
-      th1d_uncorr_c2G->SetBinError(i+1,ecorr_c2G);
-      th1d_uncorr_v24->SetBinError(i+1,ecorr_v24);
-      th1d_uncorr_v22->SetBinError(i+1,ecorr_v22);
-      th1d_uncorr_v2G->SetBinError(i+1,ecorr_v2G);
+      th1d_uncorr_four->SetBinError(i+1,euncorr_four);
+      th1d_uncorr_222->SetBinError(i+1,euncorr_222);
+      th1d_uncorr_c24->SetBinError(i+1,euncorr_c24);
+      th1d_uncorr_c22->SetBinError(i+1,euncorr_c22);
+      th1d_uncorr_c2G->SetBinError(i+1,euncorr_c2G);
+      th1d_uncorr_v24->SetBinError(i+1,euncorr_v24);
+      th1d_uncorr_v22->SetBinError(i+1,euncorr_v22);
+      th1d_uncorr_v2G->SetBinError(i+1,euncorr_v2G);
     }
 
   // --- now we have all the histograms with proper uncertainties, so let's make some plots

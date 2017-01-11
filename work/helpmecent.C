@@ -39,6 +39,7 @@ void helpmecent()
   th1d_v22gap_unco->Draw("ex0p same");
 
   c1->Print("acceptance_AuAu.png");
+  c1->Print("acceptance_AuAu.pdf");
 
 
 }
