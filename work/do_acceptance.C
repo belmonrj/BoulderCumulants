@@ -95,7 +95,7 @@ void process(const char* systematic, const char* collision)
   v22gap_syst->Fit(fun,"","",10,50);
   //fun->Draw("same");
   num = fun->GetParameter(0);
-  tex->DrawLatex(0.2,0.8,Form("%s systematic, %.2f%%", systematic, fabs((num-1)*100) ));
+  tex->DrawLatex(0.2,0.8,Form("v_{2}{2,|#Delta#eta|>2} %s acceptance, %.2f%%", systematic, fabs((num-1)*100) ));
   c1->Print(Form("SysFigsFour/accsys_v22gap_%s_%s.png",systematic,collision));
   c1->Print(Form("SysFigsFour/accsys_v22gap_%s_%s.pdf",systematic,collision));
 
@@ -114,7 +114,7 @@ void process(const char* systematic, const char* collision)
   v22_syst->Fit(fun,"","",10,50);
   num = fun->GetParameter(0);
   //fun->Draw("same");
-  tex->DrawLatex(0.2,0.8,Form("%s systematic, %.2f%%", systematic, fabs((num-1)*100) ));
+  tex->DrawLatex(0.2,0.8,Form("v_{2}{2} %s acceptance, %.2f%%", systematic, fabs((num-1)*100) ));
   c1->Print(Form("SysFigsFour/accsys_v22_%s_%s.png",systematic,collision));
   c1->Print(Form("SysFigsFour/accsys_v22_%s_%s.pdf",systematic,collision));
 
@@ -133,7 +133,7 @@ void process(const char* systematic, const char* collision)
   v24_syst->Fit(fun,"","",10,50);
   //fun->Draw("same");
   num = fun->GetParameter(0);
-  tex->DrawLatex(0.2,0.8,Form("%s systematic, %.2f%%", systematic, fabs((num-1)*100) ));
+  tex->DrawLatex(0.2,0.8,Form("v_{2}{4} %s acceptance, %.2f%%", systematic, fabs((num-1)*100) ));
   c1->Print(Form("SysFigsFour/accsys_v24_%s_%s.png",systematic,collision));
   c1->Print(Form("SysFigsFour/accsys_v24_%s_%s.pdf",systematic,collision));
 
