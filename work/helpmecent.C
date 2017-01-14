@@ -41,5 +41,67 @@ void helpmecent()
   c1->Print("acceptance_AuAu.png");
   c1->Print("acceptance_AuAu.pdf");
 
+  TH1D* th1d_cos1 = (TH1D*)fin->Get("th1d_cos1");
+  TH1D* th1d_sin1 = (TH1D*)fin->Get("th1d_sin1");
+  TH1D* th1d_cossum2 = (TH1D*)fin->Get("th1d_cossum2");
+  TH1D* th1d_sinsum2 = (TH1D*)fin->Get("th1d_sinsum2");
+  TH1D* th1d_cos3 = (TH1D*)fin->Get("th1d_cos3");
+  TH1D* th1d_sin3 = (TH1D*)fin->Get("th1d_sin3");
+  TH1D* th1d_cos1_north = (TH1D*)fin->Get("th1d_cos1_north");
+  TH1D* th1d_sin1_north = (TH1D*)fin->Get("th1d_sin1_north");
+  TH1D* th1d_cos1_south = (TH1D*)fin->Get("th1d_cos1_south");
+  TH1D* th1d_sin1_south = (TH1D*)fin->Get("th1d_sin1_south");
+
+  th1d_v22_base->Draw("ex0p");
+  th1d_v22_unco->Draw("ex0p same");
+  th1d_cos1->SetLineColor(kBlack);
+  th1d_cos1->SetMarkerColor(kBlack);
+  th1d_cos1->SetMarkerStyle(kOpenCircle);
+  th1d_sin1->SetLineColor(kBlack);
+  th1d_sin1->SetMarkerColor(kBlack);
+  th1d_sin1->SetMarkerStyle(kOpenCircle);
+  th1d_cos1->Draw("ex0p same");
+  th1d_sin1->Draw("ex0p same");
+
+  c1->Print("acceptance_AuAu_v22andterms.png");
+  c1->Print("acceptance_AuAu_v22andterms.pdf");
+
+  th1d_cos1_north->SetLineColor(kBlack);
+  th1d_cos1_north->SetMarkerColor(kBlack);
+  th1d_cos1_north->SetMarkerStyle(kOpenCircle);
+  th1d_sin1_north->SetLineColor(kBlack);
+  th1d_sin1_north->SetMarkerColor(kBlack);
+  th1d_sin1_north->SetMarkerStyle(kOpenTriangleUp);
+  th1d_cos1_south->SetLineColor(kBlack);
+  th1d_cos1_south->SetMarkerColor(kBlack);
+  th1d_cos1_south->SetMarkerStyle(kOpenSquare);
+  th1d_sin1_south->SetLineColor(kBlack);
+  th1d_sin1_south->SetMarkerColor(kBlack);
+  th1d_sin1_south->SetMarkerStyle(kOpenTriangleDown);
+
+  th1d_v22gap_base->Draw("ex0p");
+  th1d_v22gap_base->SetMinimum(0.0);
+  th1d_v22gap_base->SetMaximum(0.199);
+  th1d_v22gap_unco->Draw("ex0p same");
+  th1d_cos1_north->Draw("ex0p same");
+  th1d_cos1_south->Draw("ex0p same");
+  th1d_sin1_north->Draw("ex0p same");
+  th1d_sin1_south->Draw("ex0p same");
+
+  c1->Print("acceptance_AuAu_v22gapandterms.png");
+  c1->Print("acceptance_AuAu_v22gapandterms.pdf");
+
+  // TLegend* leg = new TLegend(0.68,0.58,0.88,0.88);
+  // leg->AddEntry(th1d_c22gap_base);
+
+  TH1D* th1d_c22gap_base = th1d_v22gap_base->Clone();
+  TH1D* th1d_c22gap_unco = th1d_v22gap_unco->Clone();
+  th1d_c22gap_base->Multiply(th1d_v22gap_base);
+  th1d_c22gap_unco->Multiply(th1d_v22gap_unco);
+
+  c1->Print("acceptance_AuAu_c22gapandterms.png");
+  c1->Print("acceptance_AuAu_c22gapandterms.pdf");
+
+
 
 }

@@ -122,6 +122,8 @@ void do_process(const char* type, int rebin)
       double two_G      = tp1f_G_two->GetBinContent(i+1);
       double etwo_G     = tp1f_G_two->GetBinError(i+1);
       double corr_c2G   = two_G - cos1_north*cos1_south - sin1_north*sin1_south;
+      //double corr_c2G   = two_G - cos1_north*cos1_south; // this is a dumb idea and it doesn't work anyway
+      //double corr_c2G   = two_G - cos1*cos1 - sin1*sin1; // interesting to note this looks much much worse
       double uncorr_c2G = two_G;
       // --- calculate the harmonics
       double corr_v24 = -9;
@@ -360,6 +362,31 @@ void do_process(const char* type, int rebin)
   c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.png",rebin,type));
   c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.pdf",rebin,type));
 
+  // ---
+
+  // tp1f_cos1->Rebin(rebin);
+  // tp1f_sin1->Rebin(rebin);
+  // tp1f_cossum2->Rebin(rebin);
+  // tp1f_sinsum2->Rebin(rebin);
+  // tp1f_cos3->Rebin(rebin);
+  // tp1f_sin3->Rebin(rebin);
+  // tp1f_cos1_north->Rebin(rebin);
+  // tp1f_sin1_north->Rebin(rebin);
+  // tp1f_cos1_south->Rebin(rebin);
+  // tp1f_sin1_south->Rebin(rebin);
+
+  TH1D* th1d_cos1 = tp1f_cos1->ProjectionX("th1d_cos1");
+  TH1D* th1d_sin1 = tp1f_sin1->ProjectionX("th1d_sin1");
+  TH1D* th1d_cossum2 = tp1f_cossum2->ProjectionX("th1d_cossum2");
+  TH1D* th1d_sinsum2 = tp1f_sinsum2->ProjectionX("th1d_sinsum2");
+  TH1D* th1d_cos3 = tp1f_cos3->ProjectionX("th1d_cos3");
+  TH1D* th1d_sin3 = tp1f_sin3->ProjectionX("th1d_sin3");
+  TH1D* th1d_cos1_north = tp1f_cos1_north->ProjectionX("th1d_cos1_north");
+  TH1D* th1d_sin1_north = tp1f_sin1_north->ProjectionX("th1d_sin1_north");
+  TH1D* th1d_cos1_south = tp1f_cos1_south->ProjectionX("th1d_cos1_south");
+  TH1D* th1d_sin1_south = tp1f_sin1_south->ProjectionX("th1d_sin1_south");
+
+
   // --- back out the scaling when writing to file
 
   th1d_corr_v22->GetXaxis()->SetRangeUser(0,100);
@@ -395,6 +422,16 @@ void do_process(const char* type, int rebin)
   th1d_uncorr_v24->Write();
   th1d_uncorr_222->Write();
   th1d_uncorr_four->Write();
+  th1d_cos1->Write();
+  th1d_sin1->Write();
+  th1d_cossum2->Write();
+  th1d_sinsum2->Write();
+  th1d_cos3->Write();
+  th1d_sin3->Write();
+  th1d_cos1_north->Write();
+  th1d_sin1_north->Write();
+  th1d_cos1_south->Write();
+  th1d_sin1_south->Write();
 
 }
 
