@@ -34,6 +34,7 @@ class BoulderCumulants: public SubsysReco
   void set_use_runlist(bool b){ _use_runlist = b;} // text file for runs to analyze
   void set_runlist_file(std::string filename) { _runlist_filename = filename; } // name of file for above
   bool is_run_in_list(int runnumber);
+  void SetQvectorOffsets(int runnumber);
 
  protected:
 
@@ -86,10 +87,23 @@ class BoulderCumulants: public SubsysReco
   float FVTX_Z;
 
 
+  // --- Q-vector offset variables
+  double offset_centrality_qx2_south[100];
+  double offset_centrality_qx4_south[100];
+  double offset_centrality_qx6_south[100];
+  double offset_centrality_qy2_south[100];
+  double offset_centrality_qy4_south[100];
+  double offset_centrality_qy6_south[100];
+  double offset_centrality_qx2_north[100];
+  double offset_centrality_qx4_north[100];
+  double offset_centrality_qx6_north[100];
+  double offset_centrality_qy2_north[100];
+  double offset_centrality_qy4_north[100];
+  double offset_centrality_qy6_north[100];
+
+
 
   //-- Other variables
-
-
   TH1D* th1d_nfvtxt_combinedER;
   TH1D* th1d_nfvtxt_combined;
   TH1D* th1d_nfvtxt_north;
@@ -155,12 +169,6 @@ class BoulderCumulants: public SubsysReco
   TProfile* nfvtxt_ac_fvtxc_tracks_sin31;
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c32;
 
-  // --- event plane decorrelation stuff
-  TProfile* tp1f_special_fvtx_tracks_ab[8];
-  TProfile* tp1f_special_fvtx_tracks_aa;
-  TProfile* tp1f_special_fvtx_tracks_aa_cos;
-  TProfile* tp1f_special_fvtx_tracks_aa_sin;
-
   // --- centrality stuff
 
   // --- correlation histograms
@@ -221,7 +229,133 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_ac_fvtxc_tracks_sin31;
   TProfile* centrality_ac_fvtxsfvtxn_tracks_c32;
 
+  // --- come back here
 
+  // --- correlation histograms
+  // --- <<cos(n(phi1-phi2))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_c22;
+  TProfile* nfvtxt_os_fvtxn_tracks_c22;
+  TProfile* nfvtxt_os_fvtxc_tracks_c22;
+  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_c24;
+  TProfile* nfvtxt_os_fvtxn_tracks_c24;
+  TProfile* nfvtxt_os_fvtxc_tracks_c24;
+  TProfile* nfvtxt_os_fvtxs_tracks_c26;
+  TProfile* nfvtxt_os_fvtxn_tracks_c26;
+  TProfile* nfvtxt_os_fvtxc_tracks_c26;
+  // --- 2-particle scalr product
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c22 ;
+  // --- experimental 4-particle correlations
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24 ;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24a;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24b;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24c;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c24d;
+
+  // --- acceptance correction histograms
+  // --- <<cos(n(phi1))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_cos21;
+  TProfile* nfvtxt_os_fvtxn_tracks_cos21;
+  TProfile* nfvtxt_os_fvtxc_tracks_cos21;
+  // --- <<sin(n(phi1))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_sin21;
+  TProfile* nfvtxt_os_fvtxn_tracks_sin21;
+  TProfile* nfvtxt_os_fvtxc_tracks_sin21;
+  // --- <<cos(n(phi1+phi2))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_cossum22;
+  TProfile* nfvtxt_os_fvtxn_tracks_cossum22;
+  TProfile* nfvtxt_os_fvtxc_tracks_cossum22;
+  // --- <<sin(n(phi1+phi2))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_sinsum22;
+  TProfile* nfvtxt_os_fvtxn_tracks_sinsum22;
+  TProfile* nfvtxt_os_fvtxc_tracks_sinsum22;
+  // --- <<cos(n(phi1-phi2-phi3))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_cos23;
+  TProfile* nfvtxt_os_fvtxn_tracks_cos23;
+  TProfile* nfvtxt_os_fvtxc_tracks_cos23;
+  // --- <<sin(n(phi1-phi2-phi3))>>
+  TProfile* nfvtxt_os_fvtxs_tracks_sin23;
+  TProfile* nfvtxt_os_fvtxn_tracks_sin23;
+  TProfile* nfvtxt_os_fvtxc_tracks_sin23;
+
+  // --- 3rd harmonic stuff
+  TProfile* nfvtxt_os_fvtxs_tracks_c32;
+  TProfile* nfvtxt_os_fvtxn_tracks_c32;
+  TProfile* nfvtxt_os_fvtxc_tracks_c32;
+  TProfile* nfvtxt_os_fvtxs_tracks_cos31;
+  TProfile* nfvtxt_os_fvtxn_tracks_cos31;
+  TProfile* nfvtxt_os_fvtxc_tracks_cos31;
+  TProfile* nfvtxt_os_fvtxs_tracks_sin31;
+  TProfile* nfvtxt_os_fvtxn_tracks_sin31;
+  TProfile* nfvtxt_os_fvtxc_tracks_sin31;
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c32;
+
+  // --- centrality stuff
+
+  // --- correlation histograms
+  // --- <<cos(n(phi1-phi2))>>
+  TProfile* centrality_os_fvtxs_tracks_c22;
+  TProfile* centrality_os_fvtxn_tracks_c22;
+  TProfile* centrality_os_fvtxc_tracks_c22;
+  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
+  TProfile* centrality_os_fvtxs_tracks_c24;
+  TProfile* centrality_os_fvtxn_tracks_c24;
+  TProfile* centrality_os_fvtxc_tracks_c24;
+  TProfile* centrality_os_fvtxs_tracks_c26;
+  TProfile* centrality_os_fvtxn_tracks_c26;
+  TProfile* centrality_os_fvtxc_tracks_c26;
+  // --- 2-particle scalr product
+  TProfile* centrality_os_fvtxsfvtxn_tracks_c22 ;
+  // --- experimental 4-particle correlations
+  TProfile* centrality_os_fvtxsfvtxn_tracks_c24 ;
+  TProfile* centrality_os_fvtxsfvtxn_tracks_c24a;
+  TProfile* centrality_os_fvtxsfvtxn_tracks_c24b;
+  TProfile* centrality_os_fvtxsfvtxn_tracks_c24c;
+  TProfile* centrality_os_fvtxsfvtxn_tracks_c24d;
+
+  // --- acceptance correction histograms
+  // --- <<cos(n(phi1))>>
+  TProfile* centrality_os_fvtxs_tracks_cos21;
+  TProfile* centrality_os_fvtxn_tracks_cos21;
+  TProfile* centrality_os_fvtxc_tracks_cos21;
+  // --- <<sin(n(phi1))>>
+  TProfile* centrality_os_fvtxs_tracks_sin21;
+  TProfile* centrality_os_fvtxn_tracks_sin21;
+  TProfile* centrality_os_fvtxc_tracks_sin21;
+  // --- <<cos(n(phi1+phi2))>>
+  TProfile* centrality_os_fvtxs_tracks_cossum22;
+  TProfile* centrality_os_fvtxn_tracks_cossum22;
+  TProfile* centrality_os_fvtxc_tracks_cossum22;
+  // --- <<sin(n(phi1+phi2))>>
+  TProfile* centrality_os_fvtxs_tracks_sinsum22;
+  TProfile* centrality_os_fvtxn_tracks_sinsum22;
+  TProfile* centrality_os_fvtxc_tracks_sinsum22;
+  // --- <<cos(n(phi1-phi2-phi3))>>
+  TProfile* centrality_os_fvtxs_tracks_cos23;
+  TProfile* centrality_os_fvtxn_tracks_cos23;
+  TProfile* centrality_os_fvtxc_tracks_cos23;
+  // --- <<sin(n(phi1-phi2-phi3))>>
+  TProfile* centrality_os_fvtxs_tracks_sin23;
+  TProfile* centrality_os_fvtxn_tracks_sin23;
+  TProfile* centrality_os_fvtxc_tracks_sin23;
+  // --- 3rd harmonic stuff
+  TProfile* centrality_os_fvtxs_tracks_c32;
+  TProfile* centrality_os_fvtxn_tracks_c32;
+  TProfile* centrality_os_fvtxc_tracks_c32;
+  TProfile* centrality_os_fvtxs_tracks_cos31;
+  TProfile* centrality_os_fvtxn_tracks_cos31;
+  TProfile* centrality_os_fvtxc_tracks_cos31;
+  TProfile* centrality_os_fvtxs_tracks_sin31;
+  TProfile* centrality_os_fvtxn_tracks_sin31;
+  TProfile* centrality_os_fvtxc_tracks_sin31;
+  TProfile* centrality_os_fvtxsfvtxn_tracks_c32;
+
+
+  // --- event plane decorrelation stuff
+  TProfile* tp1f_special_fvtx_tracks_ab[8];
+  TProfile* tp1f_special_fvtx_tracks_aa;
+  TProfile* tp1f_special_fvtx_tracks_aa_cos;
+  TProfile* tp1f_special_fvtx_tracks_aa_sin;
 
 
   TProfile* nfvtxt_tracks_south_qx2;
