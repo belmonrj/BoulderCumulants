@@ -787,6 +787,23 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
   }
   runnumber = rh->get_RunNumber();
 
+  // --- reset all
+  for ( int i = 0; i < 100; ++i )
+    {
+      offset_centrality_qx2_south[i] = 0;
+      offset_centrality_qx4_south[i] = 0;
+      offset_centrality_qx6_south[i] = 0;
+      offset_centrality_qy2_south[i] = 0;
+      offset_centrality_qy4_south[i] = 0;
+      offset_centrality_qy6_south[i] = 0;
+      offset_centrality_qx2_north[i] = 0;
+      offset_centrality_qx4_north[i] = 0;
+      offset_centrality_qx6_north[i] = 0;
+      offset_centrality_qy2_north[i] = 0;
+      offset_centrality_qy4_north[i] = 0;
+      offset_centrality_qy6_north[i] = 0;
+    }
+  // --- then set again
   SetQvectorOffsets(runnumber);
 
 
