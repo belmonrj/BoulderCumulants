@@ -88,59 +88,19 @@ class BoulderCumulants: public SubsysReco
   float FVTX_Z;
 
 
-  // --- fvtx tracks
-  float fvtxs_tracks_qx2[3]; // both, inner, outer
-  float fvtxs_tracks_qy2[3];
-  float fvtxs_tracks_qx3[3];
-  float fvtxs_tracks_qy3[3];
-  float fvtxs_tracks_qx4[3];
-  float fvtxs_tracks_qy4[3];
-  float fvtxs_tracks_qx6[3];
-  float fvtxs_tracks_qy6[3];
-  float fvtxs_tracks_qw[3];
-  float fvtxn_tracks_qx2[3]; // both, inner, outer
-  float fvtxn_tracks_qy2[3];
-  float fvtxn_tracks_qx3[3];
-  float fvtxn_tracks_qy3[3];
-  float fvtxn_tracks_qx4[3];
-  float fvtxn_tracks_qy4[3];
-  float fvtxn_tracks_qx6[3];
-  float fvtxn_tracks_qy6[3];
-  float fvtxn_tracks_qw[3];
-
-  float os_fvtxs_tracks_qw;
-  float os_fvtxs_tracks_qx2;
-  float os_fvtxs_tracks_qy2;
-  float os_fvtxs_tracks_qx3;
-  float os_fvtxs_tracks_qy3;
-  float os_fvtxs_tracks_qx4;
-  float os_fvtxs_tracks_qy4;
-  float os_fvtxs_tracks_qx6;
-  float os_fvtxs_tracks_qy6;
-  float os_fvtxn_tracks_qw;
-  float os_fvtxn_tracks_qx2;
-  float os_fvtxn_tracks_qy2;
-  float os_fvtxn_tracks_qx3;
-  float os_fvtxn_tracks_qy3;
-  float os_fvtxn_tracks_qx4;
-  float os_fvtxn_tracks_qy4;
-  float os_fvtxn_tracks_qx6;
-  float os_fvtxn_tracks_qy6;
-
-
   // --- Q-vector offset variables
-  float offset_centrality_qx2_south[100];
-  float offset_centrality_qx4_south[100];
-  float offset_centrality_qx6_south[100];
-  float offset_centrality_qy2_south[100];
-  float offset_centrality_qy4_south[100];
-  float offset_centrality_qy6_south[100];
-  float offset_centrality_qx2_north[100];
-  float offset_centrality_qx4_north[100];
-  float offset_centrality_qx6_north[100];
-  float offset_centrality_qy2_north[100];
-  float offset_centrality_qy4_north[100];
-  float offset_centrality_qy6_north[100];
+  double offset_centrality_qx2_south[100];
+  double offset_centrality_qx4_south[100];
+  double offset_centrality_qx6_south[100];
+  double offset_centrality_qy2_south[100];
+  double offset_centrality_qy4_south[100];
+  double offset_centrality_qy6_south[100];
+  double offset_centrality_qx2_north[100];
+  double offset_centrality_qx4_north[100];
+  double offset_centrality_qx6_north[100];
+  double offset_centrality_qy2_north[100];
+  double offset_centrality_qy4_north[100];
+  double offset_centrality_qy6_north[100];
 
 
 
