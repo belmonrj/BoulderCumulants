@@ -76,6 +76,7 @@ class BoulderCumulants: public SubsysReco
   int event;
   float bbc_z;
   float centrality;
+  int icent;
   int npc1;
   unsigned int trigger_scaled;
   unsigned int trigger_live;

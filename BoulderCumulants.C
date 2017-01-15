@@ -69,6 +69,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   event = -9999;
   bbc_z = -9999.9;
   centrality = -9999;
+  icent = 0;
   npc1 = -9999;
   trigger_scaled = -9999;
   trigger_live = -9999;
@@ -1001,6 +1002,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
   // phglobal fields
   centrality  = global->getCentrality();
+  icent = (int)centrality;
   // bbc_qn      = global->getBbcChargeN();
   // bbc_qs      = global->getBbcChargeS();
   npc1        = global->getNumberPC1Hits();
@@ -1551,8 +1553,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
 
   // ---
-  int icent = (int)centrality;
-
   // --- FVTX south
   float os_fvtxs_tracks_qw = fvtxs_tracks_qw[0];
   float os_fvtxs_tracks_qx2 = fvtxs_tracks_qx2[0] - offset_centrality_qx2_south[icent]*os_fvtxs_tracks_qw;
