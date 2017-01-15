@@ -372,6 +372,28 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
       offset_centrality_qy6_north[i] = 0;
     }
 
+  for ( int i = 0; i < 3; ++i )
+  {
+    fvtxs_tracks_qx2[i] = 0.0;
+    fvtxs_tracks_qy2[i] = 0.0;
+    fvtxs_tracks_qx3[i] = 0.0;
+    fvtxs_tracks_qy3[i] = 0.0;
+    fvtxs_tracks_qx4[i] = 0.0;
+    fvtxs_tracks_qy4[i] = 0.0;
+    fvtxs_tracks_qx6[i] = 0.0;
+    fvtxs_tracks_qy6[i] = 0.0;
+    fvtxs_tracks_qw[i] = 0.0;
+    fvtxn_tracks_qx2[i] = 0.0;
+    fvtxn_tracks_qy2[i] = 0.0;
+    fvtxn_tracks_qx3[i] = 0.0;
+    fvtxn_tracks_qy3[i] = 0.0;
+    fvtxn_tracks_qx4[i] = 0.0;
+    fvtxn_tracks_qy4[i] = 0.0;
+    fvtxn_tracks_qx6[i] = 0.0;
+    fvtxn_tracks_qy6[i] = 0.0;
+    fvtxn_tracks_qw[i] = 0.0;
+  } // loop over layers
+
 }
 
 
@@ -1039,26 +1061,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
 
   // ---
-
-  // --- fvtx tracks
-  float fvtxs_tracks_qx2[3]; // both, inner, outer
-  float fvtxs_tracks_qy2[3];
-  float fvtxs_tracks_qx3[3];
-  float fvtxs_tracks_qy3[3];
-  float fvtxs_tracks_qx4[3];
-  float fvtxs_tracks_qy4[3];
-  float fvtxs_tracks_qx6[3];
-  float fvtxs_tracks_qy6[3];
-  float fvtxs_tracks_qw[3];
-  float fvtxn_tracks_qx2[3]; // both, inner, outer
-  float fvtxn_tracks_qy2[3];
-  float fvtxn_tracks_qx3[3];
-  float fvtxn_tracks_qy3[3];
-  float fvtxn_tracks_qx4[3];
-  float fvtxn_tracks_qy4[3];
-  float fvtxn_tracks_qx6[3];
-  float fvtxn_tracks_qy6[3];
-  float fvtxn_tracks_qw[3];
 
   for ( int i = 0; i < 3; ++i )
   {

@@ -88,6 +88,26 @@ class BoulderCumulants: public SubsysReco
   float FVTX_Z;
 
 
+  // --- fvtx tracks
+  float fvtxs_tracks_qx2[3]; // both, inner, outer
+  float fvtxs_tracks_qy2[3];
+  float fvtxs_tracks_qx3[3];
+  float fvtxs_tracks_qy3[3];
+  float fvtxs_tracks_qx4[3];
+  float fvtxs_tracks_qy4[3];
+  float fvtxs_tracks_qx6[3];
+  float fvtxs_tracks_qy6[3];
+  float fvtxs_tracks_qw[3];
+  float fvtxn_tracks_qx2[3]; // both, inner, outer
+  float fvtxn_tracks_qy2[3];
+  float fvtxn_tracks_qx3[3];
+  float fvtxn_tracks_qy3[3];
+  float fvtxn_tracks_qx4[3];
+  float fvtxn_tracks_qy4[3];
+  float fvtxn_tracks_qx6[3];
+  float fvtxn_tracks_qy6[3];
+  float fvtxn_tracks_qw[3];
+
   // --- Q-vector offset variables
   float offset_centrality_qx2_south[100];
   float offset_centrality_qx4_south[100];
