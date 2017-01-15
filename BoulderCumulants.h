@@ -89,18 +89,18 @@ class BoulderCumulants: public SubsysReco
 
 
   // --- Q-vector offset variables
-  double offset_centrality_qx2_south[100];
-  double offset_centrality_qx4_south[100];
-  double offset_centrality_qx6_south[100];
-  double offset_centrality_qy2_south[100];
-  double offset_centrality_qy4_south[100];
-  double offset_centrality_qy6_south[100];
-  double offset_centrality_qx2_north[100];
-  double offset_centrality_qx4_north[100];
-  double offset_centrality_qx6_north[100];
-  double offset_centrality_qy2_north[100];
-  double offset_centrality_qy4_north[100];
-  double offset_centrality_qy6_north[100];
+  float offset_centrality_qx2_south[100];
+  float offset_centrality_qx4_south[100];
+  float offset_centrality_qx6_south[100];
+  float offset_centrality_qy2_south[100];
+  float offset_centrality_qy4_south[100];
+  float offset_centrality_qy6_south[100];
+  float offset_centrality_qx2_north[100];
+  float offset_centrality_qx4_north[100];
+  float offset_centrality_qx6_north[100];
+  float offset_centrality_qy2_north[100];
+  float offset_centrality_qy4_north[100];
+  float offset_centrality_qy6_north[100];
 
 
 
