@@ -36,19 +36,19 @@ void do_process(const char* type, int rebin)
   TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
 
   // --- get the histograms from the file
-  TProfile* tp1f_four = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_c24");
-  TProfile* tp1f_two = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_c22");
-  TProfile* tp1f_cos1 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cos21");
-  TProfile* tp1f_sin1 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sin21");
-  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cossum22");
-  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sinsum22");
-  TProfile* tp1f_cos3 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cos23");
-  TProfile* tp1f_sin3 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sin23");
-  TProfile* tp1f_G_two = (TProfile*)fin->Get("centrality_ac_fvtxsfvtxn_tracks_c22"); // scalar product north*south
-  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("centrality_ac_fvtxn_tracks_cos21");
-  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("centrality_ac_fvtxn_tracks_sin21");
-  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("centrality_ac_fvtxs_tracks_cos21");
-  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("centrality_ac_fvtxs_tracks_sin21");
+  TProfile* tp1f_four = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c24");
+  TProfile* tp1f_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c22");
+  TProfile* tp1f_cos1 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_cos21");
+  TProfile* tp1f_sin1 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_sin21");
+  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_cossum22");
+  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_sinsum22");
+  TProfile* tp1f_cos3 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_cos23");
+  TProfile* tp1f_sin3 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_sin23");
+  TProfile* tp1f_G_two = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c22"); // scalar product north*south
+  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_cos21");
+  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_sin21");
+  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_cos21");
+  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_sin21");
 
   // --- rebin as desired, rebinning on TProfile ensure weighted averages and uncertainties are done correctly
   tp1f_four->Rebin(rebin);
