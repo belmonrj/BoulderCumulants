@@ -1557,19 +1557,19 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // ---
   // --- FVTX south
   float os_fvtxs_tracks_qw = fvtxs_tracks_qw[0];
-  float os_fvtxs_tracks_qx2 = fvtxs_tracks_qx2[0] - offset_centrality_qx2_south[icent]*os_fvtxs_tracks_qw; // valgrind error (new)
+  float os_fvtxs_tracks_qx2 = fvtxs_tracks_qx2[0] - offset_centrality_qx2_south[icent]*os_fvtxs_tracks_qw; // valgrind error
   float os_fvtxs_tracks_qy2 = fvtxs_tracks_qy2[0] - offset_centrality_qy2_south[icent]*os_fvtxs_tracks_qw; // valgrind error
   float os_fvtxs_tracks_qx3 = fvtxs_tracks_qx3[0];
   float os_fvtxs_tracks_qy3 = fvtxs_tracks_qy3[0];
   float os_fvtxs_tracks_qx4 = fvtxs_tracks_qx4[0] - offset_centrality_qx4_south[icent]*os_fvtxs_tracks_qw; // valgrind error
-  float os_fvtxs_tracks_qy4 = fvtxs_tracks_qy4[0] - offset_centrality_qy4_south[icent]*os_fvtxs_tracks_qw; // valgrind error (new)
-  float os_fvtxs_tracks_qx6 = fvtxs_tracks_qx6[0] - offset_centrality_qx6_south[icent]*os_fvtxs_tracks_qw; // valgrind error (new)
-  float os_fvtxs_tracks_qy6 = fvtxs_tracks_qy6[0] - offset_centrality_qy6_south[icent]*os_fvtxs_tracks_qw; // valgrind error (new)
+  float os_fvtxs_tracks_qy4 = fvtxs_tracks_qy4[0] - offset_centrality_qy4_south[icent]*os_fvtxs_tracks_qw; // valgrind error
+  float os_fvtxs_tracks_qx6 = fvtxs_tracks_qx6[0] - offset_centrality_qx6_south[icent]*os_fvtxs_tracks_qw; // valgrind error
+  float os_fvtxs_tracks_qy6 = fvtxs_tracks_qy6[0] - offset_centrality_qy6_south[icent]*os_fvtxs_tracks_qw; // valgrind error
   float os_fvtxs_tracks_qq2 = calc2_event(os_fvtxs_tracks_qx2,os_fvtxs_tracks_qy2,os_fvtxs_tracks_qw);
   float os_fvtxs_tracks_qq3 = calc2_event(os_fvtxs_tracks_qx3,os_fvtxs_tracks_qy3,os_fvtxs_tracks_qw);
-  nfvtxt_os_fvtxs_tracks_c22->Fill(nfvtxt,os_fvtxs_tracks_qq2); // valgrind error
+  nfvtxt_os_fvtxs_tracks_c22->Fill(nfvtxt,os_fvtxs_tracks_qq2);
   nfvtxt_os_fvtxs_tracks_cos21->Fill(nfvtxt,os_fvtxs_tracks_qx2/os_fvtxs_tracks_qw);
-  nfvtxt_os_fvtxs_tracks_sin21->Fill(nfvtxt,os_fvtxs_tracks_qy2/os_fvtxs_tracks_qw); // valgrind error
+  nfvtxt_os_fvtxs_tracks_sin21->Fill(nfvtxt,os_fvtxs_tracks_qy2/os_fvtxs_tracks_qw);
   nfvtxt_os_fvtxs_tracks_c32->Fill(nfvtxt,os_fvtxs_tracks_qq3);
   nfvtxt_os_fvtxs_tracks_cos31->Fill(nfvtxt,os_fvtxs_tracks_qx3/os_fvtxs_tracks_qw);
   nfvtxt_os_fvtxs_tracks_sin31->Fill(nfvtxt,os_fvtxs_tracks_qy3/os_fvtxs_tracks_qw);
@@ -1578,23 +1578,23 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   TComplex tc_os_fvtxs_tracks_Q6(os_fvtxs_tracks_qx6,os_fvtxs_tracks_qy6);
   float os_fvtxs_tracks_cossum2 = calccossum2_event(tc_os_fvtxs_tracks_Q2,tc_os_fvtxs_tracks_Q4,os_fvtxs_tracks_qw);
   float os_fvtxs_tracks_sinsum2 = calcsinsum2_event(tc_os_fvtxs_tracks_Q2,tc_os_fvtxs_tracks_Q4,os_fvtxs_tracks_qw);
-  nfvtxt_os_fvtxs_tracks_cossum22->Fill(nfvtxt,os_fvtxs_tracks_cossum2); // valgrind error
-  nfvtxt_os_fvtxs_tracks_sinsum22->Fill(nfvtxt,os_fvtxs_tracks_sinsum2); // valgrind error
+  nfvtxt_os_fvtxs_tracks_cossum22->Fill(nfvtxt,os_fvtxs_tracks_cossum2);
+  nfvtxt_os_fvtxs_tracks_sinsum22->Fill(nfvtxt,os_fvtxs_tracks_sinsum2);
   float os_fvtxs_tracks_cos23 = calccos3_event(tc_os_fvtxs_tracks_Q2,tc_os_fvtxs_tracks_Q4,os_fvtxs_tracks_qw);
   float os_fvtxs_tracks_sin23 = calcsin3_event(tc_os_fvtxs_tracks_Q2,tc_os_fvtxs_tracks_Q4,os_fvtxs_tracks_qw);
-  nfvtxt_os_fvtxs_tracks_cos23->Fill(nfvtxt,os_fvtxs_tracks_cos23); // valgrind error
-  nfvtxt_os_fvtxs_tracks_sin23->Fill(nfvtxt,os_fvtxs_tracks_sin23); // valgrind error
+  nfvtxt_os_fvtxs_tracks_cos23->Fill(nfvtxt,os_fvtxs_tracks_cos23);
+  nfvtxt_os_fvtxs_tracks_sin23->Fill(nfvtxt,os_fvtxs_tracks_sin23);
 
   // --- FVTX north
   float os_fvtxn_tracks_qw = fvtxn_tracks_qw[0];
-  float os_fvtxn_tracks_qx2 = fvtxn_tracks_qx2[0] - offset_centrality_qx2_north[icent]*os_fvtxn_tracks_qw; // valgrind error
-  float os_fvtxn_tracks_qy2 = fvtxn_tracks_qy2[0] - offset_centrality_qy2_north[icent]*os_fvtxn_tracks_qw; // valgrind error (new)
+  float os_fvtxn_tracks_qx2 = fvtxn_tracks_qx2[0] - offset_centrality_qx2_north[icent]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qy2 = fvtxn_tracks_qy2[0] - offset_centrality_qy2_north[icent]*os_fvtxn_tracks_qw;
   float os_fvtxn_tracks_qx3 = fvtxn_tracks_qx3[0];
   float os_fvtxn_tracks_qy3 = fvtxn_tracks_qy3[0];
-  float os_fvtxn_tracks_qx4 = fvtxn_tracks_qx4[0] - offset_centrality_qx4_north[icent]*os_fvtxn_tracks_qw; // valgrind error
-  float os_fvtxn_tracks_qy4 = fvtxn_tracks_qy4[0] - offset_centrality_qy4_north[icent]*os_fvtxn_tracks_qw; // valgrind error (new)
-  float os_fvtxn_tracks_qx6 = fvtxn_tracks_qx6[0] - offset_centrality_qx6_north[icent]*os_fvtxn_tracks_qw; // valgrind error (new)
-  float os_fvtxn_tracks_qy6 = fvtxn_tracks_qy6[0] - offset_centrality_qy6_north[icent]*os_fvtxn_tracks_qw; // valgrind error
+  float os_fvtxn_tracks_qx4 = fvtxn_tracks_qx4[0] - offset_centrality_qx4_north[icent]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qy4 = fvtxn_tracks_qy4[0] - offset_centrality_qy4_north[icent]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qx6 = fvtxn_tracks_qx6[0] - offset_centrality_qx6_north[icent]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qy6 = fvtxn_tracks_qy6[0] - offset_centrality_qy6_north[icent]*os_fvtxn_tracks_qw;
   float os_fvtxn_tracks_qq2 = calc2_event(os_fvtxn_tracks_qx2,os_fvtxn_tracks_qy2,os_fvtxn_tracks_qw);
   float os_fvtxn_tracks_qq3 = calc2_event(os_fvtxn_tracks_qx3,os_fvtxn_tracks_qy3,os_fvtxn_tracks_qw);
   nfvtxt_os_fvtxn_tracks_c22->Fill(nfvtxt,os_fvtxn_tracks_qq2);
