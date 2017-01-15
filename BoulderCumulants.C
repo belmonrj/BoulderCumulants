@@ -1003,6 +1003,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // phglobal fields
   centrality  = global->getCentrality();
   icent = (int)centrality;
+  if ( icent < 0 ) icent = 99; // last bin is always empty and this protects against invalid read
   // bbc_qn      = global->getBbcChargeN();
   // bbc_qs      = global->getBbcChargeS();
   npc1        = global->getNumberPC1Hits();
