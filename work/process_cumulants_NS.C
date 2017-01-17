@@ -1,67 +1,111 @@
 double calc_corr_four(double,double,double,double,double,double,double,double);
 
-void do_process(const char*,int); // get it? :)
+void do_process(const char*,const char*,int); // get it? :)
 
 TFile* fout;
 
 void process_cumulants_NS()
 {
-
-  fout = TFile::Open("all_cumulants_out.root","recreate");
-  do_process("Run16dAu200",1);
-  do_process("Run16dAu200",2);
-  do_process("Run16dAu200",5);
-  do_process("Run16dAu62",1);
-  do_process("Run16dAu62",2);
-  do_process("Run16dAu62",5);
-  do_process("Run16dAu39",1);
-  do_process("Run16dAu39",2);
-  do_process("Run16dAu39",5);
-  do_process("Run16dAu20",1);
-  do_process("Run16dAu20",2);
-  do_process("Run16dAu20",5);
-  // do_process("Run15pAu200",1);
-  // do_process("Run15pAu200",2);
-  // do_process("Run15pAu200",5);
-  // do_process("Run14AuAu200",1);
-  // do_process("Run14AuAu200",10);
-  // do_process("Run14AuAu200",20);
+  fout = TFile::Open("all_cumulants_northsouth.root","recreate");
+  do_process("Run16dAu200","north",1);
+  do_process("Run16dAu200","south",1);
+  do_process("Run16dAu200","combined",1);
+  do_process("Run16dAu62","north",1);
+  do_process("Run16dAu62","south",1);
+  do_process("Run16dAu62","combined",1);
+  do_process("Run16dAu39","north",1);
+  do_process("Run16dAu39","south",1);
+  do_process("Run16dAu39","combined",1);
+  do_process("Run16dAu20","north",1);
+  do_process("Run16dAu20","south",1);
+  do_process("Run16dAu20","combined",1);
+  do_process("Run16dAu200","north",2);
+  do_process("Run16dAu200","south",2);
+  do_process("Run16dAu200","combined",2);
+  do_process("Run16dAu62","north",2);
+  do_process("Run16dAu62","south",2);
+  do_process("Run16dAu62","combined",2);
+  do_process("Run16dAu39","north",2);
+  do_process("Run16dAu39","south",2);
+  do_process("Run16dAu39","combined",2);
+  do_process("Run16dAu20","north",2);
+  do_process("Run16dAu20","south",2);
+  do_process("Run16dAu20","combined",2);
+  do_process("Run16dAu200","north",5);
+  do_process("Run16dAu200","south",5);
+  do_process("Run16dAu200","combined",5);
+  do_process("Run16dAu62","north",5);
+  do_process("Run16dAu62","south",5);
+  do_process("Run16dAu62","combined",5);
+  do_process("Run16dAu39","north",5);
+  do_process("Run16dAu39","south",5);
+  do_process("Run16dAu39","combined",5);
+  do_process("Run16dAu20","north",5);
+  do_process("Run16dAu20","south",5);
+  do_process("Run16dAu20","combined",5);
   fout->Close();
 }
 
-void do_process(const char* type, int rebin)
+void do_process(const char* type, const char* side, int rebin)
 {
+
+  char sideletter[2];
+  if ( strcmp(side,"north") == 0 )
+    {
+      sprintf(sideletter,"n");
+      cout << "north side " << side << " " << sideletter << endl;
+    }
+  else if ( strcmp(side,"south") == 0 )
+    {
+      sprintf(sideletter,"s");
+      cout << "south side " << side << " " << sideletter << endl;
+    }
+  else if ( strcmp(side,"combined") == 0 )
+    {
+      sprintf(sideletter,"c");
+      cout << "combined " << side << " " << sideletter << endl;
+    }
+  else
+    {
+      cout << "You chose... poorly." << endl;
+      return;
+    }
 
   // --- get the file with the cumulants (considering making a function with a flag to take the collision system)
   TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
 
   // --- get the histograms from the file
-  TProfile* tp1f_four = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
-  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
-  TProfile* tp1f_four_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_c24");
-  TProfile* tp1f_two_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_c22");
-  TProfile* tp1f_four_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_c24");
-  TProfile* tp1f_two_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_c22");
-  TProfile* tp1f_cos1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos21");
-  TProfile* tp1f_sin1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin21");
-  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_cos21");
-  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_sin21");
-  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_cos21");
-  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_sin21");
+  TProfile* tp1f_four = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtx%s_tracks_c24",sideletter));
+  TProfile* tp1f_two = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtx%s_tracks_c22",sideletter));
+  TProfile* tp1f_cos1 = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtx%s_tracks_cos21",sideletter));
+  TProfile* tp1f_sin1 = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtx%s_tracks_sin21",sideletter));
+  TProfile* tp1f_cossum2 = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtx%s_tracks_cossum22",sideletter));
+  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtx%s_tracks_sinsum22",sideletter));
+  TProfile* tp1f_cos3 = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtx%s_tracks_cos23",sideletter));
+  TProfile* tp1f_sin3 = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtx%s_tracks_sin23",sideletter));
+  TProfile* tp1f_G_two = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c22"));
+  TProfile* tp1f_cos1_north = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtxn_tracks_cos21",sideletter));
+  TProfile* tp1f_sin1_north = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtxn_tracks_sin21",sideletter));
+  TProfile* tp1f_cos1_south = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtxs_tracks_cos21",sideletter));
+  TProfile* tp1f_sin1_south = (TProfile*)fin->Get(Form("nfvtxt_ac_fvtxs_tracks_sin21",sideletter));
 
   // --- rebin as desired, rebinning on TProfile ensure weighted averages and uncertainties are done correctly
   tp1f_four->Rebin(rebin);
   tp1f_two->Rebin(rebin);
-  tp1f_four_north->Rebin(rebin);
-  tp1f_two_north->Rebin(rebin);
-  tp1f_four_south->Rebin(rebin);
-  tp1f_two_south->Rebin(rebin);
   tp1f_cos1->Rebin(rebin);
   tp1f_sin1->Rebin(rebin);
-  tp1f_cos1_north->Rebin(rebin);
-  tp1f_sin1_north->Rebin(rebin);
-  tp1f_cos1_south->Rebin(rebin);
-  tp1f_sin1_south->Rebin(rebin);
+  tp1f_cossum2->Rebin(rebin);
+  tp1f_sinsum2->Rebin(rebin);
+  tp1f_cos3->Rebin(rebin);
+  tp1f_sin3->Rebin(rebin);
+  // if ( strcmp(side,"north") == 0 )
+  //   {
+  //     tp1f_G_two->Rebin(rebin);
+  //     tp1f_cos1_north->Rebin(rebin);
+  //     tp1f_sin1_north->Rebin(rebin);
+  //     tp1f_cos1_south->Rebin(rebin);
+  //     tp1f_sin1_south->Rebin(rebin);
+  //   }
 
   // --- make some clones to ensure the same binning (number and range)
   TH1D* th1d_four = tp1f_four->ProjectionX();
@@ -69,8 +113,12 @@ void do_process(const char* type, int rebin)
   TH1D* th1d_corr_222  = (TH1D*)th1d_four->Clone("th1d_corr_222");
   TH1D* th1d_corr_c24  = (TH1D*)th1d_four->Clone("th1d_corr_c24");
   TH1D* th1d_corr_c22  = (TH1D*)th1d_four->Clone("th1d_corr_c22");
+  TH1D* th1d_corr_c2G  = (TH1D*)th1d_four->Clone("th1d_corr_c2G");
   TH1D* th1d_corr_v24  = (TH1D*)th1d_four->Clone("th1d_corr_v24");
   TH1D* th1d_corr_v22  = (TH1D*)th1d_four->Clone("th1d_corr_v22");
+  TH1D* th1d_corr_v2G  = (TH1D*)th1d_four->Clone("th1d_corr_v2G");
+
+
 
   // --- get the number of bins and do a loop
   int nbinsx = tp1f_four->GetNbinsX();
@@ -178,13 +226,13 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
   leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s_%s.png",rebin,side,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s_%s.pdf",rebin,side,type));
   th1d_corr_v2G->Draw("ex0p same");
   leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s_%s.png",rebin,side,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s_%s.pdf",rebin,side,type));
 
   th1d_corr_222->SetLineColor(kBlack);
   th1d_corr_222->SetMarkerColor(kGreen+2);
@@ -208,20 +256,22 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_corr_222,"2#LT#LT2#GT#GT^{2}","p");
   leg->AddEntry(th1d_corr_four,"#LT#LT4#GT#GT","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_222and4_%s_%s.png",rebin,side,type));
+  c1->Print(Form("FigsFour/simpleR%d_222and4_%s_%s.pdf",rebin,side,type));
 
   fout->cd();
-  th1d_corr_v22->SetName(Form("th1dR%d_v22_%s",rebin,type));
-  th1d_corr_v2G->SetName(Form("th1dR%d_v22gap_%s",rebin,type));
-  th1d_corr_v24->SetName(Form("th1dR%d_v24_%s",rebin,type));
-  th1d_corr_222->SetName(Form("th1dR%d_222_%s",rebin,type));
-  th1d_corr_four->SetName(Form("th1dR%d_four_%s",rebin,type));
+  th1d_corr_v22->SetName(Form("th1dR%d_v22_%s_%s",rebin,side,type));
+  //th1d_corr_v2G->SetName(Form("th1dR%d_v22gap_%s_%s",rebin,side,type));
+  th1d_corr_v24->SetName(Form("th1dR%d_v24_%s_%s",rebin,side,type));
+  //th1d_corr_222->SetName(Form("th1dR%d_222_%s_%s",rebin,side,type));
+  //th1d_corr_four->SetName(Form("th1dR%d_four_%s_%s",rebin,side,type));
   th1d_corr_v22->Write();
-  th1d_corr_v2G->Write();
+  //th1d_corr_v2G->Write();
   th1d_corr_v24->Write();
-  th1d_corr_222->Write();
-  th1d_corr_four->Write();
+  //th1d_corr_222->Write();
+  //th1d_corr_four->Write();
+
+  fin->Close();
 
 }
 
