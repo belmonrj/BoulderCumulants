@@ -38,6 +38,15 @@ void helpmecent()
   th1d_v24_unco->Draw("ex0p same");
   th1d_v22gap_unco->Draw("ex0p same");
 
+  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
+  leg->SetHeader("Run14AuAu200");
+  leg->SetTextSize(0.045);
+  //leg->SetFillStyle(0);
+  leg->AddEntry(th1d_v22_base,"v_{2}{2} 1<|#eta|<3","p");
+  leg->AddEntry(th1d_v24_base,"v_{2}{4} 1<|#eta|<3","p");
+  leg->AddEntry(th1d_v22gap_base,"v_{2}{2,|#Delta#eta|>2}","p");
+  leg->Draw();
+
   c1->Print("acceptance_AuAu.png");
   c1->Print("acceptance_AuAu.pdf");
 

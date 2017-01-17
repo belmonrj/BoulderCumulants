@@ -80,7 +80,7 @@ void simple_six()
     }
 
   double xmin = 0.0;
-  double xmax = 100.0;
+  double xmax = 70.0;
   double ymin = -1e-4;
   double ymax = 1e-4;
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
@@ -102,7 +102,7 @@ void simple_six()
   th1d_123->Draw("same ex0p");
   TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
-  leg->SetHeader("Run16dAu200");
+  leg->SetHeader("Run14AuAu200");
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_six,"#LT#LT6#GT#GT","p");
@@ -145,7 +145,7 @@ void simple_six()
   if ( leg ) delete leg;
   leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
-  leg->SetHeader("Run16dAu200");
+  leg->SetHeader("Run14AuAu200");
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_c26,"c_{2}{6} = 4v_{2}^{6}","p");
@@ -160,7 +160,8 @@ void simple_six()
   if ( empty ) delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
   th1d_v26->SetMarkerStyle(kOpenCircle);
   th1d_v26->SetMarkerColor(kBlack);
@@ -169,7 +170,7 @@ void simple_six()
   if ( leg ) delete leg;
   leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
-  leg->SetHeader("Run16dAu200");
+  leg->SetHeader("Run14AuAu200");
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_v26,"v_{2}{6}","p");
