@@ -20,9 +20,9 @@ void process_cumulants()
   do_process("Run16dAu20",1);
   do_process("Run16dAu20",2);
   do_process("Run16dAu20",5);
-  // do_process("Run15pAu200",1);
-  // do_process("Run15pAu200",2);
-  // do_process("Run15pAu200",5);
+  do_process("Run15pAu200",1);
+  do_process("Run15pAu200",2);
+  do_process("Run15pAu200",5);
   // do_process("Run14AuAu200",1);
   // do_process("Run14AuAu200",10);
   // do_process("Run14AuAu200",20);
@@ -122,7 +122,7 @@ void do_process(const char* type, int rebin)
       double ecorr_222 = 4*two*etwo;
       double ecorr_c2G = etwo_G;
       double ecorr_c22 = etwo;
-      double ecorr_c24 = (efour/four)*corr_c24;
+      double ecorr_c24 = sqrt(16*two*two*etwo*etwo*+efour*efour);
       double ecorr_v2G = 0;
       double ecorr_v22 = 0;
       double ecorr_v24 = 0;
@@ -221,11 +221,13 @@ void do_process(const char* type, int rebin)
   th1d_corr_v24->SetName(Form("th1dR%d_v24_%s",rebin,type));
   th1d_corr_222->SetName(Form("th1dR%d_222_%s",rebin,type));
   th1d_corr_four->SetName(Form("th1dR%d_four_%s",rebin,type));
+  th1d_corr_c24->SetName(Form("th1dR%d_c24_%s",rebin,type));
   th1d_corr_v22->Write();
   th1d_corr_v2G->Write();
   th1d_corr_v24->Write();
   th1d_corr_222->Write();
   th1d_corr_four->Write();
+  th1d_corr_c24->Write();
 
 }
 
