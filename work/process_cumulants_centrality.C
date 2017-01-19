@@ -36,19 +36,19 @@ void do_process(const char* type, int rebin)
   TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
 
   // --- get the histograms from the file
-  TProfile* tp1f_four = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c24");
-  TProfile* tp1f_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c22");
-  TProfile* tp1f_cos1 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_cos21");
-  TProfile* tp1f_sin1 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_sin21");
-  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_cossum22");
-  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_sinsum22");
-  TProfile* tp1f_cos3 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_cos23");
-  TProfile* tp1f_sin3 = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_sin23");
-  TProfile* tp1f_G_two = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c22"); // scalar product north*south
-  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_cos21");
-  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_sin21");
-  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_cos21");
-  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_sin21");
+  TProfile* tp1f_four = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_c24");
+  TProfile* tp1f_two = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_c22");
+  TProfile* tp1f_cos1 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cos21");
+  TProfile* tp1f_sin1 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sin21");
+  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cossum22");
+  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sinsum22");
+  TProfile* tp1f_cos3 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cos23");
+  TProfile* tp1f_sin3 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sin23");
+  TProfile* tp1f_G_two = (TProfile*)fin->Get("centrality_ac_fvtxsfvtxn_tracks_c22"); // scalar product north*south
+  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("centrality_ac_fvtxn_tracks_cos21");
+  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("centrality_ac_fvtxn_tracks_sin21");
+  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("centrality_ac_fvtxs_tracks_cos21");
+  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("centrality_ac_fvtxs_tracks_sin21");
 
   // --- rebin as desired, rebinning on TProfile ensure weighted averages and uncertainties are done correctly
   tp1f_four->Rebin(rebin);
@@ -299,6 +299,8 @@ void do_process(const char* type, int rebin)
   tge_star_v24->SetMarkerColor(kBlack);
   tge_star_v24->SetMarkerSize(1.99);
   tge_star_v24->SetLineColor(kBlue);
+  tge_star_v22->SetMarkerSize(2.9);
+  tge_star_v24->SetMarkerSize(2.9);
   // ---
   ymax = 0.12;
   delete empty;
@@ -321,15 +323,15 @@ void do_process(const char* type, int rebin)
   c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgapandSTAR_%s.png",rebin,type));
   c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgapandSTAR_%s.pdf",rebin,type));
   empty->Draw();
-  th1d_uncorr_v22->Scale(1.35);
-  th1d_uncorr_v24->Scale(1.35);
-  th1d_uncorr_v2G->Scale(1.35);
-  th1d_uncorr_v22->GetXaxis()->SetRangeUser(10,70);
-  th1d_uncorr_v24->GetXaxis()->SetRangeUser(10,60);
-  th1d_uncorr_v2G->GetXaxis()->SetRangeUser(10,70);
-  //th1d_uncorr_v22->Draw("ex0p same");
-  th1d_uncorr_v24->Draw("ex0p same");
-  th1d_uncorr_v2G->Draw("ex0p same");
+  th1d_corr_v22->Scale(1.35);
+  th1d_corr_v24->Scale(1.35);
+  th1d_corr_v2G->Scale(1.35);
+  th1d_corr_v22->GetXaxis()->SetRangeUser(10,70);
+  th1d_corr_v24->GetXaxis()->SetRangeUser(10,60);
+  th1d_corr_v2G->GetXaxis()->SetRangeUser(10,70);
+  //th1d_corr_v22->Draw("ex0p same");
+  th1d_corr_v24->Draw("ex0p same");
+  th1d_corr_v2G->Draw("ex0p same");
   tge_star_v22->Draw("p");
   tge_star_v24->Draw("p");
   delete leg;
@@ -337,9 +339,9 @@ void do_process(const char* type, int rebin)
   leg->SetHeader("Scaled by 1.35");
   leg->SetTextSize(0.045);
   //leg->SetFillStyle(0);
-  //leg->AddEntry(th1d_uncorr_v22,"v_{2}{2} 1<|#eta|<3","p");
-  leg->AddEntry(th1d_uncorr_v24,"v_{2}{4} 1<|#eta|<3","p");
-  leg->AddEntry(th1d_uncorr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
+  //leg->AddEntry(th1d_corr_v22,"v_{2}{2} 1<|#eta|<3","p");
+  leg->AddEntry(th1d_corr_v24,"v_{2}{4} 1<|#eta|<3","p");
+  leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
   leg->Draw();
   leg->Draw();
   leg2->Draw();
