@@ -122,7 +122,7 @@ void do_process(const char* type, int rebin)
       double ecorr_222 = 4*two*etwo;
       double ecorr_c2G = etwo_G;
       double ecorr_c22 = etwo;
-      double ecorr_c24 = sqrt(16*two*two*etwo*etwo*+efour*efour);
+      double ecorr_c24 = sqrt((16*two*two*etwo*etwo)+(efour*efour));
       double ecorr_v2G = 0;
       double ecorr_v22 = 0;
       double ecorr_v24 = 0;
