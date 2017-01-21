@@ -11,21 +11,26 @@ void process_cumulants()
   do_process("Run16dAu200",1);
   do_process("Run16dAu200",2);
   do_process("Run16dAu200",5);
-  do_process("Run16dAu62",1);
-  do_process("Run16dAu62",2);
-  do_process("Run16dAu62",5);
-  do_process("Run16dAu39",1);
-  do_process("Run16dAu39",2);
-  do_process("Run16dAu39",5);
-  do_process("Run16dAu20",1);
-  do_process("Run16dAu20",2);
-  do_process("Run16dAu20",5);
-  do_process("Run15pAu200",1);
-  do_process("Run15pAu200",2);
-  do_process("Run15pAu200",5);
-  // do_process("Run14AuAu200",1);
-  // do_process("Run14AuAu200",10);
-  // do_process("Run14AuAu200",20);
+  do_process("Run16dAu200",10);
+  // do_process("Run16dAu62",1);
+  // do_process("Run16dAu62",2);
+  // do_process("Run16dAu62",5);
+  // do_process("Run16dAu62",10);
+  // do_process("Run16dAu39",1);
+  // do_process("Run16dAu39",2);
+  // do_process("Run16dAu39",5);
+  // do_process("Run16dAu39",10);
+  // do_process("Run16dAu20",1);
+  // do_process("Run16dAu20",2);
+  // do_process("Run16dAu20",5);
+  // do_process("Run16dAu20",10);
+  // do_process("Run15pAu200",1);
+  // do_process("Run15pAu200",2);
+  // do_process("Run15pAu200",5);
+  // do_process("Run15pAu200",10);
+  // // do_process("Run14AuAu200",1);
+  // // do_process("Run14AuAu200",10);
+  // // do_process("Run14AuAu200",20);
   fout->Close();
 }
 
@@ -38,6 +43,7 @@ void do_process(const char* type, int rebin)
   // --- get the histograms from the file
   TProfile* tp1f_four = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
   TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
+  TProfile* tp1f_cov = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cov24");
   TProfile* tp1f_cos1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos21");
   TProfile* tp1f_sin1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin21");
   TProfile* tp1f_cossum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cossum22");
@@ -53,6 +59,7 @@ void do_process(const char* type, int rebin)
   // --- rebin as desired, rebinning on TProfile ensure weighted averages and uncertainties are done correctly
   tp1f_four->Rebin(rebin);
   tp1f_two->Rebin(rebin);
+  tp1f_cov->Rebin(rebin);
   tp1f_cos1->Rebin(rebin);
   tp1f_sin1->Rebin(rebin);
   tp1f_cossum2->Rebin(rebin);
@@ -84,6 +91,7 @@ void do_process(const char* type, int rebin)
       // --- get the components
       double four    = tp1f_four->GetBinContent(i+1);
       double two     = tp1f_two->GetBinContent(i+1);
+      double twofour = tp1f_cov->GetBinContent(i+1);
       double efour   = tp1f_four->GetBinError(i+1);
       double etwo    = tp1f_two->GetBinError(i+1);
       double cos1    = tp1f_cos1->GetBinContent(i+1);
@@ -118,17 +126,22 @@ void do_process(const char* type, int rebin)
       if ( corr_c2G > 0 ) corr_v2G = sqrt(corr_c2G);
       if ( corr_c24 < 0 ) corr_v24 = sqrt(sqrt(-corr_c24));
       // --- calculate statistical uncertainties
+      double cov24 = twofour - two*four;
+      cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
+      cout << "covariance term: " << cov24 << " <24> = " << twofour << " <2><4> = " << two*four << " <2> = " << two << " <4>  = " << four << endl;
+      cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
       double ecorr_four = efour;
       double ecorr_222 = 4*two*etwo;
       double ecorr_c2G = etwo_G;
       double ecorr_c22 = etwo;
-      double ecorr_c24 = sqrt((16*two*two*etwo*etwo)+(efour*efour));
+      double ecorr_c24 = sqrt((16*two*two*etwo*etwo)+(efour*efour)-(8*two*cov24));
+      cout << "cumulant is " << corr_c24 << " and error is " << (16*two*two*etwo*etwo) << " + " << (efour*efour) << " - " << (8*two*cov24) << endl;
       double ecorr_v2G = 0;
       double ecorr_v22 = 0;
       double ecorr_v24 = 0;
       if ( corr_c2G > 0 ) ecorr_v2G = sqrt(1.0/corr_v2G)*ecorr_c2G;
       if ( corr_c22 > 0 ) ecorr_v22 = sqrt(1.0/corr_v22)*ecorr_c22;
-      if ( corr_c24 < 0 ) ecorr_v24 = (1.0/pow(-corr_c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
+      if ( corr_c24 < 0 ) ecorr_v24 = (1.0/pow(-corr_c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour)-(0.5*two*cov24));
       // --- now set the histogram values
       th1d_corr_four->SetBinContent(i+1,corr_four);
       th1d_corr_222->SetBinContent(i+1,corr_222);
