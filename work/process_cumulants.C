@@ -92,6 +92,7 @@ void do_process(const char* type, int rebin)
       double four    = tp1f_four->GetBinContent(i+1);
       double two     = tp1f_two->GetBinContent(i+1);
       double twofour = tp1f_cov->GetBinContent(i+1);
+      double count24 = tp1f_cov->GetBinEntries(i+1);
       double efour   = tp1f_four->GetBinError(i+1);
       double etwo    = tp1f_two->GetBinError(i+1);
       double cos1    = tp1f_cos1->GetBinContent(i+1);
@@ -127,8 +128,10 @@ void do_process(const char* type, int rebin)
       if ( corr_c24 < 0 ) corr_v24 = sqrt(sqrt(-corr_c24));
       // --- calculate statistical uncertainties
       double cov24 = twofour - two*four;
+      if ( count24 > 0 ) cov24 /= count24; // ...
       cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
       cout << "covariance term: " << cov24 << " <24> = " << twofour << " <2><4> = " << two*four << " <2> = " << two << " <4>  = " << four << endl;
+      cout << "counts: " << count24 << endl;
       cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
       double ecorr_four = efour;
       double ecorr_222 = 4*two*etwo;
