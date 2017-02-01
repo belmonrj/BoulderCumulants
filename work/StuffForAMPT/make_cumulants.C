@@ -3,7 +3,7 @@ TFile* fout;
 void make_cumulants()
 {
 
-  fout = TFile::Open("ampt_cumulants_non.root","recreate");
+  fout = TFile::Open("ampt_cumulants.root","recreate");
 
   argument("dAu",200);
   argument("dAu",62);
@@ -20,7 +20,7 @@ void argument(const char* system, int energy)
 {
 
   // --- now bill stuff
-  TFile *bill = TFile::Open(Form("%s%d_non_cumulant.root",system,energy));
+  TFile *bill = TFile::Open(Form("%s_%d_cumulant.root",system,energy));
   int bin_size = 50; // PbPb: maximum 100      pPb: 50
 
   TProfile* tp1f_raa4 = (TProfile*)bill->Get("raa4_Ncharge");
@@ -113,36 +113,36 @@ void argument(const char* system, int energy)
 	}
     }
 
-  TFile *fppp = TFile::Open(Form("%s%d_non_ppplane.root",system,energy));
+  TFile *fppp = TFile::Open(Form("%s_%d_ppplane.root",system,energy));
   TProfile* v2s = (TProfile*)fppp->Get("v2s");
   TH1D* th1d_v2_pplane = v2s->ProjectionX("th1d_v2_pplane");
 
   fout->cd();
-  th1d_v2_pplane->SetName(Form("th1d_AMPT%s%d_non_v2pplane",system,energy));
+  th1d_v2_pplane->SetName(Form("th1d_AMPT%s%d_v2pplane",system,energy));
   th1d_v2_pplane->SetTitle("");
   th1d_v2_pplane->Write();
-  th1d_v2_mid->SetName(Form("th1d_AMPT%s%d_non_v2mid",system,energy));
+  th1d_v2_mid->SetName(Form("th1d_AMPT%s%d_v2mid",system,energy));
   th1d_v2_mid->SetTitle("");
   th1d_v2_mid->Write();
-  th1d_v2_sigma->SetName(Form("th1d_AMPT%s%d_non_v2sigma",system,energy));
+  th1d_v2_sigma->SetName(Form("th1d_AMPT%s%d_v2sigma",system,energy));
   th1d_v2_sigma->SetTitle("");
   th1d_v2_sigma->Write();
-  th1d_cv22gap->SetName(Form("th1d_AMPT%s%d_non_v22gap",system,energy));
+  th1d_cv22gap->SetName(Form("th1d_AMPT%s%d_v22gap",system,energy));
   th1d_cv22gap->SetTitle("");
   th1d_cv22gap->Write();
-  th1d_cv22->SetName(Form("th1d_AMPT%s%d_non_v22",system,energy));
+  th1d_cv22->SetName(Form("th1d_AMPT%s%d_v22",system,energy));
   th1d_cv22->SetTitle("");
   th1d_cv22->Write();
-  th1d_cv24->SetName(Form("th1d_AMPT%s%d_non_v24",system,energy));
+  th1d_cv24->SetName(Form("th1d_AMPT%s%d_v24",system,energy));
   th1d_cv24->SetTitle("");
   th1d_cv24->Write();
-  th1d_c2->SetName(Form("th1d_AMPT%s%d_non_222",system,energy));
+  th1d_c2->SetName(Form("th1d_AMPT%s%d_222",system,energy));
   th1d_c2->SetTitle("");
   th1d_c2->Write();
-  th1d_raa4->SetName(Form("th1d_AMPT%s%d_non_four",system,energy));
+  th1d_raa4->SetName(Form("th1d_AMPT%s%d_four",system,energy));
   th1d_raa4->SetTitle("");
   th1d_raa4->Write();
-  th1d_c24->SetName(Form("th1d_AMPT%s%d_non_c24",system,energy));
+  th1d_c24->SetName(Form("th1d_AMPT%s%d_c24",system,energy));
   th1d_c24->SetTitle("");
   th1d_c24->Write();
 
