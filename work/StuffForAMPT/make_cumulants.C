@@ -142,6 +142,9 @@ void argument(const char* system, int energy)
   th1d_raa4->SetName(Form("th1d_AMPT%s%d_non_four",system,energy));
   th1d_raa4->SetTitle("");
   th1d_raa4->Write();
+  th1d_c24->SetName(Form("th1d_AMPT%s%d_non_c24",system,energy));
+  th1d_c24->SetTitle("");
+  th1d_c24->Write();
 
 }
 
