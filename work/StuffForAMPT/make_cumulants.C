@@ -9,7 +9,7 @@ void make_cumulants()
   argument("dAu",62);
   argument("dAu",39);
   argument("dAu",20);
-  //argument("pAu",200);
+  argument("pAu",200);
 
   fout->Write();
   fout->Close();
