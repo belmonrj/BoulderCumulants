@@ -820,6 +820,11 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
       _collsys = "Run14AuAu200";
       use_utils = false;
     }
+  if ( runnumber >= 415370 && runnumber <= 416893 )
+    {
+      _collsys = "Run14HeAu200";
+      use_utils = false;
+    }
   // --- Run15pAu200
   if ( runnumber >= 432637 && runnumber <= 436647 )
     _collsys = "Run15pAu200";
