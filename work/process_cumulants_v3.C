@@ -4,14 +4,14 @@ void do_process(const char*,int); // get it? :)
 
 TFile* fout;
 
-void process_cumulants()
+void process_cumulants_v3()
 {
 
-  fout = TFile::Open("all_cumulants_out.root","recreate");
-  do_process("Run16dAu200",1);
-  do_process("Run16dAu200",2);
-  do_process("Run16dAu200",5);
-  do_process("Run16dAu200",10);
+  fout = TFile::Open("all_cumulants_out3.root","recreate");
+  // do_process("Run16dAu200",1);
+  // do_process("Run16dAu200",2);
+  // do_process("Run16dAu200",5);
+  // do_process("Run16dAu200",10);
   // do_process("Run16dAu62",1);
   // do_process("Run16dAu62",2);
   // do_process("Run16dAu62",5);
@@ -24,10 +24,10 @@ void process_cumulants()
   // do_process("Run16dAu20",2);
   // do_process("Run16dAu20",5);
   // do_process("Run16dAu20",10);
-  do_process("Run15pAu200",1);
-  do_process("Run15pAu200",2);
-  do_process("Run15pAu200",5);
-  do_process("Run15pAu200",10);
+  // do_process("Run15pAu200",1);
+  // do_process("Run15pAu200",2);
+  // do_process("Run15pAu200",5);
+  // do_process("Run15pAu200",10);
   do_process("Run14HeAu200",1);
   do_process("Run14HeAu200",2);
   do_process("Run14HeAu200",5);
@@ -45,20 +45,20 @@ void do_process(const char* type, int rebin)
   TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
 
   // --- get the histograms from the file
-  TProfile* tp1f_four = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
-  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
+  TProfile* tp1f_four = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c34");
+  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c32");
   TProfile* tp1f_cov = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cov24");
-  TProfile* tp1f_cos1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos21");
-  TProfile* tp1f_sin1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin21");
-  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cossum22");
-  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sinsum22");
-  TProfile* tp1f_cos3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos23");
-  TProfile* tp1f_sin3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin23");
-  TProfile* tp1f_G_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxsfvtxn_tracks_c22"); // scalar product north*south
-  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_cos21");
-  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_sin21");
-  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_cos21");
-  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_sin21");
+  TProfile* tp1f_cos1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos31");
+  TProfile* tp1f_sin1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin31");
+  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cossum32");
+  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sinsum32");
+  TProfile* tp1f_cos3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos33");
+  TProfile* tp1f_sin3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin33");
+  TProfile* tp1f_G_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxsfvtxn_tracks_c32"); // scalar product north*south
+  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_cos31");
+  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_sin31");
+  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_cos31");
+  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_sin31");
 
   bool docov = false;
   if ( tp1f_cov ) docov = true;
@@ -82,12 +82,12 @@ void do_process(const char* type, int rebin)
   TH1D* th1d_four = tp1f_four->ProjectionX();
   TH1D* th1d_corr_four = (TH1D*)th1d_four->Clone("th1d_corr_four");
   TH1D* th1d_corr_222  = (TH1D*)th1d_four->Clone("th1d_corr_222");
-  TH1D* th1d_corr_c24  = (TH1D*)th1d_four->Clone("th1d_corr_c24");
-  TH1D* th1d_corr_c22  = (TH1D*)th1d_four->Clone("th1d_corr_c22");
-  TH1D* th1d_corr_c2G  = (TH1D*)th1d_four->Clone("th1d_corr_c2G");
-  TH1D* th1d_corr_v24  = (TH1D*)th1d_four->Clone("th1d_corr_v24");
-  TH1D* th1d_corr_v22  = (TH1D*)th1d_four->Clone("th1d_corr_v22");
-  TH1D* th1d_corr_v2G  = (TH1D*)th1d_four->Clone("th1d_corr_v2G");
+  TH1D* th1d_corr_c34  = (TH1D*)th1d_four->Clone("th1d_corr_c34");
+  TH1D* th1d_corr_c32  = (TH1D*)th1d_four->Clone("th1d_corr_c32");
+  TH1D* th1d_corr_c3G  = (TH1D*)th1d_four->Clone("th1d_corr_c3G");
+  TH1D* th1d_corr_v34  = (TH1D*)th1d_four->Clone("th1d_corr_v34");
+  TH1D* th1d_corr_v32  = (TH1D*)th1d_four->Clone("th1d_corr_v32");
+  TH1D* th1d_corr_v3G  = (TH1D*)th1d_four->Clone("th1d_corr_v3G");
 
   // --- get the number of bins and do a loop
   int nbinsx = tp1f_four->GetNbinsX();
@@ -113,14 +113,14 @@ void do_process(const char* type, int rebin)
       double cos3    = tp1f_cos3->GetBinContent(i+1);
       double sin3    = tp1f_sin3->GetBinContent(i+1);
       // --- calculate corrected terms
-      double corr_c22 = two - cos1*cos1 - sin1*sin1;
-      double corr_c24 = calc_corr_four(four,two,cos1,sin1,cossum2,sinsum2,cos3,sin3);
-      double corr_222 = 2*corr_c22*corr_c22;
-      double corr_four = corr_c24 + corr_222;
+      double corr_c32 = two - cos1*cos1 - sin1*sin1;
+      double corr_c34 = calc_corr_four(four,two,cos1,sin1,cossum2,sinsum2,cos3,sin3);
+      double corr_222 = 2*corr_c32*corr_c32;
+      double corr_four = corr_c34 + corr_222;
       // --- also useful to look at some things without the corrections
       double uncorr_four = four;
       double uncorr_222 = 2*two*two;
-      double uncorr_c24 = four - 2*two*two;
+      double uncorr_c34 = four - 2*two*two;
       // --- now look at G
       double cos1_north = tp1f_cos1_north->GetBinContent(i+1);
       double sin1_north = tp1f_sin1_north->GetBinContent(i+1);
@@ -128,15 +128,15 @@ void do_process(const char* type, int rebin)
       double sin1_south = tp1f_sin1_south->GetBinContent(i+1);
       double two_G      = tp1f_G_two->GetBinContent(i+1);
       double etwo_G     = tp1f_G_two->GetBinError(i+1);
-      double corr_c2G   = two_G - cos1_north*cos1_south - sin1_north*sin1_south;
-      double uncorr_c2G = two_G;
+      double corr_c3G   = two_G - cos1_north*cos1_south - sin1_north*sin1_south;
+      double uncorr_c3G = two_G;
       // --- calculate the harmonics
-      double corr_v24 = -9;
-      double corr_v22 = -9;
-      double corr_v2G = -9;
-      if ( corr_c22 > 0 ) corr_v22 = sqrt(corr_c22);
-      if ( corr_c2G > 0 ) corr_v2G = sqrt(corr_c2G);
-      if ( corr_c24 < 0 ) corr_v24 = sqrt(sqrt(-corr_c24));
+      double corr_v34 = -9;
+      double corr_v32 = -9;
+      double corr_v3G = -9;
+      if ( corr_c32 > 0 ) corr_v32 = sqrt(corr_c32);
+      if ( corr_c3G > 0 ) corr_v3G = sqrt(corr_c3G);
+      if ( corr_c34 < 0 ) corr_v34 = sqrt(sqrt(-corr_c34));
       // --- calculate statistical uncertainties
       double cov24 = twofour - two*four;
       if ( count24 > 0 ) cov24 /= count24; // ...
@@ -146,52 +146,52 @@ void do_process(const char* type, int rebin)
       // cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
       double ecorr_four = efour;
       double ecorr_222 = 4*two*etwo;
-      double ecorr_c2G = etwo_G;
-      double ecorr_c22 = etwo;
-      double ecorr_c24 = 0;
+      double ecorr_c3G = etwo_G;
+      double ecorr_c32 = etwo;
+      double ecorr_c34 = 0;
       // cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
-      ecorr_c24 = sqrt((16*two*two*etwo*etwo)+(efour*efour));
-      // cout << ecorr_c24 << endl;
-      ecorr_c24 = sqrt((16*two*two*etwo*etwo)+(efour*efour)-(8*two*cov24));
-      // cout << ecorr_c24 << endl;
+      ecorr_c34 = sqrt((16*two*two*etwo*etwo)+(efour*efour));
+      // cout << ecorr_c34 << endl;
+      ecorr_c34 = sqrt((16*two*two*etwo*etwo)+(efour*efour)-(8*two*cov24));
+      // cout << ecorr_c34 << endl;
       // cout << "-------------------------------------------------------------------------------------------------------------------------" << endl;
-      // cout << "cumulant is " << corr_c24 << " and error is " << (16*two*two*etwo*etwo) << " + " << (efour*efour) << " - " << (8*two*cov24) << endl;
-      double ecorr_v2G = 0;
-      double ecorr_v22 = 0;
-      double ecorr_v24 = 0;
-      if ( corr_c2G > 0 ) ecorr_v2G = sqrt(1.0/corr_v2G)*ecorr_c2G;
-      if ( corr_c22 > 0 ) ecorr_v22 = sqrt(1.0/corr_v22)*ecorr_c22;
-      if ( corr_c24 < 0 ) ecorr_v24 = (1.0/pow(-corr_c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour)-(0.5*two*cov24));
+      // cout << "cumulant is " << corr_c34 << " and error is " << (16*two*two*etwo*etwo) << " + " << (efour*efour) << " - " << (8*two*cov24) << endl;
+      double ecorr_v3G = 0;
+      double ecorr_v32 = 0;
+      double ecorr_v34 = 0;
+      if ( corr_c3G > 0 ) ecorr_v3G = sqrt(1.0/corr_v3G)*ecorr_c3G;
+      if ( corr_c32 > 0 ) ecorr_v32 = sqrt(1.0/corr_v32)*ecorr_c32;
+      if ( corr_c34 < 0 ) ecorr_v34 = (1.0/pow(-corr_c34,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour)-(0.5*two*cov24));
       // --- now set the histogram values
       th1d_corr_four->SetBinContent(i+1,corr_four);
       th1d_corr_222->SetBinContent(i+1,corr_222);
-      th1d_corr_c24->SetBinContent(i+1,corr_c24);
-      th1d_corr_c22->SetBinContent(i+1,corr_c22);
-      th1d_corr_c2G->SetBinContent(i+1,corr_c2G);
-      th1d_corr_v24->SetBinContent(i+1,corr_v24);
-      th1d_corr_v22->SetBinContent(i+1,corr_v22);
-      th1d_corr_v2G->SetBinContent(i+1,corr_v2G);
+      th1d_corr_c34->SetBinContent(i+1,corr_c34);
+      th1d_corr_c32->SetBinContent(i+1,corr_c32);
+      th1d_corr_c3G->SetBinContent(i+1,corr_c3G);
+      th1d_corr_v34->SetBinContent(i+1,corr_v34);
+      th1d_corr_v32->SetBinContent(i+1,corr_v32);
+      th1d_corr_v3G->SetBinContent(i+1,corr_v3G);
       // --- now set the histogram uncertainties
       th1d_corr_four->SetBinError(i+1,ecorr_four);
       th1d_corr_222->SetBinError(i+1,ecorr_222);
-      th1d_corr_c24->SetBinError(i+1,ecorr_c24);
-      th1d_corr_c22->SetBinError(i+1,ecorr_c22);
-      th1d_corr_c2G->SetBinError(i+1,ecorr_c2G);
-      th1d_corr_v24->SetBinError(i+1,ecorr_v24);
-      th1d_corr_v22->SetBinError(i+1,ecorr_v22);
-      th1d_corr_v2G->SetBinError(i+1,ecorr_v2G);
+      th1d_corr_c34->SetBinError(i+1,ecorr_c34);
+      th1d_corr_c32->SetBinError(i+1,ecorr_c32);
+      th1d_corr_c3G->SetBinError(i+1,ecorr_c3G);
+      th1d_corr_v34->SetBinError(i+1,ecorr_v34);
+      th1d_corr_v32->SetBinError(i+1,ecorr_v32);
+      th1d_corr_v3G->SetBinError(i+1,ecorr_v3G);
     }
 
   // --- now we have all the histograms with proper uncertainties, so let's make some plots
-  th1d_corr_v22->SetLineColor(kBlack);
-  th1d_corr_v22->SetMarkerColor(kRed);
-  th1d_corr_v22->SetMarkerStyle(kFullDiamond);
-  th1d_corr_v2G->SetLineColor(kBlack);
-  th1d_corr_v2G->SetMarkerColor(kMagenta+2);
-  th1d_corr_v2G->SetMarkerStyle(kOpenDiamond);
-  th1d_corr_v24->SetLineColor(kBlack);
-  th1d_corr_v24->SetMarkerColor(kBlue);
-  th1d_corr_v24->SetMarkerStyle(kFullSquare);
+  th1d_corr_v32->SetLineColor(kBlack);
+  th1d_corr_v32->SetMarkerColor(kRed);
+  th1d_corr_v32->SetMarkerStyle(kFullDiamond);
+  th1d_corr_v3G->SetLineColor(kBlack);
+  th1d_corr_v3G->SetMarkerColor(kMagenta+2);
+  th1d_corr_v3G->SetMarkerStyle(kOpenDiamond);
+  th1d_corr_v34->SetLineColor(kBlack);
+  th1d_corr_v34->SetMarkerColor(kBlue);
+  th1d_corr_v34->SetMarkerStyle(kFullSquare);
 
   double xmin = 0.0;
   double xmax = 500.0;
@@ -206,23 +206,23 @@ void do_process(const char* type, int rebin)
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetYaxis()->SetTitle("v_{2}");
-  th1d_corr_v22->Draw("ex0p same");
-  th1d_corr_v24->Draw("ex0p same");
+  empty->GetYaxis()->SetTitle("v_{3}");
+  th1d_corr_v32->Draw("ex0p same");
+  th1d_corr_v34->Draw("ex0p same");
   TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
   leg->SetHeader(type);
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
-  leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
-  leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
+  leg->AddEntry(th1d_corr_v32,"v_{3}{2}","p");
+  leg->AddEntry(th1d_corr_v34,"v_{3}{4}","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.pdf",rebin,type));
-  th1d_corr_v2G->Draw("ex0p same");
-  leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34_%s.pdf",rebin,type));
+  th1d_corr_v3G->Draw("ex0p same");
+  leg->AddEntry(th1d_corr_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgap_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgap_%s.pdf",rebin,type));
 
   th1d_corr_222->SetLineColor(kBlack);
   th1d_corr_222->SetMarkerColor(kGreen+2);
@@ -247,22 +247,22 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_corr_222,"2#LT#LT2#GT#GT^{2}","p");
   leg->AddEntry(th1d_corr_four,"#LT#LT4#GT#GT","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_222and4_3rd_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_222and4_3rd_%s.pdf",rebin,type));
 
   fout->cd();
-  th1d_corr_v22->SetName(Form("th1dR%d_v22_%s",rebin,type));
-  th1d_corr_v2G->SetName(Form("th1dR%d_v22gap_%s",rebin,type));
-  th1d_corr_v24->SetName(Form("th1dR%d_v24_%s",rebin,type));
+  th1d_corr_v32->SetName(Form("th1dR%d_v32_%s",rebin,type));
+  th1d_corr_v3G->SetName(Form("th1dR%d_v32gap_%s",rebin,type));
+  th1d_corr_v34->SetName(Form("th1dR%d_v34_%s",rebin,type));
   th1d_corr_222->SetName(Form("th1dR%d_222_%s",rebin,type));
   th1d_corr_four->SetName(Form("th1dR%d_four_%s",rebin,type));
-  th1d_corr_c24->SetName(Form("th1dR%d_c24_%s",rebin,type));
-  th1d_corr_v22->Write();
-  th1d_corr_v2G->Write();
-  th1d_corr_v24->Write();
+  th1d_corr_c34->SetName(Form("th1dR%d_c34_%s",rebin,type));
+  th1d_corr_v32->Write();
+  th1d_corr_v3G->Write();
+  th1d_corr_v34->Write();
   th1d_corr_222->Write();
   th1d_corr_four->Write();
-  th1d_corr_c24->Write();
+  th1d_corr_c34->Write();
 
 }
 
