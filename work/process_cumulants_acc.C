@@ -8,21 +8,24 @@ void process_cumulants_acc()
 {
 
   fout = TFile::Open("all_cumulants_acc.root","recreate");
-  do_process("Run16dAu200",1);
+  // do_process("Run16dAu200",1);
   do_process("Run16dAu200",2);
-  do_process("Run16dAu200",5);
-  do_process("Run16dAu62",1);
-  do_process("Run16dAu62",2);
-  do_process("Run16dAu62",5);
-  do_process("Run16dAu39",1);
-  do_process("Run16dAu39",2);
-  do_process("Run16dAu39",5);
-  do_process("Run16dAu20",1);
-  do_process("Run16dAu20",2);
-  do_process("Run16dAu20",5);
+  // do_process("Run16dAu200",5);
+  // do_process("Run16dAu62",1);
+  // do_process("Run16dAu62",2);
+  // do_process("Run16dAu62",5);
+  // do_process("Run16dAu39",1);
+  // do_process("Run16dAu39",2);
+  // do_process("Run16dAu39",5);
+  // do_process("Run16dAu20",1);
+  // do_process("Run16dAu20",2);
+  // do_process("Run16dAu20",5);
   // do_process("Run15pAu200",1);
   // do_process("Run15pAu200",2);
   // do_process("Run15pAu200",5);
+  // do_process("Run14HeAu200",1);
+  do_process("Run14HeAu200",2);
+  // do_process("Run14HeAu200",5);
   // do_process("Run14AuAu200",1);
   // do_process("Run14AuAu200",10);
   // do_process("Run14AuAu200",20);
@@ -53,6 +56,9 @@ void do_process(const char* type, int rebin)
   TProfile* tp1fz_four = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c24");
   TProfile* tp1fz_two = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c22");
   TProfile* tp1fz_G_two = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxsfvtxn_tracks_c22"); // scalar product north*south
+  if ( tp1fz_four == NULL ) tp1fz_four = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c24");
+  if ( tp1fz_two == NULL ) tp1fz_two = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c22");
+  if ( tp1fz_G_two == NULL ) tp1fz_G_two = (TProfile*)fin->Get("nfvtxt_os_fvtxsfvtxn_tracks_c22"); // scalar product north*south
 
   // --- rebin as desired, rebinning on TProfile ensure weighted averages and uncertainties are done correctly
   tp1f_four->Rebin(rebin);
@@ -240,6 +246,7 @@ void do_process(const char* type, int rebin)
   double xmax = 500.0;
   double ymin = 0.0;
   double ymax = 0.199;
+  if ( strcmp(type,"Run14HeAu200") == 0 ) xmax = 200.0;
   if ( strcmp(type,"Run15pAu200") == 0 ) xmax = 70.0;
   if ( strcmp(type,"Run16dAu200") == 0 ) xmax = 70.0;
   if ( strcmp(type,"Run16dAu62") == 0 ) xmax = 70.0;

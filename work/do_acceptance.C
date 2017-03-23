@@ -6,12 +6,14 @@ void do_acceptance()
 {
   process("U","Run16dAu200");
   process("Z","Run16dAu200");
-  process("U","Run16dAu62");
-  process("Z","Run16dAu62");
-  process("U","Run16dAu39");
-  process("Z","Run16dAu39");
-  process("U","Run16dAu20");
-  process("Z","Run16dAu20");
+  // process("U","Run16dAu62");
+  // process("Z","Run16dAu62");
+  // process("U","Run16dAu39");
+  // process("Z","Run16dAu39");
+  // process("U","Run16dAu20");
+  // process("Z","Run16dAu20");
+  process("U","Run14HeAu200");
+  process("Z","Run14HeAu200");
 }
 
 
@@ -22,13 +24,13 @@ void process(const char* systematic, const char* collision)
   TCanvas* c1 = new TCanvas();
 
   TFile* finbase = TFile::Open("all_cumulants_acc.root");
-  TH1D* v22gap_base = (TH1D*)finbase->Get(Form("th1dR1_v22gap_%s",collision));
-  TH1D* v22_base    = (TH1D*)finbase->Get(Form("th1dR1_v22_%s",collision));
-  TH1D* v24_base    = (TH1D*)finbase->Get(Form("th1dR1_v24_%s",collision));
+  TH1D* v22gap_base = (TH1D*)finbase->Get(Form("th1dR2_v22gap_%s",collision));
+  TH1D* v22_base    = (TH1D*)finbase->Get(Form("th1dR2_v22_%s",collision));
+  TH1D* v24_base    = (TH1D*)finbase->Get(Form("th1dR2_v24_%s",collision));
 
-  TH1D* v22gap_syst = (TH1D*)finbase->Get(Form("th1dR1%s_v22gap_%s",systematic,collision));
-  TH1D* v22_syst    = (TH1D*)finbase->Get(Form("th1dR1%s_v22_%s",systematic,collision));
-  TH1D* v24_syst    = (TH1D*)finbase->Get(Form("th1dR1%s_v24_%s",systematic,collision));
+  TH1D* v22gap_syst = (TH1D*)finbase->Get(Form("th1dR2%s_v22gap_%s",systematic,collision));
+  TH1D* v22_syst    = (TH1D*)finbase->Get(Form("th1dR2%s_v22_%s",systematic,collision));
+  TH1D* v24_syst    = (TH1D*)finbase->Get(Form("th1dR2%s_v24_%s",systematic,collision));
 
   // ---
 
@@ -45,9 +47,21 @@ void process(const char* systematic, const char* collision)
   v22_syst->SetMarkerColor(kRed);
   v24_syst->SetMarkerColor(kBlue);
 
+  double xmin = 0.0;
+  double xmax = 500.0;
+  double ymin = 0.0;
+  double ymax = 0.199;
+  if ( strcmp(collision,"Run14HeAu200") == 0 ) xmax = 200.0;
+  if ( strcmp(collision,"Run15pAu200") == 0 ) xmax = 70.0;
+  if ( strcmp(collision,"Run16dAu200") == 0 ) xmax = 70.0;
+  if ( strcmp(collision,"Run16dAu62") == 0 ) xmax = 70.0;
+  if ( strcmp(collision,"Run16dAu39") == 0 ) xmax = 70.0;
+  if ( strcmp(collision,"Run16dAu20") == 0 ) xmax = 70.0;
+
   v22_base->Draw("ex0p");
-  v22_base->SetMinimum(0.0);
-  v22_base->SetMaximum(0.199);
+  v22_base->SetMinimum(ymin);
+  v22_base->SetMaximum(ymax);
+  v22_base->GetXaxis()->SetRangeUser(xmin,xmax);
   v22_base->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   v22_base->GetYaxis()->SetTitle("v_{2}");
   v24_base->Draw("ex0p same");
@@ -71,6 +85,8 @@ void process(const char* systematic, const char* collision)
   leg2->Draw();
   c1->Print(Form("SysFigsFour/accsys_v2all_%s_%s.png",systematic,collision));
   c1->Print(Form("SysFigsFour/accsys_v2all_%s_%s.pdf",systematic,collision));
+
+  return;
 
   // ---
 

@@ -8,10 +8,10 @@ void process_cumulants()
 {
 
   fout = TFile::Open("all_cumulants_out.root","recreate");
-  do_process("Run16dAu200",1);
+  // do_process("Run16dAu200",1);
   do_process("Run16dAu200",2);
-  do_process("Run16dAu200",5);
-  do_process("Run16dAu200",10);
+  // do_process("Run16dAu200",5);
+  // do_process("Run16dAu200",10);
   // do_process("Run16dAu62",1);
   // do_process("Run16dAu62",2);
   // do_process("Run16dAu62",5);
@@ -24,14 +24,14 @@ void process_cumulants()
   // do_process("Run16dAu20",2);
   // do_process("Run16dAu20",5);
   // do_process("Run16dAu20",10);
-  do_process("Run15pAu200",1);
-  do_process("Run15pAu200",2);
-  do_process("Run15pAu200",5);
-  do_process("Run15pAu200",10);
-  do_process("Run14HeAu200",1);
+  // do_process("Run15pAu200",1);
+  // do_process("Run15pAu200",2);
+  // do_process("Run15pAu200",5);
+  // do_process("Run15pAu200",10);
+  //  do_process("Run14HeAu200",1);
   do_process("Run14HeAu200",2);
-  do_process("Run14HeAu200",5);
-  do_process("Run14HeAu200",10);
+  // do_process("Run14HeAu200",5);
+  // do_process("Run14HeAu200",10);
   // // do_process("Run14AuAu200",1);
   // // do_process("Run14AuAu200",10);
   // // do_process("Run14AuAu200",20);
