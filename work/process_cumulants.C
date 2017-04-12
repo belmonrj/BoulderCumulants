@@ -197,7 +197,7 @@ void do_process(const char* type, int rebin)
   double xmax = 500.0;
   double ymin = 0.0;
   double ymax = 0.199;
-  if ( strcmp(type,"Run14HeAu200") == 0 ) xmax = 200.0;
+  if ( strcmp(type,"Run14HeAu200") == 0 ) xmax = 100.0;
   if ( strcmp(type,"Run15pAu200") == 0 ) xmax = 70.0;
   if ( strcmp(type,"Run16dAu200") == 0 ) xmax = 70.0;
   if ( strcmp(type,"Run16dAu62") == 0 ) xmax = 70.0;
@@ -231,7 +231,7 @@ void do_process(const char* type, int rebin)
   th1d_corr_four->SetMarkerColor(kOrange-5);
   th1d_corr_four->SetMarkerStyle(kFullSquare);
   ymax = 3.0e-4;
-  if ( strcmp(type,"Run14HeAu200") == 0 ) ymax = 3.0e-3;
+  //if ( strcmp(type,"Run14HeAu200") == 0 ) ymax = 3.0e-3;
   delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
