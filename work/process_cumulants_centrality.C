@@ -109,10 +109,6 @@ void do_process(const char* type, int rebin)
       double uncorr_four = four;
       double uncorr_222 = 2*two*two;
       double uncorr_c24 = four - 2*two*two;
-      // --- also useful to look at some things without the corrections
-      double uncorr_four = four;
-      double uncorr_222 = 2*two*two;
-      double uncorr_c24 = four - 2*two*two;
       double uncorr_c22 = two;
       // --- now look at G
       double cos1_north = tp1f_cos1_north->GetBinContent(i+1);
@@ -360,7 +356,7 @@ void do_process(const char* type, int rebin)
   empty->Draw();
   //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   empty->GetXaxis()->SetTitle("Centrality (%)");
-  empty->GetYaxis()->SetTitle("v_{2}");
+  empty->GetYaxis()->SetTitle("components");
   th1d_corr_222->Draw("ex0p same");
   th1d_corr_four->Draw("ex0p same");
   delete leg;
@@ -373,6 +369,32 @@ void do_process(const char* type, int rebin)
   leg->Draw();
   c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.png",rebin,type));
   c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.pdf",rebin,type));
+
+  th1d_uncorr_222->SetLineColor(kBlack);
+  th1d_uncorr_222->SetMarkerColor(kGreen+2);
+  th1d_uncorr_222->SetMarkerStyle(kFullCircle);
+  th1d_uncorr_four->SetLineColor(kBlack);
+  th1d_uncorr_four->SetMarkerColor(kOrange-5);
+  th1d_uncorr_four->SetMarkerStyle(kFullSquare);
+  ymax = 6.0e-4;
+  delete empty;
+  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetYaxis()->SetTitle("components");
+  th1d_uncorr_222->Draw("ex0p same");
+  th1d_uncorr_four->Draw("ex0p same");
+  delete leg;
+  leg = new TLegend(0.62,0.68,0.88,0.88);
+  leg->SetHeader(type);
+  leg->SetTextSize(0.045);
+  //leg->SetFillStyle(0);
+  leg->AddEntry(th1d_uncorr_222,"2#LT#LT2#GT#GT^{2}","p");
+  leg->AddEntry(th1d_uncorr_four,"#LT#LT4#GT#GT","p");
+  leg->Draw();
+  c1->Print(Form("FigsFourSpecial/simpleR%d_uncorr_222and4_%s.png",rebin,type));
+  c1->Print(Form("FigsFourSpecial/simpleR%d_uncorr_222and4_%s.pdf",rebin,type));
 
   // ---
 
