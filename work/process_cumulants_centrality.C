@@ -263,20 +263,46 @@ void do_process(const char* type, int rebin)
   // 6(20-30%) 5.66 0.02
   // 7(10-20%) 4.27 0.022
   // 8(5-10%)  2.53 0.066
+  //Collision Cross Sectionv2{LYZ_Sum}
+  //45 0.0581909  0.00115924
+  //35 0.059935   0.000298429
+  //25 0.0541134  0.000171784
+  //15 0.0411426  0.0002367
+  //Collision Cross Sectionv2{LYZ_Prod}(%)
+  //55  0.063  0.0037
+  //45  0.0627 0.0017
+  //35  0.0612 0.0003
+  //25  0.0541 0.00024
+  //15  0.0404 0.00032
+  //7.5 0.0292 0.0023
+
   double cent[9] = {75,65,55,45,35,25,15,7.5,2.5};
   double star_v22[9]={0};
   double star_v24[9]={0};
+  double star_v2LYZS[9]={0};
+  double star_v2LYZP[9]={0};
   double star_ev22[9]={0};
   double star_ev24[9]={0};
-  star_v22[0] = 6.88;  star_ev22[0] = 0.052 ;  star_v24[0] = -9.0;  star_ev24[0] = 0    ;
-  star_v22[1] = 7.25;  star_ev22[1] = 0.029 ;  star_v24[1] = 5.68;  star_ev24[1] = 0.35 ;
-  star_v22[2] = 7.59;  star_ev22[2] = 0.018 ;  star_v24[2] = 6.18;  star_ev24[2] = 0.1  ;
-  star_v22[3] = 7.64;  star_ev22[3] = 0.013 ;  star_v24[3] = 6.43;  star_ev24[3] = 0.045;
-  star_v22[4] = 7.29;  star_ev22[4] = 0.0094;  star_v24[4] = 6.33;  star_ev24[4] = 0.026;
-  star_v22[5] = 6.42;  star_ev22[5] = 0.0075;  star_v24[5] = 5.66;  star_ev24[5] = 0.02 ;
-  star_v22[6] = 4.97;  star_ev22[6] = 0.0066;  star_v24[6] = 4.27;  star_ev24[6] = 0.022;
-  star_v22[7] = 3.55;  star_ev22[7] = 0.0088;  star_v24[7] = 2.53;  star_ev24[7] = 0.066;
-  star_v22[8] = 2.41;  star_ev22[8] = 0.0096;  star_v24[8] = -9.0;  star_ev24[8] = 0    ;
+  double star_ev2LYZS[9]={0};
+  double star_ev2LYZP[9]={0};
+  star_v22[0] = 6.88;  star_v24[0] = -9.0;   star_v2LYZS[0] = -9.0  ;   star_v2LYZP[0] = -9.0  ;   // 75
+  star_v22[1] = 7.25;  star_v24[1] = 5.68;   star_v2LYZS[1] = -9.0  ;   star_v2LYZP[1] = -9.0  ;   // 65
+  star_v22[2] = 7.59;  star_v24[2] = 6.18;   star_v2LYZS[2] = -9.0  ;   star_v2LYZP[2] = 0.063 ;   // 55
+  star_v22[3] = 7.64;  star_v24[3] = 6.43;   star_v2LYZS[3] = 0.0581;   star_v2LYZP[3] = 0.0627;   // 45
+  star_v22[4] = 7.29;  star_v24[4] = 6.33;   star_v2LYZS[4] = 0.0599;   star_v2LYZP[4] = 0.0612;   // 35
+  star_v22[5] = 6.42;  star_v24[5] = 5.66;   star_v2LYZS[5] = 0.0541;   star_v2LYZP[5] = 0.0541;   // 25
+  star_v22[6] = 4.97;  star_v24[6] = 4.27;   star_v2LYZS[6] = 0.0411;   star_v2LYZP[6] = 0.0404;   // 15
+  star_v22[7] = 3.55;  star_v24[7] = 2.53;   star_v2LYZS[7] = -9.0  ;   star_v2LYZP[7] = 0.0292;   // 7.5
+  star_v22[8] = 2.41;  star_v24[8] = -9.0;   star_v2LYZS[8] = -9.0  ;   star_v2LYZP[8] = -9.0  ;   // 2.5
+  star_ev22[0] = 0.052 ;  star_ev24[0] = 0    ; // 75
+  star_ev22[1] = 0.029 ;  star_ev24[1] = 0.35 ; // 65
+  star_ev22[2] = 0.018 ;  star_ev24[2] = 0.1  ; // 55
+  star_ev22[3] = 0.013 ;  star_ev24[3] = 0.045; // 45
+  star_ev22[4] = 0.0094;  star_ev24[4] = 0.026; // 35
+  star_ev22[5] = 0.0075;  star_ev24[5] = 0.02 ; // 25
+  star_ev22[6] = 0.0066;  star_ev24[6] = 0.022; // 15
+  star_ev22[7] = 0.0088;  star_ev24[7] = 0.066; // 7.5
+  star_ev22[8] = 0.0096;  star_ev24[8] = 0    ; // 2.5
   for ( int i = 0; i < 9; ++i )
     {
       star_v22[i] /= 100.0;
@@ -294,9 +320,22 @@ void do_process(const char* type, int rebin)
   tge_star_v24->SetMarkerStyle(kFullStar);
   tge_star_v24->SetMarkerColor(kBlack);
   tge_star_v24->SetMarkerSize(1.99);
-  tge_star_v24->SetLineColor(kBlue);
+  tge_star_v24->SetLineColor(kBlack);
   tge_star_v22->SetMarkerSize(2.9);
   tge_star_v24->SetMarkerSize(2.9);
+  // ---
+  TGraphErrors* tge_star_v2LYZS = new TGraphErrors(9,cent,star_v2LYZS,0,star_ev2LYZS);
+  TGraphErrors* tge_star_v2LYZP = new TGraphErrors(9,cent,star_v2LYZP,0,star_ev2LYZP);
+  tge_star_v2LYZS->SetMarkerStyle(kOpenStar);
+  tge_star_v2LYZS->SetMarkerColor(kRed);
+  tge_star_v2LYZS->SetMarkerSize(1.99);
+  tge_star_v2LYZS->SetLineColor(kRed);
+  tge_star_v2LYZP->SetMarkerStyle(kOpenStar);
+  tge_star_v2LYZP->SetMarkerColor(kBlack);
+  tge_star_v2LYZP->SetMarkerSize(1.99);
+  tge_star_v2LYZP->SetLineColor(kBlack);
+  tge_star_v2LYZS->SetMarkerSize(2.9);
+  tge_star_v2LYZP->SetMarkerSize(2.9);
   // ---
   ymax = 0.12;
   delete empty;
@@ -309,11 +348,15 @@ void do_process(const char* type, int rebin)
   th1d_uncorr_v2G->Draw("ex0p same");
   tge_star_v22->Draw("p");
   tge_star_v24->Draw("p");
+  tge_star_v2LYZS->Draw("p");
+  tge_star_v2LYZP->Draw("p");
   leg->Draw();
   TLegend* leg2 = new TLegend(0.18,0.68,0.38,0.88);
   leg2->SetHeader("STAR");
   leg2->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1","p");
   leg2->AddEntry(tge_star_v22,"v_{2}{2} |#eta|<1","p");
+  leg2->AddEntry(tge_star_v2LYZS,"v_{2}{LYZ} Sum |#eta|<1","p");
+  leg2->AddEntry(tge_star_v2LYZP,"v_{2}{LYZ} Product |#eta|<1","p");
   leg2->SetTextSize(0.045);
   leg2->Draw();
   c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgapandSTAR_%s.png",rebin,type));
@@ -330,6 +373,8 @@ void do_process(const char* type, int rebin)
   th1d_corr_v2G->Draw("ex0p same");
   tge_star_v22->Draw("p");
   tge_star_v24->Draw("p");
+  tge_star_v2LYZS->Draw("p");
+  tge_star_v2LYZP->Draw("p");
   delete leg;
   leg = new TLegend(0.62,0.68,0.88,0.88);
   leg->SetHeader("Scaled by 1.35");
