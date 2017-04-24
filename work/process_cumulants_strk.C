@@ -8,6 +8,8 @@ void process_cumulants_strk()
 {
   fout = TFile::Open("all_cumulants_strk.root","recreate");
   do_process("Run14AuAu200",10);
+  do_process("Run14AuAu200",20);
+  do_process("Run14AuAu200",50);
   fout->Close();
 }
 

@@ -4,12 +4,12 @@ void helpmestrk()
   TCanvas* c1 = new TCanvas();
 
   TFile* fin = TFile::Open("all_cumulants_strk.root");
-  TH1D* th1d_v22gap_base = (TH1D*)fin->Get("th1dR10_v22gap_Run14AuAu200");
-  TH1D* th1d_v22_base = (TH1D*)fin->Get("th1dR10_v22_Run14AuAu200");
-  TH1D* th1d_v24_base = (TH1D*)fin->Get("th1dR10_v24_Run14AuAu200");
-  TH1D* th1d_v22gap_unco = (TH1D*)fin->Get("th1dR10U_v22gap_Run14AuAu200");
-  TH1D* th1d_v22_unco = (TH1D*)fin->Get("th1dR10U_v22_Run14AuAu200");
-  TH1D* th1d_v24_unco = (TH1D*)fin->Get("th1dR10U_v24_Run14AuAu200");
+  TH1D* th1d_v22gap_base = (TH1D*)fin->Get("th1dR20_v22gap_Run14AuAu200");
+  TH1D* th1d_v22_base = (TH1D*)fin->Get("th1dR20_v22_Run14AuAu200");
+  TH1D* th1d_v24_base = (TH1D*)fin->Get("th1dR20_v24_Run14AuAu200");
+  TH1D* th1d_v22gap_unco = (TH1D*)fin->Get("th1dR20U_v22gap_Run14AuAu200");
+  TH1D* th1d_v22_unco = (TH1D*)fin->Get("th1dR20U_v22_Run14AuAu200");
+  TH1D* th1d_v24_unco = (TH1D*)fin->Get("th1dR20U_v24_Run14AuAu200");
 
   th1d_v22gap_base->SetMarkerStyle(kFullDiamond);
   th1d_v22_base->SetMarkerStyle(kFullCircle);
