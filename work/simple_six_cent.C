@@ -1,4 +1,4 @@
-void simple_six()
+void simple_six_cent()
 {
 
   //TFile* fin = TFile::Open("input/cumulants_200.root");
