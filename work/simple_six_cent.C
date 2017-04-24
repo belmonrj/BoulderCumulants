@@ -49,29 +49,29 @@ void simple_six_cent()
       // --- 6-particle
       double c26 = th1d_c26->GetBinContent(i+1);
       double v26 = -9999;
-      if ( c26 > 0 && six != 0 ) v26 = 0.25*pow(c26,(1.0/6.0)); // v2{6} = (1/4)*c2{6}^{(1/6)}
-      th1d_v26->SetBinContent(i+1,v26);
       double six = th1d_six->GetBinContent(i+1);
       double esix = th1d_six->GetBinError(i+1);
       double ev26 = v26*(esix/six); // relative error for now, will get proper formula later...
+      if ( c26 > 0 && six != 0 ) v26 = 0.25*pow(c26,(1.0/6.0)); // v2{6} = (1/4)*c2{6}^{(1/6)}
+      th1d_v26->SetBinContent(i+1,v26);
       th1d_v26->SetBinError(i+1,ev26);
       // --- 4-particle
       double c24 = th1d_c24->GetBinContent(i+1);
       double v24 = -9999;
-      if ( c24 < 0 && four != 0 ) v24 = pow(-c24,(1.0/4.0)); // v2{4} = -c2{4}^{(1/4)}
-      th1d_v24->SetBinContent(i+1,v24);
       double four = th1d_for->GetBinContent(i+1);
       double efour = th1d_for->GetBinError(i+1);
       double ev24 = v24*(efour/four); // relative error for now, will get proper formula later...
+      if ( c24 < 0 && four != 0 ) v24 = pow(-c24,(1.0/4.0)); // v2{4} = -c2{4}^{(1/4)}
+      th1d_v24->SetBinContent(i+1,v24);
       th1d_v24->SetBinError(i+1,ev24);
       // --- 2-particle
       double c22 = th1d_c22->GetBinContent(i+1);
       double v22 = -9999;
-      if ( c22 > 0 ) v22 = sqrt(c22); // v2{2} = c2{2}^{(1/2)}
-      th1d_v22->SetBinContent(i+1,v22);
       double two = th1d_two->GetBinContent(i+1);
       double etwo = th1d_two->GetBinError(i+1);
       double ev22 = (1.0/v22)*etwo; // correct formula
+      if ( c22 > 0 ) v22 = sqrt(c22); // v2{2} = c2{2}^{(1/2)}
+      th1d_v22->SetBinContent(i+1,v22);
       th1d_v22->SetBinError(i+1,ev22);
       // ---
       // cout << i << " 123 " << th1d_123->GetBinContent(i+1) << " " << 12*two*two*two << endl;
