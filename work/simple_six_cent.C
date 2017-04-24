@@ -52,6 +52,7 @@ void simple_six_cent()
       double six = th1d_six->GetBinContent(i+1);
       double esix = th1d_six->GetBinError(i+1);
       double ev26 = v26*(esix/six); // relative error for now, will get proper formula later...
+      ev26 = 0; // looks very bad for reasons I don't yet understand...
       if ( c26 > 0 && six != 0 ) v26 = 0.25*pow(c26,(1.0/6.0)); // v2{6} = (1/4)*c2{6}^{(1/6)}
       th1d_v26->SetBinContent(i+1,v26);
       th1d_v26->SetBinError(i+1,ev26);
@@ -61,6 +62,7 @@ void simple_six_cent()
       double four = th1d_for->GetBinContent(i+1);
       double efour = th1d_for->GetBinError(i+1);
       double ev24 = v24*(efour/four); // relative error for now, will get proper formula later...
+      ev24 = 0; // looks very bad for reasons I don't yet understand...
       if ( c24 < 0 && four != 0 ) v24 = pow(-c24,(1.0/4.0)); // v2{4} = -c2{4}^{(1/4)}
       th1d_v24->SetBinContent(i+1,v24);
       th1d_v24->SetBinError(i+1,ev24);
