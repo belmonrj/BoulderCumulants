@@ -4,10 +4,10 @@ double calc_corr_four(double,double,double,double,double,double,double,double);
 
 void do_process(const char*,int); // get it? :)
 
-void process_cumulants_centrality()
+void process_cumulants_strk()
 {
-  fout = TFile::Open("all_cumulants_cent.root","recreate");
-  do_process("Run14AuAu200",1);
+  fout = TFile::Open("all_cumulants_strk.root","recreate");
+  do_process("Run14AuAu200",10);
   fout->Close();
 }
 
@@ -18,19 +18,19 @@ void do_process(const char* type, int rebin)
   TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
 
   // --- get the histograms from the file
-  TProfile* tp1f_four = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_c24");
-  TProfile* tp1f_two = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_c22");
-  TProfile* tp1f_cos1 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cos21");
-  TProfile* tp1f_sin1 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sin21");
-  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cossum22");
-  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sinsum22");
-  TProfile* tp1f_cos3 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_cos23");
-  TProfile* tp1f_sin3 = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_sin23");
-  TProfile* tp1f_G_two = (TProfile*)fin->Get("centrality_ac_fvtxsfvtxn_tracks_c22"); // scalar product north*south
-  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("centrality_ac_fvtxn_tracks_cos21");
-  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("centrality_ac_fvtxn_tracks_sin21");
-  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("centrality_ac_fvtxs_tracks_cos21");
-  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("centrality_ac_fvtxs_tracks_sin21");
+  TProfile* tp1f_four = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
+  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
+  TProfile* tp1f_cos1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos21");
+  TProfile* tp1f_sin1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin21");
+  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cossum22");
+  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sinsum22");
+  TProfile* tp1f_cos3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos23");
+  TProfile* tp1f_sin3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin23");
+  TProfile* tp1f_G_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxsfvtxn_tracks_c22"); // scalar product north*south
+  TProfile* tp1f_cos1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_cos21");
+  TProfile* tp1f_sin1_north = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_sin21");
+  TProfile* tp1f_cos1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_cos21");
+  TProfile* tp1f_sin1_south = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_sin21");
 
   // --- rebin as desired, rebinning on TProfile ensure weighted averages and uncertainties are done correctly
   tp1f_four->Rebin(rebin);
@@ -208,7 +208,7 @@ void do_process(const char* type, int rebin)
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetXaxis()->SetTitle("N^{FVTX}_{tracks}");
   empty->GetYaxis()->SetTitle("v_{2}");
   th1d_corr_v22->Draw("ex0p same");
   th1d_corr_v24->Draw("ex0p same");
@@ -323,7 +323,7 @@ void do_process(const char* type, int rebin)
   delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetXaxis()->SetTitle("N^{FVTX}_{tracks}");
   empty->GetYaxis()->SetTitle("v_{2}");
   th1d_uncorr_v22->Draw("ex0p same");
   th1d_uncorr_v24->Draw("ex0p same");
@@ -382,7 +382,7 @@ void do_process(const char* type, int rebin)
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetXaxis()->SetTitle("N^{FVTX}_{tracks}");
   empty->GetYaxis()->SetTitle("components");
   th1d_corr_222->Draw("ex0p same");
   th1d_corr_four->Draw("ex0p same");
@@ -408,7 +408,7 @@ void do_process(const char* type, int rebin)
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetXaxis()->SetTitle("N^{FVTX}_{tracks}");
   empty->GetYaxis()->SetTitle("components");
   th1d_uncorr_222->Draw("ex0p same");
   th1d_uncorr_four->Draw("ex0p same");
