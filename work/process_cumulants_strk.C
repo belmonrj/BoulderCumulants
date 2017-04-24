@@ -197,7 +197,8 @@ void do_process(const char* type, int rebin)
   th1d_uncorr_v24->SetMarkerStyle(kFullSquare);
 
   double xmin = 0.0;
-  double xmax = 100.0;
+  //double xmax = 100.0;
+  double xmax = 2000.0;
   double ymin = 0.0;
   double ymax = 0.199;
   // if ( strcmp(type,"Run15pAu200") == 0 ) xmax = 70.0;
@@ -304,15 +305,10 @@ void do_process(const char* type, int rebin)
   TH1D* th1d_sin1_south = tp1f_sin1_south->ProjectionX("th1d_sin1_south");
 
 
-  // --- back out the scaling when writing to file
 
-  th1d_corr_v22->GetXaxis()->SetRangeUser(0,100);
-  th1d_corr_v24->GetXaxis()->SetRangeUser(0,100);
-  th1d_corr_v2G->GetXaxis()->SetRangeUser(0,100);
-
-  th1d_corr_v22->Scale(1.0/1.35);
-  th1d_corr_v24->Scale(1.0/1.35);
-  th1d_corr_v2G->Scale(1.0/1.35);
+  // th1d_corr_v22->GetXaxis()->SetRangeUser(0,xmax);
+  // th1d_corr_v24->GetXaxis()->SetRangeUser(0,xmax);
+  // th1d_corr_v2G->GetXaxis()->SetRangeUser(0,xmax);
 
   fout->cd();
   th1d_corr_v22->SetName(Form("th1dR%d_v22_%s",rebin,type));
