@@ -447,7 +447,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
 
   if (_create_ttree)
   {
-    shorttree = new TTree("ntp_event", "event-wise ntuple");
+    shorttree = new TTree("shorttree", "Event-wise TTree");
     shorttree->SetAutoFlush(1000);
     shorttree->SetMaxTreeSize(100000000000LL);
     shorttree -> Branch("event", &event, "event/F");
@@ -1929,6 +1929,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
 
   if ( _verbosity > 0 ) cout << "sucessfully processed this event, number of fvtx tracks is " << nfvtxt_raw << ", number of fvtx tracks passing cuts is " << nfvtxt << endl;
+
+  if ( _create_ttree ) shorttree->Fill();
 
   ++tmp_evt;//to keep track of how many events pass event cuts
   return EVENT_OK;
