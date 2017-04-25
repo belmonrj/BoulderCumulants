@@ -2891,7 +2891,9 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
 
       cntfile = "CNT_MPC_run15pAu_200GeV_CA_pro104-0000435527-9000.root";
       dst_evefile = "DST_EVE_MPC_run15pAu_200GeV_CA_pro104-0000435527-9000.root";
+      dst_mpcfile = "DST_MPC_MPC_run15pAu_200GeV_MPCPlus_pro104-0000435527-9000.root";
       dst_svxfile = "DST_SVX_MPC_run15pAu_200GeV_CA_pro104-0000435527-9000.root";
+      mwgfile = "MWG_MPC_run15pAu_200GeV_Muons_pro104-0000435527-9000.root";
     }
   else if (strcmp(system, "Run15pAu200CAMUPro104") == 0)
     {
@@ -2957,6 +2959,7 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
 
       cntfile = "CNT_MB_run15pp_200GeV_CA_pro104-0000430238-9000.root";
       mwgfile = "MWG_MB_run15pp_200GeV_Muons_pro105-0000430238-9000.root";
+      dst_mpcfile = "DST_MPC_MB_run15pp_200GeV_MPCPlus_pro104-0000430238-9000.root";
       dst_evefile = "DST_EVE_MB_run15pp_200GeV_CA_pro104-0000430238-9000.root";
       dst_svxfile = "DST_SVX_MB_run15pp_200GeV_CA_pro104-0000430238-9000.root";
     }
@@ -2972,6 +2975,7 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
       cntfile = "CNT_MPC_run15pp_200GeV_CA_pro104-0000430238-9000.root";
       mwgfile = "MWG_MPC_run15pp_200GeV_Muons_pro105-0000430238-9000.root";
       dst_evefile = "DST_EVE_MPC_run15pp_200GeV_CA_pro104-0000430238-9000.root";
+      dst_mpcfile = "DST_MPC_MPC_run15pp_200GeV_MPCPlus_pro104-0000430238-9000.root";
       dst_svxfile = "DST_SVX_MPC_run15pp_200GeV_CA_pro104-0000430238-9000.root";
     }
   else if (strcmp(system, "Run15pp200CAMUPro104") == 0)
@@ -3001,6 +3005,96 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
       mwgfile = "MWG_OT_run15pp_200GeV_Muons_pro105-0000430238-9000.root";
       dst_evefile = "DST_EVE_OT_run15pp_200GeV_CA_pro104-0000430238-9000.root";
       dst_svxfile = "DST_SVX_OT_run15pp_200GeV_CA_pro104-0000430238-9000.root";
+    }
+  else if (strcmp(system, "Run15pp200CAERTP108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("libert");
+      gSystem->Load("libspin");
+      gSystem->Load("librecal");
+
+      cntfile = "CNT_ERT_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_evefile = "DST_EVE_ERT_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_mpcfile = "DST_MPC_ERT_run15pp_200GeV_MPCPlus_pro104-0000430238-9000.root";
+      dst_svxfile = "DST_SVX_ERT_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      mwgfile = "MWG_ERT_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+    }
+  else if (strcmp(system, "Run15pp200CAFVTXP108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("libert");
+      gSystem->Load("libspin");
+      gSystem->Load("librecal");
+
+      cntfile = "CNT_FVTX_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_evefile = "DST_EVE_FVTX_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_mpcfile = "DST_MPC_FVTX_run15pp_200GeV_MPCPlus_pro104-0000430238-9000.root";
+      dst_svxfile = "DST_SVX_FVTX_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      mwgfile = "MWG_FVTX_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+    }
+  else if (strcmp(system, "Run15pp200CAMBP108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("libert");
+      gSystem->Load("libspin");
+      gSystem->Load("librecal");
+
+      cntfile = "CNT_MB_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_evefile = "DST_EVE_MB_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_mpcfile = "DST_MPC_MB_run15pp_200GeV_MPCPlus_pro104-0000430238-9000.root";
+      dst_svxfile = "DST_SVX_MB_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      mwgfile = "MWG_MB_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+    }
+  else if (strcmp(system, "Run15pp200CAMPCP108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("libert");
+      gSystem->Load("libspin");
+      gSystem->Load("librecal");
+
+      cntfile = "CNT_MPC_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_evefile = "DST_EVE_MPC_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_mpcfile = "DST_MPC_MPC_run15pp_200GeV_MPCPlus_pro104-0000430238-9000.root";
+      dst_svxfile = "DST_SVX_MPC_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      mwgfile = "MWG_MPC_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+    }
+  else if (strcmp(system, "Run15pp200CAMUP108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("libert");
+      gSystem->Load("libspin");
+      gSystem->Load("librecal");
+
+      cntfile = "CNT_MU_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_evefile = "DST_EVE_MU_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_mpcfile = "DST_MPC_MU_run15pp_200GeV_MPCPlus_pro104-0000430238-9000.root";
+      dst_svxfile = "DST_SVX_MU_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      mwgfile = "MWG_MU_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+    }
+  else if (strcmp(system, "Run15pp200CAOTP108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("libert");
+      gSystem->Load("libspin");
+      gSystem->Load("librecal");
+
+      cntfile = "CNT_OT_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_evefile = "DST_EVE_OT_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      dst_mpcfile = "DST_MPC_OT_run15pp_200GeV_MPCPlus_pro104-0000430238-9000.root";
+      dst_svxfile = "DST_SVX_OT_run15pp_200GeV_CA_pro108-0000430238-9000.root";
+      mwgfile = "MWG_OT_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
     }
 
   else if (strcmp(system, "Run15pp200CAnoVTXERTPro104") == 0)
@@ -3678,6 +3772,66 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
       gSystem->Load("librecal");
 
       mwgfile = "MWG_OT_run15pp_200GeV_Muons_pro105-0000430238-9000.root";
+      pwg_included = true;
+    }
+  else if (strcmp(system, "Run15pp200MuonsERTPro108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("librecal");
+
+      mwgfile = "MWG_ERT_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+      pwg_included = true;
+    }
+  else if (strcmp(system, "Run15pp200MuonsFVTXPro108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("librecal");
+
+      mwgfile = "MWG_FVTX_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+      pwg_included = true;
+    }
+  else if (strcmp(system, "Run15pp200MuonsMBPro108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("librecal");
+
+      mwgfile = "MWG_MB_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+      pwg_included = true;
+    }
+  else if (strcmp(system, "Run15pp200MuonsMPCPro108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("librecal");
+
+      mwgfile = "MWG_MPC_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+      pwg_included = true;
+    }
+  else if (strcmp(system, "Run15pp200MuonsMUPro108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("librecal");
+
+      mwgfile = "MWG_MU_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
+      pwg_included = true;
+    }
+  else if (strcmp(system, "Run15pp200MuonsOTPro108") == 0)
+    {
+      gSystem->Load("libfvtx_subsysreco.so");
+      gSystem->Load("libMWGOO");
+      gSystem->Load("libmutrg");
+      gSystem->Load("librecal");
+
+      mwgfile = "MWG_OT_run15pp_200GeV_Muons_pro108-0000430238-9000.root";
       pwg_included = true;
     }
   else if (strcmp(system, "Run15pp200FvtxERTPro107") == 0)
@@ -4565,7 +4719,7 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
       gSystem->Load("libjprof.so");
       prof *Pr = new prof;
     }
-
+  gSystem->ListLibraries();
   TString seOutFile(outfile);
   seOutFile.Insert(seOutFile.Last('/') + 1, "se-");
   gBenchmark->Start("timeme");
