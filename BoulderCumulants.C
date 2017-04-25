@@ -14,6 +14,7 @@
 #include <TMath.h>
 #include <TString.h>
 #include <TFile.h>
+#include <TTree.h>
 #include <TProfile.h>
 #include <TComplex.h>
 
@@ -61,6 +62,8 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   use_utils = true;
 
   tmp_evt = 0;
+
+  _create_ttree = true,
 
   FVTX_X = -9999.9;
   FVTX_Y = -9999.9;
@@ -441,6 +444,32 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   if (_verbosity > 1) cout << PHWHERE << "::Init() - entered." << endl;
 
   _output_file = new TFile(_output_filename.c_str(), "RECREATE");
+
+  if (_create_ttree)
+  {
+    shorttree = new TTree("ntp_event", "event-wise ntuple");
+    shorttree->SetAutoFlush(1000);
+    shorttree->SetMaxTreeSize(100000000000LL);
+    shorttree -> Branch("event", &event, "event/F");
+    shorttree -> Branch("bbc_z", &bbc_z, "bbc_z/F");
+    shorttree -> Branch("centrality", &centrality, "centrality/F");
+    shorttree -> Branch("npc1", &npc1, "npc1/I");
+    shorttree -> Branch("trigger_scaled", &trigger_scaled, "trigger_scaled/i");
+    shorttree -> Branch("trigger_live", &trigger_live, "trigger_live/i");
+    // shorttree -> Branch("d_Qx", &d_Qx, "d_Qx[9]/F");
+    // shorttree -> Branch("d_Qy", &d_Qy, "d_Qy[9]/F");
+    // shorttree -> Branch("d_Qw", &d_Qw, "d_Qw[9]/F");
+    shorttree -> Branch("bc_x", &bc_x, "bc_x/F");
+    shorttree -> Branch("bc_y", &bc_y, "bc_y/F");
+    shorttree -> Branch("vtx_z", &vtx_z, "vtx_z/F");
+    shorttree -> Branch("fvtx_x", &FVTX_X, "fvtx_x/F");
+    shorttree -> Branch("fvtx_y", &FVTX_Y, "fvtx_y/F");
+    shorttree -> Branch("fvtx_z", &FVTX_Z, "fvtx_z/F");
+    // shorttree -> Branch("frac", &frac, "frac/F");
+    shorttree -> Branch("bbc_qn", &bbc_qn, "bbc_qn/F");
+    shorttree -> Branch("bbc_qs", &bbc_qs, "bbc_qs/F");
+    // shorttree -> Branch("d_BBC_charge", &d_BBC_charge, "d_BBC_charge[128]/F");
+  }
 
   // ---
   // --- initialize histograms
@@ -1119,8 +1148,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality  = global->getCentrality();
   icent = (int)centrality;
   if ( icent < 0 ) icent = 99; // last bin is always empty and this protects against invalid read
-  // bbc_qn      = global->getBbcChargeN();
-  // bbc_qs      = global->getBbcChargeS();
+  bbc_qn      = global->getBbcChargeN();
+  bbc_qs      = global->getBbcChargeS();
   npc1        = global->getNumberPC1Hits();
   event = evthead->get_EvtSequence();
   trigger_scaled = triggers->get_lvl1_trigscaled();

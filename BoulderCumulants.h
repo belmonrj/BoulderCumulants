@@ -10,6 +10,7 @@
 class Fun4AllHistoManager;
 class dAuBES_utils;
 class TFile;
+class TTree;
 class TH1D;
 class TProfile;
 class TComplex;
@@ -35,6 +36,7 @@ class BoulderCumulants: public SubsysReco
   void set_runlist_file(std::string filename) { _runlist_filename = filename; } // name of file for above
   bool is_run_in_list(int runnumber);
   void SetQvectorOffsets(int runnumber);
+  void set_create_ttree(bool b){_create_ttree = b;} // ??
 
  protected:
 
@@ -71,11 +73,16 @@ class BoulderCumulants: public SubsysReco
 
   int tmp_evt;
 
+  bool _create_ttree;
+  // -- the tree itself
+  TTree* shorttree;
 
   //-- ntp_event variables
   int event;
   float bbc_z;
   float centrality;
+  float bbc_qn;
+  float bbc_qs;
   int icent;
   int npc1;
   unsigned int trigger_scaled;
