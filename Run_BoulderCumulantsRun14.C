@@ -33,8 +33,8 @@ void Run_BoulderCumulantsRun14(const char *outFile = "test_train_output.root")
 
 void InputData(vector<string> &indata)
 {
-  indata.push_back("CNT"); // must have for Run14 (HeAu only??)
+  //indata.push_back("CNT"); // must have for Run14 (HeAu only??)
   indata.push_back("MWG"); // must have for Run14 (only)
-  //indata.push_back("MuonDST"); // must have for Run14 (AuAu only)
+  indata.push_back("MuonDST"); // must have for Run14 (AuAu only)
   return;
 }
