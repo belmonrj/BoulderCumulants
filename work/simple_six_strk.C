@@ -53,7 +53,7 @@ void simple_six_strk()
       double esix = th1d_six->GetBinError(i+1);
       double ev26 = v26*(esix/six); // relative error for now, will get proper formula later...
       ev26 = 0; // looks very bad for reasons I don't yet understand...
-      if ( c26 > 0 && six != 0 ) v26 = 0.25*pow(c26,(1.0/6.0)); // v2{6} = (1/4)*c2{6}^{(1/6)}
+      if ( c26 > 0 && six != 0 ) v26 = pow((0.25*c26),(1.0/6.0)); // v2{6} = (c2{6}/4)^{(1/6)}
       th1d_v26->SetBinContent(i+1,v26);
       th1d_v26->SetBinError(i+1,ev26);
       // --- 4-particle
