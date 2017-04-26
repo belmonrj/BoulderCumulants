@@ -85,6 +85,10 @@ class BoulderCumulants: public SubsysReco
   float bbc_qs;
   int icent;
   int npc1;
+  int nfvtxt;
+  int nfvtxt_south;
+  int nfvtxt_north;
+  int nfvtxt_raw;
   unsigned int trigger_scaled;
   unsigned int trigger_live;
   float bc_x;

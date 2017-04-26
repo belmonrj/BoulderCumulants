@@ -454,6 +454,10 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
     shorttree -> Branch("bbc_z", &bbc_z, "bbc_z/F");
     shorttree -> Branch("centrality", &centrality, "centrality/F");
     shorttree -> Branch("npc1", &npc1, "npc1/I");
+    shorttree -> Branch("nfvtxt", &nfvtxt, "nfvtxt/I");
+    shorttree -> Branch("nfvtxt_south", &nfvtxt_south, "nfvtxt_south/I");
+    shorttree -> Branch("nfvtxt_north", &nfvtxt_north, "nfvtxt_north/I");
+    shorttree -> Branch("nfvtxt_raw", &nfvtxt_raw, "nfvtxt_raw/I");
     shorttree -> Branch("trigger_scaled", &trigger_scaled, "trigger_scaled/i");
     shorttree -> Branch("trigger_live", &trigger_live, "trigger_live/i");
     // shorttree -> Branch("d_Qx", &d_Qx, "d_Qx[9]/F");
@@ -1161,6 +1165,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   trigger_scaled = triggers->get_lvl1_trigscaled();
   trigger_live = triggers->get_lvl1_triglive();
 
+  if ( !use_utils && centrality < 0  ) return EVENT_OK;
+  if ( !use_utils && centrality > 99 ) return EVENT_OK;
 
 
 
@@ -1168,6 +1174,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   PHPoint vertex1 = vertexes->get_Vertex("BBC");
   bbc_z = vertex1.getZ();
   if ( bbc_z != bbc_z ) bbc_z = -9999; // reassign nan
+
+  if ( !use_utils && fabs(bbc_z) > 15.0 ) return EVENT_OK;
 
   PHPoint fvtx_vertex = vertexes->get_Vertex("FVTX");
   FVTX_X = fvtx_vertex.getX();
@@ -1249,14 +1257,23 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   }
 
 
-
+  // --- initialize Q-vectors for tree
+  for ( int i = 0; i < 9; ++i )
+    {
+      d_NorthQX[i] = 0;
+      d_NorthQY[i] = 0;
+      d_SouthQX[i] = 0;
+      d_SouthQY[i] = 0;
+    }
+  d_NorthQW = 0;
+  d_SouthQW = 0;
 
   //int ntr = -1;
   //int ntr = 0;
-  int nfvtxt = 0;
-  int nfvtxt_south = 0;
-  int nfvtxt_north = 0;
-  int nfvtxt_raw = 0;
+  nfvtxt = 0;
+  nfvtxt_south = 0;
+  nfvtxt_north = 0;
+  nfvtxt_raw = 0;
   // --- first fvtx track loop
   if ( _verbosity > 1 ) cout << "entering fvtx track loop" << endl;
   TFvtxCompactTrkMap::const_iterator trk_iter = trkfvtx_map->range();
@@ -1276,11 +1293,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       float the = fvtx_trk->get_fvtx_theta();
       float eta = fvtx_trk->get_fvtx_eta();
       float phi = fvtx_trk->get_fvtx_phi();
-      //int   arm = (int)fvtx_trk->get_arm();
-      //float fvtx_x      = fvtx_trk->get_fvtx_vtx().getX();
-      //float fvtx_y      = fvtx_trk->get_fvtx_vtx().getY();
-      //float fvtx_z      = fvtx_trk->get_fvtx_vtx().getZ();
-      //int   nfhits      = (int)fvtx_trk->get_nhits();
+      // int   arm = (int)fvtx_trk->get_arm();
+      float fvtx_x      = fvtx_trk->get_fvtx_vtx().getX();
+      float fvtx_y      = fvtx_trk->get_fvtx_vtx().getY();
+      float fvtx_z      = fvtx_trk->get_fvtx_vtx().getZ();
+      float chisq       = fvtx_trk->get_chi2_ndf();
+      int   nhits       = (int)fvtx_trk->get_nhits();
 
       // fix total momentum to 1.0 (for rotating due to beamtilt)
       double px = 1.0 * sin(the) * cos(phi);
@@ -1299,10 +1317,37 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 	  the = TMath::ACos(pz / TMath::Sqrt(px * px + py * py + pz * pz));
 	}
 
-      // float vertex_z = zvtx;
-      // if ( FVTX_Z > -999 ) vertex_z = FVTX_Z;
-      // float DCA_x      = fvtx_x + tan(the) * cos(phi) * (vertex_z - fvtx_z);
-      // float DCA_y      = fvtx_y + tan(the) * sin(phi) * (vertex_z - fvtx_z);
+      float vertex_z = zvtx;
+      if ( FVTX_Z > -999 ) vertex_z = FVTX_Z;
+      float DCA_x      = fvtx_x + tan(the) * cos(phi) * (vertex_z - fvtx_z);
+      float DCA_y      = fvtx_y + tan(the) * sin(phi) * (vertex_z - fvtx_z);
+
+      if ( !use_utils )
+        {
+          if ( fabs(DCA_x) > 2.0 || fabs(DCA_y) > 2.0 ) continue;
+          if ( nhits < 3 ) continue;
+          if ( chisq > 5 ) continue;
+        }
+
+      // --- Q-vectors for tree
+      if ( eta > 0 )
+        {
+          for ( int i = 0; i < 9; ++i )
+            {
+              d_NorthQX[i] += cos(i*phi);
+              d_NorthQY[i] += sin(i*phi);
+            }
+          d_NorthQW += 1;
+        }
+      if ( eta < 0 )
+        {
+          for ( int i = 0; i < 9; ++i )
+            {
+              d_SouthQX[i] += cos(i*phi);
+              d_SouthQY[i] += sin(i*phi);
+            }
+          d_SouthQW += 1;
+        }
 
       // --- now fill the Q-vector arrays
       int special_index = -1;
