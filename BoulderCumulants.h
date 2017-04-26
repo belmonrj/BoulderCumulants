@@ -94,6 +94,12 @@ class BoulderCumulants: public SubsysReco
   float FVTX_Y;
   float FVTX_Z;
 
+  float d_SouthQX[9];
+  float d_SouthQY[9];
+  float d_SouthQW;
+  float d_NorthQX[9];
+  float d_NorthQY[9];
+  float d_NorthQW;
 
   // --- Q-vector offset variables
   double offset_centrality_qx2_south[100];

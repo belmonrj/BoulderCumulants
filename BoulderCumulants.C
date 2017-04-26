@@ -459,6 +459,12 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
     // shorttree -> Branch("d_Qx", &d_Qx, "d_Qx[9]/F");
     // shorttree -> Branch("d_Qy", &d_Qy, "d_Qy[9]/F");
     // shorttree -> Branch("d_Qw", &d_Qw, "d_Qw[9]/F");
+    shorttree -> Branch("d_SouthQX", &d_SouthQX, "d_SouthQX[9]/F");
+    shorttree -> Branch("d_SouthQY", &d_SouthQY, "d_SouthQY[9]/F");
+    shorttree -> Branch("d_SouthQW", &d_SouthQW, "d_SouthQW/F");
+    shorttree -> Branch("d_NorthQX", &d_NorthQX, "d_NorthQX[9]/F");
+    shorttree -> Branch("d_NorthQY", &d_NorthQY, "d_NorthQY[9]/F");
+    shorttree -> Branch("d_NorthQW", &d_NorthQW, "d_NorthQW/F");
     shorttree -> Branch("bc_x", &bc_x, "bc_x/F");
     shorttree -> Branch("bc_y", &bc_y, "bc_y/F");
     shorttree -> Branch("vtx_z", &vtx_z, "vtx_z/F");
