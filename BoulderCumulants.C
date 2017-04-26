@@ -80,6 +80,24 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   bc_y = -9999.9;
   vtx_z = -9999.9;
 
+  shorttree = NULL;
+  bbc_qn = -9999.9;
+  bbc_qs = -9999.9;
+  nfvtxt = 0;
+  nfvtxt_south = 0;
+  nfvtxt_north = 0;
+  nfvtxt_raw = 0;
+  for ( int i = 0; i < 9; ++i )
+    {
+      d_SouthQX[i] = 0;
+      d_SouthQY[i] = 0;
+      d_NorthQX[i] = 0;
+      d_NorthQY[i] = 0;
+    }
+  d_SouthQW = 0;
+  d_NorthQW = 0;
+
+
   th1d_nfvtxt_combinedER = NULL;
   th1d_nfvtxt_combined = NULL;
   th1d_nfvtxt_north = NULL;
