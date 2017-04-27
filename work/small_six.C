@@ -9,9 +9,12 @@ void small_six()
   // TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c26");
   // TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c24");
   // TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c22");
-  TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c26");
-  TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c24");
-  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c22");
+  TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c26");
+  TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
+  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
+  // TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c26");
+  // TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c24");
+  // TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c22");
 
   tp1f_six->Rebin(rebin);
   tp1f_for->Rebin(rebin);
@@ -85,7 +88,7 @@ void small_six()
     }
 
   double xmin = 0.0;
-  double xmax = 70.0;
+  double xmax = 50.0;
   double ymin = -1e-4;
   double ymax = 1e-4;
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
