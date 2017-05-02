@@ -1,11 +1,11 @@
 void small_six()
 {
-  doit("Run16dAu200");
-  doit("Run16dAu62");
-  doit("Run16dAu39");
+  doit("Run16dAu200",2);
+  doit("Run16dAu62",5);
+  doit("Run16dAu39",5);
 }
 
-void doit(const char* handle)
+void doit(const char* handle, int rebin)
 {
 
   //TFile* fin = TFile::Open("input/cumulants_200.root");
@@ -13,7 +13,7 @@ void doit(const char* handle)
   //TFile* fin = TFile::Open("input/cumulants_Run16dAu62.root");
   TFile* fin = TFile::Open(Form("input/cumulants_%s.root",handle));
 
-  int rebin = 2;
+  // int rebin = 2;
 
   // TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c26");
   // TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c24");
