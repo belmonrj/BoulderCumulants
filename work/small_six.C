@@ -1,8 +1,17 @@
 void small_six()
 {
+  doit("Run16dAu200");
+  doit("Run16dAu62");
+  doit("Run16dAu39");
+}
+
+void doit(const char* handle)
+{
 
   //TFile* fin = TFile::Open("input/cumulants_200.root");
-  TFile* fin = TFile::Open("input/cumulants_Run16dAu200.root");
+  //TFile* fin = TFile::Open("input/cumulants_Run16dAu200.root");
+  //TFile* fin = TFile::Open("input/cumulants_Run16dAu62.root");
+  TFile* fin = TFile::Open(Form("input/cumulants_%s.root",handle));
 
   int rebin = 2;
 
@@ -110,15 +119,15 @@ void small_six()
   th1d_123->Draw("same ex0p");
   TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
-  leg->SetHeader("Run14AuAu200");
+  leg->SetHeader(handle);
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_six,"#LT#LT6#GT#GT","p");
   leg->AddEntry(th1d_942,"9#LT#LT4#GT#GT#LT#LT2#GT#GT","p");
   leg->AddEntry(th1d_123,"12#LT#LT2#GT#GT^{3}","p");
   leg->Draw();
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_components_blah.png"));
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_components_blah.pdf"));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_components_%s.png",handle));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_components_%s.pdf",handle));
 
   // xmin = 0.0;
   // xmax = 100.0;
@@ -134,8 +143,8 @@ void small_six()
   th1d_942->Draw("same ex0p");
   th1d_123->Draw("same ex0p");
   leg->Draw();
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_components_zoom_blah.png"));
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_components_zoom_blah.pdf"));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_components_zoom_%s.png",handle));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_components_zoom_%s.pdf",handle));
 
   // xmin = 0.0;
   // xmax = 100.0;
@@ -153,13 +162,13 @@ void small_six()
   if ( leg ) delete leg;
   leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
-  leg->SetHeader("Run14AuAu200");
+  leg->SetHeader(handle);
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_c26,"c_{2}{6} = 4v_{2}^{6}","p");
   leg->Draw();
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_cumulant_blah.png"));
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_cumulant_blah.pdf"));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_cumulant_%s.png",handle));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_cumulant_%s.pdf",handle));
 
   // xmin = 0.0;
   // xmax = 100.0;
@@ -178,13 +187,13 @@ void small_six()
   if ( leg ) delete leg;
   leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
-  leg->SetHeader("Run14AuAu200");
+  leg->SetHeader(handle);
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_v26,"v_{2}{6}","p");
   leg->Draw();
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_v2_blah.png"));
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_v2_blah.pdf"));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_v2_%s.png",handle));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_v2_%s.pdf",handle));
   th1d_v24->SetMarkerStyle(kOpenSquare);
   th1d_v24->SetMarkerColor(kRed);
   th1d_v24->SetLineColor(kRed);
@@ -196,7 +205,7 @@ void small_six()
   leg->AddEntry(th1d_v24,"v_{2}{4}","p");
   leg->AddEntry(th1d_v22,"v_{2}{2}","p");
   leg->Draw();
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_v2642_blah.png"));
-  c1->Print(Form("FigsSixSmall/strk_sixparticle_v2642_blah.pdf"));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_v2642_%s.png",handle));
+  c1->Print(Form("FigsSixSmall/strk_sixparticle_v2642_%s.pdf",handle));
 
 }
