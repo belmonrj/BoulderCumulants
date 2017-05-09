@@ -61,33 +61,54 @@ void doit(const char* handle, int rebin)
   int nbins = th1d_c26->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
     {
+      // --- base quantities
+      double six = th1d_six->GetBinContent(i+1);
+      double esix = th1d_six->GetBinError(i+1);
+      double four = th1d_for->GetBinContent(i+1);
+      double efour = th1d_for->GetBinError(i+1);
+      double two = th1d_two->GetBinContent(i+1);
+      double etwo = th1d_two->GetBinError(i+1);
       // --- 6-particle
       double center = th1d_c26->GetBinCenter(i+1);
       if ( center < 7 ) th1d_c26->SetBinContent(i+1,-9999);
       double c26 = th1d_c26->GetBinContent(i+1);
       double v26 = -9999;
-      double six = th1d_six->GetBinContent(i+1);
-      double esix = th1d_six->GetBinError(i+1);
-      if ( c26 > 0 && six != 0 ) v26 = pow((0.25*c26),(1.0/6.0)); // v2{6} = (c2{6}/4)^{(1/6)}
+      double ev26 = -9999;
+      if ( c26 > 0 && six != 0 )
+        {
+          v26 = pow((0.25*c26),(1.0/6.0));
+          ev26 = (1.0/pow(c26,1.25)) *
+            sqrt(
+                 (4.5*(4*two*two-four)*(4*two*two-four)*etwo*etwo) +
+                 (4.5*two*two*efour*efour) +
+                 (1.0/18.0)*esix*six
+                 );
+        }
       th1d_v26->SetBinContent(i+1,v26);
       double ev26 = v26*(esix/six);
       th1d_v26->SetBinError(i+1,ev26);
       // --- 4-particle
+      center = th1d_c24->GetBinCenter(i+1);
+      if ( center < 5 ) th1d_c24->SetBinContent(i+1,9999);
       double c24 = th1d_c24->GetBinContent(i+1);
       double v24 = -9999;
-      double four = th1d_for->GetBinContent(i+1);
-      double efour = th1d_for->GetBinError(i+1);
-      if ( c24 < 0 && four != 0 ) v24 = pow(-c24,(1.0/4.0));
-      double ev24 = v24*(efour/four);
+      double ev24 = -9999;
+      if ( c24 < 0 && four != 0 )
+        {
+          v24 = pow(-c24,(1.0/4.0));
+          ev24 = (1.0/pow(-c24,0.75)) *
+            sqrt(
+                 (two*two*etwo*etwo) +
+                 (0.0625*efour*efour)
+                 );
+        }
       th1d_v24->SetBinContent(i+1,v24);
       th1d_v24->SetBinError(i+1,ev24);
       // --- 2-particle
       double c22 = th1d_c22->GetBinContent(i+1);
       double v22 = -9999;
-      double two = th1d_two->GetBinContent(i+1);
-      double etwo = th1d_two->GetBinError(i+1);
-      double ev22 = (1.0/v22)*etwo; // correct formula
-      if ( c22 > 0 ) v22 = sqrt(c22); // v2{2} = c2{2}^{(1/2)}
+      double ev22 = (1.0/v22)*etwo;
+      if ( c22 > 0 ) v22 = sqrt(c22);
       th1d_v22->SetBinContent(i+1,v22);
       th1d_v22->SetBinError(i+1,ev22);
       // ---
@@ -99,22 +120,19 @@ void doit(const char* handle, int rebin)
 
   float Lmarg = 0.14;
   float Rmarg = 0.02;
-  // float Bmarg = 0.10;
-  // float Bmarg = 0.14; // not quite enough
-  //float Bmarg = 0.2; // a little too much
   float Bmarg = 0.16;
   float Tmarg = 0.02;
 
-  TCanvas *ccomp_dAu200 = new TCanvas("ccomp_dAu200", "components dau200", 600, 700);
-  ccomp_dAu200->SetMargin(0, 0, 0, 0);
+  TCanvas *ccomp = new TCanvas("ccomp", "", 600, 700);
+  ccomp->SetMargin(0, 0, 0, 0);
 
-  ccomp_dAu200->cd();
+  ccomp->cd();
   TPad *pcomp = new TPad("pcomp", "comp", 0, 0.45, 1, 1);
   pcomp->SetMargin(Lmarg, Rmarg, 0, 0.1);
   pcomp->SetTicks(1, 1);
   pcomp->Draw();
 
-  ccomp_dAu200->cd();
+  ccomp->cd();
   TPad *pcompc26 = new TPad("pcompc24", "compc24", 0, 0, 1, 0.45);
   pcompc26->SetMargin(Lmarg, Rmarg, 0.22, 0);
   pcompc26->SetTicks(1, 1);
@@ -172,13 +190,13 @@ void doit(const char* handle, int rebin)
   line.SetLineWidth(2);
   line.SetLineStyle(2);
   line.Draw();
-  ccomp_dAu200->cd();
-  ccomp_dAu200->Print(Form("FigsSixSmall/strk_sixparticle_components_%s.png",handle));
-  ccomp_dAu200->Print(Form("FigsSixSmall/strk_sixparticle_components_%s.pdf",handle));
+  ccomp->cd();
+  ccomp->Print(Form("FigsSixSmall/strk_sixparticle_components_%s.png",handle));
+  ccomp->Print(Form("FigsSixSmall/strk_sixparticle_components_%s.pdf",handle));
 
   //return;
 
-  TCanvas* c1 = new TCanvas();
+  TCanvas* c1 = new TCanvas("c1","");
   c1->cd();
   // xmin = 0.0;
   // xmax = 100.0;
@@ -319,5 +337,8 @@ void doit(const char* handle, int rebin)
   gv26_sys_dAu200->Draw("E5 same");
   c1->Print(Form("FigsSixSmall/strk_sixparticle_v2642_%s.png",handle));
   c1->Print(Form("FigsSixSmall/strk_sixparticle_v2642_%s.pdf",handle));
+
+  delete c1;
+  delete ccomp;
 
 }
