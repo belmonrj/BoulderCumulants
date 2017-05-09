@@ -70,18 +70,15 @@ void doit(const char* handle, int rebin)
       double esix = th1d_six->GetBinError(i+1);
       if ( c26 > 0 && six != 0 ) v26 = pow((0.25*c26),(1.0/6.0)); // v2{6} = (c2{6}/4)^{(1/6)}
       th1d_v26->SetBinContent(i+1,v26);
-      double ev26 = v26*(esix/six); // relative error for now, will get proper formula later...
-      //if ( six > 0 ) cout << v26 << " " << (esix/six) << " " << ev26 << endl;
-      //ev26 = 0; // looks very bad for reasons I don't yet understand...
+      double ev26 = v26*(esix/six);
       th1d_v26->SetBinError(i+1,ev26);
       // --- 4-particle
       double c24 = th1d_c24->GetBinContent(i+1);
       double v24 = -9999;
       double four = th1d_for->GetBinContent(i+1);
       double efour = th1d_for->GetBinError(i+1);
-      if ( c24 < 0 && four != 0 ) v24 = pow(-c24,(1.0/4.0)); // v2{4} = -c2{4}^{(1/4)}
-      double ev24 = v24*(efour/four); // relative error for now, will get proper formula later...
-      //ev24 = 0; // looks very bad for reasons I don't yet understand...
+      if ( c24 < 0 && four != 0 ) v24 = pow(-c24,(1.0/4.0));
+      double ev24 = v24*(efour/four);
       th1d_v24->SetBinContent(i+1,v24);
       th1d_v24->SetBinError(i+1,ev24);
       // --- 2-particle
