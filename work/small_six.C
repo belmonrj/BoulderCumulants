@@ -3,6 +3,7 @@ void small_six()
   doit("Run16dAu200",2);
   doit("Run16dAu62",5);
   doit("Run16dAu39",5);
+  doit("Run16dAu20",5);
 }
 
 void doit(const char* handle, int rebin)
@@ -15,15 +16,12 @@ void doit(const char* handle, int rebin)
 
   // int rebin = 2;
 
-  // TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c26");
-  // TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c24");
-  // TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c22");
-  TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c26");
-  TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
-  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
-  // TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c26");
-  // TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c24");
-  // TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_zzyzx_fvtxc_tracks_c22");
+  TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c26");
+  TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c24");
+  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c22");
+  // TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c26");
+  // TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
+  // TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
 
   tp1f_six->Rebin(rebin);
   tp1f_for->Rebin(rebin);
@@ -162,6 +160,10 @@ void doit(const char* handle, int rebin)
   th1d_six->Draw("same ex0p");
   th1d_942->Draw("same ex0p");
   th1d_123->Draw("same ex0p");
+  TLine line(xmin,0,xmax,0);
+  line.SetLineWidth(2);
+  line.SetLineStyle(2);
+  line.Draw();
   TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
   leg->SetHeader(handle);
@@ -172,7 +174,7 @@ void doit(const char* handle, int rebin)
   leg->AddEntry(th1d_123,"12#LT#LT2#GT#GT^{3}","p");
   leg->Draw();
   pcompc26->cd();
-  ymax = 2e-6;
+  ymax = 1.999e-6;
   ymin = -5e-7;
   TH2D* empty2 = new TH2D("empty2","",1,xmin,xmax,1,ymin,ymax);
   empty2->Draw();
@@ -186,9 +188,6 @@ void doit(const char* handle, int rebin)
   th1d_c26->SetMarkerColor(kBlack);
   th1d_c26->SetLineColor(kBlack);
   th1d_c26->Draw("same ex0p");
-  TLine line(xmin,0,xmax,0);
-  line.SetLineWidth(2);
-  line.SetLineStyle(2);
   line.Draw();
   ccomp->cd();
   ccomp->Print(Form("FigsSixSmall/strk_sixparticle_components_%s.png",handle));
