@@ -3,6 +3,7 @@ void make_do_cuts()
 
   int number_of_problems = 0;
 
+  // --- this was made with root6, so there may be problems when running on RCF...
   TFile* file = TFile::Open("fout.root");
 
   TGraph* tglower = (TGraph*)file->Get("tglower");
@@ -11,16 +12,21 @@ void make_do_cuts()
   const int nlower = tglower->GetN();
   const int nupper = tgupper->GetN();
 
-  double xlower[nlower];
-  double ylower[nlower];
-  double xupper[nupper];
-  double yupper[nupper];
-
-  if ( nlower != nupper )
+  if ( nlower != nupper || nlower > 50 || nupper > 50 )
     {
-      cout << "what the fuck" << endl;
+      cout << "this is very bad" << endl;
       ++number_of_problems;
     }
+
+  // double xlower[nlower];
+  // double ylower[nlower];
+  // double xupper[nupper];
+  // double yupper[nupper];
+
+  double xlower[50];
+  double ylower[50];
+  double xupper[50];
+  double yupper[50];
 
   for ( int i = 0; i < nlower; ++i ) tglower->GetPoint(i,xlower[i],ylower[i]);
   for ( int i = 0; i < nupper; ++i ) tgupper->GetPoint(i,xupper[i],yupper[i]);
