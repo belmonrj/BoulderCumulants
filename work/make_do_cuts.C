@@ -59,8 +59,8 @@ void make_do_cuts()
     }
   fout << "  else return false;" << endl;
   fout << endl;
-  fout << "  double quantity = double(ntracks)/chargesum;" << endl;
-  fout << "  if ( quantity >= cutlow && quanity <= cuthigh ) return true;" << endl;
+  fout << "  double quantity = chargesum/double(ntracks);" << endl;
+  fout << "  if ( quantity >= cutlow && quantity <= cuthigh ) return true;" << endl;
   fout << "  else return false;" << endl;
   fout << endl;
   fout << "}" << endl;

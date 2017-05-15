@@ -58,8 +58,8 @@ bool tracks_charge_function(int ntracks, double chargesum)
   else if ( ntracks > 1372 && ntracks <= 1400) { cutlow = 0.95; cuthigh = 1.35; }
   else return false;
 
-  double quantity = double(ntracks)/chargesum;
-  if ( quantity >= cutlow && quanity <= cuthigh ) return true;
+  double quantity = chargesum/double(ntracks);
+  if ( quantity >= cutlow && quantity <= cuthigh ) return true;
   else return false;
 
 }
