@@ -12,7 +12,6 @@
 #include "TOAD.h"
 
 #include <TMath.h>
-#include <TString.h>
 #include <TFile.h>
 #include <TTree.h>
 #include <TH1D.h>
@@ -60,6 +59,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   _use_runlist = false;
   _runlist_filename = "NULL";
   _utils = NULL;
+  _collsys = "NULL";
 
   use_utils = true;
 
@@ -985,7 +985,7 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
   // Setup the utility class
   // This is done in init run so that the collision system can be
   // determined from the run number
-  TString _collsys = "Run16dAu200"; // default to 200 GeV
+  _collsys = "Run16dAu200"; // default to 200 GeV
   use_utils = true;
   // --- Run14AuAu200
   if ( runnumber >= 405839 && runnumber <= 414988 )
@@ -1490,7 +1490,11 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   th2d_nfvtxt_bbcsumratio->Fill(nfvtxt,bbc_charge_sum/(float)nfvtxt);
 
   bool passes = PassesTracksChargeRatio(nfvtxt,bbc_charge_sum);
-  if ( !passes ) return EVENT_OK;
+  if ( _collsys == "Run14AuAu200" && !passes )
+    {
+      if ( _verbosity > 1 ) cout << "Making special event cut for " << _collsys << endl;
+      return EVENT_OK;
+    }
 
   //---------------------------------------------------------//
   //                 finished Get FVTX Tracks

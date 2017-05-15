@@ -71,7 +71,7 @@ class BoulderCumulants: public SubsysReco
 
   dAuBES_utils* _utils;            ///< Utilities class
   bool use_utils;
-
+  std::string _collsys;
 
   int tmp_evt;
 
