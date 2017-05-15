@@ -12,6 +12,7 @@ class dAuBES_utils;
 class TFile;
 class TTree;
 class TH1D;
+class TH2D;
 class TProfile;
 class TComplex;
 
@@ -40,7 +41,8 @@ class BoulderCumulants: public SubsysReco
 
  protected:
 
-  // ---
+  // --- special event cuts
+  bool PassesTracksChargeRatio(int, double);
 
   // --- cumulants functions
   float calc2_event(float, float, float);
@@ -126,6 +128,8 @@ class BoulderCumulants: public SubsysReco
   TH1D* th1d_nfvtxt_combined;
   TH1D* th1d_nfvtxt_north;
   TH1D* th1d_nfvtxt_south;
+  TH2D* th2d_nfvtxt_bbcsum;
+  TH2D* th2d_nfvtxt_bbcsumratio;
 
 
   // --- correlation histograms

@@ -15,6 +15,8 @@
 #include <TString.h>
 #include <TFile.h>
 #include <TTree.h>
+#include <TH1D.h>
+#include <TH2D.h>
 #include <TProfile.h>
 #include <TComplex.h>
 
@@ -102,6 +104,8 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   th1d_nfvtxt_combined = NULL;
   th1d_nfvtxt_north = NULL;
   th1d_nfvtxt_south = NULL;
+  th2d_nfvtxt_bbcsum = NULL;
+  th2d_nfvtxt_bbcsumratio = NULL;
   nfvtxt_ac_fvtxs_tracks_c22 = NULL;
   nfvtxt_ac_fvtxn_tracks_c22 = NULL;
   nfvtxt_ac_fvtxc_tracks_c22 = NULL;
@@ -505,6 +509,8 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
 
   th1d_nfvtxt_combinedER = new TH1D("th1d_nfvtxt_combinedER","",5000, -0.5, 4999.5);
   th1d_nfvtxt_combined = new TH1D("th1d_nfvtxt_combined","",2000, -0.5, 1999.5);
+  th2d_nfvtxt_bbcsum = new TH2D("th2d_nfvtxt_bbcsum","",2000, -0.5, 1999.5, 1000, 0, 4000);
+  th2d_nfvtxt_bbcsumratio = new TH2D("th2d_nfvtxt_bbcsumratio","",2000, -0.5, 1999.5, 1000, 0, 5);
   th1d_nfvtxt_north = new TH1D("th1d_nfvtxt_north","",2000, -0.5, 1999.5);
   th1d_nfvtxt_south = new TH1D("th1d_nfvtxt_south","",2000, -0.5, 1999.5);
 
@@ -1178,6 +1184,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   if ( icent < 0 ) icent = 99; // last bin is always empty and this protects against invalid read
   bbc_qn      = global->getBbcChargeN();
   bbc_qs      = global->getBbcChargeS();
+  float bbc_charge_sum = bbc_qn+bbc_qs;
   npc1        = global->getNumberPC1Hits();
   event = evthead->get_EvtSequence();
   trigger_scaled = triggers->get_lvl1_trigscaled();
@@ -1193,7 +1200,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   bbc_z = vertex1.getZ();
   if ( bbc_z != bbc_z ) bbc_z = -9999; // reassign nan
 
-  if ( !use_utils && fabs(bbc_z) > 15.0 ) return EVENT_OK;
+  if ( !use_utils && fabs(bbc_z) > 10.0 ) return EVENT_OK;
 
   PHPoint fvtx_vertex = vertexes->get_Vertex("FVTX");
   FVTX_X = fvtx_vertex.getX();
@@ -1478,6 +1485,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   th1d_nfvtxt_combined->Fill(nfvtxt);
   th1d_nfvtxt_north->Fill(nfvtxt_north);
   th1d_nfvtxt_south->Fill(nfvtxt_south);
+
+  th2d_nfvtxt_bbcsum->Fill(nfvtxt,bbc_charge_sum);
+  th2d_nfvtxt_bbcsumratio->Fill(nfvtxt,bbc_charge_sum/(float)nfvtxt);
+
+  bool passes = PassesTracksChargeRatio(nfvtxt,bbc_charge_sum);
+  if ( !passes ) return EVENT_OK;
 
   //---------------------------------------------------------//
   //                 finished Get FVTX Tracks

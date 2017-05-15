@@ -16,6 +16,7 @@ libBoulderCumulants_la_SOURCES = \
   BoulderCumulants.C \
   BoulderCumulantsFunctions.C \
   BoulderCumulantsOffsets.C \
+  BoulderCumulantsSpecialEventCuts.C \
   BoulderCumulants_Dict.C
 
 libBoulderCumulants_la_LIBADD = \
