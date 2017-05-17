@@ -325,9 +325,12 @@ void do_process(const char* type, int rebin)
   empty->Draw();
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
-  th1d_uncorr_v22->Draw("ex0p same");
-  th1d_uncorr_v24->Draw("ex0p same");
-  th1d_uncorr_v2G->Draw("ex0p same");
+  // th1d_uncorr_v22->Draw("ex0p same");
+  // th1d_uncorr_v24->Draw("ex0p same");
+  // th1d_uncorr_v2G->Draw("ex0p same");
+  th1d_corr_v22->Draw("ex0p same");
+  th1d_corr_v24->Draw("ex0p same");
+  th1d_corr_v2G->Draw("ex0p same");
   tge_star_v22->Draw("p");
   tge_star_v24->Draw("p");
   tge_star_v2LYZS->Draw("p");
