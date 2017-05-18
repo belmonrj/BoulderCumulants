@@ -1,9 +1,9 @@
 void small_six()
 {
   doit("Run16dAu200",2);
-  doit("Run16dAu62",5);
-  doit("Run16dAu39",5);
-  doit("Run16dAu20",5);
+  // doit("Run16dAu62",5);
+  // doit("Run16dAu39",5);
+  // doit("Run16dAu20",5);
 }
 
 void doit(const char* handle, int rebin)
@@ -16,16 +16,55 @@ void doit(const char* handle, int rebin)
 
   // int rebin = 2;
 
-  TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c26");
-  TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c24");
-  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c22");
-  // TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c26");
-  // TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
-  // TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
+  TProfile* tp1f_cos1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos21");
+  TProfile* tp1f_sin1 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin21");
+  TProfile* tp1f_cossum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cossum22");
+  TProfile* tp1f_sinsum2 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sinsum22");
+  TProfile* tp1f_cos3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_cos23");
+  TProfile* tp1f_sin3 = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_sin23");
 
+  tp1f_cos1->Rebin(rebin);
+  tp1f_sin1->Rebin(rebin);
+  tp1f_cossum2->Rebin(rebin);
+  tp1f_sinsum2->Rebin(rebin);
+  tp1f_cos3->Rebin(rebin);
+  tp1f_sin3->Rebin(rebin);
+
+  TProfile* tp1f_os_six = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c26");
+  TProfile* tp1f_os_for = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c24");
+  TProfile* tp1f_os_two = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c22");
+  TProfile* tp1f_six = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c26");
+  TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
+  TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
+
+  tp1f_os_six->Rebin(rebin);
+  tp1f_os_for->Rebin(rebin);
+  tp1f_os_two->Rebin(rebin);
   tp1f_six->Rebin(rebin);
   tp1f_for->Rebin(rebin);
   tp1f_two->Rebin(rebin);
+
+  TH1D* th1d_os_six = tp1f_os_six->ProjectionX("th1d_os_six"); // <6>
+  TH1D* th1d_os_for = tp1f_os_for->ProjectionX("th1d_os_for"); // <4>
+  TH1D* th1d_os_two = tp1f_os_two->ProjectionX("th1d_os_two"); // <2>
+
+  TH1D* th1d_os_942 = (TH1D*)th1d_os_for->Clone("th1d_os_942"); // 9<4><2>
+  TH1D* th1d_os_123 = (TH1D*)th1d_os_two->Clone("th1d_os_123"); // 12<2>^3
+  TH1D* th1d_os_222 = (TH1D*)th1d_os_two->Clone("th1d_os_222"); // 2<2>^2
+
+  th1d_os_942->Multiply(th1d_os_two);
+  th1d_os_942->Scale(9);
+  th1d_os_123->Multiply(th1d_os_two);
+  th1d_os_123->Multiply(th1d_os_two);
+  th1d_os_123->Scale(12);
+  th1d_os_222->Multiply(th1d_os_two);
+  th1d_os_222->Scale(2);
+
+  TH1D* th1d_os_c26 = (TH1D*)th1d_os_six->Clone("th1d_os_c26"); // c2{6} = <6> - 9<4><2> + 12<2>^3
+  th1d_os_c26->Add(th1d_os_942,-1);
+  th1d_os_c26->Add(th1d_os_123,1);
+
+  // ---
 
   TH1D* th1d_six = tp1f_six->ProjectionX("th1d_six"); // <6>
   TH1D* th1d_for = tp1f_for->ProjectionX("th1d_for"); // <4>
@@ -66,13 +105,23 @@ void doit(const char* handle, int rebin)
       double efour = th1d_for->GetBinError(i+1);
       double two = th1d_two->GetBinContent(i+1);
       double etwo = th1d_two->GetBinError(i+1);
+      // --- some correction quantities
+      double cos1    = tp1f_cos1->GetBinContent(i+1);
+      double sin1    = tp1f_sin1->GetBinContent(i+1);
+      double cossum2 = tp1f_cossum2->GetBinContent(i+1);
+      double sinsum2 = tp1f_sinsum2->GetBinContent(i+1);
+      double cos3    = tp1f_cos3->GetBinContent(i+1);
+      double sin3    = tp1f_sin3->GetBinContent(i+1);
+      double corr_c22 = two - cos1*cos1 - sin1*sin1;
+      double corr_c24 = calc_corr_four(four,two,cos1,sin1,cossum2,sinsum2,cos3,sin3);
       // --- 6-particle
       double center = th1d_c26->GetBinCenter(i+1);
-      if ( center < 7 ) th1d_c26->SetBinContent(i+1,-9999);
+      //if ( center < 20 ) th1d_c26->SetBinContent(i+1,-9999);
       double c26 = th1d_c26->GetBinContent(i+1);
+      //double c26 = th1d_os_c26->GetBinContent(i+1);
       double v26 = -9999;
       double ev26 = -9999;
-      if ( c26 > 0 && six != 0 )
+      if ( c26 > 0 && six != 0 && center > 19 )
         {
           v26 = pow((0.25*c26),(1.0/6.0));
           ev26 = (1.0/pow(c26,1.25)) *
@@ -82,16 +131,21 @@ void doit(const char* handle, int rebin)
                  (1.0/18.0)*esix*six
                  );
         }
+      if ( center > 19 && center < 30 )
+        {
+          cout << center << " " << c26 << " " << v26 << endl;
+        }
       th1d_v26->SetBinContent(i+1,v26);
       double ev26 = v26*(esix/six);
       th1d_v26->SetBinError(i+1,ev26);
       // --- 4-particle
       center = th1d_c24->GetBinCenter(i+1);
-      if ( center < 5 ) th1d_c24->SetBinContent(i+1,9999);
+      //if ( center < 10 ) th1d_c24->SetBinContent(i+1,9999);
       double c24 = th1d_c24->GetBinContent(i+1);
+      //c24 = corr_c24; // need to come up with a better solution..
       double v24 = -9999;
       double ev24 = -9999;
-      if ( c24 < 0 && four != 0 )
+      if ( c24 < 0 && four != 0 && center > 9)
         {
           v24 = pow(-c24,(1.0/4.0));
           ev24 = (1.0/pow(-c24,0.75)) *
@@ -104,6 +158,7 @@ void doit(const char* handle, int rebin)
       th1d_v24->SetBinError(i+1,ev24);
       // --- 2-particle
       double c22 = th1d_c22->GetBinContent(i+1);
+      //c22 = corr_c22; // need to come up with a better solution..
       double v22 = -9999;
       double ev22 = (1.0/v22)*etwo;
       if ( c22 > 0 ) v22 = sqrt(c22);
@@ -152,11 +207,11 @@ void doit(const char* handle, int rebin)
   th1d_942->SetMarkerStyle(kOpenSquare);
   th1d_123->SetMarkerStyle(kOpenCross);
   th1d_six->SetMarkerColor(kBlack);
-  th1d_942->SetMarkerColor(kRed);
-  th1d_123->SetMarkerColor(kBlue);
+  th1d_942->SetMarkerColor(kBlue);
+  th1d_123->SetMarkerColor(kRed);
   th1d_six->SetLineColor(kBlack);
-  th1d_942->SetLineColor(kRed);
-  th1d_123->SetLineColor(kBlue);
+  th1d_942->SetLineColor(kBlue);
+  th1d_123->SetLineColor(kRed);
   th1d_six->Draw("same ex0p");
   th1d_942->Draw("same ex0p");
   th1d_123->Draw("same ex0p");
@@ -263,12 +318,12 @@ void doit(const char* handle, int rebin)
   c1->Print(Form("FigsSixSmall/strk_sixparticle_v2_%s.png",handle));
   c1->Print(Form("FigsSixSmall/strk_sixparticle_v2_%s.pdf",handle));
   th1d_v24->SetMarkerStyle(kOpenSquare);
-  th1d_v24->SetMarkerColor(kRed);
-  th1d_v24->SetLineColor(kRed);
+  th1d_v24->SetMarkerColor(kBlue);
+  th1d_v24->SetLineColor(kBlue);
   th1d_v24->Draw("same ex0p");
   th1d_v22->SetMarkerStyle(kOpenCross);
-  th1d_v22->SetMarkerColor(kBlue);
-  th1d_v22->SetLineColor(kBlue);
+  th1d_v22->SetMarkerColor(kRed);
+  th1d_v22->SetLineColor(kRed);
   th1d_v22->Draw("same ex0p");
   leg->AddEntry(th1d_v24,"v_{2}{4}","p");
   leg->AddEntry(th1d_v22,"v_{2}{2}","p");
@@ -276,7 +331,7 @@ void doit(const char* handle, int rebin)
   double sysB_v22_dAu200 = 0.1;
   TH1D* gv22_sys_dAu200 = (TH1D*) th1d_v22->Clone("gv22_sys_dAu200");
   gv22_sys_dAu200->SetMarkerSize(0);
-  gv22_sys_dAu200->SetFillColorAlpha(kBlue, 0.35);
+  gv22_sys_dAu200->SetFillColorAlpha(kRed, 0.35);
   for (int i = 1; i <= gv22_sys_dAu200->GetNbinsX(); i++)
   {
     double y = gv22_sys_dAu200->GetBinContent(i);
@@ -299,7 +354,7 @@ void doit(const char* handle, int rebin)
   //cout << "sys is " << sysB_v24_dAu200 << endl;
   TH1D* gv24_sys_dAu200 = (TH1D*) th1d_v24->Clone("gv24_sys_dAu200");
   gv24_sys_dAu200->SetMarkerSize(0);
-  gv24_sys_dAu200->SetFillColorAlpha(kRed, 0.35);
+  gv24_sys_dAu200->SetFillColorAlpha(kBlue, 0.35);
   for (int i = 1; i <= gv24_sys_dAu200->GetNbinsX(); i++)
   {
     double y = gv24_sys_dAu200->GetBinContent(i);
@@ -341,3 +396,19 @@ void doit(const char* handle, int rebin)
   delete ccomp;
 
 }
+
+double calc_corr_four(double four, double two, double cos1, double sin1, double cossum2, double sinsum2, double cos3, double sin3)
+{
+  double uncorr = four - 2*two*two;
+  double corr_term1 = 4*cos1*cos3;
+  double corr_term2 = 4*sin1*sin3;
+  double corr_term3 = cossum2*cossum2;
+  double corr_term4 = sinsum2*sinsum2;
+  double corr_term5 = 4*cossum2*(cos1*cos1 - sin1*sin1);
+  double corr_term6 = 8*sinsum2*sin1*cos1;
+  double corr_term7 = 8*two*(cos1*cos1 + sin1*sin1);
+  double corr_term8 = 6*(cos1*cos1 + sin1*sin1)*(cos1*cos1 + sin1*sin1);
+  double result = uncorr - corr_term1 + corr_term2 - corr_term3 - corr_term4 + corr_term5 + corr_term6 + corr_term7 - corr_term8;
+  return result;
+}
+
