@@ -1,6 +1,6 @@
 void small_six()
 {
-  doit("Run16dAu200",2);
+  doit("Run16dAu200",5);
   // doit("Run16dAu62",5);
   // doit("Run16dAu39",5);
   // doit("Run16dAu20",5);
@@ -63,6 +63,15 @@ void doit(const char* handle, int rebin)
   TH1D* th1d_os_c26 = (TH1D*)th1d_os_six->Clone("th1d_os_c26"); // c2{6} = <6> - 9<4><2> + 12<2>^3
   th1d_os_c26->Add(th1d_os_942,-1);
   th1d_os_c26->Add(th1d_os_123,1);
+
+  TH1D* th1d_os_c24 = (TH1D*)th1d_os_for->Clone("th1d_os_c24"); // c2{4} = <4> - 2<2>^2
+  th1d_os_c24->Add(th1d_os_222,-1);
+
+  TH1D* th1d_os_c22 = (TH1D*)th1d_os_two->Clone("th1d_os_c22"); // c2{2} = <2>
+
+  TH1D* th1d_os_v26 = (TH1D*)th1d_os_c26->Clone("th1d_os_v26");
+  TH1D* th1d_os_v24 = (TH1D*)th1d_os_c24->Clone("th1d_os_v24");
+  TH1D* th1d_os_v22 = (TH1D*)th1d_os_c24->Clone("th1d_os_v22");
 
   // ---
 
@@ -168,6 +177,72 @@ void doit(const char* handle, int rebin)
       // cout << i << " 123 " << th1d_123->GetBinContent(i+1) << " " << 12*two*two*two << endl;
       // cout << i << " 942 " << th1d_942->GetBinContent(i+1) << " " << 9*four*two << endl;
       // cout << i << " six " << th1d_six->GetBinContent(i+1) << " " << six << endl;
+      // --- base quantities
+      six = th1d_os_six->GetBinContent(i+1);
+      esix = th1d_os_six->GetBinError(i+1);
+      four = th1d_os_for->GetBinContent(i+1);
+      efour = th1d_os_for->GetBinError(i+1);
+      two = th1d_os_two->GetBinContent(i+1);
+      etwo = th1d_os_two->GetBinError(i+1);
+      // --- some correction quantities
+      // cos1    = tp1f_cos1->GetBinContent(i+1);
+      // sin1    = tp1f_sin1->GetBinContent(i+1);
+      // cossum2 = tp1f_cossum2->GetBinContent(i+1);
+      // sinsum2 = tp1f_sinsum2->GetBinContent(i+1);
+      // cos3    = tp1f_cos3->GetBinContent(i+1);
+      // sin3    = tp1f_sin3->GetBinContent(i+1);
+      // corr_c22 = two - cos1*cos1 - sin1*sin1;
+      // corr_c24 = calc_corr_four(four,two,cos1,sin1,cossum2,sinsum2,cos3,sin3);
+      // --- 6-particle
+      center = th1d_os_c26->GetBinCenter(i+1);
+      //if ( center < 20 ) th1d_os_c26->SetBinContent(i+1,-9999);
+      c26 = th1d_os_c26->GetBinContent(i+1);
+      //c26 = th1d_os_os_c26->GetBinContent(i+1);
+      v26 = -9999;
+      ev26 = -9999;
+      if ( c26 > 0 && six != 0 && center > 19 )
+        {
+          v26 = pow((0.25*c26),(1.0/6.0));
+          ev26 = (1.0/pow(c26,1.25)) *
+            sqrt(
+                 (4.5*(4*two*two-four)*(4*two*two-four)*etwo*etwo) +
+                 (4.5*two*two*efour*efour) +
+                 (1.0/18.0)*esix*six
+                 );
+        }
+      if ( center > 19 && center < 30 )
+        {
+          cout << center << " " << c26 << " " << v26 << endl;
+        }
+      th1d_os_v26->SetBinContent(i+1,v26);
+      ev26 = v26*(esix/six);
+      th1d_os_v26->SetBinError(i+1,ev26);
+      // --- 4-particle
+      center = th1d_os_c24->GetBinCenter(i+1);
+      //if ( center < 10 ) th1d_os_c24->SetBinContent(i+1,9999);
+      c24 = th1d_os_c24->GetBinContent(i+1);
+      //c24 = corr_c24; // need to come up with a better solution..
+      v24 = -9999;
+      ev24 = -9999;
+      if ( c24 < 0 && four != 0 && center > 9)
+        {
+          v24 = pow(-c24,(1.0/4.0));
+          ev24 = (1.0/pow(-c24,0.75)) *
+            sqrt(
+                 (two*two*etwo*etwo) +
+                 (0.0625*efour*efour)
+                 );
+        }
+      th1d_os_v24->SetBinContent(i+1,v24);
+      th1d_os_v24->SetBinError(i+1,ev24);
+      // --- 2-particle
+      c22 = th1d_os_c22->GetBinContent(i+1);
+      //c22 = corr_c22; // need to come up with a better solution..
+      v22 = -9999;
+      ev22 = (1.0/v22)*etwo;
+      if ( c22 > 0 ) v22 = sqrt(c22);
+      th1d_os_v22->SetBinContent(i+1,v22);
+      th1d_os_v22->SetBinError(i+1,ev22);
     }
 
 
@@ -394,6 +469,13 @@ void doit(const char* handle, int rebin)
 
   delete c1;
   delete ccomp;
+
+  TFile* fout = TFile::Open("v26dAu200.root","recreate");
+  fout->cd();
+  th1d_v26->Write();
+  th1d_os_v26->Write();
+  fout->Write();
+  fout->Close();
 
 }
 
