@@ -1305,6 +1305,14 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   while ( TFvtxCompactTrkMap::const_pointer trk_ptr = trk_iter.next() )
     {
       TFvtxCompactTrk* fvtx_trk = trk_ptr->get();
+      bool pattern0 = ((fvtx_trk->get_hit_pattern() & 0x3) > 0);
+      bool pattern2 = ((fvtx_trk->get_hit_pattern() & (0x3 << 2)) > 0 );
+      bool pattern4 = ((fvtx_trk->get_hit_pattern() & (0x3 << 4)) > 0 );
+      bool pattern6 = ((fvtx_trk->get_hit_pattern() & (0x3 << 6)) > 0 );
+      int nhits_special = pattern0 + pattern2 + pattern4 + pattern6;
+
+
+
 
       ++nfvtxt_raw;
       // --- use the utility class to make the track selections
@@ -1324,6 +1332,18 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       float fvtx_z      = fvtx_trk->get_fvtx_vtx().getZ();
       float chisq       = fvtx_trk->get_chi2_ndf();
       int   nhits       = (int)fvtx_trk->get_nhits();
+
+      // cout << "----------------------------------------------------" << endl;
+      // cout << "pattern " << (int)fvtx_trk->get_hit_pattern() << endl;
+      // cout << "part0 " << (fvtx_trk->get_hit_pattern() & 0x3) << endl;
+      // cout << "part2 " << (fvtx_trk->get_hit_pattern() & (0x3 << 2)) << endl;
+      // cout << "part4 " << (fvtx_trk->get_hit_pattern() & (0x3 << 4)) << endl;
+      // cout << "part6 " << (fvtx_trk->get_hit_pattern() & (0x3 << 6)) << endl;
+      // cout << "nhits_special " << nhits_special << endl;
+      // cout << "nhits " << nhits << endl;
+      // cout << "----------------------------------------------------" << endl;
+
+      if ( nhits_special < 3 ) continue; // need at least 3 hits in FVTX, excluding VTX
 
       // fix total momentum to 1.0 (for rotating due to beamtilt)
       double px = 1.0 * sin(the) * cos(phi);
