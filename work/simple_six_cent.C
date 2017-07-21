@@ -155,16 +155,19 @@ void simple_six_cent()
   c1->Print(Form("FigsSix/sixparticle_cumulant_blah.png"));
   c1->Print(Form("FigsSix/sixparticle_cumulant_blah.pdf"));
 
-  // xmin = 0.0;
-  // xmax = 100.0;
+  xmin = 0.0;
+  xmax = 100.0;
   ymin = 0.0;
-  ymax = 0.199;
+  ymax = 0.12;
   if ( empty ) delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
+  th1d_v22->GetXaxis()->SetRangeUser(0,90);
+  th1d_v24->GetXaxis()->SetRangeUser(0,70);
+  th1d_v26->GetXaxis()->SetRangeUser(0,70);
   th1d_v26->SetMarkerStyle(kOpenCircle);
   th1d_v26->SetMarkerColor(kBlack);
   th1d_v26->SetLineColor(kBlack);
