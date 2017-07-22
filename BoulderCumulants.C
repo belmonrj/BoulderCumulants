@@ -1509,13 +1509,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   th2d_nfvtxt_bbcsum->Fill(nfvtxt,bbc_charge_sum);
   th2d_nfvtxt_bbcsumratio->Fill(nfvtxt,bbc_charge_sum/(float)nfvtxt);
 
-  bool passes = PassesTracksChargeRatio(nfvtxt,bbc_charge_sum);
-  if ( _collsys == "Run14AuAu200" && !passes )
-    {
-      if ( _verbosity > 1 ) cout << "Making special event cut for " << _collsys << endl;
-      return EVENT_OK;
-    }
-
   //---------------------------------------------------------//
   //                 finished Get FVTX Tracks
   //---------------------------------------------------------//
