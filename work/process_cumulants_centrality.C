@@ -365,9 +365,9 @@ void do_process(const char* type, int rebin)
   th1d_corr_v22->Scale(1.2);
   th1d_corr_v24->Scale(1.2);
   th1d_corr_v2G->Scale(1.2);
-  th1d_corr_v22->GetXaxis()->SetRangeUser(0,80);
+  th1d_corr_v22->GetXaxis()->SetRangeUser(0,90);
   th1d_corr_v24->GetXaxis()->SetRangeUser(5,70);
-  th1d_corr_v2G->GetXaxis()->SetRangeUser(0,80);
+  th1d_corr_v2G->GetXaxis()->SetRangeUser(0,90);
   th1d_corr_v22->Draw("ex0p same");
   th1d_corr_v24->Draw("ex0p same");
   th1d_corr_v2G->Draw("ex0p same");
