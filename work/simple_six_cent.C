@@ -94,7 +94,7 @@ void simple_six_cent()
     }
 
   double xmin = 0.0;
-  double xmax = 70.0;
+  double xmax = 100.0;
   double ymin = -1e-4;
   double ymax = 1e-4;
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
@@ -128,8 +128,8 @@ void simple_six_cent()
 
   // xmin = 0.0;
   // xmax = 100.0;
-  ymin = -2e-5;
-  ymax = 2e-5;
+  ymin = -1e-6;
+  ymax = 3e-6;
   if ( empty ) delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
@@ -145,8 +145,8 @@ void simple_six_cent()
 
   // xmin = 0.0;
   // xmax = 100.0;
-  ymin = -4e-6;
-  ymax = 4e-6;
+  ymin = -1e-6;
+  ymax = 3e-6;
   if ( empty ) delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
@@ -164,8 +164,35 @@ void simple_six_cent()
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_c26,"c_{2}{6} = 4v_{2}^{6}","p");
   leg->Draw();
+  TLine *cline = new TLine(xmin,0,xmax,0);
+  cline->SetLineWidth(2);
+  cline->SetLineStyle(2);
+  cline->Draw();
   c1->Print(Form("FigsSix/sixparticle_cumulant_blah.png"));
   c1->Print(Form("FigsSix/sixparticle_cumulant_blah.pdf"));
+
+  ymin = -2e-5;
+  ymax = 2e-5;
+  if ( empty ) delete empty;
+  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
+  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetYaxis()->SetTitle("cumulant");
+  th1d_c24->SetMarkerStyle(kOpenCircle);
+  th1d_c24->SetLineColor(kBlack);
+  th1d_c24->Draw("same ex0p");
+  if ( leg ) delete leg;
+  leg = new TLegend(0.62,0.68,0.88,0.88);
+  //leg->SetHeader(type);
+  leg->SetHeader("Run14AuAu200");
+  leg->SetTextSize(0.045);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_c24,"c_{2}{4} = -v_{2}^{4}","p");
+  leg->Draw();
+  cline->Draw();
+  c1->Print(Form("FigsSix/sixparticle_cumulant4_blah.png"));
+  c1->Print(Form("FigsSix/sixparticle_cumulant4_blah.pdf"));
 
   xmin = 0.0;
   xmax = 100.0;
