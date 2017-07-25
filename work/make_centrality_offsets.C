@@ -18,6 +18,8 @@ void make_centrality_offsets()
   TProfile* tp1f_offset_centrality_qy6_north = (TProfile*)fin->Get("centrality_tracks_north_qy6");
 
   ofstream fout("BoulderCumulantsOffsets.C");
+  fout << "#include \"BoulderCumulants.h\"" << endl;
+  fout << endl;
   fout << "void BoulderCumulants::SetQvectorOffsets(int run)" << endl;
   fout << "{" << endl;
   //fout << "  cout << \"run numnber is \" << run << \" but run number not currently used in this function... \" << endl;" << endl;
