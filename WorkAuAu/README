@@ -1,0 +1,11 @@
+fout.root - root file with the Run14AuAu event cuts
+helpmecent.C - looks at acceptance based quantities as a function of centrality for Run14AuAu
+helpmestrk.C - looks at acceptance based quantities as a function of NFVTXtracks for Run14AuAu
+make_centrality_offsets.C - generates the code for the Q-vector recentering for Run14AuAu vs centrality
+make_do_cuts.C - reads fout.root to generate code for the Run14AuAu event cuts
+process_cumulants_centrality.C - special variant of process_cumulants to do Run14AuAu vs centrality instead of NFVTXtracks
+process_cumulants_strk.C - special variant of process_cumulants to do Run14AuAu (derived from _centrality)
+run14auau_eventcuts.pdf - plot of Run14AuAu event cuts
+simple_six_cent.C - macro to look at v2{6} in Run14AuAu vs centrality
+simple_six_strk.C - macro to look at v2{6} in Run14AuAu vs NFVTXtracks
+tracks_charge_function.C - output of make_do_cuts.C
