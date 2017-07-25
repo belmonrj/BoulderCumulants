@@ -219,13 +219,13 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_corr_v22,"v_{2}{2} 1<|#eta|<3","p");
   leg->AddEntry(th1d_corr_v24,"v_{2}{4} 1<|#eta|<3","p");
   leg->Draw();
-  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24_%s.png",rebin,type));
-  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.pdf",rebin,type));
   th1d_corr_v2G->Draw("ex0p same");
   leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
   leg->Draw();
-  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgap_%s.png",rebin,type));
-  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
   // --- STAR data
   // v_{2}{2}
   // 1(70-80%) 6.88 0.052
@@ -344,8 +344,8 @@ void do_process(const char* type, int rebin)
   // leg2->AddEntry(tge_star_v2LYZP,"v_{2}{LYZ} Product |#eta|<1","p");
   leg2->SetTextSize(0.045);
   leg2->Draw();
-  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgapandSTAR_%s.png",rebin,type));
-  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgapandSTAR_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgapandSTAR_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgapandSTAR_%s.pdf",rebin,type));
   th1d_corr_v22->SetLineColor(kBlack);
   th1d_corr_v22->SetMarkerColor(kRed);
   th1d_corr_v22->SetMarkerStyle(kOpenDiamond);
@@ -388,8 +388,8 @@ void do_process(const char* type, int rebin)
   leg->Draw();
   leg->Draw();
   leg2->Draw();
-  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgapandSTARSCALE_%s.png",rebin,type));
-  c1->Print(Form("FigsFourSpecial/simpleR%d_v22andv24andgapandSTARSCALE_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgapandSTARSCALE_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v22andv24andgapandSTARSCALE_%s.pdf",rebin,type));
 
   th1d_corr_222->SetLineColor(kBlack);
   th1d_corr_222->SetMarkerColor(kGreen+2);
@@ -414,8 +414,8 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_corr_222,"2#LT#LT2#GT#GT^{2}","p");
   leg->AddEntry(th1d_corr_four,"#LT#LT4#GT#GT","p");
   leg->Draw();
-  c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.png",rebin,type));
-  c1->Print(Form("FigsFourSpecial/simpleR%d_222and4_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.pdf",rebin,type));
 
   th1d_uncorr_222->SetLineColor(kBlack);
   th1d_uncorr_222->SetMarkerColor(kGreen+2);
@@ -440,8 +440,8 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_uncorr_222,"2#LT#LT2#GT#GT^{2}","p");
   leg->AddEntry(th1d_uncorr_four,"#LT#LT4#GT#GT","p");
   leg->Draw();
-  c1->Print(Form("FigsFourSpecial/simpleR%d_uncorr_222and4_%s.png",rebin,type));
-  c1->Print(Form("FigsFourSpecial/simpleR%d_uncorr_222and4_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_uncorr_222and4_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_uncorr_222and4_%s.pdf",rebin,type));
 
   // ---
 

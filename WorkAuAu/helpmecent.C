@@ -47,8 +47,8 @@ void helpmecent()
   leg->AddEntry(th1d_v22gap_base,"v_{2}{2,|#Delta#eta|>2}","p");
   leg->Draw();
 
-  c1->Print("FigsFourSpecial/acceptance_AuAu.png");
-  c1->Print("FigsFourSpecial/acceptance_AuAu.pdf");
+  c1->Print("FigsFour/acceptance_AuAu.png");
+  c1->Print("FigsFour/acceptance_AuAu.pdf");
 
   TH1D* th1d_cos1 = (TH1D*)fin->Get("th1d_cos1");
   TH1D* th1d_sin1 = (TH1D*)fin->Get("th1d_sin1");
@@ -72,8 +72,8 @@ void helpmecent()
   th1d_cos1->Draw("ex0p same");
   th1d_sin1->Draw("ex0p same");
 
-  c1->Print("FigsFourSpecial/acceptance_AuAu_v22andterms.png");
-  c1->Print("FigsFourSpecial/acceptance_AuAu_v22andterms.pdf");
+  c1->Print("FigsFour/acceptance_AuAu_v22andterms.png");
+  c1->Print("FigsFour/acceptance_AuAu_v22andterms.pdf");
 
   th1d_cos1_north->SetLineColor(kBlack);
   th1d_cos1_north->SetMarkerColor(kBlack);
@@ -97,8 +97,8 @@ void helpmecent()
   th1d_sin1_north->Draw("ex0p same");
   th1d_sin1_south->Draw("ex0p same");
 
-  c1->Print("FigsFourSpecial/acceptance_AuAu_v22gapandterms.png");
-  c1->Print("FigsFourSpecial/acceptance_AuAu_v22gapandterms.pdf");
+  c1->Print("FigsFour/acceptance_AuAu_v22gapandterms.png");
+  c1->Print("FigsFour/acceptance_AuAu_v22gapandterms.pdf");
 
   // TLegend* leg = new TLegend(0.68,0.58,0.88,0.88);
   // leg->AddEntry(th1d_c22gap_base);
@@ -108,8 +108,8 @@ void helpmecent()
   th1d_c22gap_base->Multiply(th1d_v22gap_base);
   th1d_c22gap_unco->Multiply(th1d_v22gap_unco);
 
-  c1->Print("FigsFourSpecial/acceptance_AuAu_c22gapandterms.png");
-  c1->Print("FigsFourSpecial/acceptance_AuAu_c22gapandterms.pdf");
+  c1->Print("FigsFour/acceptance_AuAu_c22gapandterms.png");
+  c1->Print("FigsFour/acceptance_AuAu_c22gapandterms.pdf");
 
 
 
