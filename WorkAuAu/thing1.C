@@ -19,9 +19,11 @@ void thing1()
 
   gROOT->ProcessLine(".L dothething_components.C");
   dothething_components(200,0,1,2,4);
+  dothething_components(200,3,4,5,6);
 
   gROOT->ProcessLine(".L dothething_cumulants.C");
   dothething_cumulants(200,0,1,2,4);
+  dothething_cumulants(200,3,4,5,6);
 
 }
 
