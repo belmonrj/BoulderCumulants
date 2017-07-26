@@ -116,16 +116,16 @@ void dothething_cumulants(int name, int which1, int which2, int which3, int whic
   // <<6>> - 9<<4>><<2>> + 12<<2>>^3
   c2h1_os_c22->Multiply(th1d_h1_os_c22); c2h1_os_c22->Multiply(th1d_h1_os_c22); c1h1_os_c22->Scale(12.0);
   c2h1_os_c24->Multiply(th1d_h1_os_c24); c2h1_os_c24->Scale(9.0);
-  c2h1_os_c26->Add(c2h1_os_c24,-1.0); c2h1_os_c26->Add(c2h1_os_c22,-1.0);
+  c2h1_os_c26->Add(c2h1_os_c24,-1.0); c2h1_os_c26->Add(c2h1_os_c22,1.0);
   c2h2_os_c22->Multiply(th1d_h2_os_c22); c2h2_os_c22->Multiply(th1d_h2_os_c22); c1h2_os_c22->Scale(12.0);
   c2h2_os_c24->Multiply(th1d_h2_os_c24); c2h2_os_c24->Scale(9.0);
-  c2h2_os_c26->Add(c2h2_os_c24,-1.0); c2h2_os_c26->Add(c2h2_os_c22,-1.0);
+  c2h2_os_c26->Add(c2h2_os_c24,-1.0); c2h2_os_c26->Add(c2h2_os_c22,1.0);
   c2h3_os_c22->Multiply(th1d_h3_os_c22); c2h3_os_c22->Multiply(th1d_h3_os_c22); c1h3_os_c22->Scale(12.0);
   c2h3_os_c24->Multiply(th1d_h3_os_c24); c2h3_os_c24->Scale(9.0);
-  c2h3_os_c26->Add(c2h3_os_c24,-1.0); c2h3_os_c26->Add(c2h3_os_c22,-1.0);
+  c2h3_os_c26->Add(c2h3_os_c24,-1.0); c2h3_os_c26->Add(c2h3_os_c22,1.0);
   c2h4_os_c22->Multiply(th1d_h4_os_c22); c2h4_os_c22->Multiply(th1d_h4_os_c22); c1h4_os_c22->Scale(12.0);
   c2h4_os_c24->Multiply(th1d_h4_os_c24); c2h4_os_c24->Scale(9.0);
-  c2h4_os_c26->Add(c2h4_os_c24,-1.0); c2h4_os_c26->Add(c2h4_os_c22,-1.0);
+  c2h4_os_c26->Add(c2h4_os_c24,-1.0); c2h4_os_c26->Add(c2h4_os_c22,1.0);
 
   TCanvas* c1 = new TCanvas();
   c1->SetMargin(0.15,0.05,0.13,0.08); // LRBT
@@ -222,7 +222,7 @@ void dothething_cumulants(int name, int which1, int which2, int which3, int whic
 
 
   ymin = -1e-2;
-  ymax = 1e-1;
+  ymax = 1.2e-1;
   TH1D* c1h1_os_v24 = get_v24(c1h1_os_c24,th1d_h1_os_c22,th1d_h1_os_c24);
   TH1D* c1h2_os_v24 = get_v24(c1h2_os_c24,th1d_h2_os_c22,th1d_h2_os_c24);
   TH1D* c1h3_os_v24 = get_v24(c1h3_os_c24,th1d_h3_os_c22,th1d_h3_os_c24);
@@ -268,14 +268,14 @@ void dothething_cumulants(int name, int which1, int which2, int which3, int whic
   c1->Print(Form("ComparisonFigs/FourWayComparison_os_cumulant_v24_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
 
   ymin = -1e-2;
-  ymax = 1e-1;
+  ymax = 1.2e-1;
   TH1D* c2h1_os_v26 = get_v26(c2h1_os_c26,th1d_h1_os_c22,th1d_h1_os_c24,th1d_h1_os_c26);
   TH1D* c2h2_os_v26 = get_v26(c2h2_os_c26,th1d_h2_os_c22,th1d_h2_os_c24,th1d_h2_os_c26);
   TH1D* c2h3_os_v26 = get_v26(c2h3_os_c26,th1d_h3_os_c22,th1d_h3_os_c24,th1d_h3_os_c26);
   TH1D* c2h4_os_v26 = get_v26(c2h4_os_c26,th1d_h4_os_c22,th1d_h4_os_c24,th1d_h4_os_c26);
   TH2D* hd_os_v26 = new TH2D("hd_os_v26","",1,xmin,xmax,1,ymin,ymax);
   hd_os_v26->GetXaxis()->SetTitle("centrality");
-  hd_os_v26->GetYaxis()->SetTitle("v_{2}{4}");
+  hd_os_v26->GetYaxis()->SetTitle("v_{2}{6}");
   hd_os_v26->GetXaxis()->SetTitleOffset(1.1);
   hd_os_v26->GetYaxis()->SetTitleOffset(1.4);
   hd_os_v26->GetXaxis()->SetTitleSize(0.055);
@@ -355,14 +355,15 @@ TH1D* get_v26(TH1D* hc26, TH1D* htwo, TH1D* hfour, TH1D* hsix)
       double etwo = htwo->GetBinError(i+1);
       double efour = hfour->GetBinError(i+1);
       double esix = hsix->GetBinError(i+1);
+      c26 = six - 9*four*two + 12*two*two*two; // something going wrong with histos above...
       if ( c26 > 0 && six != 0 )
         {
           v26 = pow((0.25*c26),(1.0/6.0));
-          ev26 = (1.0/pow(c26,1.25)) *
+          ev26 = (1.0/pow(2*c26,(5.0/6.0))) *
             sqrt(
                  (4.5*(4*two*two-four)*(4*two*two-four)*etwo*etwo) +
                  (4.5*two*two*efour*efour) +
-                 (1.0/18.0)*esix*six
+                 (1.0/18.0)*esix*esix
                  );
         }
       hv26->SetBinContent(i+1,v26);
