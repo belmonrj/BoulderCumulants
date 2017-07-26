@@ -1,6 +1,8 @@
 void dothething_diagnostics(int name, int which1, int which2, int which3, int which4)
 {
 
+  gStyle->SetOptTitle(0);
+
   TString ts_hash1 = hash_description[xhash][which1];
   TString ts_hash2 = hash_description[xhash][which2];
   TString ts_hash3 = hash_description[xhash][which3];
@@ -97,5 +99,57 @@ void dothething_diagnostics(int name, int which1, int which2, int which3, int wh
   c1->SetLogy();
   c1->Print(Form("ComparisonFigs/FourWayComparison_nfvtxt_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
   c1->Print(Form("ComparisonFigs/FourWayComparison_nfvtxt_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
+
+  // --- 2d shenanigans
+
+  gStyle->SetOptTitle(1);
+
+  TCanvas* c2 = new TCanvas("c2","",1000,1000);
+  c2->Divide(2,2); // may need to make my own pads, but let's do it the easy way for now...
+
+  TH2D* h1_fbsr = (TH2D*)file1->Get("th2d_nfvtxt_bbcsumratio");
+  TH2D* h2_fbsr = (TH2D*)file2->Get("th2d_nfvtxt_bbcsumratio");
+  TH2D* h3_fbsr = (TH2D*)file3->Get("th2d_nfvtxt_bbcsumratio");
+  TH2D* h4_fbsr = (TH2D*)file4->Get("th2d_nfvtxt_bbcsumratio");
+
+  if ( h1_fbsr )
+    {
+      c2->cd(1);
+      c2->SetLogz(1);
+      h1_fbsr->SetTitle(leghead1);
+      h1_fbsr->Draw("colz");
+    }
+
+  if ( h2_fbsr )
+    {
+      c2->cd(2);
+      c2->SetLogz(1);
+      h2_fbsr->SetTitle(leghead2);
+      h2_fbsr->Draw("colz");
+    }
+
+  if ( h3_fbsr )
+    {
+      c2->cd(3);
+      c2->SetLogz(1);
+      h3_fbsr->SetTitle(leghead3);
+      h3_fbsr->Draw("colz");
+    }
+
+  if ( h4_fbsr )
+    {
+      c2->cd(4);
+      c2->SetLogz(1);
+      h4_fbsr->SetTitle(leghead4);
+      h4_fbsr->Draw("colz");
+    }
+
+  c2->cd(0);
+
+  c2->Print(Form("ComparisonFigs/FourWayComparison_fbsr_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
+  c2->Print(Form("ComparisonFigs/FourWayComparison_fbsr_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
+
+  delete c1;
+  delete c2;
 
 }

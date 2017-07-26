@@ -24,17 +24,20 @@ void run14_fvtx_percentiles()
       double integral = histo->Integral(i,max);
       double percentile = integral/total;
       percentile *= 100.0; // turn into percent
-      if ( percentile > 4.99 && percentile < 5.01 )
+      //if ( percentile > 4.99 && percentile < 5.01 )
+      if ( percentile > 4.9 && percentile < 5.1 )
         {
           cout << "5% most central events " << i << " " << percentile << endl;
           five = i;
         }
-      if ( percentile > 9.99 && percentile < 10.01 )
+      //if ( percentile > 9.99 && percentile < 10.01 )
+      if ( percentile > 9.9 && percentile < 10.1 )
         {
           cout << "10% most central events " << i << " " << percentile << endl;
           ten = i;
         }
-      if ( percentile > 19.99 && percentile < 20.01 )
+      //if ( percentile > 19.99 && percentile < 20.01 )
+      if ( percentile > 19.9 && percentile < 20.1 )
         {
           cout << "20% most central events " << i << " " << percentile << endl;
           twenty = i;
