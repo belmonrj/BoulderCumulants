@@ -51,6 +51,102 @@ void dothething_diagnostics(int name, int which1, int which2, int which3, int wh
   th1d_nfvtxt_south;
 
 
+  // --- cos21
+
+  TProfile* h1_os_cos21 = (TProfile*)file1->Get("centrality_ac_fvtxc_tracks_cos21");
+  TProfile* h2_os_cos21 = (TProfile*)file2->Get("centrality_ac_fvtxc_tracks_cos21");
+  TProfile* h3_os_cos21 = (TProfile*)file3->Get("centrality_ac_fvtxc_tracks_cos21");
+  TProfile* h4_os_cos21 = (TProfile*)file4->Get("centrality_ac_fvtxc_tracks_cos21");
+
+  xmin = 0.0;
+  xmax = 100.0;
+  ymin = -1;
+  ymax = 1;
+  TH2D* hd_os_cos21 = new TH2D("hd_os_cos21","",1,xmin,xmax,1,ymin,ymax);
+  hd_os_cos21->GetXaxis()->SetTitle("centrality");
+  hd_os_cos21->GetYaxis()->SetTitle("#LT#LTcos2#phi#GT#GT");
+  hd_os_cos21->GetXaxis()->SetTitleOffset(1.1);
+  hd_os_cos21->GetYaxis()->SetTitleOffset(1.4);
+  hd_os_cos21->GetXaxis()->SetTitleSize(0.055);
+  hd_os_cos21->GetYaxis()->SetTitleSize(0.055);
+  hd_os_cos21->GetXaxis()->SetLabelSize(0.055);
+  hd_os_cos21->GetYaxis()->SetLabelSize(0.055);
+  hd_os_cos21->Draw();
+  h1_os_cos21->SetLineColor(kBlack);
+  h2_os_cos21->SetLineColor(kRed);
+  h3_os_cos21->SetLineColor(kBlue);
+  h4_os_cos21->SetLineColor(kGreen+2);
+  h1_os_cos21->SetMarkerColor(kBlack);
+  h2_os_cos21->SetMarkerColor(kRed);
+  h3_os_cos21->SetMarkerColor(kBlue);
+  h4_os_cos21->SetMarkerColor(kGreen+2);
+  h1_os_cos21->SetMarkerStyle(kOpenSquare);
+  h2_os_cos21->SetMarkerStyle(kOpenCircle);
+  h3_os_cos21->SetMarkerStyle(kOpenDiamond);
+  h4_os_cos21->SetMarkerStyle(kOpenCross);
+  h1_os_cos21->Draw("same ex0p");
+  h2_os_cos21->Draw("same ex0p");
+  h3_os_cos21->Draw("same ex0p");
+  h4_os_cos21->Draw("same ex0p");
+  TLegend* leg_os_cos21 = new TLegend(0.58,0.68,0.88,0.88);
+  leg_os_cos21->AddEntry(h1_os_cos21,leghead1,"p");
+  leg_os_cos21->AddEntry(h2_os_cos21,leghead2,"p");
+  leg_os_cos21->AddEntry(h3_os_cos21,leghead3,"p");
+  leg_os_cos21->AddEntry(h4_os_cos21,leghead4,"p");
+  leg_os_cos21->SetTextSize(0.055);
+  leg_os_cos21->SetFillStyle(0);
+  leg_os_cos21->Draw();
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cos21_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cos21_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
+
+  // --- sin21
+
+  TProfile* h1_os_sin21 = (TProfile*)file1->Get("centrality_ac_fvtxc_tracks_sin21");
+  TProfile* h2_os_sin21 = (TProfile*)file2->Get("centrality_ac_fvtxc_tracks_sin21");
+  TProfile* h3_os_sin21 = (TProfile*)file3->Get("centrality_ac_fvtxc_tracks_sin21");
+  TProfile* h4_os_sin21 = (TProfile*)file4->Get("centrality_ac_fvtxc_tracks_sin21");
+
+  xmin = 0.0;
+  xmax = 100.0;
+  ymin = -1;
+  ymax = 1;
+  TH2D* hd_os_sin21 = new TH2D("hd_os_sin21","",1,xmin,xmax,1,ymin,ymax);
+  hd_os_sin21->GetXaxis()->SetTitle("centrality");
+  hd_os_sin21->GetYaxis()->SetTitle("#LT#LTsin2#phi#GT#GT");
+  hd_os_sin21->GetXaxis()->SetTitleOffset(1.1);
+  hd_os_sin21->GetYaxis()->SetTitleOffset(1.4);
+  hd_os_sin21->GetXaxis()->SetTitleSize(0.055);
+  hd_os_sin21->GetYaxis()->SetTitleSize(0.055);
+  hd_os_sin21->GetXaxis()->SetLabelSize(0.055);
+  hd_os_sin21->GetYaxis()->SetLabelSize(0.055);
+  hd_os_sin21->Draw();
+  h1_os_sin21->SetLineColor(kBlack);
+  h2_os_sin21->SetLineColor(kRed);
+  h3_os_sin21->SetLineColor(kBlue);
+  h4_os_sin21->SetLineColor(kGreen+2);
+  h1_os_sin21->SetMarkerColor(kBlack);
+  h2_os_sin21->SetMarkerColor(kRed);
+  h3_os_sin21->SetMarkerColor(kBlue);
+  h4_os_sin21->SetMarkerColor(kGreen+2);
+  h1_os_sin21->SetMarkerStyle(kOpenSquare);
+  h2_os_sin21->SetMarkerStyle(kOpenCircle);
+  h3_os_sin21->SetMarkerStyle(kOpenDiamond);
+  h4_os_sin21->SetMarkerStyle(kOpenCross);
+  h1_os_sin21->Draw("same ex0p");
+  h2_os_sin21->Draw("same ex0p");
+  h3_os_sin21->Draw("same ex0p");
+  h4_os_sin21->Draw("same ex0p");
+  TLegend* leg_os_sin21 = new TLegend(0.58,0.68,0.88,0.88);
+  leg_os_sin21->AddEntry(h1_os_sin21,leghead1,"p");
+  leg_os_sin21->AddEntry(h2_os_sin21,leghead2,"p");
+  leg_os_sin21->AddEntry(h3_os_sin21,leghead3,"p");
+  leg_os_sin21->AddEntry(h4_os_sin21,leghead4,"p");
+  leg_os_sin21->SetTextSize(0.055);
+  leg_os_sin21->SetFillStyle(0);
+  leg_os_sin21->Draw();
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_sin21_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_sin21_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
+
   // --- nfvtxt
 
   TH1D* h1_nfvtxt = (TH1D*)file1->Get("th1d_nfvtxt_combinedER");
