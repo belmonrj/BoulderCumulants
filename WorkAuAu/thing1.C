@@ -21,8 +21,6 @@ void thing1()
   dothething_diagnostics(200,0,1,2,4);
   dothething_diagnostics(200,3,4,5,6);
 
-  return;
-
   gROOT->ProcessLine(".L dothething_components.C");
   dothething_components(200,0,1,2,4);
   dothething_components(200,3,4,5,6);

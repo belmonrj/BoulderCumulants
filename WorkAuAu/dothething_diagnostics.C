@@ -60,8 +60,8 @@ void dothething_diagnostics(int name, int which1, int which2, int which3, int wh
 
   xmin = 0.0;
   xmax = 100.0;
-  ymin = -1;
-  ymax = 1;
+  ymin = -0.2;
+  ymax = 0.2;
   TH2D* hd_os_cos21 = new TH2D("hd_os_cos21","",1,xmin,xmax,1,ymin,ymax);
   hd_os_cos21->GetXaxis()->SetTitle("centrality");
   hd_os_cos21->GetYaxis()->SetTitle("#LT#LTcos2#phi#GT#GT");
@@ -108,8 +108,8 @@ void dothething_diagnostics(int name, int which1, int which2, int which3, int wh
 
   xmin = 0.0;
   xmax = 100.0;
-  ymin = -1;
-  ymax = 1;
+  ymin = -0.2;
+  ymax = 0.2;
   TH2D* hd_os_sin21 = new TH2D("hd_os_sin21","",1,xmin,xmax,1,ymin,ymax);
   hd_os_sin21->GetXaxis()->SetTitle("centrality");
   hd_os_sin21->GetYaxis()->SetTitle("#LT#LTsin2#phi#GT#GT");
@@ -197,6 +197,8 @@ void dothething_diagnostics(int name, int which1, int which2, int which3, int wh
   c1->Print(Form("ComparisonFigs/FourWayComparison_nfvtxt_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
 
   // --- 2d shenanigans
+
+  return; // runs very slowly so only run it when needed
 
   gStyle->SetOptTitle(1);
 

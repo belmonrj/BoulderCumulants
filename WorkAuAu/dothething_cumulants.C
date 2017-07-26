@@ -174,8 +174,8 @@ void dothething_cumulants(int name, int which1, int which2, int which3, int whic
   leg_os_c24->AddEntry(c1h4_os_c24,leghead4,"p");
   leg_os_c24->SetTextSize(0.055);
   leg_os_c24->Draw();
-  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cumulant_c24_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
-  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cumulant_c24_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_c24_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_c24_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
 
 
   ymin = -2e-6;
@@ -217,8 +217,8 @@ void dothething_cumulants(int name, int which1, int which2, int which3, int whic
   leg_os_c26->AddEntry(c2h4_os_c26,leghead4,"p");
   leg_os_c26->SetTextSize(0.055);
   leg_os_c26->Draw();
-  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cumulant_c26_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
-  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cumulant_c26_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_c26_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_c26_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
 
 
   ymin = -1e-2;
@@ -264,8 +264,8 @@ void dothething_cumulants(int name, int which1, int which2, int which3, int whic
   leg_os_v24->AddEntry(c1h4_os_v24,leghead4,"p");
   leg_os_v24->SetTextSize(0.055);
   leg_os_v24->Draw();
-  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cumulant_v24_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
-  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cumulant_v24_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_v24_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_v24_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
 
   ymin = -1e-2;
   ymax = 1.2e-1;
@@ -310,8 +310,8 @@ void dothething_cumulants(int name, int which1, int which2, int which3, int whic
   leg_os_v26->AddEntry(c2h4_os_v26,leghead4,"p");
   leg_os_v26->SetTextSize(0.055);
   leg_os_v26->Draw();
-  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cumulant_v26_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
-  c1->Print(Form("ComparisonFigs/FourWayComparison_os_cumulant_v26_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_v26_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_os_v26_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
 
 }
 
