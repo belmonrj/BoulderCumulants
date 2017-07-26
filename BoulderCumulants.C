@@ -1513,7 +1513,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   if ( _collsys == "Run14AuAu200" && !passes )
     {
       if ( _verbosity > 1 ) cout << "Making special event cut for " << _collsys << endl;
-      // return EVENT_OK; // don't want to make cut...
+      return EVENT_OK; // now testing revised cut...
     }
 
   //---------------------------------------------------------//
