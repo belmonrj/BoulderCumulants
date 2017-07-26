@@ -12,6 +12,10 @@ void donttrythis()
   histo->RebinX(10);
   histo->GetXaxis()->SetRangeUser(0,1000);
   histo->Draw("colz");
+  tg_upper->SetLineColor(1);
+  tg_lower->SetLineColor(1);
+  tg_upper->SetLineWidth(2);
+  tg_lower->SetLineWidth(2);
   tg_upper->Draw("l");
   tg_lower->Draw("l");
 
