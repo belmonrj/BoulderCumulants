@@ -85,9 +85,9 @@ void simple_six_cent()
             sqrt(
                  (4.5*(4*two*two-four)*(4*two*two-four)*etwo*etwo) +
                  (4.5*two*two*efour*efour) +
-                 (1.0/18.0)*esix*six
+                 (1.0/18.0)*esix*esix // fixed a typo here
                  ); // correct formula excluding covariance terms, looks like over-estimate
-          ev26 = v26*(esix/six); // brutally simplistic, but *looks* right
+          //ev26 = v26*(esix/six); // brutally simplistic, but *looks* right
         }
       th1d_v26->SetBinContent(i+1,v26);
       th1d_v26->SetBinError(i+1,ev26);
