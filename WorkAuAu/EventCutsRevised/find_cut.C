@@ -40,4 +40,32 @@ void find_cut()
 
   c1->Print("make_the_cut.png");
 
+  ofstream fout("tracks_charge_function.C");
+  fout << endl;
+  fout << "bool tracks_charge_function(int ntracks, double chargesum)" << endl;
+  fout << "{" << endl;
+  fout << endl;
+  fout << "  double cutlow = 0;" << endl;
+  fout << "  double cuthigh = 0;" << endl;
+  fout << endl;
+  fout << "  if ( ntracks < 0 ) return false;" << endl;
+  for ( int i = 0; i < 50; ++i )
+    {
+      int bin_low_edge = th1d_histo->GetBinLowEdge(i+1);
+      int bin_high_edge = th1d_histo->GetBinLowEdge(i+2); // no get bin high edge
+      int bin_center = th1d_histo->GetBinCenter(i+1);
+      double ylower = th1d_lower->GetBinContent(i+1);
+      double yupper = th1d_upper->GetBinContent(i+1);
+      fout << "  else if ( ntracks > " << bin_low_edge << " && ntracks <= " << bin_high_edge << ") { cutlow = " << ylower << "; cuthigh = " << yupper << "; }" << endl;
+    }
+  fout << "  else return false;" << endl;
+  fout << endl;
+  fout << "  double quantity = chargesum/double(ntracks);" << endl;
+  fout << "  if ( quantity >= cutlow && quantity <= cuthigh ) return true;" << endl;
+  fout << "  else return false;" << endl;
+  fout << endl;
+  fout << "}" << endl;
+  fout << endl;
+
+
 }
