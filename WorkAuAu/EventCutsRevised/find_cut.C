@@ -49,7 +49,7 @@ void find_cut()
   fout << "  double cuthigh = 0;" << endl;
   fout << endl;
   fout << "  if ( ntracks < 0 ) return false;" << endl;
-  for ( int i = 0; i < 50; ++i )
+  for ( int i = 0; i < 65; ++i )
     {
       int bin_low_edge = th1d_histo->GetBinLowEdge(i+1);
       int bin_high_edge = th1d_histo->GetBinLowEdge(i+2); // no get bin high edge
