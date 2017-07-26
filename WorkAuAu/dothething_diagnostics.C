@@ -1,0 +1,93 @@
+void dothething_diagnostics(int name, int which1, int which2, int which3, int which4)
+{
+
+  TString ts_hash1 = hash_description[xhash][which1];
+  TString ts_hash2 = hash_description[xhash][which2];
+  TString ts_hash3 = hash_description[xhash][which3];
+  TString ts_hash4 = hash_description[xhash][which4];
+
+  TString ts_desc1 = hash_description[xdesc][which1];
+  TString ts_desc2 = hash_description[xdesc][which2];
+  TString ts_desc3 = hash_description[xdesc][which3];
+  TString ts_desc4 = hash_description[xdesc][which4];
+
+  TString fname1 = "input/histos_"; fname1 += ts_hash1; fname1 += ".root";
+  TString fname2 = "input/histos_"; fname2 += ts_hash2; fname2 += ".root";
+  TString fname3 = "input/histos_"; fname3 += ts_hash3; fname3 += ".root";
+  TString fname4 = "input/histos_"; fname4 += ts_hash4; fname4 += ".root";
+
+  TString leghead1 = ts_desc1; leghead1 += " "; leghead1 += ts_hash1;
+  TString leghead2 = ts_desc2; leghead2 += " "; leghead2 += ts_hash2;
+  TString leghead3 = ts_desc3; leghead3 += " "; leghead3 += ts_hash3;
+  TString leghead4 = ts_desc4; leghead4 += " "; leghead4 += ts_hash4;
+
+  cout << ts_hash1 << " " << ts_desc1 << " " << fname1 << " " << leghead1 << endl;
+  cout << ts_hash2 << " " << ts_desc2 << " " << fname2 << " " << leghead2 << endl;
+  cout << ts_hash3 << " " << ts_desc3 << " " << fname3 << " " << leghead3 << endl;
+  cout << ts_hash4 << " " << ts_desc4 << " " << fname4 << " " << leghead4 << endl;
+
+
+
+  TCanvas* c1 = new TCanvas();
+  c1->SetMargin(0.15,0.05,0.13,0.08); // LRBT
+
+  double xmin = 0.0;
+  double xmax = 100.0;
+  double ymin = 0.0;
+  double ymax = 50.0;
+
+  TFile* file1 = TFile::Open(fname1);
+  TFile* file2 = TFile::Open(fname2);
+  TFile* file3 = TFile::Open(fname3);
+  TFile* file4 = TFile::Open(fname4);
+
+  th1d_nfvtxt_combinedER;
+  th1d_nfvtxt_combined;
+  th2d_nfvtxt_bbcsum;
+  th2d_nfvtxt_bbcsumratio;
+  th1d_nfvtxt_north;
+  th1d_nfvtxt_south;
+
+
+  // --- nfvtxt
+
+  TH1D* h1_nfvtxt = (TH1D*)file1->Get("th1d_nfvtxt_combinedER");
+  TH1D* h2_nfvtxt = (TH1D*)file2->Get("th1d_nfvtxt_combinedER");
+  TH1D* h3_nfvtxt = (TH1D*)file3->Get("th1d_nfvtxt_combinedER");
+  TH1D* h4_nfvtxt = (TH1D*)file4->Get("th1d_nfvtxt_combinedER");
+
+  xmin = 0.0;
+  xmax = 1500.0;
+  ymin = 1;
+  ymax = h1_nfvtxt->GetMaximum();
+  TH2D* hd_nfvtxt = new TH2D("hd_nfvtxt","",1,xmin,xmax,1,ymin,ymax);
+  hd_nfvtxt->GetXaxis()->SetTitle("number of FVTX tracks");
+  hd_nfvtxt->GetYaxis()->SetTitle("number of events");
+  hd_nfvtxt->GetXaxis()->SetTitleOffset(1.1);
+  hd_nfvtxt->GetYaxis()->SetTitleOffset(1.4);
+  hd_nfvtxt->GetXaxis()->SetTitleSize(0.055);
+  hd_nfvtxt->GetYaxis()->SetTitleSize(0.055);
+  hd_nfvtxt->GetXaxis()->SetLabelSize(0.055);
+  hd_nfvtxt->GetYaxis()->SetLabelSize(0.055);
+  hd_nfvtxt->Draw();
+  h1_nfvtxt->SetLineColor(kBlack);
+  h2_nfvtxt->SetLineColor(kRed);
+  h3_nfvtxt->SetLineColor(kBlue);
+  h4_nfvtxt->SetLineColor(kGreen+2);
+  h1_nfvtxt->Draw("same");
+  h2_nfvtxt->Draw("same");
+  h3_nfvtxt->Draw("same");
+  h4_nfvtxt->Draw("same");
+  TLegend* leg_nfvtxt = new TLegend(0.58,0.68,0.88,0.88);
+  leg_nfvtxt->AddEntry(h1_nfvtxt,leghead1,"p");
+  leg_nfvtxt->AddEntry(h2_nfvtxt,leghead2,"p");
+  leg_nfvtxt->AddEntry(h3_nfvtxt,leghead3,"p");
+  leg_nfvtxt->AddEntry(h4_nfvtxt,leghead4,"p");
+  leg_nfvtxt->SetTextSize(0.055);
+  leg_nfvtxt->SetFillStyle(0);
+  leg_nfvtxt->Draw();
+  c1->SetLogy();
+  c1->Print(Form("ComparisonFigs/FourWayComparison_nfvtxt_%d_%d%d%d%d.png",name,which1,which2,which3,which4));
+  c1->Print(Form("ComparisonFigs/FourWayComparison_nfvtxt_%d_%d%d%d%d.pdf",name,which1,which2,which3,which4));
+
+}
