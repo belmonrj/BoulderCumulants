@@ -106,11 +106,11 @@ void simple_six_cent()
   th1d_942->SetMarkerStyle(kOpenSquare);
   th1d_123->SetMarkerStyle(kOpenCross);
   th1d_six->SetMarkerColor(kBlack);
-  th1d_942->SetMarkerColor(kRed);
-  th1d_123->SetMarkerColor(kBlue);
+  th1d_942->SetMarkerColor(kBlue);
+  th1d_123->SetMarkerColor(kRed);
   th1d_six->SetLineColor(kBlack);
-  th1d_942->SetLineColor(kRed);
-  th1d_123->SetLineColor(kBlue);
+  th1d_942->SetLineColor(kBlue);
+  th1d_123->SetLineColor(kRed);
   th1d_six->Draw("same ex0p");
   th1d_942->Draw("same ex0p");
   th1d_123->Draw("same ex0p");

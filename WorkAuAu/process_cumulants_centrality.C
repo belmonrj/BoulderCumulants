@@ -362,9 +362,12 @@ void do_process(const char* type, int rebin)
   // th1d_corr_v22->Scale(1.1);
   // th1d_corr_v24->Scale(1.1);
   // th1d_corr_v2G->Scale(1.1);
-  th1d_corr_v22->Scale(1.2);
-  th1d_corr_v24->Scale(1.2);
-  th1d_corr_v2G->Scale(1.2);
+  // th1d_corr_v22->Scale(1.2);
+  // th1d_corr_v24->Scale(1.2);
+  // th1d_corr_v2G->Scale(1.2);
+  th1d_corr_v22->Scale(1.25);
+  th1d_corr_v24->Scale(1.25);
+  th1d_corr_v2G->Scale(1.25);
   th1d_corr_v22->GetXaxis()->SetRangeUser(0,90);
   th1d_corr_v24->GetXaxis()->SetRangeUser(5,70);
   th1d_corr_v2G->GetXaxis()->SetRangeUser(0,90);
@@ -379,7 +382,8 @@ void do_process(const char* type, int rebin)
   leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader("Scaled by 1.35");
   //leg->SetHeader("Scaled by 1.1");
-  leg->SetHeader("Scaled by 1.2");
+  //leg->SetHeader("Scaled by 1.2");
+  leg->SetHeader("Scaled by 1.25");
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_corr_v22,"v_{2}{2} 1<|#eta|<3","p");
