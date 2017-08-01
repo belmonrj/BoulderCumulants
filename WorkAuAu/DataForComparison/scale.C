@@ -2,6 +2,7 @@ void scale()
 {
 
   TCanvas* c1 = new TCanvas("c1","");
+  c1->SetMargin(0.15,0.05,0.13,0.08);
 
   double eta[28], v2[28], ev2[28], eslv2[28], esuv2[28];
   eta[0]  = -4.8614; v2[0]  = 0.0166; ev2[0]  = 0.0038; eslv2[0]  = 0.0025; esuv2[0]  = 0.0034;
@@ -60,8 +61,6 @@ void scale()
 
   // c1->Print("fig_scale.png");
 
-  cout << "done with first part..." << endl;
-
   double eta_1[14], v2_1[14], ev2_1[14], eslv2_1[14], esuv2_1[14];
   double eta_2[14], v2_2[14], ev2_2[14], eslv2_2[14], esuv2_2[14];
   for ( int i = 0; i < 14; ++i )
@@ -77,8 +76,6 @@ void scale()
       eslv2_2[i] = eslv2[i+14];
       esuv2_2[i] = esuv2[i+14];
     }
-
-  cout << "done with loop..." << endl;
 
   TGraphErrors* tge_v2_1 = new TGraphErrors(14,eta_1,v2_1,0,ev2_1);
   tge_v2_1->SetMarkerStyle(kFullSquare);
@@ -98,8 +95,6 @@ void scale()
   tgae_v2_2->SetLineWidth(15);
   tgae_v2_2->SetLineColor(kGray+0);
 
-  cout << "now drawing..." << endl;
-
   empty->Draw();
   tgae_v2_2->Draw("pz");
   tgae_v2_1->Draw("pz");
@@ -108,6 +103,16 @@ void scale()
   fun_south->Draw("same");
   fun_north->Draw("same");
   fun_centr->Draw("same");
+
+  TLegend* leg = new TLegend(0.78,0.75,0.88,0.88);
+  leg->AddEntry(tge_v2_1,"Data","p");
+  leg->AddEntry(tge_v2_2,"Mirror","p");
+  leg->SetTextSize(0.05);
+  leg->Draw();
+
+  TLatex* tl1 = new TLatex(-4.5,0.05325,"PHOBOS, PRC 72 051901 (2005)");
+  tl1->SetTextSize(0.05);
+  tl1->Draw();
 
   c1->Print("fig_scale.png");
 
