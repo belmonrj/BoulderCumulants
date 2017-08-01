@@ -58,6 +58,57 @@ void scale()
   fun_north->Draw("same");
   fun_centr->Draw("same");
 
+  // c1->Print("fig_scale.png");
+
+  cout << "done with first part..." << endl;
+
+  double eta_1[14], v2_1[14], ev2_1[14], eslv2_1[14], esuv2_1[14];
+  double eta_2[14], v2_2[14], ev2_2[14], eslv2_2[14], esuv2_2[14];
+  for ( int i = 0; i < 14; ++i )
+    {
+      eta_1[i] = eta[i];
+      v2_1[i] = v2[i];
+      ev2_1[i] = ev2[i];
+      eslv2_1[i] = eslv2[i];
+      esuv2_1[i] = esuv2[i];
+      eta_2[i] = eta[i+14];
+      v2_2[i] = v2[i+14];
+      ev2_2[i] = ev2[i+14];
+      eslv2_2[i] = eslv2[i+14];
+      esuv2_2[i] = esuv2[i+14];
+    }
+
+  cout << "done with loop..." << endl;
+
+  TGraphErrors* tge_v2_1 = new TGraphErrors(14,eta_1,v2_1,0,ev2_1);
+  tge_v2_1->SetMarkerStyle(kFullSquare);
+  tge_v2_1->SetMarkerColor(kBlack);
+  TGraphAsymmErrors* tgae_v2_1 = new TGraphAsymmErrors(14,eta_1,v2_1,0,0,eslv2_1,esuv2_1);
+  tgae_v2_1->SetMarkerStyle(1);
+  tgae_v2_1->SetMarkerColor(1);
+  tgae_v2_1->SetLineWidth(15);
+  tgae_v2_1->SetLineColor(kGray+1);
+
+  TGraphErrors* tge_v2_2 = new TGraphErrors(14,eta_2,v2_2,0,ev2_2);
+  tge_v2_2->SetMarkerStyle(kOpenSquare);
+  tge_v2_2->SetMarkerColor(kBlack);
+  TGraphAsymmErrors* tgae_v2_2 = new TGraphAsymmErrors(14,eta_2,v2_2,0,0,eslv2_2,esuv2_2);
+  tgae_v2_2->SetMarkerStyle(1);
+  tgae_v2_2->SetMarkerColor(kGray+0);
+  tgae_v2_2->SetLineWidth(15);
+  tgae_v2_2->SetLineColor(kGray+0);
+
+  cout << "now drawing..." << endl;
+
+  empty->Draw();
+  tgae_v2_2->Draw("pz");
+  tgae_v2_1->Draw("pz");
+  tge_v2_1->Draw("pz");
+  tge_v2_2->Draw("pz");
+  fun_south->Draw("same");
+  fun_north->Draw("same");
+  fun_centr->Draw("same");
+
   c1->Print("fig_scale.png");
 
 }
