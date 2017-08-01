@@ -226,7 +226,11 @@ void do_process(const char* type, int rebin)
   leg->Draw();
   c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.png",rebin,type));
   c1->Print(Form("FigsFour/simpleR%d_v22andv24andgap_%s.pdf",rebin,type));
-  // --- STAR data
+  // -----------------------------------------------------------------------------
+  // --- STAR data ---------------------------------------------------------------
+  // J. Adams et al, Phys. Rev. C72 (2005) 014904
+  // arXiv:nucl-ex/0409033
+  // https://drupal.star.bnl.gov/STAR/files/starpublications/48/Figure_29a.html
   // v_{2}{2}
   // 1(70-80%) 6.88 0.052
   // 2(60-70%) 7.25 0.029
@@ -245,6 +249,10 @@ void do_process(const char* type, int rebin)
   // 6(20-30%) 5.66 0.02
   // 7(10-20%) 4.27 0.022
   // 8(5-10%)  2.53 0.066
+  // -----------------------------------------------------------------------------
+  // B. Abelev et al, Phys.Rev. C77 (2008) 054901
+  // arXiv:0801.3466
+  // https://drupal.star.bnl.gov/STAR/files/starpublications/108/data.html (fig 5)
   //Collision Cross Sectionv2{LYZ_Sum}
   //45 0.0581909  0.00115924
   //35 0.059935   0.000298429
@@ -257,7 +265,7 @@ void do_process(const char* type, int rebin)
   //25  0.0541 0.00024
   //15  0.0404 0.00032
   //7.5 0.0292 0.0023
-
+  // -----------------------------------------------------------------------------
   double cent[9] = {75,65,55,45,35,25,15,7.5,2.5};
   double star_v22[9]={0};
   double star_v24[9]={0};
