@@ -3,7 +3,7 @@ void scale()
 
   TCanvas* c1 = new TCanvas("c1","");
 
-  double eta[14], v2[14], ev2[14], eslv2[14], esuv2[14];
+  double eta[28], v2[28], ev2[28], eslv2[28], esuv2[28];
   eta[0]  = -4.8614; v2[0]  = 0.0166; ev2[0]  = 0.0038; eslv2[0]  = 0.0025; esuv2[0]  = 0.0034;
   eta[1]  = -4.0059; v2[1]  = 0.0236; ev2[1]  = 0.0025; eslv2[1]  = 0.0032; esuv2[1]  = 0.0038;
   eta[2]  = -3.0445; v2[2]  = 0.0312; ev2[2]  = 0.0015; eslv2[2]  = 0.0038; esuv2[2]  = 0.0038;
@@ -18,12 +18,20 @@ void scale()
   eta[11] =  3.6751; v2[11] = 0.0268; ev2[11] = 0.0021; eslv2[11] = 0.0045; esuv2[11] = 0.0067;
   eta[12] =  4.2536; v2[12] = 0.0196; ev2[12] = 0.0021; eslv2[12] = 0.0054; esuv2[12] = 0.0052;
   eta[13] =  5.0519; v2[13] = 0.0251; ev2[13] = 0.0094; eslv2[13] = 0.0269; esuv2[13] = 0.0092;
+  for ( int i = 14; i < 28; ++i )
+    {
+      eta[i] = -eta[i-14];
+      v2[i] = v2[i-14];
+      ev2[i] = ev2[i-14];
+      eslv2[i] = eslv2[i-14];
+      esuv2[i] = esuv2[i-14];
+    }
 
-  TGraphErrors* tge_v2 = new TGraphErrors(14,eta,v2,0,ev2);
+  TGraphErrors* tge_v2 = new TGraphErrors(28,eta,v2,0,ev2);
   tge_v2->SetMarkerStyle(kFullSquare);
   tge_v2->SetMarkerColor(kBlack);
 
-  TGraphAsymmErrors* tgae_v2 = new TGraphAsymmErrors(14,eta,v2,0,0,eslv2,esuv2);
+  TGraphAsymmErrors* tgae_v2 = new TGraphAsymmErrors(28,eta,v2,0,0,eslv2,esuv2);
   tgae_v2->SetMarkerStyle(1);
   tgae_v2->SetMarkerColor(1);
   tgae_v2->SetLineWidth(15);
