@@ -34,6 +34,13 @@ void simple_six()
 void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
 {
 
+  //  TCanvas* c1 = new TCanvas("c1","");
+
+  bool iscent = false;
+  bool isntrk = false;
+  if ( strcmp(handle,"cent") == 0 ) iscent = true;
+  if ( strcmp(handle,"strk") == 0 ) isntrk = true;
+
   tp1f_six->Rebin(rebin);
   tp1f_for->Rebin(rebin);
   tp1f_two->Rebin(rebin);
@@ -121,13 +128,13 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   double xmax = 100.0;
   double ymin = -1e-4;
   double ymax = 1e-4;
-  if ( strcmp(handle,"cent") == 0 ) xmax = 100.0;
-  if ( strcmp(handle,"strk") == 0 ) xmax = 600.0;
+  if ( iscent ) xmax = 100.0;
+  if ( isntrk ) xmax = 600.0;
 
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("components");
   th1d_six->SetMarkerStyle(kOpenCircle);
   th1d_942->SetMarkerStyle(kOpenSquare);
@@ -160,8 +167,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   if ( empty ) delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("components");
   th1d_six->Draw("same ex0p");
   th1d_942->Draw("same ex0p");
@@ -177,8 +184,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   if ( empty ) delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("cumulant");
   th1d_c26->SetMarkerStyle(kOpenCircle);
   th1d_c26->SetLineColor(kBlack);
@@ -205,8 +212,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   if ( empty ) delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("cumulant");
   th1d_c24->SetMarkerStyle(kOpenCircle);
   th1d_c24->SetLineColor(kBlack);
@@ -230,10 +237,10 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   if ( empty ) delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("v_{2}");
-  if ( strcmp(handle,"cent") == 0 )
+  if ( iscent )
   {
   th1d_v22->GetXaxis()->SetRangeUser(0,90);
   th1d_v24->GetXaxis()->SetRangeUser(0,70);
@@ -268,6 +275,6 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   c1->Print(Form("FigsSix/sixparticle_%s_v2642_blah.pdf",handle));
 
   if ( empty ) delete empty;
-
+  //  if ( c1 ) delete c1;
 
 }
