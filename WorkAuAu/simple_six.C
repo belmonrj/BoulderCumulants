@@ -4,6 +4,8 @@ void do_simple_six(TProfile*, TProfile*, TProfile*, int, const char*);
 void simple_six()
 {
 
+  // ------------------------------------------------------------------------
+
   TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
 
   int rebin = 1;
@@ -28,6 +30,27 @@ void simple_six()
 
   do_simple_six(tp1f_six,tp1f_for,tp1f_two,rebin,handle2);
 
+  // ------------------------------------------------------------------------
+
+  gROOT->ProcessLine("gErrorIgnoreLevel = 2002;");
+  TFile* fin = TFile::Open("input/cumulants_ampt_auau200_1.root");
+  gROOT->ProcessLine("gErrorIgnoreLevel = 0;");
+  //cout << fin << endl;
+
+  rebin = 10;
+
+  const char* handle3 = "amptstrk";
+
+  tp1f_six = (TProfile*)fin->Get("raa6_Ncharge");
+  tp1f_for = (TProfile*)fin->Get("raa4_Ncharge");
+  tp1f_two = (TProfile*)fin->Get("raa2_Ncharge");
+
+  do_simple_six(tp1f_six,tp1f_for,tp1f_two,rebin,handle3);
+
+  // ------------------------------------------------------------------------
+
+  cout << "All done. Have a nice day!" << endl;
+
 }
 
 
@@ -40,6 +63,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   bool isntrk = false;
   if ( strcmp(handle,"cent") == 0 ) iscent = true;
   if ( strcmp(handle,"strk") == 0 ) isntrk = true;
+  bool isamptntrk = false;
+  if ( strcmp(handle,"amptstrk") == 0 ) { isamptntrk = true; isntrk = true; }
 
   tp1f_six->Rebin(rebin);
   tp1f_for->Rebin(rebin);
