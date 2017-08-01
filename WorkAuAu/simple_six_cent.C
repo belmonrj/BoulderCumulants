@@ -1,14 +1,26 @@
+void do_simple_six(TProfile*, TProfile*, TProfile*, int, const char*);
+
+
 void simple_six_cent()
 {
 
-  //TFile* fin = TFile::Open("input/cumulants_200.root");
   TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
 
   int rebin = 1;
 
+  const char* handle = "cent";
+
   TProfile* tp1f_six = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c26");
   TProfile* tp1f_for = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c24");
   TProfile* tp1f_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c22");
+
+  do_simple_six(tp1f_six,tp1f_for,tp1f_two,rebin,handle);
+
+}
+
+
+void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
+{
 
   tp1f_six->Rebin(rebin);
   tp1f_for->Rebin(rebin);
@@ -123,8 +135,8 @@ void simple_six_cent()
   leg->AddEntry(th1d_942,"9#LT#LT4#GT#GT#LT#LT2#GT#GT","p");
   leg->AddEntry(th1d_123,"12#LT#LT2#GT#GT^{3}","p");
   leg->Draw();
-  c1->Print(Form("FigsSix/sixparticle_components_blah.png"));
-  c1->Print(Form("FigsSix/sixparticle_components_blah.pdf"));
+  c1->Print(Form("FigsSix/sixparticle_%s_components_blah.png",handle));
+  c1->Print(Form("FigsSix/sixparticle_%s_components_blah.pdf",handle));
 
   // xmin = 0.0;
   // xmax = 100.0;
@@ -140,8 +152,8 @@ void simple_six_cent()
   th1d_942->Draw("same ex0p");
   th1d_123->Draw("same ex0p");
   leg->Draw();
-  c1->Print(Form("FigsSix/sixparticle_components_zoom_blah.png"));
-  c1->Print(Form("FigsSix/sixparticle_components_zoom_blah.pdf"));
+  c1->Print(Form("FigsSix/sixparticle_%s_components_zoom_blah.png",handle));
+  c1->Print(Form("FigsSix/sixparticle_%s_components_zoom_blah.pdf",handle));
 
   // xmin = 0.0;
   // xmax = 100.0;
@@ -168,8 +180,8 @@ void simple_six_cent()
   cline->SetLineWidth(2);
   cline->SetLineStyle(2);
   cline->Draw();
-  c1->Print(Form("FigsSix/sixparticle_cumulant_blah.png"));
-  c1->Print(Form("FigsSix/sixparticle_cumulant_blah.pdf"));
+  c1->Print(Form("FigsSix/sixparticle_%s_cumulant_blah.png",handle));
+  c1->Print(Form("FigsSix/sixparticle_%s_cumulant_blah.pdf",handle));
 
   ymin = -2e-5;
   ymax = 2e-5;
@@ -191,8 +203,8 @@ void simple_six_cent()
   leg->AddEntry(th1d_c24,"c_{2}{4} = -v_{2}^{4}","p");
   leg->Draw();
   cline->Draw();
-  c1->Print(Form("FigsSix/sixparticle_cumulant4_blah.png"));
-  c1->Print(Form("FigsSix/sixparticle_cumulant4_blah.pdf"));
+  c1->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.png",handle));
+  c1->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.pdf",handle));
 
   xmin = 0.0;
   xmax = 100.0;
@@ -219,20 +231,20 @@ void simple_six_cent()
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_v26,"v_{2}{6}","p");
   leg->Draw();
-  c1->Print(Form("FigsSix/sixparticle_v2_blah.png"));
-  c1->Print(Form("FigsSix/sixparticle_v2_blah.pdf"));
+  c1->Print(Form("FigsSix/sixparticle_%s_v2_blah.png",handle));
+  c1->Print(Form("FigsSix/sixparticle_%s_v2_blah.pdf",handle));
   th1d_v24->SetMarkerStyle(kOpenSquare);
-  th1d_v24->SetMarkerColor(kRed);
-  th1d_v24->SetLineColor(kRed);
+  th1d_v24->SetMarkerColor(kBlue);
+  th1d_v24->SetLineColor(kBlue);
   th1d_v24->Draw("same ex0p");
   th1d_v22->SetMarkerStyle(kOpenCross);
-  th1d_v22->SetMarkerColor(kBlue);
-  th1d_v22->SetLineColor(kBlue);
+  th1d_v22->SetMarkerColor(kRed);
+  th1d_v22->SetLineColor(kRed);
   th1d_v22->Draw("same ex0p");
   leg->AddEntry(th1d_v24,"v_{2}{4}","p");
   leg->AddEntry(th1d_v22,"v_{2}{2}","p");
   leg->Draw();
-  c1->Print(Form("FigsSix/sixparticle_v2642_blah.png"));
-  c1->Print(Form("FigsSix/sixparticle_v2642_blah.pdf"));
+  c1->Print(Form("FigsSix/sixparticle_%s_v2642_blah.png",handle));
+  c1->Print(Form("FigsSix/sixparticle_%s_v2642_blah.pdf",handle));
 
 }
