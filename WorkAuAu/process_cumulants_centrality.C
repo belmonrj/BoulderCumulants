@@ -249,6 +249,16 @@ void do_process(const char* type, int rebin)
   // 6(20-30%) 5.66 0.02
   // 7(10-20%) 4.27 0.022
   // 8(5-10%)  2.53 0.066
+  // Figure30
+  // v2{6}
+  // 2(60-70%) 5.65 1.54
+  // 3(50-60%) 6.01 0.27
+  // 4(40-50%) 6.24 0.08
+  // 5(30-40%) 6.14 0.03
+  // 6(20-30%) 5.45 0.02
+  // 7(10-20%) 4.01 0.03
+  // 8(5-10%)  2.48 0.13
+  // 9(0-5%)   2.08 0.2
   // -----------------------------------------------------------------------------
   // B. Abelev et al, Phys.Rev. C77 (2008) 054901
   // arXiv:0801.3466
@@ -269,60 +279,73 @@ void do_process(const char* type, int rebin)
   double cent[9] = {75,65,55,45,35,25,15,7.5,2.5};
   double star_v22[9]={0};
   double star_v24[9]={0};
+  double star_v26[9]={0};
   double star_v2LYZS[9]={0};
   double star_v2LYZP[9]={0};
   double star_ev22[9]={0};
   double star_ev24[9]={0};
+  double star_ev26[9]={0};
   double star_ev2LYZS[9]={0};
   double star_ev2LYZP[9]={0};
-  star_v22[0] = 6.88;  star_v24[0] = -9.0;   star_v2LYZS[0] = -9.0  ;   star_v2LYZP[0] = -9.0  ;   // 75
-  star_v22[1] = 7.25;  star_v24[1] = 5.68;   star_v2LYZS[1] = -9.0  ;   star_v2LYZP[1] = -9.0  ;   // 65
-  star_v22[2] = 7.59;  star_v24[2] = 6.18;   star_v2LYZS[2] = -9.0  ;   star_v2LYZP[2] = 0.063 ;   // 55
-  star_v22[3] = 7.64;  star_v24[3] = 6.43;   star_v2LYZS[3] = 0.0581;   star_v2LYZP[3] = 0.0627;   // 45
-  star_v22[4] = 7.29;  star_v24[4] = 6.33;   star_v2LYZS[4] = 0.0599;   star_v2LYZP[4] = 0.0612;   // 35
-  star_v22[5] = 6.42;  star_v24[5] = 5.66;   star_v2LYZS[5] = 0.0541;   star_v2LYZP[5] = 0.0541;   // 25
-  star_v22[6] = 4.97;  star_v24[6] = 4.27;   star_v2LYZS[6] = 0.0411;   star_v2LYZP[6] = 0.0404;   // 15
-  star_v22[7] = 3.55;  star_v24[7] = 2.53;   star_v2LYZS[7] = -9.0  ;   star_v2LYZP[7] = 0.0292;   // 7.5
-  star_v22[8] = 2.41;  star_v24[8] = -9.0;   star_v2LYZS[8] = -9.0  ;   star_v2LYZP[8] = -9.0  ;   // 2.5
-  star_ev22[0] = 0.052 ;  star_ev24[0] = 0    ; // 75
-  star_ev22[1] = 0.029 ;  star_ev24[1] = 0.35 ; // 65
-  star_ev22[2] = 0.018 ;  star_ev24[2] = 0.1  ; // 55
-  star_ev22[3] = 0.013 ;  star_ev24[3] = 0.045; // 45
-  star_ev22[4] = 0.0094;  star_ev24[4] = 0.026; // 35
-  star_ev22[5] = 0.0075;  star_ev24[5] = 0.02 ; // 25
-  star_ev22[6] = 0.0066;  star_ev24[6] = 0.022; // 15
-  star_ev22[7] = 0.0088;  star_ev24[7] = 0.066; // 7.5
-  star_ev22[8] = 0.0096;  star_ev24[8] = 0    ; // 2.5
+  star_v22[0] = 6.88;  star_v24[0] = -9.0;   star_v26[0] = -9.0;   // 75
+  star_v22[1] = 7.25;  star_v24[1] = 5.68;   star_v26[1] = 5.65;   // 65
+  star_v22[2] = 7.59;  star_v24[2] = 6.18;   star_v26[2] = 6.01;   // 55
+  star_v22[3] = 7.64;  star_v24[3] = 6.43;   star_v26[3] = 6.24;   // 45
+  star_v22[4] = 7.29;  star_v24[4] = 6.33;   star_v26[4] = 6.14;   // 35
+  star_v22[5] = 6.42;  star_v24[5] = 5.66;   star_v26[5] = 5.45;   // 25
+  star_v22[6] = 4.97;  star_v24[6] = 4.27;   star_v26[6] = 4.01;   // 15
+  star_v22[7] = 3.55;  star_v24[7] = 2.53;   star_v26[7] = 2.48;   // 7.5
+  star_v22[8] = 2.41;  star_v24[8] = -9.0;   star_v26[8] = 2.08;   // 2.5
+  star_ev22[0] = 0.052 ;  star_ev24[0] = 0    ;  star_ev26[0] = 0   ; // 75
+  star_ev22[1] = 0.029 ;  star_ev24[1] = 0.35 ;  star_ev26[1] = 1.54; // 65
+  star_ev22[2] = 0.018 ;  star_ev24[2] = 0.1  ;  star_ev26[2] = 0.27; // 55
+  star_ev22[3] = 0.013 ;  star_ev24[3] = 0.045;  star_ev26[3] = 0.08; // 45
+  star_ev22[4] = 0.0094;  star_ev24[4] = 0.026;  star_ev26[4] = 0.03; // 35
+  star_ev22[5] = 0.0075;  star_ev24[5] = 0.02 ;  star_ev26[5] = 0.02; // 25
+  star_ev22[6] = 0.0066;  star_ev24[6] = 0.022;  star_ev26[6] = 0.03; // 15
+  star_ev22[7] = 0.0088;  star_ev24[7] = 0.066;  star_ev26[7] = 0.13; // 7.5
+  star_ev22[8] = 0.0096;  star_ev24[8] = 0    ;  star_ev26[8] = 0.2 ; // 2.5
+  star_v2LYZS[0] = -9.0  ;   star_v2LYZP[0] = -9.0  ;   star_ev2LYZS[0] = 0          ;   star_ev2LYZP[0] = 0      ;   // 75
+  star_v2LYZS[1] = -9.0  ;   star_v2LYZP[1] = -9.0  ;   star_ev2LYZS[1] = 0          ;   star_ev2LYZP[1] = 0      ;   // 65
+  star_v2LYZS[2] = -9.0  ;   star_v2LYZP[2] = 0.063 ;   star_ev2LYZS[2] = 0          ;   star_ev2LYZP[2] = 0.0037 ;   // 55
+  star_v2LYZS[3] = 0.0581;   star_v2LYZP[3] = 0.0627;   star_ev2LYZS[3] = 0.00115924 ;   star_ev2LYZP[3] = 0.0017 ;   // 45
+  star_v2LYZS[4] = 0.0599;   star_v2LYZP[4] = 0.0612;   star_ev2LYZS[4] = 0.000298429;   star_ev2LYZP[4] = 0.0003 ;   // 35
+  star_v2LYZS[5] = 0.0541;   star_v2LYZP[5] = 0.0541;   star_ev2LYZS[5] = 0.000171784;   star_ev2LYZP[5] = 0.00024;   // 25
+  star_v2LYZS[6] = 0.0411;   star_v2LYZP[6] = 0.0404;   star_ev2LYZS[6] = 0.0002367  ;   star_ev2LYZP[6] = 0.00032;   // 15
+  star_v2LYZS[7] = -9.0  ;   star_v2LYZP[7] = 0.0292;   star_ev2LYZS[7] = 0          ;   star_ev2LYZP[7] = 0.0023 ;   // 7.5
+  star_v2LYZS[8] = -9.0  ;   star_v2LYZP[8] = -9.0  ;   star_ev2LYZS[8] = 0          ;   star_ev2LYZP[8] = 0      ;   // 2.5
   for ( int i = 0; i < 9; ++i )
     {
       star_v22[i] /= 100.0;
       star_v24[i] /= 100.0;
+      star_v26[i] /= 100.0;
       star_ev22[i] /= 100.0;
       star_ev24[i] /= 100.0;
-      cout << star_v22[i] << " " << star_v24[i] << endl;
+      star_ev26[i] /= 100.0;
     }
   TGraphErrors* tge_star_v22 = new TGraphErrors(9,cent,star_v22,0,star_ev22);
   TGraphErrors* tge_star_v24 = new TGraphErrors(9,cent,star_v24,0,star_ev24);
+  TGraphErrors* tge_star_v26 = new TGraphErrors(9,cent,star_v26,0,star_ev26);
   tge_star_v22->SetMarkerStyle(kFullStar);
   tge_star_v22->SetMarkerColor(kRed);
-  tge_star_v22->SetMarkerSize(1.99);
   tge_star_v22->SetLineColor(kRed);
   tge_star_v24->SetMarkerStyle(kFullStar);
-  tge_star_v24->SetMarkerColor(kBlack);
-  tge_star_v24->SetMarkerSize(1.99);
-  tge_star_v24->SetLineColor(kBlack);
+  tge_star_v24->SetMarkerColor(kBlue);
+  tge_star_v24->SetLineColor(kBlue);
+  tge_star_v26->SetMarkerStyle(kFullStar);
+  tge_star_v26->SetMarkerColor(kBlack);
+  tge_star_v26->SetLineColor(kBlack);
   tge_star_v22->SetMarkerSize(2.9);
   tge_star_v24->SetMarkerSize(2.9);
+  tge_star_v26->SetMarkerSize(2.9);
   // ---
   TGraphErrors* tge_star_v2LYZS = new TGraphErrors(9,cent,star_v2LYZS,0,star_ev2LYZS);
   TGraphErrors* tge_star_v2LYZP = new TGraphErrors(9,cent,star_v2LYZP,0,star_ev2LYZP);
   tge_star_v2LYZS->SetMarkerStyle(kOpenStar);
   tge_star_v2LYZS->SetMarkerColor(kRed);
-  tge_star_v2LYZS->SetMarkerSize(1.99);
   tge_star_v2LYZS->SetLineColor(kRed);
   tge_star_v2LYZP->SetMarkerStyle(kOpenStar);
   tge_star_v2LYZP->SetMarkerColor(kBlack);
-  tge_star_v2LYZP->SetMarkerSize(1.99);
   tge_star_v2LYZP->SetLineColor(kBlack);
   tge_star_v2LYZS->SetMarkerSize(2.9);
   tge_star_v2LYZP->SetMarkerSize(2.9);
@@ -341,13 +364,15 @@ void do_process(const char* type, int rebin)
   th1d_corr_v2G->Draw("ex0p same");
   tge_star_v22->Draw("p");
   tge_star_v24->Draw("p");
+  // tge_star_v26->Draw("p");
   // tge_star_v2LYZS->Draw("p");
   // tge_star_v2LYZP->Draw("p");
   leg->Draw();
   TLegend* leg2 = new TLegend(0.18,0.68,0.38,0.88);
-  leg2->SetHeader("STAR");
-  leg2->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1","p");
+  leg2->SetHeader("STAR, PRC 72 014904 (2005)");
   leg2->AddEntry(tge_star_v22,"v_{2}{2} |#eta|<1","p");
+  leg2->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1","p");
+  // leg2->AddEntry(tge_star_v26,"v_{2}{6} |#eta|<1","p");
   // leg2->AddEntry(tge_star_v2LYZS,"v_{2}{LYZ} Sum |#eta|<1","p");
   // leg2->AddEntry(tge_star_v2LYZP,"v_{2}{LYZ} Product |#eta|<1","p");
   leg2->SetTextSize(0.045);
@@ -384,6 +409,7 @@ void do_process(const char* type, int rebin)
   th1d_corr_v2G->Draw("ex0p same");
   tge_star_v22->Draw("p");
   tge_star_v24->Draw("p");
+  // tge_star_v26->Draw("p");
   // tge_star_v2LYZS->Draw("p");
   // tge_star_v2LYZP->Draw("p");
   delete leg;
