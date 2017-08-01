@@ -16,6 +16,18 @@ void simple_six_cent()
 
   do_simple_six(tp1f_six,tp1f_for,tp1f_two,rebin,handle);
 
+  // ------------------------------------------------------------------------
+
+  rebin = 10;
+
+  const char* handle2 = "strk";
+
+  tp1f_six = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c26");
+  tp1f_for = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c24");
+  tp1f_two = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c22");
+
+  do_simple_six(tp1f_six,tp1f_for,tp1f_two,rebin,handle2);
+
 }
 
 
@@ -26,13 +38,13 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   tp1f_for->Rebin(rebin);
   tp1f_two->Rebin(rebin);
 
-  TH1D* th1d_six = tp1f_six->ProjectionX("th1d_six"); // <6>
-  TH1D* th1d_for = tp1f_for->ProjectionX("th1d_for"); // <4>
-  TH1D* th1d_two = tp1f_two->ProjectionX("th1d_two"); // <2>
+  TH1D* th1d_six = tp1f_six->ProjectionX(Form("th1d_six_%s")); // <6>
+  TH1D* th1d_for = tp1f_for->ProjectionX(Form("th1d_for_%s")); // <4>
+  TH1D* th1d_two = tp1f_two->ProjectionX(Form("th1d_two_%s")); // <2>
 
-  TH1D* th1d_942 = (TH1D*)th1d_for->Clone("th1d_942"); // 9<4><2>
-  TH1D* th1d_123 = (TH1D*)th1d_two->Clone("th1d_123"); // 12<2>^3
-  TH1D* th1d_222 = (TH1D*)th1d_two->Clone("th1d_222"); // 2<2>^2
+  TH1D* th1d_942 = (TH1D*)th1d_for->Clone(Form("th1d_942_%s")); // 9<4><2>
+  TH1D* th1d_123 = (TH1D*)th1d_two->Clone(Form("th1d_123_%s")); // 12<2>^3
+  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%s")); // 2<2>^2
 
   th1d_942->Multiply(th1d_two);
   th1d_942->Scale(9);
@@ -109,6 +121,9 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   double xmax = 100.0;
   double ymin = -1e-4;
   double ymax = 1e-4;
+  if ( strcmp(handle,"cent") == 0 ) xmax = 100.0;
+  if ( strcmp(handle,"strk") == 0 ) xmax = 600.0;
+
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
@@ -138,8 +153,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   c1->Print(Form("FigsSix/sixparticle_%s_components_blah.png",handle));
   c1->Print(Form("FigsSix/sixparticle_%s_components_blah.pdf",handle));
 
-  // xmin = 0.0;
-  // xmax = 100.0;
+
+
   ymin = -1e-6;
   ymax = 3e-6;
   if ( empty ) delete empty;
@@ -155,8 +170,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   c1->Print(Form("FigsSix/sixparticle_%s_components_zoom_blah.png",handle));
   c1->Print(Form("FigsSix/sixparticle_%s_components_zoom_blah.pdf",handle));
 
-  // xmin = 0.0;
-  // xmax = 100.0;
+
+
   ymin = -1e-6;
   ymax = 3e-6;
   if ( empty ) delete empty;
@@ -183,6 +198,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   c1->Print(Form("FigsSix/sixparticle_%s_cumulant_blah.png",handle));
   c1->Print(Form("FigsSix/sixparticle_%s_cumulant_blah.pdf",handle));
 
+
+
   ymin = -2e-5;
   ymax = 2e-5;
   if ( empty ) delete empty;
@@ -206,8 +223,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   c1->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.png",handle));
   c1->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.pdf",handle));
 
-  xmin = 0.0;
-  xmax = 100.0;
+
+
   ymin = 0.0;
   ymax = 0.12;
   if ( empty ) delete empty;
@@ -216,9 +233,12 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
+  if ( strcmp(handle,"cent") == 0 )
+  {
   th1d_v22->GetXaxis()->SetRangeUser(0,90);
   th1d_v24->GetXaxis()->SetRangeUser(0,70);
   th1d_v26->GetXaxis()->SetRangeUser(0,70);
+  }
   th1d_v26->SetMarkerStyle(kOpenCircle);
   th1d_v26->SetMarkerColor(kBlack);
   th1d_v26->SetLineColor(kBlack);
@@ -246,5 +266,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   leg->Draw();
   c1->Print(Form("FigsSix/sixparticle_%s_v2642_blah.png",handle));
   c1->Print(Form("FigsSix/sixparticle_%s_v2642_blah.pdf",handle));
+
+  if ( empty ) delete empty;
+
 
 }
