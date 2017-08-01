@@ -1,7 +1,7 @@
 void do_simple_six(TProfile*, TProfile*, TProfile*, int, const char*);
 
 
-void simple_six_cent()
+void simple_six()
 {
 
   TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
