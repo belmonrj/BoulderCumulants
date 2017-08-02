@@ -232,28 +232,6 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
 
 
 
-  ymin = -2e-5;
-  ymax = 2e-5;
-  if ( empty ) delete empty;
-  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
-  empty->Draw();
-  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
-  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("cumulant");
-  th1d_c24->SetMarkerStyle(kOpenCircle);
-  th1d_c24->SetLineColor(kBlack);
-  th1d_c24->Draw("same ex0p");
-  if ( leg ) delete leg;
-  leg = new TLegend(0.62,0.68,0.88,0.88);
-  //leg->SetHeader(type);
-  leg->SetHeader("Run14AuAu200");
-  leg->SetTextSize(0.045);
-  leg->SetFillStyle(0);
-  leg->AddEntry(th1d_c24,"c_{2}{4} = -v_{2}^{4}","p");
-  leg->Draw();
-  cline->Draw();
-  c1->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.png",handle));
-  c1->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.pdf",handle));
 
 
 
