@@ -16,9 +16,11 @@ void run14_fvtx_percentiles()
       cout << "uh oh" << endl;
     }
 
-  int max = 1500;
+  int max = 1200;
   double total = histo->Integral(1,max);
   double five, ten, twenty, forty, sixty;
+  double sixhundred, cutoff, ondoubles; sixhundred = 600; cutoff = 650; ondoubles = 725;
+  double cutoff_percent, ondoubles_percent;
   for ( int i = max-1; i > 0; --i )
     {
       double integral = histo->Integral(i,max);
@@ -54,19 +56,18 @@ void run14_fvtx_percentiles()
           cout << "60% most central events " << i << " " << percentile << endl;
           sixty = i;
         }
-      if ( i == 700 || i == 650 || i == 600 )
+      if ( i == ondoubles || i == cutoff || i == sixhundred )
         {
           cout << i << " " << percentile << endl;
+          if ( i == ondoubles ) ondoubles_percent = percentile;
+          if ( i == cutoff ) cutoff_percent = percentile;
         }
     } // end of loop
 
   TCanvas* c1 = new TCanvas();
   c1->SetTicks();
 
-  // c1->SetMargin(0.15,0.02,0.15,0.02);
-  // c1->SetMargin(0.10,0.02,0.10,0.02);
-  // c1->SetMargin(0.10,0.10,0.10,0.02);
-  c1->SetMargin(0.10,0.10,0.15,0.02);
+  c1->SetMargin(0.10,0.05,0.13,0.02); // LRBT
 
   histo->GetXaxis()->SetRangeUser(-0.5,max+0.5);
   histo->GetXaxis()->SetTitle("N^{FVTX}_{tracks}");
@@ -120,18 +121,28 @@ void run14_fvtx_percentiles()
   TLine line_twenty(twenty,0,twenty,histo->GetBinContent(histo->FindBin(twenty)));
   TLine line_forty(forty,0,forty,histo->GetBinContent(histo->FindBin(forty)));
   TLine line_sixty(sixty,0,sixty,histo->GetBinContent(histo->FindBin(sixty)));
+  TLine line_sixhundred(sixhundred,0,sixhundred,1.8*height);
+  TLine line_cutoff(cutoff,0,cutoff,1.8*height);
+  TLine line_ondoubles(ondoubles,0,ondoubles,1.8*height);
 
   line_five.SetLineWidth(linewidth);
   line_ten.SetLineWidth(linewidth);
   line_twenty.SetLineWidth(linewidth);
   line_forty.SetLineWidth(linewidth);
   line_sixty.SetLineWidth(linewidth);
+  line_sixhundred.SetLineWidth(linewidth);
+  line_cutoff.SetLineWidth(linewidth);
+  line_ondoubles.SetLineWidth(linewidth);
 
   line_five.Draw();
   line_ten.Draw();
   line_twenty.Draw();
   line_forty.Draw();
   line_sixty.Draw();
+  //line_sixhundred.Draw();
+  line_cutoff.Draw();
+  line_ondoubles.Draw();
+
 
   TLatex* tex = new TLatex(0,0,"");
   //tex->SetNDC();
@@ -140,10 +151,15 @@ void run14_fvtx_percentiles()
   // tex->DrawLatex(0.50,0.2,"5-10%");
   // tex->DrawLatex(0.35,0.2,"10-20%");
   // tex->DrawLatex(0.20,0.2,"20-40%");
-  tex->DrawLatex(five,height*0.00002,"0-5%");
-  tex->DrawLatex(ten,height*0.0002,"5-10%");
-  tex->DrawLatex(twenty,height*0.002,"10-20%");
-  tex->DrawLatex(forty,height*0.02,"20-40%");
+  tex->DrawLatex(five,height*0.000002,"0-5%");
+  tex->DrawLatex(ten,height*0.00002,"5-10%");
+  tex->DrawLatex(twenty,height*0.0002,"10-20%");
+  tex->DrawLatex(forty,height*0.002,"20-40%");
+  tex->DrawLatex(sixty,height*0.02,"40-60%");
+  tex->DrawLatex(cutoff,height*0.2,Form("Safe cutoff %.4f%%",cutoff_percent));
+  tex->DrawLatex(ondoubles,height*0.01,Form("Apparent onset of",ondoubles_percent));
+  tex->DrawLatex(ondoubles,height*0.005,Form("double interactions",ondoubles_percent));
+  tex->DrawLatex(ondoubles,height*0.002,Form("%.4f%%",ondoubles_percent));
 
   c1->Print("Run14FVTXPercentiles.png");
   c1->Print("Run14FVTXPercentiles.pdf");
