@@ -54,10 +54,10 @@ void run14_fvtx_percentiles()
           cout << "60% most central events " << i << " " << percentile << endl;
           sixty = i;
         }
-      // if ( i == 1500 || i == 1000 || i == 500 )
-      //   {
-      //     cout << i << " " << percentile << endl;
-      //   }
+      if ( i == 700 || i == 650 || i == 600 )
+        {
+          cout << i << " " << percentile << endl;
+        }
     } // end of loop
 
   TCanvas* c1 = new TCanvas();
