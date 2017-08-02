@@ -2,12 +2,15 @@ void find_cut()
 {
 
   TCanvas* c1 = new TCanvas("c1","");
+  c1->SetMargin(0.12,0.12,0.12,0.08); // LRBT
 
   TFile* file = TFile::Open("input/cumulants_Run14AuAu200.root");
   TH2D* histo = (TH2D*)file->Get("th2d_nfvtxt_bbcsumratio");
 
   histo->RebinX(10);
   histo->GetXaxis()->SetRangeUser(0,1000);
+  histo->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  histo->GetYaxis()->SetTitle("Q^{BBC}_{N+S}/N_{tracks}^{FVTX}");
   histo->Draw("colz");
 
   TProfile* tp1f_histo = histo->ProfileX("tp1f_histo",1,-1,"s");
@@ -39,6 +42,7 @@ void find_cut()
   th1d_lower->Draw("same");
 
   c1->Print("make_the_cut.png");
+  c1->Print("make_the_cut.pdf");
 
   ofstream fout("tracks_charge_function.C");
   fout << endl;
