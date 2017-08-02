@@ -18,11 +18,21 @@ void simple_six()
 
   do_simple_six(tp1f_six,tp1f_for,tp1f_two,rebin,handle);
 
-  //return;
+  // ------------------------------------------------------------------------
+
+  rebin = 2;
+
+  const char* handle2s = "lowstrkzoom";
+
+  tp1f_six = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c26");
+  tp1f_for = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c24");
+  tp1f_two = (TProfile*)fin->Get("nfvtxt_os_fvtxc_tracks_c22");
+
+  do_simple_six(tp1f_six,tp1f_for,tp1f_two,rebin,handle2s);
 
   // ------------------------------------------------------------------------
 
-  rebin = 10;
+  rebin = 5;
 
   const char* handle2 = "strk";
 
@@ -273,11 +283,11 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   empty_comp->GetYaxis()->SetLabelSize(0.065);
   empty_comp->GetYaxis()->SetTitleSize(0.065);
   empty_comp->GetYaxis()->SetTitle("components");
-  th1d_222->SetMarkerStyle(kFullCircle);
+  th1d_222->SetMarkerStyle(kOpenCircle);
   th1d_222->SetMarkerColor(kRed);
   th1d_222->SetLineColor(kBlack);
   th1d_222->Draw("same ex0p");
-  th1d_for->SetMarkerStyle(kFullSquare);
+  th1d_for->SetMarkerStyle(kOpenSquare);
   th1d_for->SetMarkerColor(kBlue);
   th1d_for->SetLineColor(kBlack);
   th1d_for->Draw("same ex0p");
@@ -312,7 +322,9 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   cline->Draw();
   ccomp->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.png",handle));
   ccomp->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.pdf",handle));
-
+  delete ccomp;
+  delete empty_cumu;
+  delete empty_comp;
 
 
   // --- now v2 ------------------------------------------------------
