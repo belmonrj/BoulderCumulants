@@ -114,6 +114,19 @@ void scale()
   tl1->SetTextSize(0.05);
   tl1->Draw();
 
+  TLatex* tl2 = new TLatex(-3,0.02,Form("v_{2} for |#eta|<1: %.4f",fun_centr->Eval(0)));
+  tl2->SetTextSize(0.05);
+  tl2->Draw();
+
+  TLatex* tl3 = new TLatex(-3,0.015,Form("v_{2} for 1<|#eta|<3: %.4f",fun_south->Eval(-2)));
+  tl3->SetTextSize(0.05);
+  tl3->Draw();
+
+  TLatex* tl3 = new TLatex(-3,0.01,Form("Ratio: %.4f", ( fun_centr->Eval(0) / fun_south->Eval(-2) )  ));
+  tl3->SetTextSize(0.05);
+  tl3->Draw();
+
   c1->Print("fig_scale.png");
+  c1->Print("fig_scale.pdf");
 
 }
