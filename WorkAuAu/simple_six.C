@@ -18,7 +18,7 @@ void simple_six()
 
   do_simple_six(tp1f_six,tp1f_for,tp1f_two,rebin,handle);
 
-  return;
+  //return;
 
   // ------------------------------------------------------------------------
 
@@ -247,7 +247,7 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   double w = 800 / (1 + Lmarg + Rmarg);
   double h = 900 / (1 + Bmarg + Tmarg);
 
-  TCanvas *ccomp = new TCanvas("ccomp", "components", w, h);
+  TCanvas *ccomp = new TCanvas("ccomp", "", w, h);
   ccomp->SetMargin(0, 0, 0, 0);
 
   ccomp->cd();
@@ -262,17 +262,16 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   pcumu->SetTicks(1, 1);
   pcumu->Draw();
 
-
   //-- plot
   pcomp->cd();
   ymin = 1e-9;
-  ymax = 2e-4;
+  ymax = 1e-4;
   TH2D* empty_comp = new TH2D("empty_comp","",1,xmin,xmax,1,ymin,ymax);
   empty_comp->Draw();
   empty_comp->GetXaxis()->SetLabelSize(0.0);
   empty_comp->GetXaxis()->SetTitleSize(0.0);
-  empty_comp->GetYaxis()->SetLabelSize(30);
-  empty_comp->GetYaxis()->SetTitleSize(30);
+  empty_comp->GetYaxis()->SetLabelSize(0.065);
+  empty_comp->GetYaxis()->SetTitleSize(0.065);
   empty_comp->GetYaxis()->SetTitle("components");
   th1d_222->SetMarkerStyle(kFullCircle);
   th1d_222->SetMarkerColor(kRed);
@@ -282,13 +281,11 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   th1d_for->SetMarkerColor(kBlue);
   th1d_for->SetLineColor(kBlack);
   th1d_for->Draw("same ex0p");
-  TLegend* leg_comp = new TLegend(0.62,0.68,0.88,0.88);
-  leg_comp->SetHeader("Run14AuAu200");
-  //leg_comp->SetTextSize(0.045);
+  TLegend* leg_comp = new TLegend(0.18,0.70,0.4,0.85);
+  leg_comp->SetTextSize(0.06);
   leg_comp->SetFillStyle(0);
   leg_comp->AddEntry(th1d_222,"2#LT#LT2#GT#GT^{2}","p");
   leg_comp->AddEntry(th1d_for,"#LT#LT4#GT#GT","p");
-  //leg_comp->SetTextSize(0.05);
   leg_comp->Draw();
 
   //-- ratio
@@ -299,24 +296,23 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   empty_cumu->Draw();
   if ( iscent ) empty_cumu->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty_cumu->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  // empty_cumu->GetXaxis()->SetLabelSize(0.06);
-  // empty_cumu->GetXaxis()->SetTitleSize(0.06);
-  // empty_cumu->GetYaxis()->SetLabelSize(0.06);
-  // empty_cumu->GetYaxis()->SetTitleSize(0.06);
+  empty_cumu->GetXaxis()->SetLabelSize(0.077);
+  empty_cumu->GetXaxis()->SetTitleSize(0.077);
+  empty_cumu->GetYaxis()->SetLabelSize(0.077);
+  empty_cumu->GetYaxis()->SetTitleSize(0.077);
   empty_cumu->GetYaxis()->SetTitle("cumulant");
   th1d_c24->SetMarkerStyle(kOpenCircle);
   th1d_c24->SetLineColor(kBlack);
   th1d_c24->Draw("same ex0p");
-  TLegend* leg_cumu = new TLegend(0.62,0.68,0.88,0.88);
-  leg_cumu->SetHeader("Run14AuAu200");
-  //leg_cumu->SetTextSize(0.045);
+  TLegend* leg_cumu = new TLegend(0.18,0.80,0.4,0.95);
+  leg_cumu->SetTextSize(0.07);
   leg_cumu->SetFillStyle(0);
   leg_cumu->AddEntry(th1d_c24,"c_{2}{4} = -v_{2}^{4}","p");
-  //leg_cumu->SetTextSize(0.1);
   leg_cumu->Draw();
   cline->Draw();
   ccomp->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.png",handle));
   ccomp->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.pdf",handle));
+
 
 
   // --- now v2 ------------------------------------------------------
