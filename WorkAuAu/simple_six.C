@@ -69,7 +69,7 @@ void simple_six()
 void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
 {
 
-  //  TCanvas* c1 = new TCanvas("c1","");
+  TCanvas* c1 = new TCanvas("c1","");
 
   bool iscent = false;
   bool isntrk = false;
@@ -77,18 +77,22 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   if ( strcmp(handle,"strk") == 0 ) isntrk = true;
   bool isamptntrk = false;
   if ( strcmp(handle,"amptstrk") == 0 ) { isamptntrk = true; isntrk = true; }
+  bool islowzoom = false;
+  if ( strcmp(handle,"lowstrkzoom") == 0 ) { islowzoom = true; isntrk = true; }
+
+
 
   tp1f_six->Rebin(rebin);
   tp1f_for->Rebin(rebin);
   tp1f_two->Rebin(rebin);
 
-  TH1D* th1d_six = tp1f_six->ProjectionX(Form("th1d_six_%s")); // <6>
-  TH1D* th1d_for = tp1f_for->ProjectionX(Form("th1d_for_%s")); // <4>
-  TH1D* th1d_two = tp1f_two->ProjectionX(Form("th1d_two_%s")); // <2>
+  TH1D* th1d_six = tp1f_six->ProjectionX(Form("th1d_six_%s",handle)); // <6>
+  TH1D* th1d_for = tp1f_for->ProjectionX(Form("th1d_for_%s",handle)); // <4>
+  TH1D* th1d_two = tp1f_two->ProjectionX(Form("th1d_two_%s",handle)); // <2>
 
-  TH1D* th1d_942 = (TH1D*)th1d_for->Clone(Form("th1d_942_%s")); // 9<4><2>
-  TH1D* th1d_123 = (TH1D*)th1d_two->Clone(Form("th1d_123_%s")); // 12<2>^3
-  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%s")); // 2<2>^2
+  TH1D* th1d_942 = (TH1D*)th1d_for->Clone(Form("th1d_942_%s",handle)); // 9<4><2>
+  TH1D* th1d_123 = (TH1D*)th1d_two->Clone(Form("th1d_123_%s",handle)); // 12<2>^3
+  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%s",handle)); // 2<2>^2
 
   th1d_942->Multiply(th1d_two);
   th1d_942->Scale(9);
@@ -166,81 +170,9 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   double ymin = -1e-4;
   double ymax = 1e-4;
   if ( iscent ) xmax = 100.0;
-  if ( isntrk ) xmax = 600.0;
-
-  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
-  empty->Draw();
-  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
-  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("components");
-  th1d_six->SetMarkerStyle(kOpenCircle);
-  th1d_942->SetMarkerStyle(kOpenSquare);
-  th1d_123->SetMarkerStyle(kOpenCross);
-  th1d_six->SetMarkerColor(kBlack);
-  th1d_942->SetMarkerColor(kBlue);
-  th1d_123->SetMarkerColor(kRed);
-  th1d_six->SetLineColor(kBlack);
-  th1d_942->SetLineColor(kBlue);
-  th1d_123->SetLineColor(kRed);
-  th1d_six->Draw("same ex0p");
-  th1d_942->Draw("same ex0p");
-  th1d_123->Draw("same ex0p");
-  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
-  //leg->SetHeader(type);
-  leg->SetHeader("Run14AuAu200");
-  leg->SetTextSize(0.045);
-  leg->SetFillStyle(0);
-  leg->AddEntry(th1d_six,"#LT#LT6#GT#GT","p");
-  leg->AddEntry(th1d_942,"9#LT#LT4#GT#GT#LT#LT2#GT#GT","p");
-  leg->AddEntry(th1d_123,"12#LT#LT2#GT#GT^{3}","p");
-  leg->Draw();
-  c1->Print(Form("FigsSix/sixparticle_%s_components_blah.png",handle));
-  c1->Print(Form("FigsSix/sixparticle_%s_components_blah.pdf",handle));
+  if ( isntrk && !islowzoom ) xmax = 650.0;
 
 
-
-  ymin = -1e-6;
-  ymax = 3e-6;
-  if ( empty ) delete empty;
-  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
-  empty->Draw();
-  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
-  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("components");
-  th1d_six->Draw("same ex0p");
-  th1d_942->Draw("same ex0p");
-  th1d_123->Draw("same ex0p");
-  leg->Draw();
-  c1->Print(Form("FigsSix/sixparticle_%s_components_zoom_blah.png",handle));
-  c1->Print(Form("FigsSix/sixparticle_%s_components_zoom_blah.pdf",handle));
-
-
-
-  ymin = -1e-6;
-  ymax = 3e-6;
-  if ( empty ) delete empty;
-  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
-  empty->Draw();
-  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
-  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("cumulant");
-  th1d_c26->SetMarkerStyle(kOpenCircle);
-  th1d_c26->SetLineColor(kBlack);
-  th1d_c26->Draw("same ex0p");
-  if ( leg ) delete leg;
-  leg = new TLegend(0.62,0.68,0.88,0.88);
-  //leg->SetHeader(type);
-  leg->SetHeader("Run14AuAu200");
-  leg->SetTextSize(0.045);
-  leg->SetFillStyle(0);
-  leg->AddEntry(th1d_c26,"c_{2}{6} = 4v_{2}^{6}","p");
-  leg->Draw();
-  TLine *cline = new TLine(xmin,0,xmax,0);
-  cline->SetLineWidth(2);
-  cline->SetLineStyle(2);
-  cline->Draw();
-  c1->Print(Form("FigsSix/sixparticle_%s_cumulant_blah.png",handle));
-  c1->Print(Form("FigsSix/sixparticle_%s_cumulant_blah.pdf",handle));
 
   // --- four particle components and cumulants
 
@@ -257,32 +189,32 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   double w = 800 / (1 + Lmarg + Rmarg);
   double h = 900 / (1 + Bmarg + Tmarg);
 
-  TCanvas *ccomp = new TCanvas("ccomp", "", w, h);
-  ccomp->SetMargin(0, 0, 0, 0);
+  TCanvas *ccomp4 = new TCanvas("ccomp4", "", w, h);
+  ccomp4->SetMargin(0, 0, 0, 0);
 
-  ccomp->cd();
-  TPad *pcomp = new TPad("pcomp", "comp", 0, 0.45, 1, 1);
-  pcomp->SetMargin(Lmarg, Rmarg, 0, 0.1);
-  pcomp->SetTicks(1, 1);
-  pcomp->Draw();
+  ccomp4->cd();
+  TPad *pcomp4 = new TPad("pcomp4", "comp4", 0, 0.45, 1, 1);
+  pcomp4->SetMargin(Lmarg, Rmarg, 0, 0.1);
+  pcomp4->SetTicks(1, 1);
+  pcomp4->Draw();
 
-  ccomp->cd();
-  TPad *pcumu = new TPad("pcumu", "cumu", 0, 0, 1, 0.45);
-  pcumu->SetMargin(Lmarg, Rmarg, 0.22, 0);
-  pcumu->SetTicks(1, 1);
-  pcumu->Draw();
+  ccomp4->cd();
+  TPad *pcumu4 = new TPad("pcumu4", "cumu4", 0, 0, 1, 0.45);
+  pcumu4->SetMargin(Lmarg, Rmarg, 0.22, 0);
+  pcumu4->SetTicks(1, 1);
+  pcumu4->Draw();
 
   //-- plot
-  pcomp->cd();
+  pcomp4->cd();
   ymin = 1e-9;
   ymax = 1e-4;
-  TH2D* empty_comp = new TH2D("empty_comp","",1,xmin,xmax,1,ymin,ymax);
-  empty_comp->Draw();
-  empty_comp->GetXaxis()->SetLabelSize(0.0);
-  empty_comp->GetXaxis()->SetTitleSize(0.0);
-  empty_comp->GetYaxis()->SetLabelSize(0.065);
-  empty_comp->GetYaxis()->SetTitleSize(0.065);
-  empty_comp->GetYaxis()->SetTitle("components");
+  TH2D* empty_comp4 = new TH2D("empty_comp4","",1,xmin,xmax,1,ymin,ymax);
+  empty_comp4->Draw();
+  empty_comp4->GetXaxis()->SetLabelSize(0.0);
+  empty_comp4->GetXaxis()->SetTitleSize(0.0);
+  empty_comp4->GetYaxis()->SetLabelSize(0.065);
+  empty_comp4->GetYaxis()->SetTitleSize(0.065);
+  empty_comp4->GetYaxis()->SetTitle("comp4onents");
   th1d_222->SetMarkerStyle(kOpenCircle);
   th1d_222->SetMarkerColor(kRed);
   th1d_222->SetLineColor(kBlack);
@@ -291,50 +223,133 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   th1d_for->SetMarkerColor(kBlue);
   th1d_for->SetLineColor(kBlack);
   th1d_for->Draw("same ex0p");
-  TLegend* leg_comp = new TLegend(0.18,0.70,0.4,0.85);
-  leg_comp->SetTextSize(0.06);
-  leg_comp->SetFillStyle(0);
-  leg_comp->AddEntry(th1d_222,"2#LT#LT2#GT#GT^{2}","p");
-  leg_comp->AddEntry(th1d_for,"#LT#LT4#GT#GT","p");
-  leg_comp->Draw();
+  TLegend* leg_comp4 = new TLegend(0.18,0.70,0.4,0.85);
+  leg_comp4->SetTextSize(0.06);
+  leg_comp4->SetFillStyle(0);
+  leg_comp4->AddEntry(th1d_222,"2#LT#LT2#GT#GT^{2}","p");
+  leg_comp4->AddEntry(th1d_for,"#LT#LT4#GT#GT","p");
+  leg_comp4->Draw();
 
   //-- ratio
-  pcumu->cd();
+  pcumu4->cd();
   ymin = -2e-5;
   ymax = 2e-5;
-  TH2D* empty_cumu = new TH2D("empty_cumu","",1,xmin,xmax,1,ymin,ymax);
-  empty_cumu->Draw();
-  if ( iscent ) empty_cumu->GetXaxis()->SetTitle("Centrality (%)");
-  if ( isntrk ) empty_cumu->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty_cumu->GetXaxis()->SetLabelSize(0.077);
-  empty_cumu->GetXaxis()->SetTitleSize(0.077);
-  empty_cumu->GetYaxis()->SetLabelSize(0.077);
-  empty_cumu->GetYaxis()->SetTitleSize(0.077);
-  empty_cumu->GetYaxis()->SetTitle("cumulant");
+  TH2D* empty_cumu4 = new TH2D("empty_cumu4","",1,xmin,xmax,1,ymin,ymax);
+  empty_cumu4->Draw();
+  if ( iscent ) empty_cumu4->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty_cumu4->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  empty_cumu4->GetXaxis()->SetLabelSize(0.077);
+  empty_cumu4->GetXaxis()->SetTitleSize(0.077);
+  empty_cumu4->GetYaxis()->SetLabelSize(0.077);
+  empty_cumu4->GetYaxis()->SetTitleSize(0.077);
+  empty_cumu4->GetYaxis()->SetTitle("cumulant");
   th1d_c24->SetMarkerStyle(kOpenCircle);
   th1d_c24->SetLineColor(kBlack);
   th1d_c24->Draw("same ex0p");
-  TLegend* leg_cumu = new TLegend(0.18,0.80,0.4,0.95);
-  leg_cumu->SetTextSize(0.07);
-  leg_cumu->SetFillStyle(0);
-  leg_cumu->AddEntry(th1d_c24,"c_{2}{4} = -v_{2}^{4}","p");
-  leg_cumu->Draw();
+  TLegend* leg_cumu4 = new TLegend(0.18,0.80,0.4,0.95);
+  leg_cumu4->SetTextSize(0.07);
+  leg_cumu4->SetFillStyle(0);
+  leg_cumu4->AddEntry(th1d_c24,"c_{2}{4} = -v_{2}^{4}","p");
+  leg_cumu4->Draw();
+  TLine *cline = new TLine(xmin,0,xmax,0);
+  cline->SetLineWidth(2);
+  cline->SetLineStyle(2);
   cline->Draw();
-  ccomp->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.png",handle));
-  ccomp->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.pdf",handle));
-  delete ccomp;
-  delete empty_cumu;
-  delete empty_comp;
+  ccomp4->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.png",handle));
+  ccomp4->Print(Form("FigsSix/sixparticle_%s_cumulant4_blah.pdf",handle));
+  delete ccomp4;
+  delete empty_cumu4;
+  delete empty_comp4;
+  delete leg_cumu4;
+  delete leg_comp4;
 
+  // --- six particle components and cumulants
+
+  TCanvas* ccomp6 = new TCanvas("ccomp6", "", w, h);
+  ccomp6->SetMargin(0, 0, 0, 0);
+
+  ccomp6->cd();
+  TPad* pcomp6 = new TPad("pcomp6", "comp6", 0, 0.45, 1, 1);
+  pcomp6->SetMargin(Lmarg, Rmarg, 0, 0.1);
+  pcomp6->SetTicks(1, 1);
+  pcomp6->Draw();
+
+  ccomp6->cd();
+  TPad* pcumu6 = new TPad("pcumu6", "cumu6", 0, 0, 1, 0.45);
+  pcumu6->SetMargin(Lmarg, Rmarg, 0.22, 0);
+  pcumu6->SetTicks(1, 1);
+  pcumu6->Draw();
+
+  //-- plot
+  pcomp6->cd();
+  ymin = 1e-9;
+  ymax = 1e-4;
+  TH2D* empty_comp6 = new TH2D("empty_comp6","",1,xmin,xmax,1,ymin,ymax);
+  empty_comp6->Draw();
+  empty_comp6->GetXaxis()->SetLabelSize(0.0);
+  empty_comp6->GetXaxis()->SetTitleSize(0.0);
+  empty_comp6->GetYaxis()->SetLabelSize(0.065);
+  empty_comp6->GetYaxis()->SetTitleSize(0.065);
+  empty_comp6->GetYaxis()->SetTitle("comp6onents");
+  th1d_six->SetMarkerStyle(kOpenCircle);
+  th1d_942->SetMarkerStyle(kOpenSquare);
+  th1d_123->SetMarkerStyle(kOpenCross);
+  th1d_six->SetMarkerColor(kBlack);
+  th1d_942->SetMarkerColor(kBlue);
+  th1d_123->SetMarkerColor(kRed);
+  th1d_six->SetLineColor(kBlack);
+  th1d_942->SetLineColor(kBlue);
+  th1d_123->SetLineColor(kRed);
+  th1d_six->Draw("same ex0p");
+  th1d_942->Draw("same ex0p");
+  th1d_123->Draw("same ex0p");
+  TLegend* leg_comp6 = new TLegend(0.18,0.70,0.4,0.85);
+  leg_comp6->SetTextSize(0.06);
+  leg_comp6->SetFillStyle(0);
+  leg_comp6->AddEntry(th1d_123,"12#LT#LT2#GT#GT^{3}","p");
+  leg_comp6->AddEntry(th1d_942,"9#LT#LT4#GT#GT#LT#LT2#GT#GT","p");
+  leg_comp6->AddEntry(th1d_six,"#LT#LT6#GT#GT","p");
+  leg_comp6->Draw();
+
+  //-- ratio
+  pcumu6->cd();
+  ymin = -2e-5;
+  ymax = 2e-5;
+  TH2D* empty_cumu6 = new TH2D("empty_cumu6","",1,xmin,xmax,1,ymin,ymax);
+  empty_cumu6->Draw();
+  if ( iscent ) empty_cumu6->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty_cumu6->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  empty_cumu6->GetXaxis()->SetLabelSize(0.077);
+  empty_cumu6->GetXaxis()->SetTitleSize(0.077);
+  empty_cumu6->GetYaxis()->SetLabelSize(0.077);
+  empty_cumu6->GetYaxis()->SetTitleSize(0.077);
+  empty_cumu6->GetYaxis()->SetTitle("cumulant");
+  th1d_c26->SetMarkerStyle(kOpenCircle);
+  th1d_c26->SetLineColor(kBlack);
+  th1d_c26->Draw("same ex0p");
+  TLegend* leg_cumu6 = new TLegend(0.18,0.80,0.4,0.95);
+  leg_cumu6->SetTextSize(0.07);
+  leg_cumu6->SetFillStyle(0);
+  leg_cumu6->AddEntry(th1d_c26,"c_{2}{6} = 4v_{2}^{6}","p");
+  leg_cumu6->Draw();
+  cline->Draw();
+  ccomp6->Print(Form("FigsSix/sixparticle_%s_cumulant6_blah.png",handle));
+  ccomp6->Print(Form("FigsSix/sixparticle_%s_cumulant6_blah.pdf",handle));
+  delete ccomp6;
+  delete empty_cumu6;
+  delete empty_comp6;
+  delete leg_cumu6;
+  delete leg_comp6;
 
   // --- now v2 ------------------------------------------------------
 
-  c1->cd();
+
+
 
   ymin = 0.0;
   ymax = 0.12;
-  if ( empty ) delete empty;
-  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  //if ( empty ) delete empty;
+  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
@@ -349,8 +364,8 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   th1d_v26->SetMarkerColor(kBlack);
   th1d_v26->SetLineColor(kBlack);
   th1d_v26->Draw("same ex0p");
-  if ( leg ) delete leg;
-  leg = new TLegend(0.62,0.68,0.88,0.88);
+  //if ( leg ) delete leg;
+  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
   leg->SetHeader("Run14AuAu200");
   leg->SetTextSize(0.045);
@@ -374,6 +389,7 @@ void do_simple_six(TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, i
   c1->Print(Form("FigsSix/sixparticle_%s_v2642_blah.pdf",handle));
 
   if ( empty ) delete empty;
-  //  if ( c1 ) delete c1;
+  if ( c1 ) delete c1;
 
 }
+
