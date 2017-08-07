@@ -38,6 +38,7 @@ class BoulderCumulants: public SubsysReco
   bool is_run_in_list(int runnumber);
   void SetQvectorOffsets(int runnumber);
   void set_create_ttree(bool b){_create_ttree = b;} // ??
+  void set_do_double_track_cut(bool b){do_double_track_cut = b;}
 
  protected:
 
@@ -64,6 +65,9 @@ class BoulderCumulants: public SubsysReco
   /// module output filename
   std::string _output_filename;
   TFile* _output_file;
+
+  // whether to do the double track cut
+  bool do_double_track_cut;
 
   //run list stuff
   bool _use_runlist;
@@ -130,6 +134,9 @@ class BoulderCumulants: public SubsysReco
   TH1D* th1d_nfvtxt_south;
   TH2D* th2d_nfvtxt_bbcsum;
   TH2D* th2d_nfvtxt_bbcsumratio;
+  TH1D* th1d_track_deta;
+  TH1D* th1d_track_dphi;
+  TProfile* tp1f_track_detacutpass;
 
 
   // --- correlation histograms

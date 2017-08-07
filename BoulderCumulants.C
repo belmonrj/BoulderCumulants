@@ -57,6 +57,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   _output_filename = "NULL";
   _output_file = NULL;
   _use_runlist = false;
+  do_double_track_cut = false;
   _runlist_filename = "NULL";
   _utils = NULL;
   _collsys = "NULL";
@@ -106,6 +107,9 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   th1d_nfvtxt_south = NULL;
   th2d_nfvtxt_bbcsum = NULL;
   th2d_nfvtxt_bbcsumratio = NULL;
+  th1d_track_deta = NULL;
+  th1d_track_dphi = NULL;
+  tp1f_track_detacutpass = NULL;
   nfvtxt_ac_fvtxs_tracks_c22 = NULL;
   nfvtxt_ac_fvtxn_tracks_c22 = NULL;
   nfvtxt_ac_fvtxc_tracks_c22 = NULL;
@@ -513,6 +517,9 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   th2d_nfvtxt_bbcsumratio = new TH2D("th2d_nfvtxt_bbcsumratio","",2000, -0.5, 1999.5, 1000, 0, 5);
   th1d_nfvtxt_north = new TH1D("th1d_nfvtxt_north","",2000, -0.5, 1999.5);
   th1d_nfvtxt_south = new TH1D("th1d_nfvtxt_south","",2000, -0.5, 1999.5);
+  th1d_track_deta = new TH1D("th1d_track_deta","",2000, -0.1, 0.1);
+  th1d_track_dphi = new TH1D("th1d_track_dphi","",2000, -0.1, 0.1);
+  tp1f_track_detacutpass = new TProfile("tp1f_track_detacutpass","",100,-0.5,99.5,-0.1,1.1);
 
   nfvtxt_ac_fvtxs_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c22"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_ac_fvtxn_tracks_c22 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c22"),"",2000, -0.5, 1999.5, -1.1, 1.1);
@@ -1299,7 +1306,10 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_south = 0;
   nfvtxt_north = 0;
   nfvtxt_raw = 0;
-  // --- first fvtx track loop
+
+  vector<double> fphi;
+  vector<double> feta;
+
   if ( _verbosity > 1 ) cout << "entering fvtx track loop" << endl;
   TFvtxCompactTrkMap::const_iterator trk_iter = trkfvtx_map->range();
   while ( TFvtxCompactTrkMap::const_pointer trk_ptr = trk_iter.next() )
@@ -1310,9 +1320,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       bool pattern4 = ((fvtx_trk->get_hit_pattern() & (0x3 << 4)) > 0 );
       bool pattern6 = ((fvtx_trk->get_hit_pattern() & (0x3 << 6)) > 0 );
       int nhits_special = pattern0 + pattern2 + pattern4 + pattern6;
-
-
-
 
       ++nfvtxt_raw;
       // --- use the utility class to make the track selections
@@ -1373,7 +1380,56 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
           if ( nhits < 3 ) continue;
           if ( chisq > 5 ) continue;
         }
+      // --- done with first loop, so push the eta and phi and count total number of good tracks
+      fphi.push_back(phi);
+      feta.push_back(eta);
+      ++nfvtxt;
+    } // end for loop over tracks
 
+
+  // --- second fvtx track loop to get the double track cut
+  bool fvtx_track_passes[nfvtxt];
+  int number_of_tracks_that_pass = 0;
+  if ( do_double_track_cut )
+    {
+      for ( int i = 0; i < nfvtxt; ++i )
+        {
+          fvtx_track_passes[i] = true;
+        }
+      for ( int i = 0; i < nfvtxt; ++i )
+        {
+          for ( int j = i+1; j < nfvtxt; ++j )
+            {
+              double eta1 = feta[i];
+              double eta2 = feta[j];
+              double phi1 = fphi[i];
+              double phi2 = fphi[j];
+              th1d_track_deta->Fill(eta1-eta2);
+              if ( fabs(eta1-eta2) < 0.0002 )
+                {
+                  th1d_track_dphi->Fill(phi1-phi2);
+                  fvtx_track_passes[i] = false;
+                  fvtx_track_passes[j] = false;
+                } // check on narrow eta
+            } // inner loop
+          if ( fvtx_track_passes[i] == true ) ++number_of_tracks_that_pass;
+        } // outer loop
+    } // check on do_double_track_cut
+  double passratio = (double)number_of_tracks_that_pass/(double)nfvtxt;
+  tp1f_track_detacutpass->Fill(centrality,passratio);
+  if ( _verbosity > 1 )
+    {
+      cout << "number of tracks that pass " << number_of_tracks_that_pass
+           << " total number of tracks " << nfvtxt
+           << " ratio " << passratio << endl;
+    }
+
+  // --- third fvtxt track loop to calculate Q-vectors
+  for ( int i = 0; i < nfvtxt; ++i )
+    {
+      if ( do_double_track_cut && !fvtx_track_passes[i] ) continue;
+      double eta = feta[i];
+      double phi = fphi[i];
       // --- Q-vectors for tree
       if ( eta > 0 )
         {
@@ -1495,11 +1551,10 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 	  ++ntrack_north_outer;
 	}
 
-      ++nfvtxt;
       if ( eta < 0 ) ++nfvtxt_south;
       if ( eta > 0 ) ++nfvtxt_north;
 
-    } // end while loop over tracks
+    } // end for loop over tracks
 
   th1d_nfvtxt_combinedER->Fill(nfvtxt);
   th1d_nfvtxt_combined->Fill(nfvtxt);
