@@ -447,6 +447,14 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
           centrality_recursion[cs][c] = NULL;
         }
     }
+  for ( int cs = 0; cs < 2; ++cs )
+    {
+      for ( int c = 0; c < maxHarmonic; ++c )
+        {
+          nfvtxt_recoffsets[cs][c] = NULL;
+          centrality_recoffsets[cs][c] = NULL;
+        }
+    }
 
   for ( int i = 0; i < 100; ++i )
     {
@@ -965,17 +973,25 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   centrality_tracks_north_outer_qy6 = new TProfile("centrality_tracks_north_outer_qy6","",100, -0.5, 99.5, -1.1, 1.1);
 
 
-  for(int cs=0;cs<2;cs++)
+  for ( int cs = 0; cs < 2; ++cs )
     {
-      for(int c=0;c<maxCorrelator;c++)
+      for(int c = 0; c < maxCorrelator; ++c )
         {
-          nfvtxt_recursion[cs][c] = new TProfile(Form("nfvtxt_rescursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
-          centrality_recursion[cs][c] = new TProfile(Form("centrality_rescursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
-        } // end of for(int c=0;c<maxCorrelator;c++)
-    } // end of for(int cs=0;cs<2;cs++)
-
+          nfvtxt_recursion[cs][c] = new TProfile(Form("nfvtxt_recursion_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          centrality_recursion[cs][c] = new TProfile(Form("centrality_recursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+        }
+    }
+  for ( int cs = 0; cs < 2; ++cs )
+    {
+      for ( int c = 0; c < maxHarmonic; ++c )
+        {
+          nfvtxt_recoffsets[cs][c] = new TProfile(Form("nfvtxt_recoffsets_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          centrality_recoffsets[cs][c] = new TProfile(Form("centrality_recoffsets_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+        }
+    }
 
   return EVENT_OK;
+
 }
 
 
@@ -1799,15 +1815,21 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   TComplex sixRecursion = Recursion(6,harmonics_Six_Num)/Recursion(6,harmonics_Six_Den).Re();
   double wSixRecursion = Recursion(6,harmonics_Six_Den).Re();
   nfvtxt_recursion[0][4]->Fill(nfvtxt,sixRecursion.Re(),wSixRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
-  nfvtxt_recursion[1][4]->Fill(nfvtxt,sixRecursion.Im(),wSixRecursion); // <<<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
+  nfvtxt_recursion[1][4]->Fill(nfvtxt,sixRecursion.Im(),wSixRecursion); // <<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
   //  8-p correlations:
   //cout<<" => Calculating 8-p correlations (using recursion)...       \r"<<flush;
   int harmonics_Eight_Num[8] = {2,2,2,2,-2,-2,-2,-2};
   int harmonics_Eight_Den[8] = {0,0,0,0,0,0,0,0};
   TComplex eightRecursion = Recursion(8,harmonics_Eight_Num)/Recursion(8,harmonics_Eight_Den).Re();
   double wEightRecursion = Recursion(8,harmonics_Eight_Den).Re();
-  nfvtxt_recursion[0][6]->Fill(nfvtxt,eightRecursion.Re(),wEightRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
-  nfvtxt_recursion[1][6]->Fill(nfvtxt,eightRecursion.Im(),wEightRecursion); // <<<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
+  nfvtxt_recursion[0][6]->Fill(nfvtxt,eightRecursion.Re(),wEightRecursion);
+  nfvtxt_recursion[1][6]->Fill(nfvtxt,eightRecursion.Im(),wEightRecursion);
+  // ------------------------------------------------------------------------------------------------------
+  for ( int cs = 0; cs < maxHarmonic; ++cs )
+    {
+      nfvtxt_recoffsets[0][cs]->Fill(nfvtxt,Qvector[cs][1].Re()/Qvector[0][1].Re());
+      nfvtxt_recoffsets[1][cs]->Fill(nfvtxt,Qvector[cs][1].Im()/Qvector[0][1].Re());
+    }
   // ------------------------------------------------------------------------------------------------------
   nfvtxt_ac_fvtxc_tracks_c28->Fill(nfvtxt,eightRecursion.Re()); // extra, to match what I have...
 
@@ -1863,8 +1885,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
   if ( _verbosity > 2 )
     {
-      cout << "Mcos2phi " << ac_fvtxc_tracks_qx2 << " " << Qvector[2][1].Re() << endl;
-      cout << "Msin2phi " << ac_fvtxc_tracks_qy2 << " " << Qvector[2][1].Im() << endl;
+      cout << "Mcos2phi " << ac_fvtxc_tracks_qx2 << " " << Qvector[2][1].Re()  << endl;
+      cout << "Msin2phi " << ac_fvtxc_tracks_qy2 << " " << Qvector[2][1].Im()  << endl;
+      cout << "M        " << ac_fvtxc_tracks_qw  << " " << Qvector[0][1].Re() << endl;
       cout << "2 " << ac_fvtxc_tracks_qq2    << " " <<  twoRecursion.Re() << endl;
       cout << "4 " << ac_fvtxc_tracks_qqqq24 << " " << fourRecursion.Re() << endl;
       cout << "6 " << ac_fvtxc_tracks_six    << " " <<  sixRecursion.Re() << endl;
@@ -1877,6 +1900,11 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality_recursion[1][4]->Fill(centrality,sixRecursion.Im(),wSixRecursion);
   centrality_recursion[0][6]->Fill(centrality,eightRecursion.Re(),wEightRecursion);
   centrality_recursion[1][6]->Fill(centrality,eightRecursion.Im(),wEightRecursion);
+  for ( int cs = 0; cs < maxHarmonic; ++cs )
+    {
+      centrality_recoffsets[0][cs]->Fill(centrality,Qvector[cs][1].Re()/Qvector[0][1].Re());
+      centrality_recoffsets[1][cs]->Fill(centrality,Qvector[cs][1].Im()/Qvector[0][1].Re());
+    }
 
   // ------------------------------------------------------------------------------------- //
   // --- calculations and histograms designed to be used with/for q-vector recentering --- //

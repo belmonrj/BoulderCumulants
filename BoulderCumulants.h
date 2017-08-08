@@ -69,7 +69,7 @@ class BoulderCumulants: public SubsysReco
   //static const int maxHarmonic = sum+1;
   //static const int maxPower = maxCorrelator+1;
   static const int maxCorrelator = 8; // We will not go beyond 8-p correlations
-  static const int maxHarmonic = 17;
+  static const int maxHarmonic = 10; // Need to assess on case-by-case basis, but this gets you v2{8} and v3{6}
   static const int maxPower = 9;
   TComplex Qvector[maxHarmonic][maxPower]; // All needed Q-vector components
   TComplex Q(int, int);
@@ -596,6 +596,8 @@ class BoulderCumulants: public SubsysReco
 
   TProfile* nfvtxt_recursion[2][maxCorrelator];
   TProfile* centrality_recursion[2][maxCorrelator];
+  TProfile* nfvtxt_recoffsets[2][maxHarmonic];
+  TProfile* centrality_recoffsets[2][maxHarmonic];
 
 
 
