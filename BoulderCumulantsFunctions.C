@@ -129,3 +129,54 @@ float BoulderCumulants::calc6_event(TComplex& qn, TComplex& q2n, TComplex& q3n, 
 
 }
 
+// --- from generic forumulas ----------------------------------------------------
+TComplex BoulderCumulants::Recursion(int n, int* harmonic)
+{
+  return Recursion(n,harmonic,1,0); // 1 and 0 are defaults from above
+}
+
+TComplex BoulderCumulants::Recursion(int n, int* harmonic, int mult, int skip)
+{
+ // Calculate multi-particle correlators by using recursion (an improved faster version) originally developed by
+ // Kristjan Gulbrandsen (gulbrand@nbi.dk).
+
+  int nm1 = n-1;
+  TComplex c(Q(harmonic[nm1], mult));
+  if (nm1 == 0) return c;
+  c *= Recursion(nm1, harmonic);
+  if (nm1 == skip) return c;
+
+  int multp1 = mult+1;
+  int nm2 = n-2;
+  int counter1 = 0;
+  int hhold = harmonic[counter1];
+  harmonic[counter1] = harmonic[nm2];
+  harmonic[nm2] = hhold + harmonic[nm1];
+  TComplex c2(Recursion(nm1, harmonic, multp1, nm2));
+  int counter2 = n-3;
+  while (counter2 >= skip) {
+    harmonic[nm2] = harmonic[counter1];
+    harmonic[counter1] = hhold;
+    ++counter1;
+    hhold = harmonic[counter1];
+    harmonic[counter1] = harmonic[nm2];
+    harmonic[nm2] = hhold + harmonic[nm1];
+    c2 += Recursion(nm1, harmonic, multp1, counter2);
+    --counter2;
+  }
+  harmonic[nm2] = harmonic[counter1];
+  harmonic[counter1] = hhold;
+
+  if (mult == 1) return c-c2;
+  return c-double(mult)*c2;
+
+}
+
+TComplex BoulderCumulants::Q(int n, int p)
+{
+  // Using the fact that Q{-n,p} = Q{n,p}^*.
+  if(n>=0){return Qvector[n][p];}
+  return TComplex::Conjugate(Qvector[-n][p]);
+} // TComplex Q(int n, int p)
+// -------------------------------------------------------------------------------
+

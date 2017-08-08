@@ -4,7 +4,7 @@
 // standard includes
 #include <string>
 #include <SubsysReco.h>
-
+#include "TComplex.h"
 
 
 class Fun4AllHistoManager;
@@ -55,6 +55,26 @@ class BoulderCumulants: public SubsysReco
   float calccos3_event(TComplex&, TComplex&, float);
   float calcsin3_event(TComplex&, TComplex&, float);
 
+  //static const int h1=2;
+  //static const int h2=-2;
+  //static const int h3=2;
+  //static const int h4=-2;
+  //static const int h5=2;
+  //static const int h6=-2;
+  //static const int h7=2;
+  //static const int h8=-2; // simplifed to v2
+  //static const int sum = (h1<0?-1*h1:h1)+(h2<0?-1*h2:h2)+(h3<0?-1*h3:h3)+(h4<0?-1*h4:h4)
+  //  + (h5<0?-1*h5:h5)+(h6<0?-1*h6:h6)+(h7<0?-1*h7:h7)+(h8<0?-1*h8:h8);
+  //static const int maxCorrelator = 8; // We will not go beyond 8-p correlations
+  //static const int maxHarmonic = sum+1;
+  //static const int maxPower = maxCorrelator+1;
+  static const int maxCorrelator = 8; // We will not go beyond 8-p correlations
+  static const int maxHarmonic = 17;
+  static const int maxPower = 9;
+  TComplex Qvector[maxHarmonic][maxPower]; // All needed Q-vector components
+  TComplex Q(int, int);
+  TComplex Recursion(int, int*);
+  TComplex Recursion(int, int*, int, int);
 
   /// current event
   unsigned long _ievent;
@@ -151,6 +171,7 @@ class BoulderCumulants: public SubsysReco
   TProfile* nfvtxt_ac_fvtxs_tracks_c26;
   TProfile* nfvtxt_ac_fvtxn_tracks_c26;
   TProfile* nfvtxt_ac_fvtxc_tracks_c26;
+  TProfile* nfvtxt_ac_fvtxc_tracks_c28;
   // --- 2-particle scalr product
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c22 ;
   // --- experimental 4-particle correlations
@@ -248,6 +269,7 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_ac_fvtxs_tracks_c26;
   TProfile* centrality_ac_fvtxn_tracks_c26;
   TProfile* centrality_ac_fvtxc_tracks_c26;
+  TProfile* centrality_ac_fvtxc_tracks_c28;
   // --- 2-particle scalr product
   TProfile* centrality_ac_fvtxsfvtxn_tracks_c22 ;
   // --- experimental 4-particle correlations
@@ -308,6 +330,7 @@ class BoulderCumulants: public SubsysReco
   TProfile* nfvtxt_os_fvtxs_tracks_c26;
   TProfile* nfvtxt_os_fvtxn_tracks_c26;
   TProfile* nfvtxt_os_fvtxc_tracks_c26;
+  TProfile* nfvtxt_os_fvtxc_tracks_c28;
   // --- 2-particle scalr product
   TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c22 ;
   // --- experimental 4-particle correlations
@@ -406,6 +429,7 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_os_fvtxs_tracks_c26;
   TProfile* centrality_os_fvtxn_tracks_c26;
   TProfile* centrality_os_fvtxc_tracks_c26;
+  TProfile* centrality_os_fvtxc_tracks_c28;
   // --- 2-particle scalr product
   TProfile* centrality_os_fvtxsfvtxn_tracks_c22 ;
   // --- experimental 4-particle correlations
@@ -570,7 +594,8 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_tracks_north_outer_qy4;
   TProfile* centrality_tracks_north_outer_qy6;
 
-
+  TProfile* nfvtxt_recursion[2][maxCorrelator];
+  TProfile* centrality_recursion[2][maxCorrelator];
 
 
 

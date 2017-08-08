@@ -119,6 +119,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   nfvtxt_ac_fvtxs_tracks_c26 = NULL;
   nfvtxt_ac_fvtxn_tracks_c26 = NULL;
   nfvtxt_ac_fvtxc_tracks_c26 = NULL;
+  nfvtxt_ac_fvtxc_tracks_c28 = NULL;
   nfvtxt_ac_fvtxsfvtxn_tracks_c22  = NULL;
   nfvtxt_ac_fvtxsfvtxn_tracks_c24  = NULL;
   nfvtxt_ac_fvtxsfvtxn_tracks_c24a = NULL;
@@ -187,6 +188,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   centrality_ac_fvtxs_tracks_c26 = NULL;
   centrality_ac_fvtxn_tracks_c26 = NULL;
   centrality_ac_fvtxc_tracks_c26 = NULL;
+  centrality_ac_fvtxc_tracks_c28 = NULL;
   centrality_ac_fvtxsfvtxn_tracks_c22  = NULL;
   centrality_ac_fvtxsfvtxn_tracks_c24  = NULL;
   centrality_ac_fvtxsfvtxn_tracks_c24a = NULL;
@@ -231,6 +233,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   nfvtxt_os_fvtxs_tracks_c26 = NULL;
   nfvtxt_os_fvtxn_tracks_c26 = NULL;
   nfvtxt_os_fvtxc_tracks_c26 = NULL;
+  nfvtxt_os_fvtxc_tracks_c28 = NULL;
   nfvtxt_os_fvtxsfvtxn_tracks_c22  = NULL;
   nfvtxt_os_fvtxsfvtxn_tracks_c24  = NULL;
   nfvtxt_os_fvtxsfvtxn_tracks_c24a = NULL;
@@ -299,6 +302,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   centrality_os_fvtxs_tracks_c26 = NULL;
   centrality_os_fvtxn_tracks_c26 = NULL;
   centrality_os_fvtxc_tracks_c26 = NULL;
+  centrality_os_fvtxc_tracks_c28 = NULL;
   centrality_os_fvtxsfvtxn_tracks_c22  = NULL;
   centrality_os_fvtxsfvtxn_tracks_c24  = NULL;
   centrality_os_fvtxsfvtxn_tracks_c24a = NULL;
@@ -435,6 +439,15 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   centrality_tracks_north_outer_qy4 = NULL;
   centrality_tracks_north_outer_qy6 = NULL;
 
+  for ( int cs = 0; cs < 2; ++cs )
+    {
+      for ( int c = 0; c < maxCorrelator; ++c )
+        {
+          nfvtxt_recursion[cs][c] = NULL;
+          centrality_recursion[cs][c] = NULL;
+        }
+    }
+
   for ( int i = 0; i < 100; ++i )
     {
       offset_centrality_qx2_south[i] = 0;
@@ -530,6 +543,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   nfvtxt_ac_fvtxs_tracks_c26 = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c26"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_ac_fvtxn_tracks_c26 = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c26"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_ac_fvtxc_tracks_c26 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c26"),"",2000, -0.5, 1999.5, -1.1, 1.1);
+  nfvtxt_ac_fvtxc_tracks_c28 = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c28"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_ac_fvtxsfvtxn_tracks_c22  = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c22"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_ac_fvtxsfvtxn_tracks_c24  = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_ac_fvtxsfvtxn_tracks_c24a = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c24a"),"",2000, -0.5, 1999.5, -1.1, 1.1);
@@ -623,6 +637,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   centrality_ac_fvtxs_tracks_c26 = new TProfile(Form("centrality_ac_fvtxs_tracks_c26"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxn_tracks_c26 = new TProfile(Form("centrality_ac_fvtxn_tracks_c26"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxc_tracks_c26 = new TProfile(Form("centrality_ac_fvtxc_tracks_c26"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_c28 = new TProfile(Form("centrality_ac_fvtxc_tracks_c28"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxsfvtxn_tracks_c22  = new TProfile(Form("centrality_ac_fvtxsfvtxn_tracks_c22"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxsfvtxn_tracks_c24  = new TProfile(Form("centrality_ac_fvtxsfvtxn_tracks_c24"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxsfvtxn_tracks_c24a = new TProfile(Form("centrality_ac_fvtxsfvtxn_tracks_c24a"),"",100, -0.5, 99.5, -1.1, 1.1);
@@ -684,6 +699,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   nfvtxt_os_fvtxs_tracks_c26 = new TProfile(Form("nfvtxt_os_fvtxs_tracks_c26"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxn_tracks_c26 = new TProfile(Form("nfvtxt_os_fvtxn_tracks_c26"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxc_tracks_c26 = new TProfile(Form("nfvtxt_os_fvtxc_tracks_c26"),"",2000, -0.5, 1999.5, -1.1, 1.1);
+  nfvtxt_os_fvtxc_tracks_c28 = new TProfile(Form("nfvtxt_os_fvtxc_tracks_c28"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxsfvtxn_tracks_c22  = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c22"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxsfvtxn_tracks_c24  = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c24"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxsfvtxn_tracks_c24a = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c24a"),"",2000, -0.5, 1999.5, -1.1, 1.1);
@@ -777,6 +793,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   centrality_os_fvtxs_tracks_c26 = new TProfile(Form("centrality_os_fvtxs_tracks_c26"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_os_fvtxn_tracks_c26 = new TProfile(Form("centrality_os_fvtxn_tracks_c26"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_os_fvtxc_tracks_c26 = new TProfile(Form("centrality_os_fvtxc_tracks_c26"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_os_fvtxc_tracks_c28 = new TProfile(Form("centrality_os_fvtxc_tracks_c28"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_os_fvtxsfvtxn_tracks_c22  = new TProfile(Form("centrality_os_fvtxsfvtxn_tracks_c22"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_os_fvtxsfvtxn_tracks_c24  = new TProfile(Form("centrality_os_fvtxsfvtxn_tracks_c24"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_os_fvtxsfvtxn_tracks_c24a = new TProfile(Form("centrality_os_fvtxsfvtxn_tracks_c24a"),"",100, -0.5, 99.5, -1.1, 1.1);
@@ -948,6 +965,14 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   centrality_tracks_north_outer_qy6 = new TProfile("centrality_tracks_north_outer_qy6","",100, -0.5, 99.5, -1.1, 1.1);
 
 
+  for(int cs=0;cs<2;cs++)
+    {
+      for(int c=0;c<maxCorrelator;c++)
+        {
+          nfvtxt_recursion[cs][c] = new TProfile(Form("nfvtxt_rescursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+          centrality_recursion[cs][c] = new TProfile(Form("centrality_rescursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+        } // end of for(int c=0;c<maxCorrelator;c++)
+    } // end of for(int cs=0;cs<2;cs++)
 
 
   return EVENT_OK;
@@ -1727,6 +1752,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_ac_fvtxn_tracks_c26->Fill(nfvtxt,ac_fvtxn_tracks_six);
   nfvtxt_ac_fvtxc_tracks_c26->Fill(nfvtxt,ac_fvtxc_tracks_six);
 
+  int harmonics_Eight_Num[8] = {2,2,2,2,-2,-2,-2,-2};
+  int harmonics_Eight_Den[8] = {0,0,0,0,0,0,0,0};
+  TComplex eightRecursion = Recursion(8,harmonics_Eight_Num)/Recursion(8,harmonics_Eight_Den).Re();
+  //double wEightRecursion = Recursion(8,harmonics_Eight_Den).Re();
+  nfvtxt_ac_fvtxc_tracks_c28->Fill(nfvtxt,eightRecursion.Re());
+
   // --------------------------------------------------------- //
   // --- centrality
   // --------------
@@ -1775,6 +1806,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality_ac_fvtxs_tracks_c26->Fill(centrality,ac_fvtxs_tracks_six);
   centrality_ac_fvtxn_tracks_c26->Fill(centrality,ac_fvtxn_tracks_six);
   centrality_ac_fvtxc_tracks_c26->Fill(centrality,ac_fvtxc_tracks_six);
+  centrality_ac_fvtxc_tracks_c28->Fill(centrality,eightRecursion.Re());
 
   // ------------------------------------------------------------------------------------- //
   // --- calculations and histograms designed to be used with/for q-vector recentering --- //
@@ -2037,6 +2069,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_os_fvtxs_tracks_c26->Fill(nfvtxt,os_fvtxs_tracks_six);
   nfvtxt_os_fvtxn_tracks_c26->Fill(nfvtxt,os_fvtxn_tracks_six);
   nfvtxt_os_fvtxc_tracks_c26->Fill(nfvtxt,os_fvtxc_tracks_six);
+  nfvtxt_os_fvtxc_tracks_c28->Fill(nfvtxt,eightRecursion.Re());
 
   // --------------------------------------------------------- //
   // --- centrality
@@ -2086,6 +2119,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality_os_fvtxs_tracks_c26->Fill(centrality,os_fvtxs_tracks_six);
   centrality_os_fvtxn_tracks_c26->Fill(centrality,os_fvtxn_tracks_six);
   centrality_os_fvtxc_tracks_c26->Fill(centrality,os_fvtxc_tracks_six);
+  centrality_os_fvtxc_tracks_c28->Fill(centrality,eightRecursion.Re());
 
 
 
