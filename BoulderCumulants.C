@@ -1775,6 +1775,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_ac_fvtxs_tracks_c24->Fill(nfvtxt,ac_fvtxs_tracks_qqqq24);
   nfvtxt_ac_fvtxn_tracks_c24->Fill(nfvtxt,ac_fvtxn_tracks_qqqq24);
   nfvtxt_ac_fvtxc_tracks_c24->Fill(nfvtxt,ac_fvtxc_tracks_qqqq24);
+  // --- four particle 2sub
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24a->Fill(nfvtxt,ac_fvtxsfvtxn_tracks_qq2*ac_fvtxsfvtxn_tracks_qq2);
+  nfvtxt_ac_fvtxsfvtxn_tracks_c24b->Fill(nfvtxt,ac_fvtxs_tracks_qq2*ac_fvtxn_tracks_qq2);
 
   float ac_fvtxs_tracks_qqqq34 = calc4_event(ac_fvtxs_tracks_qx3,ac_fvtxs_tracks_qy3,ac_fvtxs_tracks_qx6,ac_fvtxs_tracks_qy6,ac_fvtxs_tracks_qw);
   float ac_fvtxn_tracks_qqqq34 = calc4_event(ac_fvtxn_tracks_qx3,ac_fvtxn_tracks_qy3,ac_fvtxn_tracks_qx6,ac_fvtxn_tracks_qy6,ac_fvtxn_tracks_qw);
@@ -1877,6 +1880,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality_ac_fvtxs_tracks_c24->Fill(centrality,ac_fvtxs_tracks_qqqq24);
   centrality_ac_fvtxn_tracks_c24->Fill(centrality,ac_fvtxn_tracks_qqqq24);
   centrality_ac_fvtxc_tracks_c24->Fill(centrality,ac_fvtxc_tracks_qqqq24);
+  // --- four particle 2sub
+  centrality_ac_fvtxsfvtxn_tracks_c24a->Fill(centrality,ac_fvtxsfvtxn_tracks_qq2*ac_fvtxsfvtxn_tracks_qq2);
+  centrality_ac_fvtxsfvtxn_tracks_c24b->Fill(centrality,ac_fvtxs_tracks_qq2*ac_fvtxn_tracks_qq2);
   // --- six particle
   centrality_ac_fvtxs_tracks_c26->Fill(centrality,ac_fvtxs_tracks_six);
   centrality_ac_fvtxn_tracks_c26->Fill(centrality,ac_fvtxn_tracks_six);
@@ -2159,6 +2165,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_os_fvtxs_tracks_c34->Fill(nfvtxt,os_fvtxs_tracks_qqqq34);
   nfvtxt_os_fvtxn_tracks_c34->Fill(nfvtxt,os_fvtxn_tracks_qqqq34);
   nfvtxt_os_fvtxc_tracks_c34->Fill(nfvtxt,os_fvtxc_tracks_qqqq34);
+  // --- four particle 2sub
+  nfvtxt_os_fvtxsfvtxn_tracks_c24a->Fill(nfvtxt,os_fvtxsfvtxn_tracks_qq2*os_fvtxsfvtxn_tracks_qq2);
+  nfvtxt_os_fvtxsfvtxn_tracks_c24b->Fill(nfvtxt,os_fvtxs_tracks_qq2*os_fvtxn_tracks_qq2);
 
   float os_fvtxs_tracks_six = calc6_event(tc_os_fvtxs_tracks_Q2,tc_os_fvtxs_tracks_Q4,tc_os_fvtxs_tracks_Q6,os_fvtxs_tracks_qw);
   float os_fvtxn_tracks_six = calc6_event(tc_os_fvtxn_tracks_Q2,tc_os_fvtxn_tracks_Q4,tc_os_fvtxn_tracks_Q6,os_fvtxn_tracks_qw);
@@ -2212,6 +2221,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality_os_fvtxs_tracks_c24->Fill(centrality,os_fvtxs_tracks_qqqq24);
   centrality_os_fvtxn_tracks_c24->Fill(centrality,os_fvtxn_tracks_qqqq24);
   centrality_os_fvtxc_tracks_c24->Fill(centrality,os_fvtxc_tracks_qqqq24);
+  // --- four particle 2sub
+  centrality_os_fvtxsfvtxn_tracks_c24a->Fill(centrality,os_fvtxsfvtxn_tracks_qq2*os_fvtxsfvtxn_tracks_qq2);
+  centrality_os_fvtxsfvtxn_tracks_c24b->Fill(centrality,os_fvtxs_tracks_qq2*os_fvtxn_tracks_qq2);
   // --- six particle
   centrality_os_fvtxs_tracks_c26->Fill(centrality,os_fvtxs_tracks_six);
   centrality_os_fvtxn_tracks_c26->Fill(centrality,os_fvtxn_tracks_six);
