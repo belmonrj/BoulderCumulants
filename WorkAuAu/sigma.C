@@ -103,6 +103,7 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   TH1D* th1d_v2G = (TH1D*)th1d_c2G->Clone("th1d_v2G");
   TH1D* th1d_SVV = (TH1D*)th1d_c24->Clone("th1d_SVV");
   TH1D* th1d_SVG = (TH1D*)th1d_c24->Clone("th1d_SVG");
+  TH1D* th1d_SV4 = (TH1D*)th1d_c24->Clone("th1d_SV4");
 
   int nbins = th1d_gap->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
@@ -157,9 +158,9 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
           denominat1 = v22*v22 + v24*v24;
           sigmavv1 = numerator1/denominat1;
           // -----------------------
-          cout << sigmavv1 << endl;
-          sigmavv1 = sqrt(sigmavv1);
-          cout << sigmavv1 << endl;
+          //cout << sigmavv1 << endl;
+          if ( sigmavv1 > 0 ) sigmavv1 = sqrt(sigmavv1); else sigmavv1 = -9999;
+          //cout << sigmavv1 << endl;
           // -----------------------
           esigmavv1 = sigmavv1*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) ); // quick and dirty guess, need to check
         }
@@ -176,14 +177,34 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
           denominat2 = v2G*v2G + v24*v24;
           sigmavv2 = numerator2/denominat2;
           // -----------------------
-          cout << sigmavv2 << endl;
-          sigmavv2 = sqrt(sigmavv2);
-          cout << sigmavv2 << endl;
+          //cout << sigmavv2 << endl;
+          if ( sigmavv2 > 0 ) sigmavv2 = sqrt(sigmavv2); else sigmavv2 = -9999;
+          //cout << sigmavv2 << endl;
           // -----------------------
           esigmavv2 = sigmavv2*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) ); // quick and dirty guess, need to check
         }
       th1d_SVG->SetBinContent(i+1,sigmavv2);
       th1d_SVG->SetBinError(i+1,esigmavv2);
+      // --- sigma_v/v this turns out to be algrebraically identical to the above...
+      double numerator4 = -9999;
+      double denominat4 = -9999;
+      double sigmavv4 = -9999;
+      double esigmavv4 = 0;
+      if ( c22 > 0 && c24 < 0 )
+        {
+          numerator4 = c22*c22 + c24;
+          denominat4 = v22*v22 + v24*v24;
+          denominat4 *= denominat4;
+          sigmavv4 = numerator4/denominat4;
+          // -----------------------
+          //cout << sigmavv4 << endl;
+          if ( sigmavv4 > 0 ) sigmavv4 = sqrt(sigmavv4); else sigmavv4 = -9999;
+          //cout << sigmavv4 << endl;
+          // -----------------------
+          esigmavv4 = sigmavv4*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) ); // quick and dirty guess, need to check
+        }
+      th1d_SV4->SetBinContent(i+1,sigmavv4);
+      th1d_SV4->SetBinError(i+1,esigmavv4);
     }
 
   double xmin = 0.0;
@@ -203,8 +224,20 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   th1d_SVG->SetMarkerStyle(kOpenSquare);
   th1d_SVG->SetMarkerColor(kBlack);
   th1d_SVG->SetLineColor(kBlack);
+  th1d_SV4->SetMarkerStyle(kOpenCross);
+  th1d_SV4->SetMarkerColor(kGreen+2);
+  th1d_SV4->SetLineColor(kGreen+2);
   th1d_SVV->Draw("same ex0p");
   th1d_SVG->Draw("same ex0p");
+  //th1d_SV4->Draw("same ex0p");
+  TLegend* leg = new TLegend(0.22,0.72,0.48,0.92);
+  leg->SetHeader("Run14AuAu200");
+  leg->SetTextSize(0.045);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_SVV,"Using v_{2}{2} no eta gap","p");
+  //leg->AddEntry(th1d_SV4,"Using v_{2}{2} no eta gap, alternate algebra","p");
+  leg->AddEntry(th1d_SVG,"Using v_{2}{2} with eta gap","p");
+  leg->Draw();
   c1->Print(Form("FigsSigma/sigma_%s_x01.png",handle));
   c1->Print(Form("FigsSigma/sigma_%s_x01.pdf",handle));
 
