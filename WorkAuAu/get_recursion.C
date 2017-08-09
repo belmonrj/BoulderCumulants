@@ -169,6 +169,7 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
                  ); // I think this is right but will need to double check when error bar issue on raw histos is resolved
         }
       //cout << "c28 " << c28 << " v28 " << v28 << endl;
+      if ( iscent && i > 50 ) v28 = -9999; // don't know why set range user is causing problems below
       th1d_v28->SetBinContent(i+1,v28);
       th1d_v28->SetBinError(i+1,ev28);
     }
@@ -421,23 +422,11 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("v_{2}");
-  if ( iscent )
-  {
-  // --- these three are redundant
-  // th1d_v22->GetXaxis()->SetRangeUser(0,90);
-  // th1d_v24->GetXaxis()->SetRangeUser(0,70);
-  // th1d_v26->GetXaxis()->SetRangeUser(0,70);
-  // --- this is causing problems????
-  //th1d_v28->GetXaxis()->SetRangeUser(0,70);
-  }
+  // if ( iscent ) th1d_v28->GetXaxis()->SetRangeUser(0,50); // very hard to understand why this line causes the points to disappear...
   th1d_v28->SetMarkerStyle(kFullDiamond);
   th1d_v28->SetMarkerColor(kGreen+2);
   th1d_v28->SetLineColor(kGreen+2);
   th1d_v28->Draw("same ex0p");
-  // for ( int i = 0; i < 100; ++i )
-  //   {
-  //     cout << th1d_v28->GetBinContent(i+1) << endl;
-  //   }
   //if ( leg ) delete leg;
   TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
@@ -451,6 +440,7 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
   th1d_v26->Draw("same ex0p");
   th1d_v24->Draw("same ex0p");
   th1d_v22->Draw("same ex0p");
+  th1d_v28->Draw("same ex0p");
   leg->AddEntry(th1d_v26,"v_{2}{6}","p");
   leg->AddEntry(th1d_v24,"v_{2}{4}","p");
   leg->AddEntry(th1d_v22,"v_{2}{2}","p");
