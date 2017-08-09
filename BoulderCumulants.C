@@ -1781,9 +1781,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   TComplex tca4 = TComplex(ac_fvtxs_tracks_qx4,ac_fvtxs_tracks_qy4);
   TComplex tcb4 = TComplex(ac_fvtxn_tracks_qx4,ac_fvtxs_tracks_qy4);
   TComplex tc_numerator_a = tca2*tca2 - tca4;
-  TComplex tc_numerator_b = tcb2*tcb2 - tcb4;
+  TComplex tc_numerator_b = TComplex::Conjugate(tcb2*tcb2 - tcb4);
   double numerator_a = tc_numerator_a.Re();
-  double numerator_b = tc_numerator_a.Re();
+  double numerator_b = tc_numerator_b.Re();
   double tcaw = ac_fvtxs_tracks_qw*ac_fvtxs_tracks_qw - ac_fvtxs_tracks_qw;
   double tcbw = ac_fvtxn_tracks_qw*ac_fvtxn_tracks_qw - ac_fvtxn_tracks_qw;
   double numerator = numerator_a*numerator_b;
@@ -2184,9 +2184,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   tca4 = TComplex(os_fvtxs_tracks_qx4,os_fvtxs_tracks_qy4);
   tcb4 = TComplex(os_fvtxn_tracks_qx4,os_fvtxs_tracks_qy4);
   tc_numerator_a = tca2*tca2 - tca4;
-  tc_numerator_b = tcb2*tcb2 - tcb4;
+  tc_numerator_b = TComplex::Conjugate(tcb2*tcb2 - tcb4);
   numerator_a = tc_numerator_a.Re();
-  numerator_b = tc_numerator_a.Re();
+  numerator_b = tc_numerator_b.Re();
   tcaw = os_fvtxs_tracks_qw*os_fvtxs_tracks_qw - os_fvtxs_tracks_qw;
   tcbw = os_fvtxn_tracks_qw*os_fvtxn_tracks_qw - os_fvtxn_tracks_qw;
   numerator = numerator_a*numerator_b;
