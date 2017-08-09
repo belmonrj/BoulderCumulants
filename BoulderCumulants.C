@@ -1782,13 +1782,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   TComplex tcb4 = TComplex(ac_fvtxn_tracks_qx4,ac_fvtxs_tracks_qy4);
   TComplex tc_numerator_a = tca2*tca2 - tca4;
   TComplex tc_numerator_b = TComplex::Conjugate(tcb2*tcb2 - tcb4);
-  double numerator_a = tc_numerator_a.Re();
-  double numerator_b = tc_numerator_b.Re();
+  TComplex tc_numerator = tc_numerator_a*tc_numerator_b;
+  double numerator = tc_numerator.Re();
   double tcaw = ac_fvtxs_tracks_qw*ac_fvtxs_tracks_qw - ac_fvtxs_tracks_qw;
   double tcbw = ac_fvtxn_tracks_qw*ac_fvtxn_tracks_qw - ac_fvtxn_tracks_qw;
-  double numerator = numerator_a*numerator_b;
   double denominator = tcaw*tcbw;
-  double answer_c24a = (numerator)/denominator;
+  double answer_c24a = numerator/denominator;
   nfvtxt_ac_fvtxsfvtxn_tracks_c24a->Fill(nfvtxt,answer_c24a);
   nfvtxt_ac_fvtxsfvtxn_tracks_c24b->Fill(nfvtxt,ac_fvtxs_tracks_qq2*ac_fvtxn_tracks_qq2);
 
@@ -2185,13 +2184,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   tcb4 = TComplex(os_fvtxn_tracks_qx4,os_fvtxs_tracks_qy4);
   tc_numerator_a = tca2*tca2 - tca4;
   tc_numerator_b = TComplex::Conjugate(tcb2*tcb2 - tcb4);
-  numerator_a = tc_numerator_a.Re();
-  numerator_b = tc_numerator_b.Re();
+  tc_numerator = tc_numerator_a*tc_numerator_b;
+  numerator = tc_numerator.Re();
   tcaw = os_fvtxs_tracks_qw*os_fvtxs_tracks_qw - os_fvtxs_tracks_qw;
   tcbw = os_fvtxn_tracks_qw*os_fvtxn_tracks_qw - os_fvtxn_tracks_qw;
-  numerator = numerator_a*numerator_b;
   denominator = tcaw*tcbw;
-  answer_c24a = (numerator)/denominator;
+  answer_c24a = numerator/denominator;
   nfvtxt_os_fvtxsfvtxn_tracks_c24a->Fill(nfvtxt,answer_c24a);
   nfvtxt_os_fvtxsfvtxn_tracks_c24b->Fill(nfvtxt,os_fvtxs_tracks_qq2*os_fvtxn_tracks_qq2);
 
