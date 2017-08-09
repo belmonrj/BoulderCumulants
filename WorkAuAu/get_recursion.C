@@ -11,7 +11,7 @@ void get_recursion()
 
   int rebin = 1;
 
-  const char* handle = "recursion_cent";
+  const char* handle = "cent";
 
   TProfile* tp1f_eit = (TProfile*)fin->Get("centrality_recursion_0_6");
   TProfile* tp1f_six = (TProfile*)fin->Get("centrality_recursion_0_4");
@@ -168,7 +168,7 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
                  ( (1.0/256.0)*eeit*eeit )
                  ); // I think this is right but will need to double check when error bar issue on raw histos is resolved
         }
-      cout << "c28 " << c28 << " v28 " << v28 << endl;
+      //cout << "c28 " << c28 << " v28 " << v28 << endl;
       th1d_v28->SetBinContent(i+1,v28);
       th1d_v28->SetBinError(i+1,ev28);
     }
@@ -423,15 +423,21 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
   empty->GetYaxis()->SetTitle("v_{2}");
   if ( iscent )
   {
-  th1d_v22->GetXaxis()->SetRangeUser(0,90);
-  th1d_v24->GetXaxis()->SetRangeUser(0,70);
-  th1d_v26->GetXaxis()->SetRangeUser(0,70);
-  th1d_v28->GetXaxis()->SetRangeUser(0,70);
+  // --- these three are redundant
+  // th1d_v22->GetXaxis()->SetRangeUser(0,90);
+  // th1d_v24->GetXaxis()->SetRangeUser(0,70);
+  // th1d_v26->GetXaxis()->SetRangeUser(0,70);
+  // --- this is causing problems????
+  //th1d_v28->GetXaxis()->SetRangeUser(0,70);
   }
-  th1d_v28->SetMarkerStyle(kOpenDiamond);
+  th1d_v28->SetMarkerStyle(kFullDiamond);
   th1d_v28->SetMarkerColor(kGreen+2);
   th1d_v28->SetLineColor(kGreen+2);
   th1d_v28->Draw("same ex0p");
+  // for ( int i = 0; i < 100; ++i )
+  //   {
+  //     cout << th1d_v28->GetBinContent(i+1) << endl;
+  //   }
   //if ( leg ) delete leg;
   TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
