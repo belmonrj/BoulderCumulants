@@ -1,6 +1,16 @@
 TH1D* squareroot(TH1D*);
+void compare_4part();
+void compare_sigma();
 
 void compare_ampt()
+{
+
+  compare_4part();
+  compare_sigma();
+
+}
+
+void compare_4part()
 {
 
   // --------------------------------------------------------------------------------
@@ -195,14 +205,77 @@ void compare_ampt()
   delete leg_cumu4;
   delete leg_comp4;
 
+}
+
+void compare_sigma()
+{
+
   // --------------------------------------------------------------------------------
   // --- now to calculate the sigma/v
 
-  TCanvas* c1 = new TCanvas();
-  c1->cd();
+  // --------------------------------------------------------------------------------
+  // --- get the histograms from the files
+
+  gROOT->ProcessLine("gErrorIgnoreLevel = 2002;");
+  TFile* fampt = TFile::Open("input/cumulants_ampt_auau200_comb.root");
+  gROOT->ProcessLine("gErrorIgnoreLevel = 0;");
+
+  TProfile* tp1f_for_ampt = (TProfile*)fampt->Get("raa4_Ncharge");
+  TProfile* tp1f_two_ampt = (TProfile*)fampt->Get("daa2_Ncharge");
+  TProfile* tp1f_gap_ampt = (TProfile*)fampt->Get("daa2_with_gap_Ncharge");
+
+  TFile* fdata = TFile::Open("input/histos_11617.root");
+
+  TProfile* tp1f_for_data = (TProfile*)fdata->Get("nfvtxt_os_fvtxc_tracks_c24");
+  TProfile* tp1f_two_data = (TProfile*)fdata->Get("nfvtxt_os_fvtxc_tracks_c22");
+  TProfile* tp1f_gap_data = (TProfile*)fdata->Get("nfvtxt_os_fvtxsfvtxn_tracks_c22");
+
+  // --------------------------------------------------------------------------------
+  // --- apply rebinning to TProfile histos
+
+  int rebin = 2;
+
+  tp1f_for_ampt->Rebin(rebin);
+  tp1f_two_ampt->Rebin(rebin);
+  tp1f_gap_ampt->Rebin(rebin);
+
+  rebin = 5;
+
+  tp1f_for_data->Rebin(rebin);
+  tp1f_two_data->Rebin(rebin);
+  tp1f_gap_data->Rebin(rebin);
+
+  // --------------------------------------------------------------------------------
+  // --- make the cumulants
+
+  TH1D* th1d_for_ampt = tp1f_for_ampt->ProjectionX("th1d_for_ampt");
+  TH1D* th1d_two_ampt = tp1f_two_ampt->ProjectionX("th1d_two_ampt");
+  TH1D* th1d_222_ampt = (TH1D*)th1d_two_ampt->Clone("th1d_222_ampt");
+  th1d_222_ampt->Multiply(th1d_two_ampt);
+  th1d_222_ampt->Scale(2);
+  TH1D* th1d_c24_ampt = (TH1D*)th1d_for_ampt->Clone("th1d_c24");
+  th1d_c24_ampt->Add(th1d_222_ampt,-1);
+
+  TH1D* th1d_for_data = tp1f_for_data->ProjectionX("th1d_for_data");
+  TH1D* th1d_two_data = tp1f_two_data->ProjectionX("th1d_two_data");
+  TH1D* th1d_222_data = (TH1D*)th1d_two_data->Clone("th1d_222_data");
+  th1d_222_data->Multiply(th1d_two_data);
+  th1d_222_data->Scale(2);
+  TH1D* th1d_c24_data = (TH1D*)th1d_for_data->Clone("th1d_c24");
+  th1d_c24_data->Add(th1d_222_data,-1);
 
   TH1D* th1d_gap_ampt = tp1f_gap_ampt->ProjectionX("th1d_gap_ampt");
   TH1D* th1d_gap_data = tp1f_gap_data->ProjectionX("th1d_gap_data");
+
+  // th1d_c24_ampt->GetXaxis()->SetRangeUser(4,600);
+  // th1d_two_ampt->GetXaxis()->SetRangeUser(4,600);
+  // th1d_for_ampt->GetXaxis()->SetRangeUser(4,600);
+  // th1d_gap_ampt->GetXaxis()->SetRangeUser(4,600);
+
+  // th1d_c24_data->GetXaxis()->SetRangeUser(4,600);
+  // th1d_two_data->GetXaxis()->SetRangeUser(4,600);
+  // th1d_for_data->GetXaxis()->SetRangeUser(4,600);
+  // th1d_gap_data->GetXaxis()->SetRangeUser(4,600);
 
   TH1D* th1d_SVV_data = (TH1D*)th1d_c24->Clone("th1d_SVV_data");
   TH1D* th1d_SVG_data = (TH1D*)th1d_c24->Clone("th1d_SVG_data");
@@ -279,7 +352,14 @@ void compare_ampt()
         }
       th1d_SVG_data->SetBinContent(i+1,sigmavv2);
       th1d_SVG_data->SetBinError(i+1,esigmavv2);
+      // ---------------------------------------
+      cout << i << " " << v22 << " " << v24 << " " << sigmavv1 << endl;
     }
+
+  double xmin = 0.0;
+  double xmax = 99.9;
+  double ymin = -1e-4;
+  double ymax = 1e-4;
 
   xmin = 0;
   xmax = 600;
