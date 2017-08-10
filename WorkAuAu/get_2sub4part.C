@@ -128,7 +128,21 @@ void get_2sub4part()
       th1d_v24->SetBinError(i+1,ev24);
     }
 
+  // --------------------------------------------------------------------------------------------------------
 
+  for ( int i = 0; i < nbins; ++i )
+    {
+      // cout << th1d_v24->GetBinContent(i+1) << " "
+      //      << th1d_v24aabb->GetBinContent(i+1) << " "
+      //      << th1d_v24abab->GetBinContent(i+1) << " "
+      //      << endl;
+      cout << th1d_for->GetBinContent(i+1) << " "
+           << th1d_4aabb->GetBinContent(i+1) << " "
+           << th1d_4abab->GetBinContent(i+1) << " "
+           << endl;
+    }
+
+  // --------------------------------------------------------------------------------------------------------
 
   double xmin = 0.0;
   double xmax = 100.0;
