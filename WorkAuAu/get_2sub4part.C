@@ -4,7 +4,7 @@ void get_2sub4part()
   bool iscent = true;
   bool isntrk = false;
 
-  TFile* fin = TFile::Open("input/histos_11609.root");
+  TFile* fin = TFile::Open("input/histos_11617.root");
 
   TProfile* tp1f_2aa = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_c22");
   TProfile* tp1f_2bb = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_c22");
@@ -172,7 +172,7 @@ void get_2sub4part()
   th1d_v24abab->SetLineColor(kBlue);
   th1d_v24abab->Draw("same ex0p");
   //if ( leg ) delete leg;
-  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
+  TLegend* leg = new TLegend(0.62,0.72,0.88,0.92);
   //leg->SetHeader(type);
   leg->SetHeader("Run14AuAu200");
   leg->SetTextSize(0.045);
