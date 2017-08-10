@@ -1,6 +1,9 @@
 void get_2sub4part()
 {
 
+  bool iscent = true;
+  bool isntrk = false;
+
   TFile* fin = TFile::Open("input/histos_11609.root");
 
   TProfile* tp1f_2aa = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_c22");
@@ -73,5 +76,99 @@ void get_2sub4part()
       th1d_v24abab->SetBinContent(i+1,v24abab);
       th1d_v24abab->SetBinError(i+1,ev24abab);
     }
+
+  // --------------------------------------------------------------------------------------------------------
+
+  TProfile* tp1f_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c22");
+  TProfile* tp1f_for = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c24");
+
+  TH1D* th1d_for = tp1f_for->ProjectionX("th1d_for"); // <4>
+  TH1D* th1d_two = tp1f_two->ProjectionX("th1d_two"); // <2>
+
+  TH1D* th1d_222 = (TH1D*)th1d_two->Clone("th1d_222"); // 2<2>^2
+  th1d_222->Multiply(th1d_two);
+  th1d_222->Scale(2);
+
+  TH1D* th1d_c24 = (TH1D*)th1d_for->Clone("th1d_c24"); // c2{4} = <4> - 2<2>^2
+  th1d_c24->Add(th1d_222,-1);
+
+  TH1D* th1d_c22 = (TH1D*)th1d_two->Clone("th1d_c22"); // c2{2} = <2>
+
+  TH1D* th1d_v24 = (TH1D*)th1d_c24->Clone("th1d_v24");
+  TH1D* th1d_v22 = (TH1D*)th1d_c24->Clone("th1d_v22");
+
+  //nbins = th1d_c24->GetNbinsX();
+  for ( int i = 0; i < nbins; ++i )
+    {
+      // --- 2-particle
+      double c22 = th1d_c22->GetBinContent(i+1);
+      double v22 = -9999;
+      double ev22 = 0;
+      double two = th1d_two->GetBinContent(i+1);
+      double etwo = th1d_two->GetBinError(i+1);
+      if ( c22 > 0 )
+        {
+          v22 = sqrt(c22); // v2{2} = c2{2}^{(1/2)}
+          ev22 = (1.0/v22)*etwo; // correct formula
+        }
+      th1d_v22->SetBinContent(i+1,v22);
+      th1d_v22->SetBinError(i+1,ev22);
+      // --- 4-particle
+      double c24 = th1d_c24->GetBinContent(i+1);
+      double v24 = -9999;
+      double four = th1d_for->GetBinContent(i+1);
+      double efour = th1d_for->GetBinError(i+1);
+      double ev24 = 0;
+      if ( c24 < 0 && four != 0 )
+        {
+          v24 = pow(-c24,(1.0/4.0)); // v2{4} = -c2{4}^{(1/4)}
+          ev24 = (1.0/pow(-c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
+        }
+      th1d_v24->SetBinContent(i+1,v24);
+      th1d_v24->SetBinError(i+1,ev24);
+    }
+
+
+
+  double xmin = 0.0;
+  double xmax = 100.0;
+  double ymin = 0.0;
+  double ymax = 0.12;
+  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  empty->GetYaxis()->SetTitle("v_{2}");
+  if ( iscent )
+  {
+  th1d_v24->GetXaxis()->SetRangeUser(0,70);
+  th1d_v24aabb->GetXaxis()->SetRangeUser(0,70);
+  th1d_v24abab->GetXaxis()->SetRangeUser(0,70);
+  }
+  th1d_v24->SetMarkerStyle(kOpenCircle);
+  th1d_v24->SetMarkerColor(kBlack);
+  th1d_v24->SetLineColor(kBlack);
+  th1d_v24->Draw("same ex0p");
+  th1d_v24aabb->SetMarkerStyle(kOpenSquare);
+  th1d_v24aabb->SetMarkerColor(kRed);
+  th1d_v24aabb->SetLineColor(kRed);
+  th1d_v24aabb->Draw("same ex0p");
+  th1d_v24abab->SetMarkerStyle(kOpenDiamond);
+  th1d_v24abab->SetMarkerColor(kBlue);
+  th1d_v24abab->SetLineColor(kBlue);
+  th1d_v24abab->Draw("same ex0p");
+  //if ( leg ) delete leg;
+  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
+  //leg->SetHeader(type);
+  leg->SetHeader("Run14AuAu200");
+  leg->SetTextSize(0.045);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_v24,"v_{2}{4}","p");
+  leg->AddEntry(th1d_v24aabb,"v_{2}{4}_{aa|bb}","p");
+  leg->AddEntry(th1d_v24abab,"v_{2}{4}_{ab|ab}","p");
+  leg->Draw();
+  c1->Print("Figs2sub4part/cent_2sub4part.png");
+  c1->Print("Figs2sub4part/cent_2sub4part.pdf");
+
 
 }
