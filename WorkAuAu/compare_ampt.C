@@ -210,8 +210,7 @@ void compare_4part()
 void compare_sigma()
 {
 
-  // --------------------------------------------------------------------------------
-  // --- now to calculate the sigma/v
+  TCanvas* c1 = new TCanvas("c1","");
 
   // --------------------------------------------------------------------------------
   // --- get the histograms from the files
@@ -353,8 +352,89 @@ void compare_sigma()
       th1d_SVG_data->SetBinContent(i+1,sigmavv2);
       th1d_SVG_data->SetBinError(i+1,esigmavv2);
       // ---------------------------------------
-      cout << i << " " << v22 << " " << v24 << " " << sigmavv1 << endl;
+      //cout << i << " " << v22 << " " << v24 << " " << sigmavv1 << endl;
     }
+
+  TH1D* th1d_SVV_ampt = (TH1D*)th1d_c24->Clone("th1d_SVV_ampt");
+  TH1D* th1d_SVG_ampt = (TH1D*)th1d_c24->Clone("th1d_SVG_ampt");
+
+  int nbins = th1d_gap_ampt->GetNbinsX();
+  for ( int i = 0; i < nbins; ++i )
+    {
+      // --- 2-particle
+      double c22 = th1d_two_ampt->GetBinContent(i+1);
+      double v22 = -9999;
+      double ev22 = 0;
+      double two = th1d_two_ampt->GetBinContent(i+1);
+      double etwo = th1d_two_ampt->GetBinError(i+1);
+      if ( c22 > 0 )
+        {
+          v22 = sqrt(c22); // v2{2} = c2{2}^{(1/2)}
+          ev22 = (1.0/v22)*etwo; // correct formula
+        }
+      // th1d_v22_ampt->SetBinContent(i+1,v22);
+      // th1d_v22_ampt->SetBinError(i+1,ev22);
+      // --- 2-particle
+      double c2G = th1d_gap_ampt->GetBinContent(i+1);
+      double v2G = -9999;
+      double ev2G = 0;
+      double twog = th1d_gap_ampt->GetBinContent(i+1);
+      double etwog = th1d_gap_ampt->GetBinError(i+1);
+      if ( c2G > 0 )
+        {
+          v2G = sqrt(c2G); // v2{2} = c2{2}^{(1/2)}
+          ev2G = (1.0/v2G)*etwog; // correct formula
+        }
+      // th1d_v2G_ampt->SetBinContent(i+1,v2G);
+      // th1d_v2G_ampt->SetBinError(i+1,ev2G);
+      // --- 4-particle
+      double c24 = th1d_c24_ampt->GetBinContent(i+1);
+      double v24 = -9999;
+      double four = th1d_for_ampt->GetBinContent(i+1);
+      double efour = th1d_for_ampt->GetBinError(i+1);
+      double ev24 = 0;
+      if ( c24 < 0 && four != 0 )
+        {
+          v24 = pow(-c24,(1.0/4.0)); // v2{4} = -c2{4}^{(1/4)}
+          ev24 = (1.0/pow(-c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
+        }
+      // th1d_v24_ampt->SetBinContent(i+1,v24);
+      // th1d_v24_ampt->SetBinError(i+1,ev24);
+      // --- sigma_v/v
+      double numerator1 = -9999;
+      double denominat1 = -9999;
+      double sigmavv1 = -9999;
+      double esigmavv1 = 0;
+      if ( v22 > 0 && v24 > 0 )
+        {
+          numerator1 = v22*v22 - v24*v24;
+          denominat1 = v22*v22 + v24*v24;
+          sigmavv1 = numerator1/denominat1;
+          if ( sigmavv1 > 0 ) sigmavv1 = sqrt(sigmavv1); else sigmavv1 = -9999;
+          esigmavv1 = sigmavv1*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) ); // quick and dirty guess, need to check
+        }
+      th1d_SVV_ampt->SetBinContent(i+1,sigmavv1);
+      th1d_SVV_ampt->SetBinError(i+1,esigmavv1);
+      // --- sigma_v/v
+      double numerator2 = -9999;
+      double denominat2 = -9999;
+      double sigmavv2 = -9999;
+      double esigmavv2 = 0;
+      if ( v22 > 0 && v24 > 0 )
+        {
+          numerator2 = v2G*v2G - v24*v24;
+          denominat2 = v2G*v2G + v24*v24;
+          sigmavv2 = numerator2/denominat2;
+          if ( sigmavv2 > 0 ) sigmavv2 = sqrt(sigmavv2); else sigmavv2 = -9999;
+          esigmavv2 = sigmavv2*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) ); // quick and dirty guess, need to check
+        }
+      th1d_SVG_ampt->SetBinContent(i+1,sigmavv2);
+      th1d_SVG_ampt->SetBinError(i+1,esigmavv2);
+      // ---------------------------------------
+      //cout << i << " " << v22 << " " << v24 << " " << sigmavv1 << endl;
+    }
+
+
 
   double xmin = 0.0;
   double xmax = 99.9;
@@ -375,18 +455,34 @@ void compare_sigma()
   th1d_SVG_data->SetMarkerStyle(kOpenSquare);
   th1d_SVG_data->SetMarkerColor(kBlack);
   th1d_SVG_data->SetLineColor(kBlack);
-  // th1d_SV4_data->SetMarkerStyle(kOpenCross);
-  // th1d_SV4_data->SetMarkerColor(kGreen+2);
-  // th1d_SV4_data->SetLineColor(kGreen+2);
   th1d_SVV_data->Draw("same ex0p");
   th1d_SVG_data->Draw("same ex0p");
-  //th1d_SV4_data->Draw("same ex0p");
+  // ---------------------------------------------
+  th1d_SVV_ampt->GetXaxis()->SetRangeUser(5,xmax);
+  th1d_SVV_ampt->SetMarkerSize(0);
+  th1d_SVV_ampt->SetLineWidth(2);
+  th1d_SVV_ampt->SetLineColor(kGreen+2);
+  th1d_SVV_ampt->SetFillColorAlpha(kGreen+2, 0.4);
+  TH1D* cloned = (TH1D*)th1d_SVV_ampt->Clone("cloned");
+  cloned->SetFillColorAlpha(kGreen+2,0.0);
+  cloned->Draw("HIST L same");
+  th1d_SVV_ampt->Draw("LE3 same");
+  // ---------------------------------------------
+  th1d_SVG_ampt->GetXaxis()->SetRangeUser(5,xmax);
+  th1d_SVG_ampt->SetMarkerSize(0);
+  th1d_SVG_ampt->SetLineWidth(2);
+  th1d_SVG_ampt->SetLineColor(kGreen+2);
+  th1d_SVG_ampt->SetFillColorAlpha(kGreen+2, 0.4);
+  TH1D* clonet = (TH1D*)th1d_SVG_ampt->Clone("clonet");
+  clonet->SetFillColorAlpha(kGreen+2,0.0);
+  clonet->Draw("HIST L same");
+  th1d_SVG_ampt->Draw("LE3 same");
+  // ---------------------------------------------
   TLegend* leg = new TLegend(0.22,0.72,0.48,0.92);
   leg->SetHeader("Run14AuAu200");
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVV_data,"Using v_{2}{2} no eta gap","p");
-  //leg->AddEntry(th1d_SV4_data,"Using v_{2}{2} no eta gap, alternate algebra","p");
   leg->AddEntry(th1d_SVG_data,"Using v_{2}{2} with eta gap","p");
   leg->Draw();
   c1->Print("FigsAmpt/sigma_ampt_x01.png");
