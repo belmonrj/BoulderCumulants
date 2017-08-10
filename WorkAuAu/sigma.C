@@ -218,6 +218,12 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("#sigma_{v_{2}}/v_{2}");
+  if ( iscent )
+    {
+      th1d_SVV->GetXaxis()->SetRangeUser(0,70);
+      th1d_SVG->GetXaxis()->SetRangeUser(0,70);
+      th1d_SV4->GetXaxis()->SetRangeUser(0,70);
+    }
   th1d_SVV->SetMarkerStyle(kOpenCircle);
   th1d_SVV->SetMarkerColor(kBlack);
   th1d_SVV->SetLineColor(kBlack);
