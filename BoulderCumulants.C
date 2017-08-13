@@ -1777,9 +1777,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_ac_fvtxc_tracks_c24->Fill(nfvtxt,ac_fvtxc_tracks_qqqq24);
   // --- four particle 2sub
   TComplex tca2 = TComplex(ac_fvtxs_tracks_qx2,ac_fvtxs_tracks_qy2);
-  TComplex tcb2 = TComplex(ac_fvtxn_tracks_qx2,ac_fvtxs_tracks_qy2);
+  TComplex tcb2 = TComplex(ac_fvtxn_tracks_qx2,ac_fvtxn_tracks_qy2);
   TComplex tca4 = TComplex(ac_fvtxs_tracks_qx4,ac_fvtxs_tracks_qy4);
-  TComplex tcb4 = TComplex(ac_fvtxn_tracks_qx4,ac_fvtxs_tracks_qy4);
+  TComplex tcb4 = TComplex(ac_fvtxn_tracks_qx4,ac_fvtxn_tracks_qy4);
   TComplex tc_numerator_a = tca2*tca2 - tca4;
   TComplex tc_numerator_b = TComplex::Conjugate(tcb2*tcb2 - tcb4);
   TComplex tc_numerator = tc_numerator_a*tc_numerator_b;
@@ -2179,9 +2179,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_os_fvtxc_tracks_c34->Fill(nfvtxt,os_fvtxc_tracks_qqqq34);
   // --- four particle 2sub
   tca2 = TComplex(os_fvtxs_tracks_qx2,os_fvtxs_tracks_qy2);
-  tcb2 = TComplex(os_fvtxn_tracks_qx2,os_fvtxs_tracks_qy2);
+  tcb2 = TComplex(os_fvtxn_tracks_qx2,os_fvtxn_tracks_qy2);
   tca4 = TComplex(os_fvtxs_tracks_qx4,os_fvtxs_tracks_qy4);
-  tcb4 = TComplex(os_fvtxn_tracks_qx4,os_fvtxs_tracks_qy4);
+  tcb4 = TComplex(os_fvtxn_tracks_qx4,os_fvtxn_tracks_qy4);
   tc_numerator_a = tca2*tca2 - tca4;
   tc_numerator_b = TComplex::Conjugate(tcb2*tcb2 - tcb4);
   tc_numerator = tc_numerator_a*tc_numerator_b;
