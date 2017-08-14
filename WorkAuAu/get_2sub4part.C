@@ -4,7 +4,7 @@ void get_2sub4part()
   bool iscent = true;
   bool isntrk = false;
 
-  TFile* fin = TFile::Open("input/histos_11617.root");
+  TFile* fin = TFile::Open("input/histos_11644.root");
 
   TProfile* tp1f_2aa = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_c22");
   TProfile* tp1f_2bb = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_c22");
@@ -155,9 +155,9 @@ void get_2sub4part()
   empty->GetYaxis()->SetTitle("v_{2}");
   if ( iscent )
   {
-  th1d_v24->GetXaxis()->SetRangeUser(0,70);
-  th1d_v24aabb->GetXaxis()->SetRangeUser(0,70);
-  th1d_v24abab->GetXaxis()->SetRangeUser(0,70);
+  th1d_v24->GetXaxis()->SetRangeUser(5,70);
+  th1d_v24aabb->GetXaxis()->SetRangeUser(5,70);
+  th1d_v24abab->GetXaxis()->SetRangeUser(5,70);
   }
   th1d_v24->SetMarkerStyle(kOpenCircle);
   th1d_v24->SetMarkerColor(kBlack);
