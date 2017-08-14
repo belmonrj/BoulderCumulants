@@ -472,6 +472,17 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
       offset_centrality_qy6_north[i] = 0;
     }
 
+  for ( int i = 0; i < maxTracks; ++i )
+    {
+      for ( int cs = 0; cs < 2; ++cs )
+        {
+          for ( int c = 0; c < maxHarmonic; ++c )
+            {
+              qvoff_nfvtxt[i][cs][c] = 0;
+            }
+        }
+    }
+
 }
 
 
@@ -1271,11 +1282,13 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
 
   // --- for the generic formulas ---------
+  TComplex Qoffset[maxHarmonic][maxPower];
   for(int h=0;h<maxHarmonic;h++)
     {
       for(int p=0;p<maxPower;p++)
         {
           Qvector[h][p] = TComplex(0.,0.);
+          Qoffset[h][p] = TComplex(0.,0.);
         } //  for(int p=0;p<maxPower;p++)
     } // for(int h=0;h<maxHarmonic;h++)
   // --------------------------------------
@@ -1435,6 +1448,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       ++nfvtxt;
     } // end for loop over tracks
 
+  if ( nfvtxt > maxTracks ) return EVENT_OK;
 
   // --- second fvtx track loop to get the double track cut
   bool fvtx_track_passes[nfvtxt];
@@ -1618,6 +1632,17 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       if ( eta > 0 ) ++nfvtxt_north;
 
     } // end for loop over tracks
+
+  // -------------------------------------------------------------------------------------------------------------------------------
+  for(int h=1;h<maxHarmonic;h++) // ABSOLUTELY MUST START AT 1!!!  RECURSION ALGORITHM USES ZEROTH COMPONENT TO GET COMBINATORICS!!!
+    {
+      for(int p=0;p<maxPower;p++)
+        {
+          Qoffset[h][p] = TComplex( Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][0][h], Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][1][h] );
+          Qvector[h][p] -= Qoffset[h][p];
+        } // for(int p=0;p<maxPower;p++)
+    } // for(int h=0;h<maxHarmonic;h++)
+  // -------------------------------------------------------------------------------------------------------------------------------
 
   th1d_nfvtxt_combinedER->Fill(nfvtxt);
   th1d_nfvtxt_combined->Fill(nfvtxt);
@@ -2200,6 +2225,16 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_os_fvtxn_tracks_c26->Fill(nfvtxt,os_fvtxn_tracks_six);
   nfvtxt_os_fvtxc_tracks_c26->Fill(nfvtxt,os_fvtxc_tracks_six);
   nfvtxt_os_fvtxc_tracks_c28->Fill(nfvtxt,eightRecursion.Re());
+
+  if ( _verbosity > 2 )
+    {
+      cout << "Mcos2phi " << os_fvtxc_tracks_qx2 << " " << Qvector[2][1].Re()  << endl;
+      cout << "Msin2phi " << os_fvtxc_tracks_qy2 << " " << Qvector[2][1].Im()  << endl;
+      cout << "M        " << os_fvtxc_tracks_qw  << " " << Qvector[0][1].Re() << endl;
+      cout << "2 " << os_fvtxc_tracks_qq2    << " " <<  twoRecursion.Re() << endl;
+      cout << "4 " << os_fvtxc_tracks_qqqq24 << " " << fourRecursion.Re() << endl;
+      cout << "6 " << os_fvtxc_tracks_six    << " " <<  sixRecursion.Re() << endl;
+    }
 
   // --------------------------------------------------------- //
   // --- centrality

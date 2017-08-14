@@ -76,6 +76,9 @@ class BoulderCumulants: public SubsysReco
   TComplex Recursion(int, int*);
   TComplex Recursion(int, int*, int, int);
 
+  // ---------------------------------------------------------------------
+  static const int maxTracks = 650; // accept no more FVTX tracks than this
+
   /// current event
   unsigned long _ievent;
 
@@ -132,7 +135,7 @@ class BoulderCumulants: public SubsysReco
   float d_NorthQW;
 
   // --- Q-vector offset variables
-  double qvoff_nfvtxt[650][2][10];
+  double qvoff_nfvtxt[maxTracks][2][maxHarmonic];
   double offset_centrality_qx2_south[100];
   double offset_centrality_qx4_south[100];
   double offset_centrality_qx6_south[100];
