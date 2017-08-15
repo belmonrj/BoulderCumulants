@@ -7,7 +7,7 @@ void get_recursion()
   // ------------------------------------------------------------------------
 
   //TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
-  TFile* fin = TFile::Open("input/histos_11609.root");
+  TFile* fin = TFile::Open("input/histos_11649.root");
 
   int rebin = 1;
 
@@ -169,7 +169,7 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
                  ); // I think this is right but will need to double check when error bar issue on raw histos is resolved
         }
       //cout << "c28 " << c28 << " v28 " << v28 << endl;
-      if ( iscent && i > 50 ) v28 = -9999; // don't know why set range user is causing problems below
+      if ( iscent && ( i > 50 || i < 5 ) ) v28 = -9999; // don't know why set range user is causing problems below
       th1d_v28->SetBinContent(i+1,v28);
       th1d_v28->SetBinError(i+1,ev28);
     }
@@ -383,8 +383,8 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
   if ( iscent )
   {
   th1d_v22->GetXaxis()->SetRangeUser(0,90);
-  th1d_v24->GetXaxis()->SetRangeUser(0,70);
-  th1d_v26->GetXaxis()->SetRangeUser(0,70);
+  th1d_v24->GetXaxis()->SetRangeUser(5,70);
+  th1d_v26->GetXaxis()->SetRangeUser(5,70);
   }
   th1d_v26->SetMarkerStyle(kOpenCircle);
   th1d_v26->SetMarkerColor(kBlack);
