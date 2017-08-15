@@ -17,7 +17,7 @@ void compare_4part()
   // --- get the histograms from the files
 
   gROOT->ProcessLine("gErrorIgnoreLevel = 2002;");
-  TFile* fampt = TFile::Open("input/cumulants_ampt_auau200_comb.root");
+  TFile* fampt = TFile::Open("input/messy_combination_auau200.root");
   gROOT->ProcessLine("gErrorIgnoreLevel = 0;");
 
   TProfile* tp1f_for_ampt = (TProfile*)fampt->Get("raa4_Ncharge");
@@ -33,13 +33,13 @@ void compare_4part()
   // --------------------------------------------------------------------------------
   // --- apply rebinning to TProfile histos
 
-  int rebin = 2;
+  int rebin = 5;
 
   tp1f_for_ampt->Rebin(rebin);
   tp1f_two_ampt->Rebin(rebin);
   tp1f_gap_ampt->Rebin(rebin);
 
-  rebin = 5;
+  rebin = 2;
 
   tp1f_for_data->Rebin(rebin);
   tp1f_two_data->Rebin(rebin);
@@ -216,7 +216,7 @@ void compare_sigma()
   // --- get the histograms from the files
 
   gROOT->ProcessLine("gErrorIgnoreLevel = 2002;");
-  TFile* fampt = TFile::Open("input/cumulants_ampt_auau200_comb.root");
+  TFile* fampt = TFile::Open("input/messy_combination_auau200.root");
   gROOT->ProcessLine("gErrorIgnoreLevel = 0;");
 
   TProfile* tp1f_for_ampt = (TProfile*)fampt->Get("raa4_Ncharge");
@@ -232,6 +232,7 @@ void compare_sigma()
   // --------------------------------------------------------------------------------
   // --- apply rebinning to TProfile histos
 
+  // --- something weird going on with rebinning...
   int rebin = 10;
 
   tp1f_for_ampt->Rebin(rebin);
