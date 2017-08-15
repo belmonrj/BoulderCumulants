@@ -277,8 +277,8 @@ void compare_sigma()
   // th1d_for_data->GetXaxis()->SetRangeUser(4,600);
   // th1d_gap_data->GetXaxis()->SetRangeUser(4,600);
 
-  TH1D* th1d_SVV_data = (TH1D*)th1d_c24->Clone("th1d_SVV_data");
-  TH1D* th1d_SVG_data = (TH1D*)th1d_c24->Clone("th1d_SVG_data");
+  TH1D* th1d_SVV_data = (TH1D*)th1d_c24_data->Clone("th1d_SVV_data");
+  TH1D* th1d_SVG_data = (TH1D*)th1d_c24_data->Clone("th1d_SVG_data");
 
   int nbins = th1d_gap_data->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
@@ -356,10 +356,10 @@ void compare_sigma()
       //cout << i << " " << v22 << " " << v24 << " " << sigmavv1 << endl;
     }
 
-  TH1D* th1d_SVV_ampt = (TH1D*)th1d_c24->Clone("th1d_SVV_ampt");
-  TH1D* th1d_SVG_ampt = (TH1D*)th1d_c24->Clone("th1d_SVG_ampt");
+  TH1D* th1d_SVV_ampt = (TH1D*)th1d_c24_ampt->Clone("th1d_SVV_ampt");
+  TH1D* th1d_SVG_ampt = (TH1D*)th1d_c24_ampt->Clone("th1d_SVG_ampt");
 
-  int nbins = th1d_gap_ampt->GetNbinsX();
+  nbins = th1d_gap_ampt->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
     {
       // --- 2-particle
