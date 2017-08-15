@@ -207,6 +207,18 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
       th1d_SV4->SetBinError(i+1,esigmavv4);
     }
 
+  // ---
+  TFile* fglauber = TFile::Open("input/fout_auau200gev_mcglauber_e2fluc.root");
+  TGraph* tg_sig1 = (TGraph*)fglauber->Get("sigmae2overe2"); // direct calculation (need to double check with Jamie)
+  TGraph* tg_sig2 = (TGraph*)fglauber->Get("fulle2fluc"); // estimate with cumulants (need to double check with Jamie)
+  tg_sig1->SetLineColor(kBlue);
+  tg_sig2->SetLineColor(kBlue);
+  tg_sig1->SetLineWidth(2);
+  tg_sig2->SetLineWidth(2);
+  tg_sig1->SetLineStyle(2);
+  tg_sig2->SetLineStyle(1);
+  // ---
+
   double xmin = 0.0;
   double xmax = 100.0;
   double ymin = 0.0;
@@ -246,7 +258,16 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   leg->Draw();
   c1->Print(Form("FigsSigma/sigma_%s_x01.png",handle));
   c1->Print(Form("FigsSigma/sigma_%s_x01.pdf",handle));
-
+  if ( iscent )
+  {
+  tg_sig1->Draw("l");
+  tg_sig2->Draw("l");
+  leg->AddEntry(tg_sig2,"MC Glauber, data style calc","l");
+  leg->AddEntry(tg_sig1,"MC Glauber, direct calc","l");
+  leg->Draw();
+  c1->Print(Form("FigsSigma/sigma_%s_x02.png",handle));
+  c1->Print(Form("FigsSigma/sigma_%s_x02.pdf",handle));
+  }
 
 }
 
