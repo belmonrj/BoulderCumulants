@@ -1876,7 +1876,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   int harmonics_Two_Num[2] = {2,-2}; // 2, -2
   int harmonics_Two_Den[2] = {0,0}; // recursion gives right combinatorics
   TComplex twoRecursion = Recursion(2,harmonics_Two_Num)/Recursion(2,harmonics_Two_Den).Re();
-  double wTwoRecursion = Recursion(2,harmonics_Two_Den).Re();
+  //double wTwoRecursion = Recursion(2,harmonics_Two_Den).Re();
+  double wTwoRecursion = 1.0;
   nfvtxt_recursion[0][0]->Fill(nfvtxt,twoRecursion.Re(),wTwoRecursion); // <<cos(h1*phi1+h2*phi2)>>
   nfvtxt_recursion[1][0]->Fill(nfvtxt,twoRecursion.Im(),wTwoRecursion); // <<sin(h1*phi1+h2*phi2)>>
   //  4-p correlations:
@@ -1884,7 +1885,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   int harmonics_Four_Num[4] = {2,2,-2,-2};
   int harmonics_Four_Den[4] = {0,0,0,0}; // recursion gives right combinatorics
   TComplex fourRecursion = Recursion(4,harmonics_Four_Num)/Recursion(4,harmonics_Four_Den).Re();
-  double wFourRecursion = Recursion(4,harmonics_Four_Den).Re();
+  //double wFourRecursion = Recursion(4,harmonics_Four_Den).Re();
+  double wFourRecursion = 1.0;
   nfvtxt_recursion[0][2]->Fill(nfvtxt,fourRecursion.Re(),wFourRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4)>>
   nfvtxt_recursion[1][2]->Fill(nfvtxt,fourRecursion.Im(),wFourRecursion); // <<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4)>>
   //  6-p correlations:
@@ -1892,7 +1894,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   int harmonics_Six_Num[6] = {2,2,2,-2,-2,-2};
   int harmonics_Six_Den[6] = {0,0,0,0,0,0};
   TComplex sixRecursion = Recursion(6,harmonics_Six_Num)/Recursion(6,harmonics_Six_Den).Re();
-  double wSixRecursion = Recursion(6,harmonics_Six_Den).Re();
+  //double wSixRecursion = Recursion(6,harmonics_Six_Den).Re();
+  double wSixRecursion = 1.0;
   nfvtxt_recursion[0][4]->Fill(nfvtxt,sixRecursion.Re(),wSixRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
   nfvtxt_recursion[1][4]->Fill(nfvtxt,sixRecursion.Im(),wSixRecursion); // <<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
   //  8-p correlations:
@@ -1900,7 +1903,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   int harmonics_Eight_Num[8] = {2,2,2,2,-2,-2,-2,-2};
   int harmonics_Eight_Den[8] = {0,0,0,0,0,0,0,0};
   TComplex eightRecursion = Recursion(8,harmonics_Eight_Num)/Recursion(8,harmonics_Eight_Den).Re();
-  double wEightRecursion = Recursion(8,harmonics_Eight_Den).Re();
+  //double wEightRecursion = Recursion(8,harmonics_Eight_Den).Re();
+  double wEightRecursion = 1.0;
   nfvtxt_recursion[0][6]->Fill(nfvtxt,eightRecursion.Re(),wEightRecursion);
   nfvtxt_recursion[1][6]->Fill(nfvtxt,eightRecursion.Im(),wEightRecursion);
   // ------------------------------------------------------------------------------------------------------
