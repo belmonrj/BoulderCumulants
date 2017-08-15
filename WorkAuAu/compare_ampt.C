@@ -233,7 +233,7 @@ void compare_sigma()
   // --- apply rebinning to TProfile histos
 
   // --- something weird going on with rebinning...
-  int rebin = 10;
+  int rebin = 20;
 
   tp1f_for_ampt->Rebin(rebin);
   tp1f_two_ampt->Rebin(rebin);
