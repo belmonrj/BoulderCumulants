@@ -72,6 +72,11 @@ class BoulderCumulants: public SubsysReco
   static const int maxHarmonic = 10; // Need to assess on case-by-case basis, but this gets you v2{8} and v3{6}
   static const int maxPower = 9;
   TComplex Qvector[maxHarmonic][maxPower]; // All needed Q-vector components
+  TComplex Qvector_north[maxHarmonic][maxPower];
+  TComplex Qvector_south[maxHarmonic][maxPower];
+  TComplex Qoffset[maxHarmonic][maxPower];
+  TComplex Qoffset_north[maxHarmonic][maxPower];
+  TComplex Qoffset_south[maxHarmonic][maxPower];
   TComplex Q(int, int);
   TComplex Recursion(int, int*);
   TComplex Recursion(int, int*, int, int);
@@ -136,6 +141,11 @@ class BoulderCumulants: public SubsysReco
 
   // --- Q-vector offset variables
   double qvoff_nfvtxt[maxTracks][2][maxHarmonic];
+  double qvoff_nfvtxt_north[maxTracks][2][maxHarmonic];
+  double qvoff_nfvtxt_south[maxTracks][2][maxHarmonic];
+  double qvoff_cent[100][2][maxHarmonic];
+  double qvoff_cent_north[100][2][maxHarmonic];
+  double qvoff_cent_south[100][2][maxHarmonic];
   double offset_centrality_qx2_south[100];
   double offset_centrality_qx4_south[100];
   double offset_centrality_qx6_south[100];
@@ -601,7 +611,11 @@ class BoulderCumulants: public SubsysReco
   TProfile* nfvtxt_recursion[2][maxCorrelator];
   TProfile* centrality_recursion[2][maxCorrelator];
   TProfile* nfvtxt_recoffsets[2][maxHarmonic];
+  TProfile* nfvtxt_recoffsets_north[2][maxHarmonic];
+  TProfile* nfvtxt_recoffsets_south[2][maxHarmonic];
   TProfile* centrality_recoffsets[2][maxHarmonic];
+  TProfile* centrality_recoffsets_north[2][maxHarmonic];
+  TProfile* centrality_recoffsets_south[2][maxHarmonic];
 
 
 

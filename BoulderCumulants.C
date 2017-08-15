@@ -452,7 +452,11 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
       for ( int c = 0; c < maxHarmonic; ++c )
         {
           nfvtxt_recoffsets[cs][c] = NULL;
+          nfvtxt_recoffsets_north[cs][c] = NULL;
+          nfvtxt_recoffsets_south[cs][c] = NULL;
           centrality_recoffsets[cs][c] = NULL;
+          centrality_recoffsets_north[cs][c] = NULL;
+          centrality_recoffsets_south[cs][c] = NULL;
         }
     }
 
@@ -479,11 +483,26 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
           for ( int c = 0; c < maxHarmonic; ++c )
             {
               qvoff_nfvtxt[i][cs][c] = 0;
+              qvoff_nfvtxt_north[i][cs][c] = 0;
+              qvoff_nfvtxt_south[i][cs][c] = 0;
             }
         }
     }
 
-}
+  for ( int i = 0; i < 100; ++i )
+    {
+      for ( int cs = 0; cs < 2; ++cs )
+        {
+          for ( int c = 0; c < maxHarmonic; ++c )
+            {
+              qvoff_cent[i][cs][c] = 0;
+              qvoff_cent_north[i][cs][c] = 0;
+              qvoff_cent_south[i][cs][c] = 0;
+            }
+        }
+    }
+
+} // end of class constructor
 
 
 // --- class destructor
@@ -997,7 +1016,11 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
       for ( int c = 0; c < maxHarmonic; ++c )
         {
           nfvtxt_recoffsets[cs][c] = new TProfile(Form("nfvtxt_recoffsets_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          nfvtxt_recoffsets_north[cs][c] = new TProfile(Form("nfvtxt_recoffsets_north_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          nfvtxt_recoffsets_south[cs][c] = new TProfile(Form("nfvtxt_recoffsets_south_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
           centrality_recoffsets[cs][c] = new TProfile(Form("centrality_recoffsets_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+          centrality_recoffsets_north[cs][c] = new TProfile(Form("centrality_recoffsets_north_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+          centrality_recoffsets_south[cs][c] = new TProfile(Form("centrality_recoffsets_south_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
         }
     }
 
@@ -1282,16 +1305,21 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
 
   // --- for the generic formulas ---------
-  TComplex Qoffset[maxHarmonic][maxPower];
   for(int h=0;h<maxHarmonic;h++)
     {
       for(int p=0;p<maxPower;p++)
         {
           Qvector[h][p] = TComplex(0.,0.);
+          Qvector_north[h][p] = TComplex(0.,0.);
+          Qvector_south[h][p] = TComplex(0.,0.);
           Qoffset[h][p] = TComplex(0.,0.);
+          Qoffset_north[h][p] = TComplex(0.,0.);
+          Qoffset_south[h][p] = TComplex(0.,0.);
         } //  for(int p=0;p<maxPower;p++)
     } // for(int h=0;h<maxHarmonic;h++)
   // --------------------------------------
+
+
 
   // --- fvtx tracks
   float fvtxs_tracks_qx2[3]; // both, inner, outer
@@ -1504,6 +1532,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
             {
               //if(bUseWeights){wPhiToPowerP = pow(wPhi,p);} // no weights for us...
               Qvector[h][p] += TComplex(wPhiToPowerP*TMath::Cos(h*dPhi),wPhiToPowerP*TMath::Sin(h*dPhi));
+              if ( eta > 0 ) Qvector_north[h][p] += TComplex(wPhiToPowerP*TMath::Cos(h*dPhi),wPhiToPowerP*TMath::Sin(h*dPhi));
+              if ( eta < 0 ) Qvector_south[h][p] += TComplex(wPhiToPowerP*TMath::Cos(h*dPhi),wPhiToPowerP*TMath::Sin(h*dPhi));
             } //  for(int p=0;p<maxPower;p++)
         } // for(int h=0;h<maxHarmonic;h++)
       // ------------------------------------------------------------------------------------------------
@@ -1638,8 +1668,17 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     {
       for(int p=0;p<maxPower;p++)
         {
-          Qoffset[h][p] = TComplex( Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][0][h], Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][1][h] );
-          Qvector[h][p] -= Qoffset[h][p];
+          // --- combined subtraction does not work well...
+          // Qoffset[h][p] = TComplex( Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][0][h], Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][1][h] );
+          // Qvector[h][p] -= Qoffset[h][p];
+          // --- north
+          Qoffset_north[h][p] = TComplex( Qvector_north[0][1].Re()*qvoff_cent_north[icent][0][h], Qvector_north[0][1].Re()*qvoff_cent_north[icent][1][h] );
+          Qvector_north[h][p] -= Qoffset_north[h][p];
+          // --- south
+          Qoffset_south[h][p] = TComplex( Qvector_south[0][1].Re()*qvoff_cent_south[icent][0][h], Qvector_south[0][1].Re()*qvoff_cent_south[icent][1][h] );
+          Qvector_south[h][p] -= Qoffset_south[h][p];
+          // --- add up north and south to get combined that's been recentered arm-by-arm
+          Qvector[h][p] = Qvector_north[h][p] + Qvector_south[h][p];
         } // for(int p=0;p<maxPower;p++)
     } // for(int h=0;h<maxHarmonic;h++)
   // -------------------------------------------------------------------------------------------------------------------------------
@@ -1869,6 +1908,10 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     {
       nfvtxt_recoffsets[0][cs]->Fill(nfvtxt,Qvector[cs][1].Re()/Qvector[0][1].Re());
       nfvtxt_recoffsets[1][cs]->Fill(nfvtxt,Qvector[cs][1].Im()/Qvector[0][1].Re());
+      nfvtxt_recoffsets_north[0][cs]->Fill(nfvtxt,Qvector_north[cs][1].Re()/Qvector_north[0][1].Re());
+      nfvtxt_recoffsets_north[1][cs]->Fill(nfvtxt,Qvector_north[cs][1].Im()/Qvector_north[0][1].Re());
+      nfvtxt_recoffsets_south[0][cs]->Fill(nfvtxt,Qvector_south[cs][1].Re()/Qvector_south[0][1].Re());
+      nfvtxt_recoffsets_south[1][cs]->Fill(nfvtxt,Qvector_south[cs][1].Im()/Qvector_south[0][1].Re());
     }
   // ------------------------------------------------------------------------------------------------------
   nfvtxt_ac_fvtxc_tracks_c28->Fill(nfvtxt,eightRecursion.Re()); // extra, to match what I have...
@@ -1947,6 +1990,10 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     {
       centrality_recoffsets[0][cs]->Fill(centrality,Qvector[cs][1].Re()/Qvector[0][1].Re());
       centrality_recoffsets[1][cs]->Fill(centrality,Qvector[cs][1].Im()/Qvector[0][1].Re());
+      centrality_recoffsets_north[0][cs]->Fill(centrality,Qvector_north[cs][1].Re()/Qvector_north[0][1].Re());
+      centrality_recoffsets_north[1][cs]->Fill(centrality,Qvector_north[cs][1].Im()/Qvector_north[0][1].Re());
+      centrality_recoffsets_south[0][cs]->Fill(centrality,Qvector_south[cs][1].Re()/Qvector_south[0][1].Re());
+      centrality_recoffsets_south[1][cs]->Fill(centrality,Qvector_south[cs][1].Im()/Qvector_south[0][1].Re());
     }
 
   // ------------------------------------------------------------------------------------- //
