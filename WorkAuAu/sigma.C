@@ -1,4 +1,4 @@
-void do_sigma(TProfile*, TProfile*, TProfile*, int, const char*);
+void do_simple_gap(TProfile*, TProfile*, TProfile*, int, const char*);
 
 
 void sigma()
@@ -47,7 +47,7 @@ void sigma()
   // ------------------------------------------------------------------------
 
   gROOT->ProcessLine("gErrorIgnoreLevel = 2002;");
-  TFile* fin = TFile::Open("input/cumulants_ampt_auau200_1.root");
+  fin = TFile::Open("input/cumulants_ampt_auau200_1.root");
   gROOT->ProcessLine("gErrorIgnoreLevel = 0;");
   //cout << fin << endl;
 
