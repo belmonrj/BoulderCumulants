@@ -417,7 +417,7 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
   ymin = 0.0;
   ymax = 0.12;
   if ( empty ) delete empty;
-  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
@@ -427,8 +427,8 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
   th1d_v28->SetMarkerColor(kGreen+2);
   th1d_v28->SetLineColor(kGreen+2);
   th1d_v28->Draw("same ex0p");
-  //if ( leg ) delete leg;
-  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
+  if ( leg ) delete leg;
+  leg = new TLegend(0.62,0.68,0.88,0.88);
   //leg->SetHeader(type);
   leg->SetHeader("Run14AuAu200");
   leg->SetTextSize(0.045);

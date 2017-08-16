@@ -3,7 +3,7 @@ void run14_fvtx_percentiles()
 
   gStyle->SetOptStat(0);
 
-  TFile* file = TFile::Open("input/cumulants_Run14AuAu200.root");
+  TFile* file = TFile::Open("../input/cumulants_Run14AuAu200.root");
   if ( !file )
     {
       cout << "uh oh" << endl;
@@ -157,8 +157,8 @@ void run14_fvtx_percentiles()
   tex->DrawLatex(forty,height*0.002,"20-40%");
   tex->DrawLatex(sixty,height*0.02,"40-60%");
   tex->DrawLatex(cutoff,height*0.2,Form("Safe cutoff %.4f%%",cutoff_percent));
-  tex->DrawLatex(ondoubles,height*0.01,Form("Apparent onset of",ondoubles_percent));
-  tex->DrawLatex(ondoubles,height*0.005,Form("double interactions",ondoubles_percent));
+  tex->DrawLatex(ondoubles,height*0.01,Form("Apparent onset of"));
+  tex->DrawLatex(ondoubles,height*0.005,Form("double interactions"));
   tex->DrawLatex(ondoubles,height*0.002,Form("%.4f%%",ondoubles_percent));
 
   c1->Print("Run14FVTXPercentiles.png");

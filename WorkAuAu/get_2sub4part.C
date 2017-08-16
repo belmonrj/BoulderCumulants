@@ -1,6 +1,8 @@
 void get_2sub4part()
 {
 
+  TCanvas* c1 = new TCanvas("c1","");
+
   bool iscent = true;
   bool isntrk = false;
 
