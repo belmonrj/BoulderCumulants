@@ -15,9 +15,9 @@ void get_offsets()
       for ( int c = 0; c < 10; ++c )
         {
           nfvtxt_recoffsets[cs][c] = (TProfile*)fin->Get(Form("nfvtxt_recoffsets_%d_%d",cs,c));
-          centre_recoffsets[cs][c] = (TProfile*)fin->Get(Form("nfvtxt_recoffsets_%d_%d",cs,c));
-          centre_recoffsets_north[cs][c] = (TProfile*)fin->Get(Form("nfvtxt_recoffsets_north_%d_%d",cs,c));
-          centre_recoffsets_south[cs][c] = (TProfile*)fin->Get(Form("nfvtxt_recoffsets_south_%d_%d",cs,c));
+          centre_recoffsets[cs][c] = (TProfile*)fin->Get(Form("centrality_recoffsets_%d_%d",cs,c));
+          centre_recoffsets_north[cs][c] = (TProfile*)fin->Get(Form("centrality_recoffsets_north_%d_%d",cs,c));
+          centre_recoffsets_south[cs][c] = (TProfile*)fin->Get(Form("centrality_recoffsets_south_%d_%d",cs,c));
           // cout << nfvtxt_recoffsets[cs][c]->GetName() << " " << nfvtxt_recoffsets[cs][c] << endl;
           // cout << centre_recoffsets[cs][c]->GetName() << " " << centre_recoffsets[cs][c] << endl;
         }
