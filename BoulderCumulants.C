@@ -2285,6 +2285,10 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       cout << "2 " << os_fvtxc_tracks_qq2    << " " <<  twoRecursion.Re() << endl;
       cout << "4 " << os_fvtxc_tracks_qqqq24 << " " << fourRecursion.Re() << endl;
       cout << "6 " << os_fvtxc_tracks_six    << " " <<  sixRecursion.Re() << endl;
+      cout << "offset south 2x " << offset_centrality_qx2_south[icent] << " " << Qoffset_south[2][1].Re()/Qvector_south[0][1].Re() << " " << qvoff_cent_south[icent][0][2] << endl;
+      cout << "offset north 2x " << offset_centrality_qx2_north[icent] << " " << Qoffset_north[2][1].Re()/Qvector_north[0][1].Re() << " " << qvoff_cent_north[icent][0][2] << endl;
+      cout << "offset south 2y " << offset_centrality_qy2_south[icent] << " " << Qoffset_south[2][1].Im()/Qvector_south[0][1].Re() << " " << qvoff_cent_south[icent][1][2] << endl;
+      cout << "offset north 2y " << offset_centrality_qy2_north[icent] << " " << Qoffset_north[2][1].Im()/Qvector_north[0][1].Re() << " " << qvoff_cent_north[icent][1][2] << endl;
     }
 
   // --------------------------------------------------------- //
