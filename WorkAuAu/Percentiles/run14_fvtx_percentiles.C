@@ -164,4 +164,39 @@ void run14_fvtx_percentiles()
   c1->Print("Run14FVTXPercentiles.png");
   c1->Print("Run14FVTXPercentiles.pdf");
 
+  // --- now add AMPT stuff...
+  histo->Draw();
+  TFile* fampt = TFile::Open("../input/cumulants_ampt_auau200_2.root");
+  TH1F* histo2 = (TH1F*)fampt->Get("dnch");
+  histo2->SetLineColor(kRed);
+  histo2->SetLineWidth(2);
+  histo2->Draw("same");
+  histo2->Scale(80); // need to be adjusted by hand because the shape is a bit different
+  TH1F* histo3 = (TH1F*)histo2->Clone("histo3");
+  double upper = histo2->GetBinCenter( (histo2->GetNbinsX()) );
+  histo3->GetXaxis()->SetLimits(0,upper*1.13);
+  histo3->SetLineColor(kBlue);
+  histo3->Draw("same");
+  TH1F* histo4 = (TH1F*)histo2->Clone("histo3");
+  histo4->GetXaxis()->SetLimits(0,upper*1.2);
+  histo4->SetLineColor(kGreen+2);
+  histo4->Draw("same");
+  TLegend* leg = new TLegend(0.15,0.18,0.38,0.38);
+  leg->AddEntry(histo,"Run14","l");
+  leg->AddEntry(histo2,"AMPT (arb.norm.)","l");
+  leg->AddEntry(histo3,"x-axis #times 1.13","l");
+  leg->AddEntry(histo4,"x-axis #times 1.25","l");
+  leg->SetTextSize(0.05);
+  leg->Draw();
+  double knee = 550;
+  TLine line_knee(knee,0,knee,1.8*height);
+  line_knee.SetLineWidth(2);
+  line_knee.Draw();
+  double limt = 700;
+  TLine line_limt(limt,0,limt,1.8*height);
+  line_limt.SetLineWidth(2);
+  line_limt.Draw();
+  c1->Print("AMPTandRun14FVTXPercentiles.png");
+  c1->Print("AMPTandRun14FVTXPercentiles.pdf");
+
 } // end of function
