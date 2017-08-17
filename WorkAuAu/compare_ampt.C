@@ -458,17 +458,17 @@ void compare_sigma()
   th1d_SVV_data->Draw("same ex0p");
   th1d_SVG_data->Draw("same ex0p");
   // ---------------------------------------------
-  th1d_SVV_ampt->GetXaxis()->SetRangeUser(5,xmax);
+  th1d_SVV_ampt->GetXaxis()->SetRangeUser(30,300);
   th1d_SVV_ampt->SetMarkerSize(0);
   th1d_SVV_ampt->SetLineWidth(2);
-  th1d_SVV_ampt->SetLineColor(kGreen+2);
-  th1d_SVV_ampt->SetFillColorAlpha(kGreen+2, 0.4);
+  th1d_SVV_ampt->SetLineColor(kBlue);
+  th1d_SVV_ampt->SetFillColorAlpha(kBlue, 0.4);
   TH1D* cloned = (TH1D*)th1d_SVV_ampt->Clone("cloned");
   cloned->SetFillColorAlpha(kGreen+2,0.0);
   cloned->Draw("HIST L same");
   th1d_SVV_ampt->Draw("LE3 same");
   // ---------------------------------------------
-  th1d_SVG_ampt->GetXaxis()->SetRangeUser(5,xmax);
+  th1d_SVG_ampt->GetXaxis()->SetRangeUser(30,300);
   th1d_SVG_ampt->SetMarkerSize(0);
   th1d_SVG_ampt->SetLineWidth(2);
   th1d_SVG_ampt->SetLineColor(kGreen+2);
@@ -480,13 +480,31 @@ void compare_sigma()
   // ---------------------------------------------
   TLegend* leg = new TLegend(0.22,0.72,0.48,0.92);
   leg->SetHeader("Run14AuAu200");
-  leg->SetTextSize(0.045);
+  leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVV_data,"Using v_{2}{2} no eta gap","p");
   leg->AddEntry(th1d_SVG_data,"Using v_{2}{2} with eta gap","p");
+  leg->AddEntry(th1d_SVV_ampt,"AMPT v_{2}{2} no eta gap","l");
+  leg->AddEntry(th1d_SVG_ampt,"AMPT v_{2}{2} with eta gap","l");
   leg->Draw();
   c1->Print("FigsAmpt/sigma_ampt_x01.png");
   c1->Print("FigsAmpt/sigma_ampt_x01.pdf");
+
+  // ---
+
+  empty->Draw();
+  th1d_SVG_data->Draw("same ex0p");
+  clonet->Draw("HIST L same");
+  th1d_SVG_ampt->Draw("LE3 same");
+  delete leg;
+  leg = new TLegend(0.22,0.72,0.48,0.92);
+  leg->SetTextSize(0.05);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_SVG_data,"Data","p");
+  leg->AddEntry(th1d_SVG_ampt,"AMPT","l");
+  leg->Draw();
+  c1->Print("FigsAmpt/sigma_ampt_x02.png");
+  c1->Print("FigsAmpt/sigma_ampt_x02.pdf");
 
   delete c1;
 
