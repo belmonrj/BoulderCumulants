@@ -159,15 +159,16 @@ void doit(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* 
       if ( c28 < 0 && eit != 0 )
         {
           v28 = pow((-c28/33.0),(1.0/8.0)); // v2{8} = (-c2{8}/33)^{(1/8)}
-          ev28 = ( 2*pow(33,(1.0/8.0)) / pow(c28,(7.0/8.0)) ) *
+          ev28 = ( 2*pow(33,(1.0/8.0)) / pow(-c28,(7.0/8.0)) ) *
             sqrt(
                  ( (36*two*two*two - 18*four*two + six)*(36*two*two*two - 18*four*two + six) * etwo*etwo ) +
                  ( (81.0/16.0)*(4*two*two-four)*(4*two*two-four) * efour*efour ) +
                  ( two*two*esix*esix ) +
                  ( (1.0/256.0)*eeit*eeit )
-                 ); // I think this is right but will need to double check when error bar issue on raw histos is resolved
+                 ); // issues fixed but looks wrong
         }
-      //cout << "c28 " << c28 << " v28 " << v28 << endl;
+      ev28 = 0;
+      //cout << i << " v28 " << v28 << " ev28 " << ev28 << endl;
       if ( iscent && ( i > 50 || i < 5 ) ) v28 = -9999; // don't know why set range user is causing problems below
       th1d_v28->SetBinContent(i+1,v28);
       th1d_v28->SetBinError(i+1,ev28);
