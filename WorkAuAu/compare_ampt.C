@@ -225,7 +225,7 @@ void compare_4part()
   th1d_c24_data->SetMarkerStyle(kFullCircle);
   th1d_c24_data->SetLineColor(kBlack);
   th1d_c24_data->Draw("same ex0p");
-  TLegend* leg_cumu4 = new TLegend(0.48,0.80,0.82,0.95);
+  TLegend* leg_cumu4 = new TLegend(0.48,0.75,0.90,0.95);
   leg_cumu4->SetTextFont(62);
   leg_cumu4->SetTextSize(0.090);
   leg_cumu4->SetFillStyle(0);
