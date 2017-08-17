@@ -6,8 +6,7 @@ void get_recursion()
 
   // ------------------------------------------------------------------------
 
-  //TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
-  TFile* fin = TFile::Open("input/histos_11649.root");
+  TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
 
   int rebin = 1;
 

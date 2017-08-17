@@ -143,7 +143,8 @@ void compare_4part()
 
   //-- plot
   pcomp4->cd();
-  ymin = -1e-5;
+  //ymin = -1e-5;
+  ymin = 1e-6;
   ymax = 1e-4;
   TH2D* empty_comp4 = new TH2D("empty_comp4","",1,xmin,xmax,1,ymin,ymax);
   empty_comp4->Draw();
@@ -155,12 +156,13 @@ void compare_4part()
   empty_comp4->GetYaxis()->SetTitleSize(0.075);
   empty_comp4->GetYaxis()->SetTitle("components");
   empty_comp4->GetYaxis()->SetTitleOffset(0.92);
-  th1d_222_data->SetMarkerStyle(kOpenCircle);
+  empty_comp4->GetYaxis()->SetNdivisions(6,5,0);
+  th1d_222_data->SetMarkerStyle(kFullCircle);
   th1d_222_data->SetMarkerColor(kRed);
   th1d_222_data->SetLineColor(kBlack);
   th1d_222_data->GetXaxis()->SetRangeUser(4,xmax);
   th1d_222_data->Draw("same ex0p");
-  th1d_for_data->SetMarkerStyle(kOpenSquare);
+  th1d_for_data->SetMarkerStyle(kFullSquare);
   th1d_for_data->SetMarkerColor(kBlue);
   th1d_for_data->SetLineColor(kBlack);
   th1d_for_data->GetXaxis()->SetRangeUser(4,xmax);
@@ -169,18 +171,21 @@ void compare_4part()
   cline->SetLineWidth(2);
   cline->SetLineStyle(2);
   cline->Draw();
-  TLegend* leg_comp4 = new TLegend(0.68,0.70,0.9,0.85);
+  //TLegend* leg_comp4 = new TLegend(0.68,0.70,0.9,0.85);
+  TLegend* leg_comp4 = new TLegend(0.68,0.55,0.9,0.75);
   leg_comp4->SetTextFont(62);
   leg_comp4->SetTextSize(0.075);
   leg_comp4->SetFillStyle(0);
-  leg_comp4->AddEntry(th1d_222_data,"2#LT#LT2#GT#GT^{2}","p");
   leg_comp4->AddEntry(th1d_for_data,"#LT#LT4#GT#GT","p");
+  leg_comp4->AddEntry(th1d_222_data,"2#LT#LT2#GT#GT^{2}","p");
   leg_comp4->Draw();
 
   //-- ratio
   pcumu4->cd();
-  ymin = -1.999e-5;
-  ymax = 1.999e-5;
+  // ymin = -1.999e-5;
+  // ymax = 1.999e-5;
+  ymin = -2.4e-5;
+  ymax = 2.4e-5;
   TH2D* empty_cumu4 = new TH2D("empty_cumu4","",1,xmin,xmax,1,ymin,ymax);
   empty_cumu4->Draw();
   //empty_cumu4->GetXaxis()->SetTitle("Centrality (%)");
@@ -193,8 +198,12 @@ void compare_4part()
   empty_cumu4->GetYaxis()->SetTitleFont(62);
   empty_cumu4->GetYaxis()->SetLabelSize(0.090);
   empty_cumu4->GetYaxis()->SetTitleSize(0.090);
-  empty_cumu4->GetYaxis()->SetTitle("cumulant");
-  empty_cumu4->GetYaxis()->SetTitleOffset(0.8);
+  // empty_cumu4->GetYaxis()->SetTitle("cumulant");
+  empty_cumu4->GetYaxis()->SetTitle("c_{2}{4}");
+  empty_cumu4->GetYaxis()->CenterTitle(true);
+  // empty_cumu4->GetYaxis()->SetTitleOffset(0.8);
+  empty_cumu4->GetYaxis()->SetTitleOffset(0.75);
+  empty_cumu4->GetYaxis()->SetNdivisions(6,5,0);
   // --- this part is tricky
   //th1d_c24_ampt->SetLineColor(kBlack);
   //th1d_c24_ampt->Draw("same HIST L");
@@ -213,14 +222,15 @@ void compare_4part()
   th1d_c24_ampt->Draw("LE3 same");
   // ---
   th1d_c24_data->GetXaxis()->SetRangeUser(4,xmax);
-  th1d_c24_data->SetMarkerStyle(kOpenCircle);
+  th1d_c24_data->SetMarkerStyle(kFullCircle);
   th1d_c24_data->SetLineColor(kBlack);
   th1d_c24_data->Draw("same ex0p");
-  TLegend* leg_cumu4 = new TLegend(0.68,0.80,0.9,0.95);
+  TLegend* leg_cumu4 = new TLegend(0.48,0.80,0.82,0.95);
   leg_cumu4->SetTextFont(62);
   leg_cumu4->SetTextSize(0.090);
   leg_cumu4->SetFillStyle(0);
-  leg_cumu4->AddEntry(th1d_c24_data,"c_{2}{4} = -v_{2}^{4}","p");
+  leg_cumu4->AddEntry(th1d_c24_data,"c_{2}{4} = #LT#LT4#GT#GT - 2#LT#LT2#GT#GT^{2}","p");
+  leg_cumu4->AddEntry(th1d_c24_ampt,"AMPT","l");
   leg_cumu4->Draw();
   cline->Draw();
   ccomp4->Print("FigsAmpt/comp_ampt_cumulant4.png");

@@ -6,7 +6,7 @@ void get_2sub4part()
   bool iscent = true;
   bool isntrk = false;
 
-  TFile* fin = TFile::Open("input/histos_11644.root");
+  TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
 
   TProfile* tp1f_2aa = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_c22");
   TProfile* tp1f_2bb = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_c22");
