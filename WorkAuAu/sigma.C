@@ -231,11 +231,11 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("#sigma_{v_{2}}/v_{2}");
   if ( iscent )
-    {
-      th1d_SVV->GetXaxis()->SetRangeUser(0,70);
-      th1d_SVG->GetXaxis()->SetRangeUser(0,70);
-      th1d_SV4->GetXaxis()->SetRangeUser(0,70);
-    }
+  {
+  th1d_SVV->GetXaxis()->SetRangeUser(0,70);
+  th1d_SVG->GetXaxis()->SetRangeUser(0,70);
+  th1d_SV4->GetXaxis()->SetRangeUser(0,70);
+  }
   th1d_SVV->SetMarkerStyle(kOpenCircle);
   th1d_SVV->SetMarkerColor(kBlack);
   th1d_SVV->SetLineColor(kBlack);
@@ -250,7 +250,7 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   //th1d_SV4->Draw("same ex0p");
   TLegend* leg = new TLegend(0.22,0.72,0.48,0.92);
   leg->SetHeader("Run14AuAu200");
-  leg->SetTextSize(0.045);
+  leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVV,"Using v_{2}{2} no eta gap","p");
   //leg->AddEntry(th1d_SV4,"Using v_{2}{2} no eta gap, alternate algebra","p");
@@ -267,6 +267,25 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   leg->Draw();
   c1->Print(Form("FigsSigma/sigma_%s_x02.png",handle));
   c1->Print(Form("FigsSigma/sigma_%s_x02.pdf",handle));
+  }
+
+  // ---
+
+  if ( iscent )
+  {
+  empty->Draw();
+  th1d_SVG->Draw("same ex0p");
+  tg_sig1->Draw("l");
+  tg_sig2->Draw("l");
+  delete leg;
+  leg = new TLegend(0.22,0.72,0.48,0.92);
+  leg->AddEntry(th1d_SVG,"Data","p");
+  leg->AddEntry(tg_sig2,"MC Glauber, data style estimate","l");
+  leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
+  leg->SetTextSize(0.05);
+  leg->Draw();
+  c1->Print(Form("FigsSigma/sigma_%s_x03.png",handle));
+  c1->Print(Form("FigsSigma/sigma_%s_x03.pdf",handle));
   }
 
 }
