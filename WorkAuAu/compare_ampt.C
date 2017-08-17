@@ -1,4 +1,3 @@
-TH1D* squareroot(TH1D*);
 void compare_4part();
 void compare_sigma();
 
@@ -493,25 +492,3 @@ void compare_sigma()
 
 }
 
-
-
-TH1D* squareroot(TH1D* h)
-{
-  TH1D* hr = (TH1D*)h->Clone(Form("%s_sqrt",h->GetName()));
-  int n = hr->GetNbinsX();
-  for ( int i = 0; i < n; ++i )
-    {
-      double content = hr->GetBinContent(i+1);
-      double error = hr->GetBinError(i+1);
-      double newcontent = -9999;
-      double newerror = 0;
-      if ( content > 0 )
-        {
-          newcontent = sqrt(content);
-          newerror = (1.0/newcontent)*error;
-        }
-      hr->SetBinContent(i+1,newcontent);
-      hr->SetBinError(i+1,newerror);
-    }
-  return hr;
-}
