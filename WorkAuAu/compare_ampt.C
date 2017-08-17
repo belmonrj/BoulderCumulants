@@ -16,14 +16,14 @@ void compare_4part()
   // --- get the histograms from the files
 
   gROOT->ProcessLine("gErrorIgnoreLevel = 2002;");
-  TFile* fampt = TFile::Open("input/messy_combination_auau200.root");
+  TFile* fampt = TFile::Open("input/cumulants_amptAuAu200.root");
   gROOT->ProcessLine("gErrorIgnoreLevel = 0;");
 
   TProfile* tp1f_for_ampt = (TProfile*)fampt->Get("raa4_Ncharge");
   TProfile* tp1f_two_ampt = (TProfile*)fampt->Get("daa2_Ncharge");
   TProfile* tp1f_gap_ampt = (TProfile*)fampt->Get("daa2_with_gap_Ncharge");
 
-  TFile* fdata = TFile::Open("input/histos_11617.root");
+  TFile* fdata = TFile::Open("input/cumulants_Run14AuAu200.root");
 
   TProfile* tp1f_for_data = (TProfile*)fdata->Get("nfvtxt_os_fvtxc_tracks_c24");
   TProfile* tp1f_two_data = (TProfile*)fdata->Get("nfvtxt_os_fvtxc_tracks_c22");
@@ -78,6 +78,33 @@ void compare_4part()
   //     ey[i] = th1d_c24_ampt->GetBinError(i+1);
   //   }
   // TGraphErrors* tge_c24_ampt = new TGraphErrors(n,x,y,ex,ey);
+  // --------------------------------------------------------------------------------
+  // --- make some plots
+
+  // --------------------------------------------------------------------------------
+  // --- turn the ampt c24 into a tgrapherrors
+  int n = th1d_c24_ampt->GetNbinsX();
+  for ( int i = 0; i < n; ++i )
+    {
+      double c24 = th1d_c24_ampt->GetBinContent(i+1);
+      double two = th1d_two_ampt->GetBinContent(i+1);
+      double four = th1d_for_ampt->GetBinContent(i+1);
+      double etwo = th1d_two_ampt->GetBinError(i+1);
+      double efour = th1d_for_ampt->GetBinError(i+1);
+      double ec24 = th1d_c24_ampt->GetBinError(i+1);
+      //cout << i << " " << ec24 << endl;
+      ec24 = sqrt( 16*two*two*etwo*etwo + efour*efour );
+      //cout << i << " " << ec24 << endl;
+      th1d_c24_ampt->SetBinError(i+1,ec24);
+      // ---
+      c24 = th1d_c24_data->GetBinContent(i+1);
+      two = th1d_two_data->GetBinContent(i+1);
+      four = th1d_for_data->GetBinContent(i+1);
+      etwo = th1d_two_data->GetBinError(i+1);
+      efour = th1d_for_data->GetBinError(i+1);
+      ec24 = sqrt( 16*two*two*etwo*etwo + efour*efour );
+      th1d_c24_data->SetBinError(i+1,ec24);
+    }
   // --------------------------------------------------------------------------------
   // --- make some plots
 
@@ -215,14 +242,14 @@ void compare_sigma()
   // --- get the histograms from the files
 
   gROOT->ProcessLine("gErrorIgnoreLevel = 2002;");
-  TFile* fampt = TFile::Open("input/messy_combination_auau200.root");
+  TFile* fampt = TFile::Open("input/cumulants_amptAuAu200.root");
   gROOT->ProcessLine("gErrorIgnoreLevel = 0;");
 
   TProfile* tp1f_for_ampt = (TProfile*)fampt->Get("raa4_Ncharge");
   TProfile* tp1f_two_ampt = (TProfile*)fampt->Get("daa2_Ncharge");
   TProfile* tp1f_gap_ampt = (TProfile*)fampt->Get("daa2_with_gap_Ncharge");
 
-  TFile* fdata = TFile::Open("input/histos_11617.root");
+  TFile* fdata = TFile::Open("input/cumulants_Run14AuAu200.root");
 
   TProfile* tp1f_for_data = (TProfile*)fdata->Get("nfvtxt_os_fvtxc_tracks_c24");
   TProfile* tp1f_two_data = (TProfile*)fdata->Get("nfvtxt_os_fvtxc_tracks_c22");
