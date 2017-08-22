@@ -1282,7 +1282,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   bbc_z = vertex1.getZ();
   if ( bbc_z != bbc_z ) bbc_z = -9999; // reassign nan
 
-  if ( !use_utils && fabs(bbc_z) > 10.0 ) return EVENT_OK;
+  if ( !use_utils && fabs(bbc_z) > 5.0 ) return EVENT_OK; // briefly changed to 5 for systematic study
 
   PHPoint fvtx_vertex = vertexes->get_Vertex("FVTX");
   FVTX_X = fvtx_vertex.getX();
