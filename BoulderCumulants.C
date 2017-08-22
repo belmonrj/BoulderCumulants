@@ -58,6 +58,9 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   _output_file = NULL;
   _use_runlist = false;
   do_double_track_cut = false;
+  _cut_zvtx = 10.0;
+  _cut_chi2 = 5.0;
+  _cut_nhit = 3;
   _runlist_filename = "NULL";
   _utils = NULL;
   _collsys = "NULL";
@@ -1282,7 +1285,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   bbc_z = vertex1.getZ();
   if ( bbc_z != bbc_z ) bbc_z = -9999; // reassign nan
 
-  if ( !use_utils && fabs(bbc_z) > 5.0 ) return EVENT_OK; // briefly changed to 5 for systematic study
+  if ( !use_utils && fabs(bbc_z) > _cut_zvtx ) return EVENT_OK;
 
   PHPoint fvtx_vertex = vertexes->get_Vertex("FVTX");
   FVTX_X = fvtx_vertex.getX();
@@ -1440,7 +1443,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       // cout << "nhits " << nhits << endl;
       // cout << "----------------------------------------------------" << endl;
 
-      if ( nhits_special < 3 ) continue; // need at least 3 hits in FVTX, excluding VTX
+      if ( nhits_special < _cut_nhit ) continue; // need at least 3 hits in FVTX, excluding VTX
 
       // fix total momentum to 1.0 (for rotating due to beamtilt)
       double px = 1.0 * sin(the) * cos(phi);
@@ -1467,8 +1470,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       if ( !use_utils )
         {
           if ( fabs(DCA_x) > 2.0 || fabs(DCA_y) > 2.0 ) continue;
-          if ( nhits < 3 ) continue;
-          if ( chisq > 5 ) continue;
+          if ( nhits < _cut_nhit ) continue;
+          if ( chisq > _cut_chi2 ) continue;
         }
       // --- done with first loop, so push the eta and phi and count total number of good tracks
       fphi.push_back(phi);

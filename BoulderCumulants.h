@@ -39,6 +39,9 @@ class BoulderCumulants: public SubsysReco
   void SetQvectorOffsets(int runnumber);
   void set_create_ttree(bool b){_create_ttree = b;} // ??
   void set_do_double_track_cut(bool b){do_double_track_cut = b;}
+  void set_zvtxcut(double z){_cut_zvtx = z;}
+  void set_chi2cut(double c){_cut_chi2 = c;}
+  void set_nhitcut(int n){_cut_nhit = n;}
 
  protected:
 
@@ -96,6 +99,10 @@ class BoulderCumulants: public SubsysReco
 
   // whether to do the double track cut
   bool do_double_track_cut;
+
+  double _cut_zvtx;
+  double _cut_chi2;
+  int _cut_nhit;
 
   //run list stuff
   bool _use_runlist;
