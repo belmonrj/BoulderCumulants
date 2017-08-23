@@ -127,13 +127,14 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
   cline->SetLineWidth(2);
   cline->SetLineStyle(2);
   cline->Draw();
+  TF1* fun = new TF1("fun","pol0",xmin,xmax);
+  hratio->Fit(fun,"R");
   TLegend* leg_ratio = new TLegend(0.18,0.80,0.4,0.95);
   leg_ratio->SetTextFont(62);
   leg_ratio->SetTextSize(0.090);
   leg_ratio->SetFillStyle(0);
-  leg_ratio->AddEntry(hratio,"ratio","p");
+  leg_ratio->AddEntry(hratio,Form("Sys = %.2f %%", fabs(1.0 - fun->GetParameter(0)) * 100.0),"p");
   leg_ratio->Draw();
-  cline->Draw();
   ccomp->Print(Form("FigsSys/sys_%s.png",handle));
   ccomp->Print(Form("FigsSys/sys_%s.pdf",handle));
   delete cline;
