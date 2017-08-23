@@ -9,18 +9,18 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
   tp1f_for->Rebin(rebin);
   tp1f_two->Rebin(rebin);
 
-  TH1D* th1d_eit = tp1f_eit->ProjectionX(Form("th1d_eit_%s",handle)); // <8>
-  TH1D* th1d_six = tp1f_six->ProjectionX(Form("th1d_six_%s",handle)); // <6>
-  TH1D* th1d_for = tp1f_for->ProjectionX(Form("th1d_for_%s",handle)); // <4>
-  TH1D* th1d_two = tp1f_two->ProjectionX(Form("th1d_two_%s",handle)); // <2>
+  TH1D* th1d_eit = tp1f_eit->ProjectionX(); // <8>
+  TH1D* th1d_six = tp1f_six->ProjectionX(); // <6>
+  TH1D* th1d_for = tp1f_for->ProjectionX(); // <4>
+  TH1D* th1d_two = tp1f_two->ProjectionX(); // <2>
 
-  TH1D* th1d_862 = (TH1D*)th1d_six->Clone(Form("th1d_846_%s",handle)); // 16<6><2>     (for the 8p)
-  TH1D* th1d_842 = (TH1D*)th1d_for->Clone(Form("th1d_842_%s",handle)); // 18<4>^2      (for the 8p)
-  TH1D* th1d_822 = (TH1D*)th1d_for->Clone(Form("th1d_822_%s",handle)); // 144<4><2>^2  (for the 8p)
-  TH1D* th1d_824 = (TH1D*)th1d_two->Clone(Form("th1d_824_%s",handle)); // 144<2>^4     (for the 8p)
-  TH1D* th1d_942 = (TH1D*)th1d_for->Clone(Form("th1d_942_%s",handle)); // 9<4><2>      (for the 6p)
-  TH1D* th1d_123 = (TH1D*)th1d_two->Clone(Form("th1d_123_%s",handle)); // 12<2>^3      (for the 6p)
-  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%s",handle)); // 2<2>^2       (for the 4p)
+  TH1D* th1d_862 = (TH1D*)th1d_six->Clone(); // 16<6><2>     (for the 8p)
+  TH1D* th1d_842 = (TH1D*)th1d_for->Clone(); // 18<4>^2      (for the 8p)
+  TH1D* th1d_822 = (TH1D*)th1d_for->Clone(); // 144<4><2>^2  (for the 8p)
+  TH1D* th1d_824 = (TH1D*)th1d_two->Clone(); // 144<2>^4     (for the 8p)
+  TH1D* th1d_942 = (TH1D*)th1d_for->Clone(); // 9<4><2>      (for the 6p)
+  TH1D* th1d_123 = (TH1D*)th1d_two->Clone(); // 12<2>^3      (for the 6p)
+  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(); // 2<2>^2       (for the 4p)
 
   // --- 8p pieces
   th1d_862->Multiply(th1d_two);
@@ -158,12 +158,12 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
                    TH1D* out_v28, TH1D* out_v26, TH1D* out_v24, TH1D* out_v22)
 {
   TH1D* h = NULL;
-  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,h,h,h,h,1);
+  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,h,h,h,h,1);
 }
 
 void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
                    TH1D* out_v28, TH1D* out_v26, TH1D* out_v24, TH1D* out_v22, int rebin)
 {
   TH1D* h = NULL;
-  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,h,h,h,h,rebin);
+  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,h,h,h,h,rebin);
 }

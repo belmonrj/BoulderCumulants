@@ -1,3 +1,5 @@
+#include "get_cumulants.C"
+
 void crunch(TProfile*, TProfile*, const char*);
 
 void crunch(TH1D*, TH1D*, const char*);
@@ -7,13 +9,12 @@ void crunch(TH1D*, TH1D*, const char*);
 void get_sys()
 {
 
-  gROOT->ProcessLine(".L get_cumulants.C");
-
   TFile* fbase = TFile::Open("input/histos_11660.root");
   TFile* feval = TFile::Open("input/histos_11653.root");
   // TProfile* tpbase = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c22");
   // TProfile* tpeval = (TProfile*)feval->Get("centrality_os_fvtxc_tracks_c22");
   // crunch(tpbase,tpeval,"sys_cent_test");
+  // gROOT->ProcessLine(".L get_cumulants.C");
 
   TProfile* eit_base = (TProfile*)fbase->Get("centrality_recursion_0_6");
   TProfile* six_base = (TProfile*)fbase->Get("centrality_recursion_0_4");
@@ -50,6 +51,11 @@ void get_sys()
 
 void crunch(TProfile* tpbase, TProfile* tpeval, const char* handle)
 {
+  if ( !tpbase || !tpeval )
+    {
+      cout << "one or more null histograms " << tpbase << " " << tpeval << endl;
+      return;
+    }
   TH1D* hbase = tpbase->ProjectionX("hbase");
   TH1D* heval = tpeval->ProjectionX("heval");
   crunch(hbase,heval,handle);
@@ -60,6 +66,11 @@ void crunch(TProfile* tpbase, TProfile* tpeval, const char* handle)
 void crunch(TH1D* hbase, TH1D* heval, const char* handle)
 {
 
+  if ( !hbase || !heval )
+    {
+      cout << "one or more null histograms " << hbase << " " << heval << endl;
+      return;
+    }
   cout << hbase << " " << heval << endl;
   cout << hbase->GetEntries() << " " << heval->GetEntries() << endl;
   cout << hbase->GetBinContent(10) << " " << heval->GetBinContent(10) << endl;
