@@ -6,11 +6,44 @@ void crunch(TH1D*, TH1D*, const char*);
 
 void get_sys()
 {
+
+  gROOT->ProcessLine(".L get_cumulants.C");
+
   TFile* fbase = TFile::Open("input/histos_11660.root");
   TFile* feval = TFile::Open("input/histos_11653.root");
-  TProfile* tpbase = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c22");
-  TProfile* tpeval = (TProfile*)feval->Get("centrality_os_fvtxc_tracks_c22");
-  crunch(tpbase,tpeval,"sys_cent_test");
+  // TProfile* tpbase = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c22");
+  // TProfile* tpeval = (TProfile*)feval->Get("centrality_os_fvtxc_tracks_c22");
+  // crunch(tpbase,tpeval,"sys_cent_test");
+
+  TProfile* eit_base = (TProfile*)fbase->Get("centrality_recursion_0_6");
+  TProfile* six_base = (TProfile*)fbase->Get("centrality_recursion_0_4");
+  TProfile* for_base = (TProfile*)fbase->Get("centrality_recursion_0_2");
+  TProfile* two_base = (TProfile*)fbase->Get("centrality_recursion_0_0");
+  TH1D* v28base = NULL;
+  TH1D* v26base = NULL;
+  TH1D* v24base = NULL;
+  TH1D* v22base = NULL;
+  TH1D* c28base = NULL;
+  TH1D* c26base = NULL;
+  TH1D* c24base = NULL;
+  TH1D* c22base = NULL;
+  get_cumulants(eit_base,six_base,for_base,two_base,v28base,v26base,v24base,v22base,c28base,c26base,c24base,c22base,1);
+  TProfile* eit_eval = (TProfile*)feval->Get("centrality_recursion_0_6");
+  TProfile* six_eval = (TProfile*)feval->Get("centrality_recursion_0_4");
+  TProfile* for_eval = (TProfile*)feval->Get("centrality_recursion_0_2");
+  TProfile* two_eval = (TProfile*)feval->Get("centrality_recursion_0_0");
+  TH1D* v28eval = NULL;
+  TH1D* v26eval = NULL;
+  TH1D* v24eval = NULL;
+  TH1D* v22eval = NULL;
+  TH1D* c28eval = NULL;
+  TH1D* c26eval = NULL;
+  TH1D* c24eval = NULL;
+  TH1D* c22eval = NULL;
+  get_cumulants(eit_eval,six_eval,for_eval,two_eval,v28eval,v26eval,v24eval,v22eval,c28eval,c26eval,c24eval,c22eval,1);
+  crunch(v22base,v22eval,"sys_v22_cent");
+
+
 }
 
 
@@ -67,8 +100,8 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
 
   //-- plot
   pcomp->cd();
-  double ymin = -1e-3;
-  double ymax = 1e-2;
+  double ymin = -1e-2;
+  double ymax = 1e-1;
   double xmin = 0;
   double xmax = 100;
   TH2D* empty_comp = new TH2D("empty_comp","",1,xmin,xmax,1,ymin,ymax);
