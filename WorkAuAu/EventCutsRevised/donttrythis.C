@@ -3,7 +3,7 @@ void donttrythis()
 
   TCanvas* c1 = new TCanvas("c1","");
 
-  TFile* file = TFile::Open("input/cumulants_Run14AuAu200.root");
+  TFile* file = TFile::Open("../input/cumulants_Run14AuAu200.root");
   TH2D* histo = (TH2D*)file->Get("th2d_nfvtxt_bbcsumratio");
   TFile* file2 =  TFile::Open("jout.root");
   TGraph* tg_upper = (TGraph*)file2->Get("tgupper");

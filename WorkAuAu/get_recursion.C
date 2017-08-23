@@ -22,6 +22,20 @@ void get_recursion()
 
   // ------------------------------------------------------------------------
 
+  rebin = 10;
+
+  const char* handle2 = "strk";
+
+  tp1f_eit = (TProfile*)fin->Get("nfvtxt_recursion_0_6");
+  tp1f_six = (TProfile*)fin->Get("nfvtxt_recursion_0_4");
+  tp1f_for = (TProfile*)fin->Get("nfvtxt_recursion_0_2");
+  tp1f_two = (TProfile*)fin->Get("nfvtxt_recursion_0_0");
+
+  doit(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,rebin,handle2);
+
+
+  // ------------------------------------------------------------------------
+
   cout << "All done. Have a nice day!" << endl;
 
 }
