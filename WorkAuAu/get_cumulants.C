@@ -9,18 +9,22 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
   tp1f_for->Rebin(rebin);
   tp1f_two->Rebin(rebin);
 
-  TH1D* th1d_eit = tp1f_eit->ProjectionX(); // <8>
-  TH1D* th1d_six = tp1f_six->ProjectionX(); // <6>
-  TH1D* th1d_for = tp1f_for->ProjectionX(); // <4>
-  TH1D* th1d_two = tp1f_two->ProjectionX(); // <2>
+  double rand = gRandom->Rndm();
+  int helper = rand*10000;
+  cout << "using random number helper " << helper << " to prevent memory leaks" << endl;
 
-  TH1D* th1d_862 = (TH1D*)th1d_six->Clone(); // 16<6><2>     (for the 8p)
-  TH1D* th1d_842 = (TH1D*)th1d_for->Clone(); // 18<4>^2      (for the 8p)
-  TH1D* th1d_822 = (TH1D*)th1d_for->Clone(); // 144<4><2>^2  (for the 8p)
-  TH1D* th1d_824 = (TH1D*)th1d_two->Clone(); // 144<2>^4     (for the 8p)
-  TH1D* th1d_942 = (TH1D*)th1d_for->Clone(); // 9<4><2>      (for the 6p)
-  TH1D* th1d_123 = (TH1D*)th1d_two->Clone(); // 12<2>^3      (for the 6p)
-  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(); // 2<2>^2       (for the 4p)
+  TH1D* th1d_eit = tp1f_eit->ProjectionX(Form("th1d_eit_%d",helper)); // <8>
+  TH1D* th1d_six = tp1f_six->ProjectionX(Form("th1d_six_%d",helper)); // <6>
+  TH1D* th1d_for = tp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
+  TH1D* th1d_two = tp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
+
+  TH1D* th1d_862 = (TH1D*)th1d_six->Clone(Form("th1d_862_%d",helper)); // 16<6><2>     (for the 8p)
+  TH1D* th1d_842 = (TH1D*)th1d_for->Clone(Form("th1d_842_%d",helper)); // 18<4>^2      (for the 8p)
+  TH1D* th1d_822 = (TH1D*)th1d_for->Clone(Form("th1d_822_%d",helper)); // 144<4><2>^2  (for the 8p)
+  TH1D* th1d_824 = (TH1D*)th1d_two->Clone(Form("th1d_824_%d",helper)); // 144<2>^4     (for the 8p)
+  TH1D* th1d_942 = (TH1D*)th1d_for->Clone(Form("th1d_942_%d",helper)); // 9<4><2>      (for the 6p)
+  TH1D* th1d_123 = (TH1D*)th1d_two->Clone(Form("th1d_123_%d",helper)); // 12<2>^3      (for the 6p)
+  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%d",helper)); // 2<2>^2       (for the 4p)
 
   // --- 8p pieces
   th1d_862->Multiply(th1d_two);
