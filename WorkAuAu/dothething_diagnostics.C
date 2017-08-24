@@ -43,12 +43,6 @@ void dothething_diagnostics(int name, int which1, int which2, int which3, int wh
   TFile* file3 = TFile::Open(fname3);
   TFile* file4 = TFile::Open(fname4);
 
-  th1d_nfvtxt_combinedER;
-  th1d_nfvtxt_combined;
-  th2d_nfvtxt_bbcsum;
-  th2d_nfvtxt_bbcsumratio;
-  th1d_nfvtxt_north;
-  th1d_nfvtxt_south;
 
 
   // --- cos21

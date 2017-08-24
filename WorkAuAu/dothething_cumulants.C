@@ -1,3 +1,7 @@
+TH1D* get_v24(TH1D* hc24, TH1D* htwo, TH1D* hfour);
+
+TH1D* get_v26(TH1D* hc26, TH1D* htwo, TH1D* hfour, TH1D* hsix);
+
 void dothething_cumulants(int name, int which1, int which2, int which3, int which4)
 {
 
@@ -371,3 +375,4 @@ TH1D* get_v26(TH1D* hc26, TH1D* htwo, TH1D* hfour, TH1D* hsix)
     }
   return hv26;
 }
+
