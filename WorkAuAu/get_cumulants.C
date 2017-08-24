@@ -174,26 +174,27 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
 
 }
 
-/*
+
 void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
-                   TH1D* out_v28, TH1D* out_v26, TH1D* out_v24, TH1D* out_v22,
-                   TH1D* out_c28, TH1D* out_c26, TH1D* out_c24, TH1D* out_c22)
+                   TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22,
+                   TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22)
 {
   get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,out_c28,out_c26,out_c24,out_c22,1);
 }
 
 
 void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
-                   TH1D* out_v28, TH1D* out_v26, TH1D* out_v24, TH1D* out_v22)
+                   TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22)
 {
   TH1D* h = NULL;
-  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,h,h,h,h,1);
+  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,&h,&h,&h,&h,1);
 }
 
+
 void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
-                   TH1D* out_v28, TH1D* out_v26, TH1D* out_v24, TH1D* out_v22, int rebin)
+                   TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22, int rebin)
 {
   TH1D* h = NULL;
-  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,h,h,h,h,rebin);
+  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,&h,&h,&h,&h,rebin);
 }
-*/
+
