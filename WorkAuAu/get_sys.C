@@ -71,9 +71,6 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
       cout << "one or more null histograms " << hbase << " " << heval << endl;
       return;
     }
-  cout << hbase << " " << heval << endl;
-  cout << hbase->GetEntries() << " " << heval->GetEntries() << endl;
-  cout << hbase->GetBinContent(10) << " " << heval->GetBinContent(10) << endl;
 
   TH1D* hratio = (TH1D*)heval->Clone("hratio");
   hratio->Divide(hbase);
@@ -85,9 +82,6 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
   //-- Margins
   float Lmarg = 0.15;
   float Rmarg = 0.04;
-  // float Bmarg = 0.10;
-  // float Bmarg = 0.14; // not quite enough
-  //float Bmarg = 0.2; // a little too much
   float Bmarg = 0.16;
   float Tmarg = 0.02;
 

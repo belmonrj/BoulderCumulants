@@ -11,7 +11,7 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
 
   double rand = gRandom->Rndm();
   int helper = rand*10000;
-  cout << "using random number helper " << helper << " to prevent memory leaks" << endl;
+  // cout << "using random number helper " << helper << " to prevent memory leaks" << endl;
 
   TH1D* th1d_eit = tp1f_eit->ProjectionX(Form("th1d_eit_%d",helper)); // <8>
   TH1D* th1d_six = tp1f_six->ProjectionX(Form("th1d_six_%d",helper)); // <6>
@@ -138,18 +138,6 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
       th1d_v28->SetBinError(i+1,ev28);
     }
 
-  cout << "before assignment..." << endl;
-
-  cout << *out_v28 << " " << th1d_v28 << endl;
-  cout << *out_v26 << " " << th1d_v26 << endl;
-  cout << *out_v24 << " " << th1d_v24 << endl;
-  cout << *out_v22 << " " << th1d_v22 << endl;
-
-  cout << *out_c28 << " " << th1d_c28 << endl;
-  cout << *out_c26 << " " << th1d_c26 << endl;
-  cout << *out_c24 << " " << th1d_c24 << endl;
-  cout << *out_c22 << " " << th1d_c22 << endl;
-
   *out_v28 = th1d_v28;
   *out_v26 = th1d_v26;
   *out_v24 = th1d_v24;
@@ -159,18 +147,6 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
   *out_c26 = th1d_c26;
   *out_c24 = th1d_c24;
   *out_c22 = th1d_c22;
-
-  cout << "after assignment..." << endl;
-
-  cout << *out_v28 << " " << th1d_v28 << endl;
-  cout << *out_v26 << " " << th1d_v26 << endl;
-  cout << *out_v24 << " " << th1d_v24 << endl;
-  cout << *out_v22 << " " << th1d_v22 << endl;
-
-  cout << *out_c28 << " " << th1d_c28 << endl;
-  cout << *out_c26 << " " << th1d_c26 << endl;
-  cout << *out_c24 << " " << th1d_c24 << endl;
-  cout << *out_c22 << " " << th1d_c22 << endl;
 
 }
 
