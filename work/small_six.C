@@ -1,3 +1,7 @@
+double calc_corr_four(double, double, double, double, double, double, double, double);
+
+void doit(const char*, int);
+
 void small_six()
 {
   doit("Run16dAu200",5);
@@ -145,7 +149,7 @@ void doit(const char* handle, int rebin)
           cout << center << " " << c26 << " " << v26 << endl;
         }
       th1d_v26->SetBinContent(i+1,v26);
-      double ev26 = v26*(esix/six);
+      ev26 = v26*(esix/six);
       th1d_v26->SetBinError(i+1,ev26);
       // --- 4-particle
       center = th1d_c24->GetBinCenter(i+1);
