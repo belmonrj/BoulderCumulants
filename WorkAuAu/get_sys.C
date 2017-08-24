@@ -171,8 +171,10 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
   cline->SetLineWidth(2);
   cline->SetLineStyle(2);
   cline->Draw();
+  //TF1* fun = new TF1("fun","pol0",xmin,xmax);
   TF1* fun = new TF1("fun","pol0",xmin,xmax);
-  hratio->Fit(fun,"R");
+  //hratio->Fit(fun,"R");
+  hratio->Fit(fun,"","",20,80);
   TLegend* leg_ratio = new TLegend(0.18,0.80,0.4,0.95);
   leg_ratio->SetTextFont(62);
   leg_ratio->SetTextSize(0.090);
