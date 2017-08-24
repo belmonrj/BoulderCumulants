@@ -28,7 +28,7 @@ void get_sys()
   TH1D* c26base = NULL;
   TH1D* c24base = NULL;
   TH1D* c22base = NULL;
-  get_cumulants(eit_base,six_base,for_base,two_base,v28base,v26base,v24base,v22base,c28base,c26base,c24base,c22base,1);
+  get_cumulants(eit_base,six_base,for_base,two_base,&v28base,&v26base,&v24base,&v22base,&c28base,&c26base,&c24base,&c22base,1);
   TProfile* eit_eval = (TProfile*)feval->Get("centrality_recursion_0_6");
   TProfile* six_eval = (TProfile*)feval->Get("centrality_recursion_0_4");
   TProfile* for_eval = (TProfile*)feval->Get("centrality_recursion_0_2");
@@ -41,7 +41,7 @@ void get_sys()
   TH1D* c26eval = NULL;
   TH1D* c24eval = NULL;
   TH1D* c22eval = NULL;
-  get_cumulants(eit_eval,six_eval,for_eval,two_eval,v28eval,v26eval,v24eval,v22eval,c28eval,c26eval,c24eval,c22eval,1);
+  get_cumulants(eit_eval,six_eval,for_eval,two_eval,&v28eval,&v26eval,&v24eval,&v22eval,&c28eval,&c26eval,&c24eval,&c22eval,1);
   crunch(v22base,v22eval,"sys_v22_cent");
 
 
