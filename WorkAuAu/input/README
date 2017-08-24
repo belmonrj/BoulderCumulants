@@ -17,4 +17,12 @@
 11617 fixed some typos
 11644 fixed some typos (2sub 4part stuff works here)
 11649 attempted Q-vector recentering on recursion (works poorly, need to update to arm-by-arm)
+11653
+11660
+
+the 117* series have incomplete statistics due to serious taxi problems
+11724 systematic baseline
+11725 sysetmatic z-vertex
+11726 systematic chi2ndf
+11727 systematic nhits
 
