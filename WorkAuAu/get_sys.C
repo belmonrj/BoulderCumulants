@@ -1,5 +1,7 @@
 #include "get_cumulants.C"
 
+void takefiles(TFile*, TFile*, const char*);
+
 void crunch(TProfile*, TProfile*, const char*);
 
 void crunch(TH1D*, TH1D*, const char*);
@@ -9,12 +11,20 @@ void crunch(TH1D*, TH1D*, const char*);
 void get_sys()
 {
 
-  TFile* fbase = TFile::Open("input/histos_11660.root");
-  TFile* feval = TFile::Open("input/histos_11653.root");
-  // TProfile* tpbase = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c22");
-  // TProfile* tpeval = (TProfile*)feval->Get("centrality_os_fvtxc_tracks_c22");
-  // crunch(tpbase,tpeval,"sys_cent_test");
-  // gROOT->ProcessLine(".L get_cumulants.C");
+  TFile* fbase = TFile::Open("input/histos_11724.root");
+  TFile* ftest = TFile::Open("input/histos_11660.root");
+  takefiles(fbase,ftest,"test");
+
+}
+
+void takefiles(TFile* fbase, TFile* feval, const char* handle)
+{
+
+  if ( !fbase || !feval )
+    {
+      cout << "One or more files missing " << fbase << " " << feval << endl;
+      return;
+    }
 
   TProfile* eit_base = (TProfile*)fbase->Get("centrality_recursion_0_6");
   TProfile* six_base = (TProfile*)fbase->Get("centrality_recursion_0_4");
@@ -42,7 +52,10 @@ void get_sys()
   TH1D* c24eval = NULL;
   TH1D* c22eval = NULL;
   get_cumulants(eit_eval,six_eval,for_eval,two_eval,&v28eval,&v26eval,&v24eval,&v22eval,&c28eval,&c26eval,&c24eval,&c22eval,1);
-  crunch(v22base,v22eval,"sys_v22_cent");
+  crunch(v22base,v22eval,Form("sys_%s_v22",handle));
+  crunch(v24base,v24eval,Form("sys_%s_v24",handle));
+  crunch(v26base,v26eval,Form("sys_%s_v26",handle));
+  crunch(v28base,v28eval,Form("sys_%s_v28",handle));
 
 
 }
@@ -175,8 +188,8 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
   leg_ratio->SetFillStyle(0);
   leg_ratio->AddEntry(hratio,Form("Sys = %.2f %%", fabs(1.0 - fun->GetParameter(0)) * 100.0),"p");
   leg_ratio->Draw();
-  ccomp->Print(Form("FigsSys/sys_%s.png",handle));
-  ccomp->Print(Form("FigsSys/sys_%s.pdf",handle));
+  ccomp->Print(Form("Systematics/sys_%s.png",handle));
+  ccomp->Print(Form("Systematics/sys_%s.pdf",handle));
   delete cline;
   delete ccomp;
   delete empty_ratio;
