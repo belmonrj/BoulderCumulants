@@ -4,7 +4,7 @@ void takefiles(TFile*, TFile*, const char*);
 
 void crunch(TProfile*, TProfile*, const char*);
 
-void crunch(TH1D*, TH1D*, const char*);
+void crunch(TH1D*, TH1D*, const char*, double, double, double, double);
 
 
 
@@ -52,10 +52,10 @@ void takefiles(TFile* fbase, TFile* feval, const char* handle)
   TH1D* c24eval = NULL;
   TH1D* c22eval = NULL;
   get_cumulants(eit_eval,six_eval,for_eval,two_eval,&v28eval,&v26eval,&v24eval,&v22eval,&c28eval,&c26eval,&c24eval,&c22eval,1);
-  crunch(v22base,v22eval,Form("sys_%s_v22",handle));
-  crunch(v24base,v24eval,Form("sys_%s_v24",handle));
-  crunch(v26base,v26eval,Form("sys_%s_v26",handle));
-  crunch(v28base,v28eval,Form("sys_%s_v28",handle));
+  crunch(v22base,v22eval,Form("cent_%s_v22",handle),0,100,1,93);
+  crunch(v24base,v24eval,Form("cent_%s_v24",handle),0,100,20,50);
+  crunch(v26base,v26eval,Form("cent_%s_v26",handle),0,100,20,50);
+  crunch(v28base,v28eval,Form("cent_%s_v28",handle),0,100,20,50);
 
 
 }
@@ -71,12 +71,12 @@ void crunch(TProfile* tpbase, TProfile* tpeval, const char* handle)
     }
   TH1D* hbase = tpbase->ProjectionX("hbase");
   TH1D* heval = tpeval->ProjectionX("heval");
-  crunch(hbase,heval,handle);
+  crunch(hbase,heval,handle,0,100,20,50);
 }
 
 
 
-void crunch(TH1D* hbase, TH1D* heval, const char* handle)
+void crunch(TH1D* hbase, TH1D* heval, const char* handle, double xmin, double xmax, double fmin, double fmax)
 {
 
   if ( !hbase || !heval )
@@ -87,6 +87,16 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
 
   TH1D* hratio = (TH1D*)heval->Clone("hratio");
   hratio->Divide(hbase);
+  for ( int i = 0; i < hratio->GetNbinsX(); ++i )
+    {
+      double cont = hratio->GetBinContent(i+1);
+      if ( cont <= 0.0 )
+        {
+          hratio->SetBinContent(i+1,0);
+          hratio->SetBinError(i+1,9999); // effectively de-weight during fit
+        }
+    }
+
 
   bool iscent = true;
   bool isntrk = false;
@@ -120,8 +130,8 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
   pcomp->cd();
   double ymin = -1e-2;
   double ymax = 1e-1;
-  double xmin = 0;
-  double xmax = 100;
+  // double xmin = 0;
+  // double xmax = 100;
   TH2D* empty_comp = new TH2D("empty_comp","",1,xmin,xmax,1,ymin,ymax);
   empty_comp->Draw();
   empty_comp->GetXaxis()->SetLabelSize(0.0);
@@ -156,6 +166,8 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
   pratio->cd();
   ymin = 0.25;
   ymax = 1.75;
+  // ymin = -0.01;
+  // ymax = 1.99;
   TH2D* empty_ratio = new TH2D("empty_ratio","",1,xmin,xmax,1,ymin,ymax);
   empty_ratio->Draw();
   if ( iscent ) empty_ratio->GetXaxis()->SetTitle("Centrality (%)");
@@ -178,10 +190,9 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle)
   cline->SetLineWidth(2);
   cline->SetLineStyle(2);
   cline->Draw();
-  //TF1* fun = new TF1("fun","pol0",xmin,xmax);
   TF1* fun = new TF1("fun","pol0",xmin,xmax);
-  //hratio->Fit(fun,"R");
-  hratio->Fit(fun,"","",20,80);
+  fun->SetParameter(0,1.0);
+  hratio->Fit(fun,"","",fmax,fmin);
   TLegend* leg_ratio = new TLegend(0.18,0.80,0.4,0.95);
   leg_ratio->SetTextFont(62);
   leg_ratio->SetTextSize(0.090);
