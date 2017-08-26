@@ -1,5 +1,6 @@
 #include "get_cumulants.C"
 #include "plot_recv2.C"
+#include "plot_recomp.C"
 
 void get_recursion()
 {
@@ -22,6 +23,7 @@ void get_recursion()
   TH1D* c22cent = NULL;
   get_cumulants(eit_cent,six_cent,for_cent,two_cent,&v28cent,&v26cent,&v24cent,&v22cent,&c28cent,&c26cent,&c24cent,&c22cent,1);
   plot_recv2(v28cent,v26cent,v24cent,v22cent,"cent");
+  plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent");
 
   // ------------------------------------------------------------------------
 
