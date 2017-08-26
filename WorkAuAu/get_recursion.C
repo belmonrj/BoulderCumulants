@@ -21,7 +21,24 @@ void get_recursion()
   TH1D* c26cent = NULL;
   TH1D* c24cent = NULL;
   TH1D* c22cent = NULL;
-  get_cumulants(eit_cent,six_cent,for_cent,two_cent,&v28cent,&v26cent,&v24cent,&v22cent,&c28cent,&c26cent,&c24cent,&c22cent,1);
+  TH1D* heitcent = NULL;
+  TH1D* hsixcent = NULL;
+  TH1D* hforcent = NULL;
+  TH1D* htwocent = NULL;
+  TH1D* h862cent = NULL;
+  TH1D* h842cent = NULL;
+  TH1D* h822cent = NULL;
+  TH1D* h824cent = NULL;
+  TH1D* h942cent = NULL;
+  TH1D* h123cent = NULL;
+  TH1D* h222cent = NULL;
+  get_cumulants(eit_cent,  six_cent,  for_cent,  two_cent,
+                &v28cent,  &v26cent,  &v24cent,  &v22cent,
+                &c28cent,  &c26cent,  &c24cent,  &c22cent,
+                &heitcent, &hsixcent, &hforcent, &htwocent,
+                &h862cent, &h842cent, &h822cent, &h824cent,
+                &h942cent, &h123cent, &h222cent,
+                1);
   plot_recv2(v28cent,v26cent,v24cent,v22cent,"cent");
   plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent");
 
