@@ -1,7 +1,51 @@
+void plot_recomp(TProfile*, TProfile*, TProfile*, TProfile*, int, const char*);
+void plot_recomp(TH1D*, TH1D*, TH1D*, TH1D*,
+                 TH1D*, TH1D*, TH1D*, TH1D*,
+                 TH1D*, TH1D*, TH1D*, TH1D*,
+                 TH1D*, TH1D*, TH1D*,
+                 const char*
+                 );
+
+
 void plot_recomp(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
 {
-  cout << "This isn't working yet.  But it will be soon!" << endl;
+  cout << "Using hidden method!" << endl;
+  // --- initialize the pointers
+  TH1D* v28 = NULL;
+  TH1D* v26 = NULL;
+  TH1D* v24 = NULL;
+  TH1D* v22 = NULL;
+  TH1D* c28 = NULL;
+  TH1D* c26 = NULL;
+  TH1D* c24 = NULL;
+  TH1D* c22 = NULL;
+  TH1D* heit = NULL;
+  TH1D* hsix = NULL;
+  TH1D* hfor = NULL;
+  TH1D* htwo = NULL;
+  TH1D* h862 = NULL;
+  TH1D* h842 = NULL;
+  TH1D* h822 = NULL;
+  TH1D* h824 = NULL;
+  TH1D* h942 = NULL;
+  TH1D* h123 = NULL;
+  TH1D* h222 = NULL;
+  // --- get all the v2{k}, c2{k}, and component histograms
+  get_cumulants(tp1f_eit, tp1f_six, tp1f_for, tp1f_two,
+                &v28,  &v26,  &v24,  &v22,
+                &c28,  &c26,  &c24,  &c22,
+                &heit, &hsix, &hfor, &htwo,
+                &h862, &h842, &h822, &h824,
+                &h942, &h123, &h222,
+                rebin);
+  // --- plot the components and cumulants
+  plot_recomp(c28,  c26,  c24,  c22,
+              heit, hsix, hfor, htwo,
+              h862, h842, h822, h824,
+              h942, h123, h222,
+              handle);
 }
+
 
 void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
                  TH1D* th1d_eit, TH1D* th1d_six, TH1D* th1d_for, TH1D* th1d_two,
