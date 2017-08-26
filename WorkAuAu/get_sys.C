@@ -11,9 +11,32 @@ void crunch(TH1D*, TH1D*, const char*, double, double, double, double);
 void get_sys()
 {
 
-  TFile* fbase = TFile::Open("input/histos_11724.root");
-  TFile* ftest = TFile::Open("input/histos_11660.root");
-  takefiles(fbase,ftest,"test");
+  TFile* fbase = NULL;
+  TFile* feval = NULL;
+
+  fbase = TFile::Open("input/histos_11724.root");
+  feval = TFile::Open("input/histos_11660.root");
+  takefiles(fbase,feval,"test");
+  fbase->Close();
+  feval->Close();
+
+  fbase = TFile::Open("input/histos_11724.root");
+  feval = TFile::Open("input/histos_11725.root");
+  takefiles(fbase,feval,"zvtx");
+  fbase->Close();
+  feval->Close();
+
+  fbase = TFile::Open("input/histos_11724.root");
+  feval = TFile::Open("input/histos_11726.root");
+  takefiles(fbase,feval,"chi2");
+  fbase->Close();
+  feval->Close();
+
+  fbase = TFile::Open("input/histos_11724.root");
+  feval = TFile::Open("input/histos_11727.root");
+  takefiles(fbase,feval,"nhit");
+  fbase->Close();
+  feval->Close();
 
 }
 
