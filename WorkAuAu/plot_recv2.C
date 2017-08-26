@@ -10,28 +10,9 @@ void plot_recv2(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TPro
   TH1D* v26 = NULL;
   TH1D* v24 = NULL;
   TH1D* v22 = NULL;
-  TH1D* c28 = NULL;
-  TH1D* c26 = NULL;
-  TH1D* c24 = NULL;
-  TH1D* c22 = NULL;
-  TH1D* heit = NULL;
-  TH1D* hsix = NULL;
-  TH1D* hfor = NULL;
-  TH1D* htwo = NULL;
-  TH1D* h862 = NULL;
-  TH1D* h842 = NULL;
-  TH1D* h822 = NULL;
-  TH1D* h824 = NULL;
-  TH1D* h942 = NULL;
-  TH1D* h123 = NULL;
-  TH1D* h222 = NULL;
   // --- get all the v2{k}, c2{k}, and component histograms
   get_cumulants(tp1f_eit, tp1f_six, tp1f_for, tp1f_two,
                 &v28,  &v26,  &v24,  &v22,
-                &c28,  &c26,  &c24,  &c22,
-                &heit, &hsix, &hfor, &htwo,
-                &h862, &h842, &h822, &h824,
-                &h942, &h123, &h222,
                 rebin);
   // --- plot the v2{k}
   plot_recv2(v28,v26,v24,v22,handle);
@@ -46,11 +27,11 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   bool iscent = false;
   bool isntrk = false;
   if ( strcmp(handle,"cent") == 0 ) iscent = true;
-  if ( strcmp(handle,"strk") == 0 ) isntrk = true;
+  if ( strcmp(handle,"ntrk") == 0 ) isntrk = true;
   bool isamptntrk = false;
-  if ( strcmp(handle,"amptstrk") == 0 ) { isamptntrk = true; isntrk = true; }
+  if ( strcmp(handle,"amptntrk") == 0 ) { isamptntrk = true; isntrk = true; }
   bool islowzoom = false;
-  if ( strcmp(handle,"lowstrkzoom") == 0 ) { islowzoom = true; isntrk = true; }
+  if ( strcmp(handle,"lowntrkzoom") == 0 ) { islowzoom = true; isntrk = true; }
 
 
 
@@ -59,6 +40,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   double xmax = 100.0;
   double ymin = 0.0;
   double ymax = 0.12;
+  if ( isntrk && !islowzoom ) xmax = 650.0;
+
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");

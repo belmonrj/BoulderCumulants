@@ -58,11 +58,11 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   bool iscent = false;
   bool isntrk = false;
   if ( strcmp(handle,"cent") == 0 ) iscent = true;
-  if ( strcmp(handle,"strk") == 0 ) isntrk = true;
+  if ( strcmp(handle,"ntrk") == 0 ) isntrk = true;
   bool isamptntrk = false;
-  if ( strcmp(handle,"amptstrk") == 0 ) { isamptntrk = true; isntrk = true; }
+  if ( strcmp(handle,"amptntrk") == 0 ) { isamptntrk = true; isntrk = true; }
   bool islowzoom = false;
-  if ( strcmp(handle,"lowstrkzoom") == 0 ) { islowzoom = true; isntrk = true; }
+  if ( strcmp(handle,"lowntrkzoom") == 0 ) { islowzoom = true; isntrk = true; }
 
 
 
