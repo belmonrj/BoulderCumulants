@@ -2,10 +2,13 @@
 #include "plot_recv2.C"
 #include "plot_recomp.C"
 
+
+
 void get_recursion()
 {
 
   // ------------------------------------------------------------------------
+  // --- centrality histograms
 
   // --- get the file; soft link to latest stable analysis with default cuts
   TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
@@ -22,7 +25,10 @@ void get_recursion()
   // --- plot the components and cumulants
   plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent");
 
+
+
   // ------------------------------------------------------------------------
+  // --- N_{tracks}^{FVTX} histograms
 
   // --- get the k-p correlator histograms from the file
   TProfile* eit_ntrk = (TProfile*)fin->Get("nfvtxt_recursion_0_6");
@@ -31,12 +37,14 @@ void get_recursion()
   TProfile* two_ntrk = (TProfile*)fin->Get("nfvtxt_recursion_0_0");
 
   // --- plot the v2{k}
-  plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,1,"ntrk");
+  plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk");
 
   // --- plot the components and cumulants
-  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,1,"ntrk");
+  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk");
 
   // ------------------------------------------------------------------------
+
+
 
   cout << "All done. Have a nice day!" << endl;
 
