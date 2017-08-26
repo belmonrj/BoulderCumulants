@@ -40,7 +40,8 @@ void get_recursion()
   plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk");
 
   // --- plot the components and cumulants
-  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk");
+  // --- NOTE THAT THE REBIN NUMBER NEEDS TO BE 1
+  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,1,"ntrk");
 
   // ------------------------------------------------------------------------
 
