@@ -1,6 +1,9 @@
 void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22,
                    TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22,
+                   TH1D** out_eit, TH1D** out_six, TH1D** out_for, TH1D** out_two,
+                   TH1D** out_862, TH1D** out_842, TH1D** out_822, TH1D** out_824,
+                   TH1D** out_942, TH1D** out_123, TH1D** out_222,
                    int rebin)
 {
 
@@ -148,15 +151,32 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
   *out_c24 = th1d_c24;
   *out_c22 = th1d_c22;
 
+  *out_eit = th1d_eit;
+  *out_six = th1d_six;
+  *out_for = th1d_for;
+  *out_two = th1d_two;
+
+  *out_862 = th1d_862;
+  *out_842 = th1d_842;
+  *out_822 = th1d_822;
+  *out_824 = th1d_824;
+  *out_942 = th1d_942;
+  *out_123 = th1d_123;
+  *out_222 = th1d_222;
+
 }
 
 
 void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22,
-                   TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22)
+                   TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22,
+                   int rebin)
 {
-  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,out_c28,out_c26,out_c24,out_c22,1);
+  TH1D* h = NULL;
+  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,out_c28,out_c26,out_c24,out_c22,
+                &h,&h,&h,&h,&h,&h,&h,&h,&h,&h,&h,rebin);
 }
+
 
 
 void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
@@ -164,13 +184,5 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
 {
   TH1D* h = NULL;
   get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,&h,&h,&h,&h,1);
-}
-
-
-void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
-                   TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22, int rebin)
-{
-  TH1D* h = NULL;
-  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,&h,&h,&h,&h,rebin);
 }
 
