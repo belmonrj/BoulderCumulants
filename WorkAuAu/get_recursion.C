@@ -9,10 +9,12 @@ void get_recursion()
 
   TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
 
+  // --- get the k-p correlator histograms from the file
   TProfile* eit_cent = (TProfile*)fin->Get("centrality_recursion_0_6");
   TProfile* six_cent = (TProfile*)fin->Get("centrality_recursion_0_4");
   TProfile* for_cent = (TProfile*)fin->Get("centrality_recursion_0_2");
   TProfile* two_cent = (TProfile*)fin->Get("centrality_recursion_0_0");
+  // --- initialize the pointers
   TH1D* v28cent = NULL;
   TH1D* v26cent = NULL;
   TH1D* v24cent = NULL;
@@ -32,6 +34,7 @@ void get_recursion()
   TH1D* h942cent = NULL;
   TH1D* h123cent = NULL;
   TH1D* h222cent = NULL;
+  // --- get all the v2{k}, c2{k}, and component histograms
   get_cumulants(eit_cent,  six_cent,  for_cent,  two_cent,
                 &v28cent,  &v26cent,  &v24cent,  &v22cent,
                 &c28cent,  &c26cent,  &c24cent,  &c22cent,
@@ -39,8 +42,14 @@ void get_recursion()
                 &h862cent, &h842cent, &h822cent, &h824cent,
                 &h942cent, &h123cent, &h222cent,
                 1);
+  // --- plot the v2{k}
   plot_recv2(v28cent,v26cent,v24cent,v22cent,"cent");
-  plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent");
+  // --- plot the components and cumulants
+  plot_recomp(c28cent,  c26cent,  c24cent,  c22cent,
+              heitcent, hsixcent, hforcent, htwocent,
+              h862cent, h842cent, h822cent, h824cent,
+              h942cent, h123cent, h222cent,
+              "cent");
 
   // ------------------------------------------------------------------------
 

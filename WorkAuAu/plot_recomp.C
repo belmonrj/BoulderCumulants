@@ -1,5 +1,15 @@
 void plot_recomp(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
 {
+  cout << "This isn't working yet.  But it will be soon!" << endl;
+}
+
+void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
+                 TH1D* th1d_eit, TH1D* th1d_six, TH1D* th1d_for, TH1D* th1d_two,
+                 TH1D* th1d_862, TH1D* th1d_842, TH1D* th1d_822, TH1D* th1d_824,
+                 TH1D* th1d_942, TH1D* th1d_123, TH1D* th1d_222,
+                 const char* handle
+                 )
+{
 
   bool iscent = false;
   bool isntrk = false;
@@ -11,69 +21,6 @@ void plot_recomp(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TPr
   if ( strcmp(handle,"lowstrkzoom") == 0 ) { islowzoom = true; isntrk = true; }
 
 
-  // --- note to self, I should change get_cumulants to also pass the component histograms
-  // --- that way, there's no duplication of the calculation part at all,
-  // --- and it keeps the rest of the code short and clean
-
-  tp1f_eit->Rebin(rebin);
-  tp1f_six->Rebin(rebin);
-  tp1f_for->Rebin(rebin);
-  tp1f_two->Rebin(rebin);
-
-  TH1D* th1d_eit = tp1f_eit->ProjectionX(Form("th1d_eit_%s",handle)); // <8>
-  TH1D* th1d_six = tp1f_six->ProjectionX(Form("th1d_six_%s",handle)); // <6>
-  TH1D* th1d_for = tp1f_for->ProjectionX(Form("th1d_for_%s",handle)); // <4>
-  TH1D* th1d_two = tp1f_two->ProjectionX(Form("th1d_two_%s",handle)); // <2>
-
-  TH1D* th1d_862 = (TH1D*)th1d_six->Clone(Form("th1d_846_%s",handle)); // 16<6><2>     (for the 8p)
-  TH1D* th1d_842 = (TH1D*)th1d_for->Clone(Form("th1d_842_%s",handle)); // 18<4>^2      (for the 8p)
-  TH1D* th1d_822 = (TH1D*)th1d_for->Clone(Form("th1d_822_%s",handle)); // 144<4><2>^2  (for the 8p)
-  TH1D* th1d_824 = (TH1D*)th1d_two->Clone(Form("th1d_824_%s",handle)); // 144<2>^4     (for the 8p)
-  TH1D* th1d_942 = (TH1D*)th1d_for->Clone(Form("th1d_942_%s",handle)); // 9<4><2>      (for the 6p)
-  TH1D* th1d_123 = (TH1D*)th1d_two->Clone(Form("th1d_123_%s",handle)); // 12<2>^3      (for the 6p)
-  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%s",handle)); // 2<2>^2       (for the 4p)
-
-  // --- 8p pieces
-  th1d_862->Multiply(th1d_two);
-  th1d_862->Scale(16);
-  th1d_842->Multiply(th1d_for);
-  th1d_842->Scale(18);
-  th1d_822->Multiply(th1d_two);
-  th1d_822->Multiply(th1d_two);
-  th1d_822->Scale(144);
-  th1d_824->Multiply(th1d_two);
-  th1d_824->Multiply(th1d_two);
-  th1d_824->Multiply(th1d_two);
-  th1d_824->Scale(144);
-  // --- 6p pieces
-  th1d_942->Multiply(th1d_two);
-  th1d_942->Scale(9);
-  th1d_123->Multiply(th1d_two);
-  th1d_123->Multiply(th1d_two);
-  th1d_123->Scale(12);
-  // --- 4p pieces
-  th1d_222->Multiply(th1d_two);
-  th1d_222->Scale(2);
-
-  TH1D* th1d_c28 = (TH1D*)th1d_eit->Clone("th1d_c28"); // c2{8} = <8> - 16<6><2> -18<4>^2 + 144<4><2>^2 -144<2>^4
-  th1d_c28->Add(th1d_862,-1);
-  th1d_c28->Add(th1d_842,-1);
-  th1d_c28->Add(th1d_822,1);
-  th1d_c28->Add(th1d_824,-1);
-
-  TH1D* th1d_c26 = (TH1D*)th1d_six->Clone("th1d_c26"); // c2{6} = <6> - 9<4><2> + 12<2>^3
-  th1d_c26->Add(th1d_942,-1);
-  th1d_c26->Add(th1d_123,1);
-
-  TH1D* th1d_c24 = (TH1D*)th1d_for->Clone("th1d_c24"); // c2{4} = <4> - 2<2>^2
-  th1d_c24->Add(th1d_222,-1);
-
-  TH1D* th1d_c22 = (TH1D*)th1d_two->Clone("th1d_c22"); // c2{2} = <2>
-
-  TH1D* th1d_v28 = (TH1D*)th1d_c28->Clone("th1d_v28");
-  TH1D* th1d_v26 = (TH1D*)th1d_c26->Clone("th1d_v26");
-  TH1D* th1d_v24 = (TH1D*)th1d_c24->Clone("th1d_v24");
-  TH1D* th1d_v22 = (TH1D*)th1d_c24->Clone("th1d_v22");
 
 
   double xmin = 0.0;
