@@ -14,6 +14,12 @@ void get_sys()
   TFile* fbase = NULL;
   TFile* feval = NULL;
 
+  fbase = TFile::Open("input/histos_11660.root");
+  feval = TFile::Open("input/histos_11653.root");
+  takefiles(fbase,feval,"acce");
+  fbase->Close();
+  feval->Close();
+
   fbase = TFile::Open("input/histos_11724.root");
   feval = TFile::Open("input/histos_11660.root");
   takefiles(fbase,feval,"test");
@@ -113,7 +119,7 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle, double xmin, double xm
   for ( int i = 0; i < hratio->GetNbinsX(); ++i )
     {
       double cont = hratio->GetBinContent(i+1);
-      if ( cont <= 0.0 )
+      if ( cont <= 0.0 || cont == 1.0 )
         {
           hratio->SetBinContent(i+1,0);
           hratio->SetBinError(i+1,9999); // effectively de-weight during fit
