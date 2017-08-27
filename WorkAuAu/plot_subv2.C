@@ -1,4 +1,4 @@
-void plot_subevents(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th1d_v22, TH1D* th1d_v22ab)
+void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th1d_v22, TH1D* th1d_v22ab)
 {
 
   TCanvas* c1 = new TCanvas("c1","");

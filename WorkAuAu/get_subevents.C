@@ -1,5 +1,5 @@
 #include "calc_subevents.C"
-#include "plot_subevents.C"
+#include "plot_subv2.C"
 
 void get_subevents()
 {
@@ -28,6 +28,6 @@ void get_subevents()
                  &hv24, &hv24aabb, &hv24abab, &hv22, &hv22ab,
                  &hc24, &hc24aabb, &hc24abab, &hc22, &hc22ab,
                  1);
-  plot_subevents(hv24, hv24aabb, hv24abab, hv22, hv22ab);
+  plot_subv2(hv24, hv24aabb, hv24abab, hv22, hv22ab);
 
 }
