@@ -1,4 +1,4 @@
-void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
+void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22,
                    TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22,
                    TH1D** out_eit, TH1D** out_six, TH1D** out_for, TH1D** out_two,
@@ -7,19 +7,24 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
                    int rebin)
 {
 
-  tp1f_eit->Rebin(rebin);
-  tp1f_six->Rebin(rebin);
-  tp1f_for->Rebin(rebin);
-  tp1f_two->Rebin(rebin);
-
   double rand = gRandom->Rndm();
   int helper = rand*10000;
   // cout << "using random number helper " << helper << " to prevent memory leaks" << endl;
 
-  TH1D* th1d_eit = tp1f_eit->ProjectionX(Form("th1d_eit_%d",helper)); // <8>
-  TH1D* th1d_six = tp1f_six->ProjectionX(Form("th1d_six_%d",helper)); // <6>
-  TH1D* th1d_for = tp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
-  TH1D* th1d_two = tp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
+  TProfile* ctp1f_eit = (TProfile*)tp1f_eit->Clone(Form("ctp1f_eit_%d",helper));
+  TProfile* ctp1f_six = (TProfile*)tp1f_six->Clone(Form("ctp1f_eit_%d",helper));
+  TProfile* ctp1f_for = (TProfile*)tp1f_for->Clone(Form("ctp1f_eit_%d",helper));
+  TProfile* ctp1f_two = (TProfile*)tp1f_two->Clone(Form("ctp1f_eit_%d",helper));
+
+  ctp1f_eit->Rebin(rebin);
+  ctp1f_six->Rebin(rebin);
+  ctp1f_for->Rebin(rebin);
+  ctp1f_two->Rebin(rebin);
+
+  TH1D* th1d_eit = ctp1f_eit->ProjectionX(Form("th1d_eit_%d",helper)); // <8>
+  TH1D* th1d_six = ctp1f_six->ProjectionX(Form("th1d_six_%d",helper)); // <6>
+  TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
+  TH1D* th1d_two = ctp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
 
   TH1D* th1d_862 = (TH1D*)th1d_six->Clone(Form("th1d_862_%d",helper)); // 16<6><2>     (for the 8p)
   TH1D* th1d_842 = (TH1D*)th1d_for->Clone(Form("th1d_842_%d",helper)); // 18<4>^2      (for the 8p)
@@ -167,7 +172,7 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
 }
 
 
-void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
+void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22,
                    TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22,
                    int rebin)
@@ -178,7 +183,7 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
 }
 
 
-void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
+void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22, int rebin)
 {
   TH1D* h = NULL;
@@ -186,7 +191,7 @@ void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, T
 }
 
 
-void get_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
+void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22)
 {
   TH1D* h = NULL;
