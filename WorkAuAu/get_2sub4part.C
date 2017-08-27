@@ -40,6 +40,8 @@ void get_2sub4part()
   TH1D* th1d_v24aabb = (TH1D*)th1d_4aabb->Clone("th1d_v24aabb");
   TH1D* th1d_v24abab = (TH1D*)th1d_4abab->Clone("th1d_v24abab");
 
+  TH1D* th1d_v22ab = (TH1D*)th1d_2ab->Clone("th1d_v22ab");
+
   int nbins = th1d_2aa->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
     {
@@ -77,6 +79,17 @@ void get_2sub4part()
         }
       th1d_v24abab->SetBinContent(i+1,v24abab);
       th1d_v24abab->SetBinError(i+1,ev24abab);
+      // --- 2ab
+      double c22ab = th1d_2ab->GetBinContent(i+1);
+      double v22ab = -9999;
+      double ev22ab = 0;
+      if ( c22ab > 0 )
+        {
+          v22ab = sqrt(c22ab); // v2{2} = c2{2}^{(1/2)}
+          ev22ab = (1.0/v22ab)*etwoab;
+        }
+      th1d_v22ab->SetBinContent(i+1,v22ab);
+      th1d_v22ab->SetBinError(i+1,ev22ab);
     }
 
   // --------------------------------------------------------------------------------------------------------
@@ -132,20 +145,6 @@ void get_2sub4part()
 
   // --------------------------------------------------------------------------------------------------------
 
-  for ( int i = 0; i < nbins; ++i )
-    {
-      // cout << th1d_v24->GetBinContent(i+1) << " "
-      //      << th1d_v24aabb->GetBinContent(i+1) << " "
-      //      << th1d_v24abab->GetBinContent(i+1) << " "
-      //      << endl;
-      cout << th1d_for->GetBinContent(i+1) << " "
-           << th1d_4aabb->GetBinContent(i+1) << " "
-           << th1d_4abab->GetBinContent(i+1) << " "
-           << endl;
-    }
-
-  // --------------------------------------------------------------------------------------------------------
-
   double xmin = 0.0;
   double xmax = 100.0;
   double ymin = 0.0;
@@ -185,6 +184,23 @@ void get_2sub4part()
   leg->Draw();
   c1->Print("Figs2sub4part/cent_2sub4part.png");
   c1->Print("Figs2sub4part/cent_2sub4part.pdf");
+  th1d_v22->SetMarkerStyle(kOpenCross);
+  th1d_v22->SetMarkerColor(kRed);
+  th1d_v22->SetLineColor(kRed);
+  th1d_v22->Draw("same ex0p");
+  th1d_v22ab->SetMarkerStyle(kOpenDiamond);
+  th1d_v22ab->SetMarkerColor(kMagenta+2);
+  th1d_v22ab->SetLineColor(kMagenta+2);
+  th1d_v22ab->Draw("same ex0p");
+  TLegend* leg2 = new TLegend(0.48,0.72,0.62,0.88);
+  //leg2->SetHeader("Run14AuAu200");
+  leg2->SetTextSize(0.045);
+  leg2->SetFillStyle(0);
+  leg2->AddEntry(th1d_v22,"v_{2}{2}","p");
+  leg2->AddEntry(th1d_v22ab,"v_{2}{2}_{a|b}","p");
+  leg2->Draw();
+  c1->Print("Figs2sub4part/cent_2sub4part2part.png");
+  c1->Print("Figs2sub4part/cent_2sub4part2part.pdf");
 
 
 }
