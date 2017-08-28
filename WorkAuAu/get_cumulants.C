@@ -129,19 +129,30 @@ void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TPr
       double ev28 = 0;
       double eit = th1d_eit->GetBinContent(i+1);
       double eeit = th1d_eit->GetBinError(i+1);
+      eeit = 0.0; // error on this one seems really wrong...
       if ( c28 < 0 && eit != 0 )
         {
           v28 = pow((-c28/33.0),(1.0/8.0)); // v2{8} = (-c2{8}/33)^{(1/8)}
-          ev28 = ( 2*pow(33,(1.0/8.0)) / pow(-c28,(7.0/8.0)) ) *
-            sqrt(
-                 ( (36*two*two*two - 18*four*two + six)*(36*two*two*two - 18*four*two + six) * etwo*etwo ) +
-                 ( (81.0/16.0)*(4*two*two-four)*(4*two*two-four) * efour*efour ) +
-                 ( two*two*esix*esix ) +
-                 ( (1.0/256.0)*eeit*eeit )
-                 ); // issues fixed but looks wrong
+          // ev28 = ( 2*pow(33,(1.0/8.0)) / pow(-c28,(7.0/8.0)) ) *
+          //   sqrt(
+          //        ( (36*two*two*two - 18*four*two + six)*(36*two*two*two - 18*four*two + six) * etwo*etwo ) +
+          //        ( (81.0/16.0)*(4*two*two-four)*(4*two*two-four) * efour*efour ) +
+          //        ( two*two*esix*esix ) +
+          //        ( (1.0/256.0)*eeit*eeit )
+          //        ); // issues fixed but looks wrong
+          double prefix = ( 2*pow(33,(1.0/8.0)) / pow(-c28,(7.0/8.0)) );
+          double term1  = ( (36*two*two*two - 18*four*two + six)*(36*two*two*two - 18*four*two + six) * etwo*etwo );
+          double term2  = ( (81.0/16.0)*(4*two*two-four)*(4*two*two-four) * efour*efour );
+          double term3  = ( two*two*esix*esix );
+          double term4  = ( (1.0/256.0)*eeit*eeit );
+          term3 = 0; // term3 seems problematic...
+          ev28 = prefix * sqrt(term1 + term2 + term3 + term4);
+          // cout << prefix * sqrt(term1) << " " << prefix * sqrt(term2) << " " << prefix * sqrt(term3) << " " << prefix * sqrt(term4) << " "
+          //      << ev28 << endl;
         }
       //ev28 = 0;
       //cout << i << " v28 " << v28 << " ev28 " << ev28 << endl;
+      //cout << etwo/two << " " << efour/four << " " << esix/six << " " << eeit/eit << endl;
       th1d_v28->SetBinContent(i+1,v28);
       th1d_v28->SetBinError(i+1,ev28);
     }

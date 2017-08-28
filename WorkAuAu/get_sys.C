@@ -82,9 +82,9 @@ void takefiles(TFile* fbase, TFile* feval, const char* handle)
   TH1D* c22eval = NULL;
   get_cumulants(eit_eval,six_eval,for_eval,two_eval,&v28eval,&v26eval,&v24eval,&v22eval,&c28eval,&c26eval,&c24eval,&c22eval,1);
   crunch(v22base,v22eval,Form("cent_%s_v22",handle),0,100,1,93);
-  crunch(v24base,v24eval,Form("cent_%s_v24",handle),0,100,20,50);
-  crunch(v26base,v26eval,Form("cent_%s_v26",handle),0,100,20,50);
-  crunch(v28base,v28eval,Form("cent_%s_v28",handle),0,100,20,50);
+  crunch(v24base,v24eval,Form("cent_%s_v24",handle),0,100,6,65);
+  crunch(v26base,v26eval,Form("cent_%s_v26",handle),0,100,6,60);
+  crunch(v28base,v28eval,Form("cent_%s_v28",handle),0,100,10,50);
 
 
 }
@@ -213,6 +213,7 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle, double xmin, double xm
   empty_ratio->GetYaxis()->SetTitleOffset(0.9);
   hratio->SetMarkerStyle(kOpenCircle);
   hratio->SetLineColor(kBlack);
+  hratio->GetXaxis()->SetRangeUser(fmin,fmax);
   hratio->Draw("same ex0p");
   if ( cline) delete cline;
   cline = new TLine(xmin,1,xmax,1);
@@ -221,7 +222,7 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle, double xmin, double xm
   cline->Draw();
   TF1* fun = new TF1("fun","pol0",xmin,xmax);
   fun->SetParameter(0,1.0);
-  hratio->Fit(fun,"","",fmax,fmin);
+  hratio->Fit(fun,"","",fmin,fmax);
   TLegend* leg_ratio = new TLegend(0.18,0.80,0.4,0.95);
   leg_ratio->SetTextFont(62);
   leg_ratio->SetTextSize(0.090);
