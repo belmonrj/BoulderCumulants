@@ -34,42 +34,36 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   if ( strcmp(handle,"lowntrkzoom") == 0 ) { islowzoom = true; isntrk = true; }
 
   // --- get the systmatics histos
-  double sysB_v22 = 0.1;
   TH1D* gv22_sys = (TH1D*) th1d_v22->Clone("gv22_sys");
+  gv22_sys->SetMarkerStyle(0);
   gv22_sys->SetMarkerSize(0);
   gv22_sys->SetFillColorAlpha(kRed, 0.35);
   for ( int i = 0; i < gv22_sys->GetNbinsX(); ++i )
   {
     double y = gv22_sys->GetBinContent(i);
-    if ( y > 0 )
-    {
-      gv22_sys->SetBinError(i, y * sysB_v22);
-      //cout << y << " +- " << y * sysB_v22 << endl;
-    }
-    else
-    {
-      gv22_sys->SetBinContent(i, 0);
-      gv22_sys->SetBinError(i, 0);
-    }
+    double err = y * 0.1;
+    //if ( i < 10 ) err = 0.005;
+    if ( y > 0 ) gv22_sys->SetBinError(i, err);
   } // i
-  double sysB_v24 = 0.1;
-  //cout << "sys is " << sysB_v24 << endl;
   TH1D* gv24_sys = (TH1D*) th1d_v24->Clone("gv24_sys");
+  gv24_sys->SetMarkerStyle(0);
   gv24_sys->SetMarkerSize(0);
-  gv24_sys->SetFillColorAlpha(kBlack, 0.35);
+  gv24_sys->SetFillColorAlpha(kBlue, 0.35);
   for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
   {
     double y = gv24_sys->GetBinContent(i);
-    if ( y > 0 )
-    {
-      gv24_sys->SetBinError(i, y * sysB_v24);
-      //cout << y << " +- " << y * sysB_v24 << endl;
-    }
-    else
-    {
-      gv24_sys->SetBinContent(i, 0);
-      gv24_sys->SetBinError(i, 0);
-    }
+    double err = y * 0.1;
+    if ( y > 0 ) gv24_sys->SetBinError(i, err);
+  } // i
+  TH1D* gv26_sys = (TH1D*) th1d_v26->Clone("gv26_sys");
+  gv26_sys->SetMarkerStyle(0);
+  gv26_sys->SetMarkerSize(0);
+  gv26_sys->SetFillColorAlpha(kBlack, 0.35);
+  for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
+  {
+    double y = gv26_sys->GetBinContent(i);
+    double err = y * 0.1;
+    if ( y > 0 ) gv26_sys->SetBinError(i, err);
   } // i
 
 
@@ -88,20 +82,24 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   empty->GetYaxis()->SetTitle("v_{2}");
   if ( iscent )
   {
-  th1d_v22->GetXaxis()->SetRangeUser(0,90);
-  th1d_v24->GetXaxis()->SetRangeUser(5,70);
-  th1d_v26->GetXaxis()->SetRangeUser(5,70);
+  th1d_v22->GetXaxis()->SetRangeUser(1,90);
+  th1d_v24->GetXaxis()->SetRangeUser(6,65);
+  th1d_v26->GetXaxis()->SetRangeUser(6,60);
+  gv22_sys->GetXaxis()->SetRangeUser(1,90);
+  gv24_sys->GetXaxis()->SetRangeUser(6,65);
+  gv26_sys->GetXaxis()->SetRangeUser(6,60);
   }
   th1d_v26->SetMarkerStyle(kOpenCircle);
   th1d_v26->SetMarkerColor(kBlack);
   th1d_v26->SetLineColor(kBlack);
   th1d_v26->Draw("same ex0p");
-  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
-  leg->SetHeader("Run14AuAu200");
+  TLegend* leg = new TLegend(0.66,0.72,0.92,0.92);
+  //leg->SetHeader("Run14AuAu200");
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_v26,"v_{2}{6}","p");
   leg->Draw();
+  gv26_sys->Draw("E5 same");
   c1->Print(Form("FigsRecursion/recursion_%s_v26.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v26.pdf",handle));
   th1d_v24->SetMarkerStyle(kOpenSquare);
@@ -134,8 +132,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   th1d_v28->SetLineColor(kGreen+2);
   th1d_v28->Draw("same ex0p");
   if ( leg ) delete leg;
-  leg = new TLegend(0.62,0.68,0.88,0.88);
-  leg->SetHeader("Run14AuAu200");
+  leg = new TLegend(0.66,0.72,0.92,0.92);
+  //leg->SetHeader("Run14AuAu200");
   leg->SetTextSize(0.045);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_v28,"v_{2}{8}","p");
