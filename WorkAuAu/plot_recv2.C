@@ -33,6 +33,44 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   bool islowzoom = false;
   if ( strcmp(handle,"lowntrkzoom") == 0 ) { islowzoom = true; isntrk = true; }
 
+  // --- get the systmatics histos
+  double sysB_v22 = 0.1;
+  TH1D* gv22_sys = (TH1D*) th1d_v22->Clone("gv22_sys");
+  gv22_sys->SetMarkerSize(0);
+  gv22_sys->SetFillColorAlpha(kRed, 0.35);
+  for ( int i = 0; i < gv22_sys->GetNbinsX(); ++i )
+  {
+    double y = gv22_sys->GetBinContent(i);
+    if ( y > 0 )
+    {
+      gv22_sys->SetBinError(i, y * sysB_v22);
+      //cout << y << " +- " << y * sysB_v22 << endl;
+    }
+    else
+    {
+      gv22_sys->SetBinContent(i, 0);
+      gv22_sys->SetBinError(i, 0);
+    }
+  } // i
+  double sysB_v24 = 0.1;
+  //cout << "sys is " << sysB_v24 << endl;
+  TH1D* gv24_sys = (TH1D*) th1d_v24->Clone("gv24_sys");
+  gv24_sys->SetMarkerSize(0);
+  gv24_sys->SetFillColorAlpha(kBlack, 0.35);
+  for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
+  {
+    double y = gv24_sys->GetBinContent(i);
+    if ( y > 0 )
+    {
+      gv24_sys->SetBinError(i, y * sysB_v24);
+      //cout << y << " +- " << y * sysB_v24 << endl;
+    }
+    else
+    {
+      gv24_sys->SetBinContent(i, 0);
+      gv24_sys->SetBinError(i, 0);
+    }
+  } // i
 
 
   // --- considering passing these as arguments...
@@ -42,6 +80,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   double ymax = 0.12;
   if ( isntrk && !islowzoom ) xmax = 650.0;
 
+  // --- do the plotting
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
@@ -76,6 +115,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   leg->AddEntry(th1d_v24,"v_{2}{4}","p");
   leg->AddEntry(th1d_v22,"v_{2}{2}","p");
   leg->Draw();
+  gv22_sys->Draw("E5 same");
+  gv24_sys->Draw("E5 same");
   c1->Print(Form("FigsRecursion/recursion_%s_v2642.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v2642.pdf",handle));
 
@@ -109,6 +150,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   leg->AddEntry(th1d_v24,"v_{2}{4}","p");
   leg->AddEntry(th1d_v22,"v_{2}{2}","p");
   leg->Draw();
+  gv22_sys->Draw("E5 same");
+  gv24_sys->Draw("E5 same");
   c1->Print(Form("FigsRecursion/recursion_%s_v28642.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v28642.pdf",handle));
 
