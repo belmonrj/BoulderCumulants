@@ -65,6 +65,16 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
     double err = y * 0.1;
     if ( y > 0 ) gv26_sys->SetBinError(i, err);
   } // i
+  TH1D* gv28_sys = (TH1D*) th1d_v28->Clone("gv28_sys");
+  gv28_sys->SetMarkerStyle(0);
+  gv28_sys->SetMarkerSize(0);
+  gv28_sys->SetFillColorAlpha(kGreen+2, 0.35);
+  for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
+  {
+    double y = gv28_sys->GetBinContent(i);
+    double err = y * 0.1;
+    if ( y > 0 ) gv28_sys->SetBinError(i, err);
+  } // i
 
 
   // --- considering passing these as arguments...
@@ -126,7 +136,11 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("v_{2}");
-  if ( iscent ) th1d_v28->GetXaxis()->SetRangeUser(0,50);
+  if ( iscent )
+  {
+  th1d_v28->GetXaxis()->SetRangeUser(10,50);
+  gv28_sys->GetXaxis()->SetRangeUser(10,50);
+  }
   th1d_v28->SetMarkerStyle(kFullDiamond);
   th1d_v28->SetMarkerColor(kGreen+2);
   th1d_v28->SetLineColor(kGreen+2);
@@ -138,6 +152,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_v28,"v_{2}{8}","p");
   leg->Draw();
+  gv28_sys->Draw("E5 same");
   c1->Print(Form("FigsRecursion/recursion_%s_v28.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v28.pdf",handle));
   th1d_v26->Draw("same ex0p");
@@ -150,6 +165,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   leg->Draw();
   gv22_sys->Draw("E5 same");
   gv24_sys->Draw("E5 same");
+  gv26_sys->Draw("E5 same");
   c1->Print(Form("FigsRecursion/recursion_%s_v28642.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v28642.pdf",handle));
 
