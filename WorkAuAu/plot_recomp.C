@@ -81,7 +81,7 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   //-- setup canvas
   //-- Margins
   float Lmarg = 0.14;
-  float Rmarg = 0.02;
+  float Rmarg = 0.05;
   // float Bmarg = 0.10;
   // float Bmarg = 0.14; // not quite enough
   //float Bmarg = 0.2; // a little too much
@@ -95,13 +95,13 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   ccomp4->SetMargin(0, 0, 0, 0);
 
   ccomp4->cd();
-  TPad *pcomp4 = new TPad("pcomp4", "comp4", 0, 0.45, 1, 1);
+  TPad *pcomp4 = new TPad("pcomp4", "comp4", 0, 0.5, 1, 1);
   pcomp4->SetMargin(Lmarg, Rmarg, 0, 0.1);
   pcomp4->SetTicks(1, 1);
   pcomp4->Draw();
 
   ccomp4->cd();
-  TPad *pcumu4 = new TPad("pcumu4", "cumu4", 0, 0, 1, 0.45);
+  TPad *pcumu4 = new TPad("pcumu4", "cumu4", 0, 0, 1, 0.5);
   pcumu4->SetMargin(Lmarg, Rmarg, 0.22, 0);
   pcumu4->SetTicks(1, 1);
   pcumu4->Draw();
@@ -116,9 +116,10 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   empty_comp4->GetXaxis()->SetTitleSize(0.0);
   empty_comp4->GetYaxis()->SetLabelFont(62);
   empty_comp4->GetYaxis()->SetTitleFont(62);
-  empty_comp4->GetYaxis()->SetLabelSize(0.075);
-  empty_comp4->GetYaxis()->SetTitleSize(0.075);
+  empty_comp4->GetYaxis()->SetLabelSize(0.08);
+  empty_comp4->GetYaxis()->SetTitleSize(0.08);
   empty_comp4->GetYaxis()->SetTitle("components");
+  empty_comp4->GetYaxis()->SetTitleOffset(0.9);
   th1d_222->SetMarkerStyle(kOpenCircle);
   th1d_222->SetMarkerColor(kRed);
   th1d_222->SetLineColor(kBlack);
@@ -131,9 +132,9 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   cline->SetLineWidth(2);
   cline->SetLineStyle(2);
   cline->Draw();
-  TLegend* leg_comp4 = new TLegend(0.18,0.70,0.4,0.85);
+  TLegend* leg_comp4 = new TLegend(0.165,0.70,0.4,0.85);
   leg_comp4->SetTextFont(62);
-  leg_comp4->SetTextSize(0.075);
+  leg_comp4->SetTextSize(0.08);
   leg_comp4->SetFillStyle(0);
   leg_comp4->AddEntry(th1d_222,"2#LT#LT2#GT#GT^{2}","p");
   leg_comp4->AddEntry(th1d_for,"#LT#LT4#GT#GT","p");
@@ -149,20 +150,20 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   if ( isntrk ) empty_cumu4->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty_cumu4->GetXaxis()->SetLabelFont(62);
   empty_cumu4->GetXaxis()->SetTitleFont(62);
-  empty_cumu4->GetXaxis()->SetLabelSize(0.090);
-  empty_cumu4->GetXaxis()->SetTitleSize(0.090);
+  empty_cumu4->GetXaxis()->SetLabelSize(0.08);
+  empty_cumu4->GetXaxis()->SetTitleSize(0.08);
   empty_cumu4->GetYaxis()->SetLabelFont(62);
   empty_cumu4->GetYaxis()->SetTitleFont(62);
-  empty_cumu4->GetYaxis()->SetLabelSize(0.090);
-  empty_cumu4->GetYaxis()->SetTitleSize(0.090);
+  empty_cumu4->GetYaxis()->SetLabelSize(0.08);
+  empty_cumu4->GetYaxis()->SetTitleSize(0.08);
   empty_cumu4->GetYaxis()->SetTitle("cumulant");
-  empty_cumu4->GetYaxis()->SetTitleOffset(0.8);
+  empty_cumu4->GetYaxis()->SetTitleOffset(0.9);
   th1d_c24->SetMarkerStyle(kOpenCircle);
   th1d_c24->SetLineColor(kBlack);
   th1d_c24->Draw("same ex0p");
-  TLegend* leg_cumu4 = new TLegend(0.18,0.80,0.4,0.95);
+  TLegend* leg_cumu4 = new TLegend(0.165,0.87,0.4,0.97);
   leg_cumu4->SetTextFont(62);
-  leg_cumu4->SetTextSize(0.090);
+  leg_cumu4->SetTextSize(0.08);
   leg_cumu4->SetFillStyle(0);
   leg_cumu4->AddEntry(th1d_c24,"c_{2}{4} = -v_{2}^{4}","p");
   leg_cumu4->Draw();
@@ -181,13 +182,13 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   ccomp6->SetMargin(0, 0, 0, 0);
 
   ccomp6->cd();
-  TPad* pcomp6 = new TPad("pcomp6", "comp6", 0, 0.45, 1, 1);
+  TPad* pcomp6 = new TPad("pcomp6", "comp6", 0, 0.5, 1, 1);
   pcomp6->SetMargin(Lmarg, Rmarg, 0, 0.1);
   pcomp6->SetTicks(1, 1);
   pcomp6->Draw();
 
   ccomp6->cd();
-  TPad* pcumu6 = new TPad("pcumu6", "cumu6", 0, 0, 1, 0.45);
+  TPad* pcumu6 = new TPad("pcumu6", "cumu6", 0, 0, 1, 0.5);
   pcumu6->SetMargin(Lmarg, Rmarg, 0.22, 0);
   pcumu6->SetTicks(1, 1);
   pcumu6->Draw();
@@ -202,9 +203,10 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   empty_comp6->GetXaxis()->SetTitleSize(0.0);
   empty_comp6->GetYaxis()->SetLabelFont(62);
   empty_comp6->GetYaxis()->SetTitleFont(62);
-  empty_comp6->GetYaxis()->SetLabelSize(0.065);
-  empty_comp6->GetYaxis()->SetTitleSize(0.065);
+  empty_comp6->GetYaxis()->SetLabelSize(0.08);
+  empty_comp6->GetYaxis()->SetTitleSize(0.08);
   empty_comp6->GetYaxis()->SetTitle("components");
+  empty_comp6->GetYaxis()->SetTitleOffset(0.9);
   th1d_six->SetMarkerStyle(kOpenCircle);
   th1d_942->SetMarkerStyle(kOpenSquare);
   th1d_123->SetMarkerStyle(kOpenCross);
@@ -218,8 +220,9 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   th1d_942->Draw("same ex0p");
   th1d_123->Draw("same ex0p");
   cline->Draw();
-  TLegend* leg_comp6 = new TLegend(0.18,0.70,0.4,0.85);
-  leg_comp6->SetTextSize(0.06);
+  TLegend* leg_comp6 = new TLegend(0.165,0.62,0.4,0.85);
+  leg_comp6->SetTextFont(62);
+  leg_comp6->SetTextSize(0.08);
   leg_comp6->SetFillStyle(0);
   leg_comp6->AddEntry(th1d_123,"12#LT#LT2#GT#GT^{3}","p");
   leg_comp6->AddEntry(th1d_942,"9#LT#LT4#GT#GT#LT#LT2#GT#GT","p");
@@ -236,18 +239,20 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   if ( isntrk ) empty_cumu6->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty_cumu6->GetXaxis()->SetLabelFont(62);
   empty_cumu6->GetXaxis()->SetTitleFont(62);
-  empty_cumu6->GetXaxis()->SetLabelSize(0.077);
-  empty_cumu6->GetXaxis()->SetTitleSize(0.077);
+  empty_cumu6->GetXaxis()->SetLabelSize(0.08);
+  empty_cumu6->GetXaxis()->SetTitleSize(0.08);
   empty_cumu6->GetYaxis()->SetLabelFont(62);
   empty_cumu6->GetYaxis()->SetTitleFont(62);
-  empty_cumu6->GetYaxis()->SetLabelSize(0.077);
-  empty_cumu6->GetYaxis()->SetTitleSize(0.077);
+  empty_cumu6->GetYaxis()->SetLabelSize(0.08);
+  empty_cumu6->GetYaxis()->SetTitleSize(0.08);
   empty_cumu6->GetYaxis()->SetTitle("cumulant");
+  empty_cumu6->GetYaxis()->SetTitleOffset(0.9);
   th1d_c26->SetMarkerStyle(kOpenCircle);
   th1d_c26->SetLineColor(kBlack);
   th1d_c26->Draw("same ex0p");
-  TLegend* leg_cumu6 = new TLegend(0.18,0.80,0.4,0.95);
-  leg_cumu6->SetTextSize(0.07);
+  TLegend* leg_cumu6 = new TLegend(0.165,0.87,0.4,0.97);
+  leg_cumu6->SetTextFont(62);
+  leg_cumu6->SetTextSize(0.08);
   leg_cumu6->SetFillStyle(0);
   leg_cumu6->AddEntry(th1d_c26,"c_{2}{6} = 4v_{2}^{6}","p");
   leg_cumu6->Draw();
@@ -267,13 +272,13 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   ccomp8->SetMargin(0, 0, 0, 0);
 
   ccomp8->cd();
-  TPad* pcomp8 = new TPad("pcomp8", "comp8", 0, 0.45, 1, 1);
+  TPad* pcomp8 = new TPad("pcomp8", "comp8", 0, 0.5, 1, 1);
   pcomp8->SetMargin(Lmarg, Rmarg, 0, 0.1);
   pcomp8->SetTicks(1, 1);
   pcomp8->Draw();
 
   ccomp8->cd();
-  TPad* pcumu8 = new TPad("pcumu8", "cumu8", 0, 0, 1, 0.45);
+  TPad* pcumu8 = new TPad("pcumu8", "cumu8", 0, 0, 1, 0.5);
   pcumu8->SetMargin(Lmarg, Rmarg, 0.22, 0);
   pcumu8->SetTicks(1, 1);
   pcumu8->Draw();
@@ -288,9 +293,10 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   empty_comp8->GetXaxis()->SetTitleSize(0.0);
   empty_comp8->GetYaxis()->SetLabelFont(62);
   empty_comp8->GetYaxis()->SetTitleFont(62);
-  empty_comp8->GetYaxis()->SetLabelSize(0.065);
-  empty_comp8->GetYaxis()->SetTitleSize(0.065);
+  empty_comp8->GetYaxis()->SetLabelSize(0.08);
+  empty_comp8->GetYaxis()->SetTitleSize(0.08);
   empty_comp8->GetYaxis()->SetTitle("components");
+  empty_comp8->GetYaxis()->SetTitleOffset(0.9);
   // TH1D* th1d_862 = (TH1D*)th1d_six->Clone(Form("th1d_846_%s",handle)); // 16<6><2>     (for the 8p)
   // TH1D* th1d_842 = (TH1D*)th1d_for->Clone(Form("th1d_842_%s",handle)); // 18<4>^2      (for the 8p)
   // TH1D* th1d_822 = (TH1D*)th1d_for->Clone(Form("th1d_822_%s",handle)); // 144<4><2>^2  (for the 8p)
@@ -311,11 +317,12 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   th1d_862->Draw("same ex0p");
   th1d_eit->Draw("same ex0p");
   cline->Draw();
-  TLegend* leg_comp8 = new TLegend(0.18,0.70,0.4,0.85);
-  leg_comp8->SetTextSize(0.06);
+  TLegend* leg_comp8 = new TLegend(0.165,0.47,0.4,0.85);
+  leg_comp8->SetTextFont(62);
+  leg_comp8->SetTextSize(0.08);
   leg_comp8->SetFillStyle(0);
   leg_comp8->AddEntry(th1d_824,"144#LT#LT2#GT#GT^{4}","p");
-  leg_comp8->AddEntry(th1d_822,"144#LT#LT4#GT#GT#LT#LT2#GT#GT^{4}","p");
+  leg_comp8->AddEntry(th1d_822,"144#LT#LT4#GT#GT#LT#LT2#GT#GT^{2}","p");
   leg_comp8->AddEntry(th1d_842,"18#LT#LT4#GT#GT^{2}","p");
   leg_comp8->AddEntry(th1d_862,"16#LT#LT6#GT#GT#LT#LT2#GT#GT","p");
   leg_comp8->AddEntry(th1d_eit,"#LT#LT8#GT#GT","p");
@@ -331,18 +338,20 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   if ( isntrk ) empty_cumu8->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty_cumu8->GetXaxis()->SetLabelFont(62);
   empty_cumu8->GetXaxis()->SetTitleFont(62);
-  empty_cumu8->GetXaxis()->SetLabelSize(0.077);
-  empty_cumu8->GetXaxis()->SetTitleSize(0.077);
+  empty_cumu8->GetXaxis()->SetLabelSize(0.08);
+  empty_cumu8->GetXaxis()->SetTitleSize(0.08);
   empty_cumu8->GetYaxis()->SetLabelFont(62);
   empty_cumu8->GetYaxis()->SetTitleFont(62);
-  empty_cumu8->GetYaxis()->SetLabelSize(0.077);
-  empty_cumu8->GetYaxis()->SetTitleSize(0.077);
+  empty_cumu8->GetYaxis()->SetLabelSize(0.08);
+  empty_cumu8->GetYaxis()->SetTitleSize(0.08);
   empty_cumu8->GetYaxis()->SetTitle("cumulant");
+  empty_cumu8->GetYaxis()->SetTitleOffset(0.9);
   th1d_c28->SetMarkerStyle(kOpenCircle);
   th1d_c28->SetLineColor(kBlack);
   th1d_c28->Draw("same ex0p");
-  TLegend* leg_cumu8 = new TLegend(0.18,0.80,0.4,0.95);
-  leg_cumu8->SetTextSize(0.07);
+  TLegend* leg_cumu8 = new TLegend(0.165,0.87,0.4,0.97);
+  leg_cumu8->SetTextFont(62);
+  leg_cumu8->SetTextSize(0.08);
   leg_cumu8->SetFillStyle(0);
   leg_cumu8->AddEntry(th1d_c28,"c_{2}{8} = -33v_{2}^{8}","p");
   leg_cumu8->Draw();
