@@ -1,10 +1,11 @@
 #include "get_cumulants.C"
+#include "calc_subevents.C"
 
 void takefiles(TFile*, TFile*, const char*);
 
-void crunch(TProfile*, TProfile*, const char*);
+void crunch(TProfile*, TProfile*, const char*, const char*);
 
-void crunch(TH1D*, TH1D*, const char*, double, double, double, double);
+void crunch(TH1D*, TH1D*, const char*, const char*, double, double, double, double);
 
 
 
@@ -46,7 +47,7 @@ void get_sys()
 
 }
 
-void takefiles(TFile* fbase, TFile* feval, const char* handle)
+void takefiles(TFile* fbase, TFile* feval, const char* systype)
 {
 
   if ( !fbase || !feval )
@@ -81,17 +82,66 @@ void takefiles(TFile* fbase, TFile* feval, const char* handle)
   TH1D* c24eval = NULL;
   TH1D* c22eval = NULL;
   get_cumulants(eit_eval,six_eval,for_eval,two_eval,&v28eval,&v26eval,&v24eval,&v22eval,&c28eval,&c26eval,&c24eval,&c22eval,1);
-  crunch(v22base,v22eval,Form("cent_%s_v22",handle),0,100,1,93);
-  crunch(v24base,v24eval,Form("cent_%s_v24",handle),0,100,6,65);
-  crunch(v26base,v26eval,Form("cent_%s_v26",handle),0,100,6,60);
-  crunch(v28base,v28eval,Form("cent_%s_v28",handle),0,100,10,50);
+  crunch(v22base,v22eval,systype,"cent_v22",0,100,1,93);
+  crunch(v24base,v24eval,systype,"cent_v24",0,100,6,65);
+  crunch(v26base,v26eval,systype,"cent_v26",0,100,6,60);
+  crunch(v28base,v28eval,systype,"cent_v28",0,100,10,50);
 
+  // ---
+
+  TProfile* base_for = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c24");
+  TProfile* base_4aabb = (TProfile*)fbase->Get("centrality_os_fvtxsfvtxn_tracks_c24a");
+  TProfile* base_4abab = (TProfile*)fbase->Get("centrality_os_fvtxsfvtxn_tracks_c24b");
+  TProfile* base_two = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c22");
+  TProfile* base_2aa = (TProfile*)fbase->Get("centrality_os_fvtxs_tracks_c22");
+  TProfile* base_2bb = (TProfile*)fbase->Get("centrality_os_fvtxn_tracks_c22");
+  TProfile* base_2ab = (TProfile*)fbase->Get("centrality_os_fvtxsfvtxn_tracks_c22");
+  TH1D* hbase_v24 = NULL;
+  TH1D* hbase_v24aabb = NULL;
+  TH1D* hbase_v24abab = NULL;
+  TH1D* hbase_v22 = NULL;
+  TH1D* hbase_v22ab = NULL;
+  TH1D* hbase_c24 = NULL;
+  TH1D* hbase_c24aabb = NULL;
+  TH1D* hbase_c24abab = NULL;
+  TH1D* hbase_c22 = NULL;
+  TH1D* hbase_c22ab = NULL;
+  calc_subevents(base_for, base_4aabb, base_4abab,
+                 base_two, base_2aa, base_2bb, base_2ab,
+                 &hbase_v24, &hbase_v24aabb, &hbase_v24abab, &hbase_v22, &hbase_v22ab,
+                 &hbase_c24, &hbase_c24aabb, &hbase_c24abab, &hbase_c22, &hbase_c22ab,
+                 1);
+  TProfile* eval_for = (TProfile*)feval->Get("centrality_os_fvtxc_tracks_c24");
+  TProfile* eval_4aabb = (TProfile*)feval->Get("centrality_os_fvtxsfvtxn_tracks_c24a");
+  TProfile* eval_4abab = (TProfile*)feval->Get("centrality_os_fvtxsfvtxn_tracks_c24b");
+  TProfile* eval_two = (TProfile*)feval->Get("centrality_os_fvtxc_tracks_c22");
+  TProfile* eval_2aa = (TProfile*)feval->Get("centrality_os_fvtxs_tracks_c22");
+  TProfile* eval_2bb = (TProfile*)feval->Get("centrality_os_fvtxn_tracks_c22");
+  TProfile* eval_2ab = (TProfile*)feval->Get("centrality_os_fvtxsfvtxn_tracks_c22");
+  TH1D* heval_v24 = NULL;
+  TH1D* heval_v24aabb = NULL;
+  TH1D* heval_v24abab = NULL;
+  TH1D* heval_v22 = NULL;
+  TH1D* heval_v22ab = NULL;
+  TH1D* heval_c24 = NULL;
+  TH1D* heval_c24aabb = NULL;
+  TH1D* heval_c24abab = NULL;
+  TH1D* heval_c22 = NULL;
+  TH1D* heval_c22ab = NULL;
+  calc_subevents(eval_for, eval_4aabb, eval_4abab,
+                 eval_two, eval_2aa, eval_2bb, eval_2ab,
+                 &heval_v24, &heval_v24aabb, &heval_v24abab, &heval_v22, &heval_v22ab,
+                 &heval_c24, &heval_c24aabb, &heval_c24abab, &heval_c22, &heval_c22ab,
+                 1);
+  crunch(hbase_v22ab,heval_v22ab,systype,"cent_v22ab",0,100,1,93);
+  crunch(hbase_v24aabb,heval_v24aabb,systype,"cent_v24aabb",0,100,6,65);
+  crunch(hbase_v24abab,heval_v24abab,systype,"cent_v24abab",0,100,6,65);
 
 }
 
 
 
-void crunch(TProfile* tpbase, TProfile* tpeval, const char* handle)
+void crunch(TProfile* tpbase, TProfile* tpeval, const char* systype, const char* quantity)
 {
   if ( !tpbase || !tpeval )
     {
@@ -100,12 +150,12 @@ void crunch(TProfile* tpbase, TProfile* tpeval, const char* handle)
     }
   TH1D* hbase = tpbase->ProjectionX("hbase");
   TH1D* heval = tpeval->ProjectionX("heval");
-  crunch(hbase,heval,handle,0,100,20,50);
+  crunch(hbase,heval,systype,quantity,0,100,20,50);
 }
 
 
 
-void crunch(TH1D* hbase, TH1D* heval, const char* handle, double xmin, double xmax, double fmin, double fmax)
+void crunch(TH1D* hbase, TH1D* heval, const char* systype, const char* quantity, double xmin, double xmax, double fmin, double fmax)
 {
 
   if ( !hbase || !heval )
@@ -187,8 +237,8 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle, double xmin, double xm
   leg_comp->SetTextFont(62);
   leg_comp->SetTextSize(0.075);
   leg_comp->SetFillStyle(0);
-  leg_comp->AddEntry(hbase,"base","p");
-  leg_comp->AddEntry(heval,"eval","p");
+  leg_comp->AddEntry(hbase,Form("base for %s",quantity),"p");
+  leg_comp->AddEntry(heval,systype,"p");
   leg_comp->Draw();
 
   //-- ratio
@@ -227,10 +277,11 @@ void crunch(TH1D* hbase, TH1D* heval, const char* handle, double xmin, double xm
   leg_ratio->SetTextFont(62);
   leg_ratio->SetTextSize(0.090);
   leg_ratio->SetFillStyle(0);
-  leg_ratio->AddEntry(hratio,Form("Sys = %.2f %%", fabs(1.0 - fun->GetParameter(0)) * 100.0),"p");
+  //leg_ratio->AddEntry(hratio,Form("Sys Uncert on %s = %.2f%%", quantity, fabs(1.0 - fun->GetParameter(0)) * 100.0),"p");
+  leg_ratio->AddEntry(hratio,Form("Sys = %.2f%%", fabs(1.0 - fun->GetParameter(0)) * 100.0),"p");
   leg_ratio->Draw();
-  ccomp->Print(Form("Systematics/sys_%s.png",handle));
-  ccomp->Print(Form("Systematics/sys_%s.pdf",handle));
+  ccomp->Print(Form("Systematics/sys_%s_%s.png",quantity,systype));
+  ccomp->Print(Form("Systematics/sys_%s_%s.pdf",quantity,systype));
   delete cline;
   delete ccomp;
   delete empty_ratio;

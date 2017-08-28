@@ -5,33 +5,36 @@ void calc_subevents(const TProfile* tp1f_for, const TProfile* tp1f_4aabb, const 
                     int rebin)
 {
 
-  TH1D* th1d_2aa = tp1f_2aa->ProjectionX("th1d_2aa");
-  TH1D* th1d_2bb = tp1f_2bb->ProjectionX("th1d_2bb");
-  TH1D* th1d_2ab = tp1f_2ab->ProjectionX("th1d_2ab");
-  TH1D* th1d_4aabb = tp1f_4aabb->ProjectionX("th1d_4aabb");
-  TH1D* th1d_4abab = tp1f_4abab->ProjectionX("th1d_4abab");
+  double rand = gRandom->Rndm();
+  int helper = rand*10000;
 
-  TH1D* th1d_222aa = (TH1D*)th1d_2aa->Clone("th1d_222aa");
-  TH1D* th1d_222bb = (TH1D*)th1d_2bb->Clone("th1d_222bb");
-  TH1D* th1d_222ab = (TH1D*)th1d_2ab->Clone("th1d_222ab");
-  TH1D* th1d_122ab = (TH1D*)th1d_2ab->Clone("th1d_122ab");
-  TH1D* th1d_2aabb = (TH1D*)th1d_2aa->Clone("th1d_2aabb");
+  TH1D* th1d_2aa = tp1f_2aa->ProjectionX(Form("th1d_2aa_%d",helper));
+  TH1D* th1d_2bb = tp1f_2bb->ProjectionX(Form("th1d_2bb_%d",helper));
+  TH1D* th1d_2ab = tp1f_2ab->ProjectionX(Form("th1d_2ab_%d",helper));
+  TH1D* th1d_4aabb = tp1f_4aabb->ProjectionX(Form("th1d_4aabb_%d",helper));
+  TH1D* th1d_4abab = tp1f_4abab->ProjectionX(Form("th1d_4abab_%d",helper));
+
+  TH1D* th1d_222aa = (TH1D*)th1d_2aa->Clone(Form("th1d_222aa_%d",helper));
+  TH1D* th1d_222bb = (TH1D*)th1d_2bb->Clone(Form("th1d_222bb_%d",helper));
+  TH1D* th1d_222ab = (TH1D*)th1d_2ab->Clone(Form("th1d_222ab_%d",helper));
+  TH1D* th1d_122ab = (TH1D*)th1d_2ab->Clone(Form("th1d_122ab_%d",helper));
+  TH1D* th1d_2aabb = (TH1D*)th1d_2aa->Clone(Form("th1d_2aabb_%d",helper));
   th1d_222aa->Multiply(th1d_2aa); th1d_222aa->Scale(2.0);
   th1d_222bb->Multiply(th1d_2bb); th1d_222bb->Scale(2.0);
   th1d_222ab->Multiply(th1d_2ab); th1d_222ab->Scale(2.0);
   th1d_122ab->Multiply(th1d_2ab);
   th1d_2aabb->Multiply(th1d_2bb);
 
-  TH1D* th1d_caabb = (TH1D*)th1d_4aabb->Clone("th1d_caabb");
-  TH1D* th1d_cabab = (TH1D*)th1d_4abab->Clone("th1d_cabab");
+  TH1D* th1d_caabb = (TH1D*)th1d_4aabb->Clone(Form("th1d_caabb_%d",helper));
+  TH1D* th1d_cabab = (TH1D*)th1d_4abab->Clone(Form("th1d_cabab_%d",helper));
   th1d_caabb->Add(th1d_222ab,-1.0);
   th1d_cabab->Add(th1d_2aabb,-1.0);
   th1d_cabab->Add(th1d_122ab,-1.0);
 
-  TH1D* th1d_v24aabb = (TH1D*)th1d_4aabb->Clone("th1d_v24aabb");
-  TH1D* th1d_v24abab = (TH1D*)th1d_4abab->Clone("th1d_v24abab");
+  TH1D* th1d_v24aabb = (TH1D*)th1d_4aabb->Clone(Form("th1d_v24aabb_%d",helper));
+  TH1D* th1d_v24abab = (TH1D*)th1d_4abab->Clone(Form("th1d_v24abab_%d",helper));
 
-  TH1D* th1d_v22ab = (TH1D*)th1d_2ab->Clone("th1d_v22ab");
+  TH1D* th1d_v22ab = (TH1D*)th1d_2ab->Clone(Form("th1d_v22ab_%d",helper));
 
   int nbins = th1d_2aa->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
@@ -88,20 +91,20 @@ void calc_subevents(const TProfile* tp1f_for, const TProfile* tp1f_4aabb, const 
   // TProfile* tp1f_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c22");
   // TProfile* tp1f_for = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c24");
 
-  TH1D* th1d_for = tp1f_for->ProjectionX("th1d_for"); // <4>
-  TH1D* th1d_two = tp1f_two->ProjectionX("th1d_two"); // <2>
+  TH1D* th1d_for = tp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
+  TH1D* th1d_two = tp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
 
-  TH1D* th1d_222 = (TH1D*)th1d_two->Clone("th1d_222"); // 2<2>^2
+  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%d",helper)); // 2<2>^2
   th1d_222->Multiply(th1d_two);
   th1d_222->Scale(2);
 
-  TH1D* th1d_c24 = (TH1D*)th1d_for->Clone("th1d_c24"); // c2{4} = <4> - 2<2>^2
+  TH1D* th1d_c24 = (TH1D*)th1d_for->Clone(Form("th1d_c24_%d",helper)); // c2{4} = <4> - 2<2>^2
   th1d_c24->Add(th1d_222,-1);
 
-  TH1D* th1d_c22 = (TH1D*)th1d_two->Clone("th1d_c22"); // c2{2} = <2>
+  TH1D* th1d_c22 = (TH1D*)th1d_two->Clone(Form("th1d_c22_%d",helper)); // c2{2} = <2>
 
-  TH1D* th1d_v24 = (TH1D*)th1d_c24->Clone("th1d_v24");
-  TH1D* th1d_v22 = (TH1D*)th1d_c24->Clone("th1d_v22");
+  TH1D* th1d_v24 = (TH1D*)th1d_c24->Clone(Form("th1d_v24_%d",helper));
+  TH1D* th1d_v22 = (TH1D*)th1d_c24->Clone(Form("th1d_v22_%d",helper));
 
   //nbins = th1d_c24->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
