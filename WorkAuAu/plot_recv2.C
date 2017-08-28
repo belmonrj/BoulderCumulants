@@ -112,6 +112,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   gv26_sys->Draw("E5 same");
   c1->Print(Form("FigsRecursion/recursion_%s_v26.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v26.pdf",handle));
+  gv22_sys->Draw("E5 same");
+  gv24_sys->Draw("E5 same");
   th1d_v24->SetMarkerStyle(kOpenSquare);
   th1d_v24->SetMarkerColor(kBlue);
   th1d_v24->SetLineColor(kBlue);
@@ -123,8 +125,6 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   leg->AddEntry(th1d_v24,"v_{2}{4}","p");
   leg->AddEntry(th1d_v22,"v_{2}{2}","p");
   leg->Draw();
-  gv22_sys->Draw("E5 same");
-  gv24_sys->Draw("E5 same");
   c1->Print(Form("FigsRecursion/recursion_%s_v2642.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v2642.pdf",handle));
 
@@ -155,6 +155,9 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   gv28_sys->Draw("E5 same");
   c1->Print(Form("FigsRecursion/recursion_%s_v28.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v28.pdf",handle));
+  gv22_sys->Draw("E5 same");
+  gv24_sys->Draw("E5 same");
+  gv26_sys->Draw("E5 same");
   th1d_v26->Draw("same ex0p");
   th1d_v24->Draw("same ex0p");
   th1d_v22->Draw("same ex0p");
@@ -163,9 +166,6 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   leg->AddEntry(th1d_v24,"v_{2}{4}","p");
   leg->AddEntry(th1d_v22,"v_{2}{2}","p");
   leg->Draw();
-  gv22_sys->Draw("E5 same");
-  gv24_sys->Draw("E5 same");
-  gv26_sys->Draw("E5 same");
   c1->Print(Form("FigsRecursion/recursion_%s_v28642.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v28642.pdf",handle));
 
