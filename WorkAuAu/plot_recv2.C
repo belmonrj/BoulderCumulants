@@ -93,11 +93,11 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   if ( iscent )
   {
   th1d_v22->GetXaxis()->SetRangeUser(1,90);
-  th1d_v24->GetXaxis()->SetRangeUser(6,65);
-  th1d_v26->GetXaxis()->SetRangeUser(6,60);
+  th1d_v24->GetXaxis()->SetRangeUser(7,65);
+  th1d_v26->GetXaxis()->SetRangeUser(7,60);
   gv22_sys->GetXaxis()->SetRangeUser(1,90);
-  gv24_sys->GetXaxis()->SetRangeUser(6,65);
-  gv26_sys->GetXaxis()->SetRangeUser(6,60);
+  gv24_sys->GetXaxis()->SetRangeUser(7,65);
+  gv26_sys->GetXaxis()->SetRangeUser(7,60);
   }
   th1d_v26->SetMarkerStyle(kOpenCircle);
   th1d_v26->SetMarkerColor(kBlack);
