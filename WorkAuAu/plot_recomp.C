@@ -142,8 +142,8 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
 
   //-- ratio
   pcumu4->cd();
-  ymin = -1.5e-5;
-  ymax = 1.5e-5;
+  ymin = -1.4999e-5;
+  ymax = 1.4999e-5;
   TH2D* empty_cumu4 = new TH2D("empty_cumu4","",1,xmin,xmax,1,ymin,ymax);
   empty_cumu4->Draw();
   if ( iscent ) empty_cumu4->GetXaxis()->SetTitle("Centrality (%)");
@@ -231,8 +231,8 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
 
   //-- ratio
   pcumu6->cd();
-  ymin = -2e-7;
-  ymax = 2e-7;
+  ymin = -1.9999e-7;
+  ymax = 1.9999e-7;
   TH2D* empty_cumu6 = new TH2D("empty_cumu6","",1,xmin,xmax,1,ymin,ymax);
   empty_cumu6->Draw();
   if ( iscent ) empty_cumu6->GetXaxis()->SetTitle("Centrality (%)");
@@ -330,8 +330,8 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
 
   //-- ratio
   pcumu8->cd();
-  ymin = -5e-9;
-  ymax = 5e-9;
+  ymin = -3.9999e-9;
+  ymax = 3.9999e-9;
   TH2D* empty_cumu8 = new TH2D("empty_cumu8","",1,xmin,xmax,1,ymin,ymax);
   empty_cumu8->Draw();
   if ( iscent ) empty_cumu8->GetXaxis()->SetTitle("Centrality (%)");
