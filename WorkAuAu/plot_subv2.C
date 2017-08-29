@@ -15,7 +15,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   {
     double y = gv22_sys->GetBinContent(i);
     double err = y * 0.1;
-    //if ( i < 10 ) err = 0.005;
+    if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv22_sys->SetBinError(i, err);
   } // i
   TH1D* gv22ab_sys = (TH1D*) th1d_v22ab->Clone("gv22ab_sys");
@@ -26,6 +26,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   {
     double y = gv22ab_sys->GetBinContent(i);
     double err = y * 0.1;
+    if ( err < 0.005 ) err = 0.005;
     //if ( i < 10 ) err = 0.005;
     if ( y > 0 ) gv22ab_sys->SetBinError(i, err);
   } // i
@@ -37,6 +38,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   {
     double y = gv24_sys->GetBinContent(i);
     double err = y * 0.1;
+    if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv24_sys->SetBinError(i, err);
   } // i
   TH1D* gv24aabb_sys = (TH1D*) th1d_v24aabb->Clone("gv24aabb_sys");
@@ -47,6 +49,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   {
     double y = gv24aabb_sys->GetBinContent(i);
     double err = y * 0.1;
+    if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv24aabb_sys->SetBinError(i, err);
   } // i
   TH1D* gv24abab_sys = (TH1D*) th1d_v24abab->Clone("gv24abab_sys");
@@ -57,6 +60,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   {
     double y = gv24abab_sys->GetBinContent(i);
     double err = y * 0.1;
+    if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv24abab_sys->SetBinError(i, err);
   } // i
 
