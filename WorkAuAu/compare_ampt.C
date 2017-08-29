@@ -530,6 +530,7 @@ void compare_sigma()
   // ---
 
   empty->Draw();
+  th1d_SVG_data->GetXaxis()->SetRangeUser(30,470);
   th1d_SVG_data->Draw("same ex0p");
   clonet->Draw("HIST L same");
   th1d_SVG_ampt->Draw("LE3 same");
@@ -542,6 +543,21 @@ void compare_sigma()
   leg->Draw();
   c1->Print("FigsAmpt/sigma_ampt_x02.png");
   c1->Print("FigsAmpt/sigma_ampt_x02.pdf");
+  TH1D* gsys = (TH1D*) th1d_SVG_data->Clone("gsys");
+  gsys->SetMarkerStyle(0);
+  gsys->SetMarkerSize(0);
+  gsys->SetFillColorAlpha(kBlack, 0.35);
+  for ( int i = 0; i < gsys->GetNbinsX(); ++i )
+  {
+    double y = gsys->GetBinContent(i);
+    double err = y * 0.12;
+    //if ( i < 10 ) err = 0.005;
+    if ( y > 0 ) gsys->SetBinError(i, err);
+  } // i
+  gsys->GetXaxis()->SetRangeUser(30,470);
+  gsys->Draw("same E5");
+  c1->Print("FigsAmpt/sigma_ampt_x03.png");
+  c1->Print("FigsAmpt/sigma_ampt_x03.pdf");
 
   delete c1;
 

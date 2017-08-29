@@ -274,6 +274,7 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   if ( iscent )
   {
   empty->Draw();
+  th1d_SVG->GetXaxis()->SetRangeUser(7,65);
   th1d_SVG->Draw("same ex0p");
   tg_sig1->Draw("l");
   tg_sig2->Draw("l");
@@ -286,6 +287,21 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   leg->Draw();
   c1->Print(Form("FigsSigma/sigma_%s_x03.png",handle));
   c1->Print(Form("FigsSigma/sigma_%s_x03.pdf",handle));
+  TH1D* gsys = (TH1D*) th1d_SVG->Clone("gsys");
+  gsys->SetMarkerStyle(0);
+  gsys->SetMarkerSize(0);
+  gsys->SetFillColorAlpha(kBlack, 0.35);
+  for ( int i = 0; i < gsys->GetNbinsX(); ++i )
+  {
+    double y = gsys->GetBinContent(i);
+    double err = y * 0.12;
+    //if ( i < 10 ) err = 0.005;
+    if ( y > 0 ) gsys->SetBinError(i, err);
+  } // i
+  gsys->GetXaxis()->SetRangeUser(7,65);
+  gsys->Draw("same E5");
+  c1->Print(Form("FigsSigma/sigma_%s_x04.png",handle));
+  c1->Print(Form("FigsSigma/sigma_%s_x04.pdf",handle));
   }
 
 }
