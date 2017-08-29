@@ -118,6 +118,16 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
   TProfile* eval_2aa = (TProfile*)feval->Get("centrality_os_fvtxs_tracks_c22");
   TProfile* eval_2bb = (TProfile*)feval->Get("centrality_os_fvtxn_tracks_c22");
   TProfile* eval_2ab = (TProfile*)feval->Get("centrality_os_fvtxsfvtxn_tracks_c22");
+  if ( strcmp(systype,"acce") == 0 )
+  {
+  eval_for = (TProfile*)feval->Get("centrality_ac_fvtxc_tracks_c24");
+  eval_4aabb = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c24a");
+  eval_4abab = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c24b");
+  eval_two = (TProfile*)feval->Get("centrality_ac_fvtxc_tracks_c22");
+  eval_2aa = (TProfile*)feval->Get("centrality_ac_fvtxs_tracks_c22");
+  eval_2bb = (TProfile*)feval->Get("centrality_ac_fvtxn_tracks_c22");
+  eval_2ab = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c22");
+  }
   TH1D* heval_v24 = NULL;
   TH1D* heval_v24aabb = NULL;
   TH1D* heval_v24abab = NULL;
