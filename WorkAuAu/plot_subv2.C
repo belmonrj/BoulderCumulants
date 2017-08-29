@@ -82,10 +82,6 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   gv24_sys->Draw("E5 same");
   gv24aabb_sys->Draw("E5 same");
   gv24abab_sys->Draw("E5 same");
-  th1d_v24->SetMarkerStyle(kOpenCircle);
-  th1d_v24->SetMarkerColor(kBlack);
-  th1d_v24->SetLineColor(kBlack);
-  th1d_v24->Draw("same ex0p");
   th1d_v24aabb->SetMarkerStyle(kOpenSquare);
   th1d_v24aabb->SetMarkerColor(kRed);
   th1d_v24aabb->SetLineColor(kRed);
@@ -94,6 +90,10 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   th1d_v24abab->SetMarkerColor(kBlue);
   th1d_v24abab->SetLineColor(kBlue);
   th1d_v24abab->Draw("same ex0p");
+  th1d_v24->SetMarkerStyle(kOpenCircle);
+  th1d_v24->SetMarkerColor(kBlack);
+  th1d_v24->SetLineColor(kBlack);
+  th1d_v24->Draw("same ex0p");
   //if ( leg ) delete leg;
   TLegend* leg = new TLegend(0.62,0.72,0.88,0.92);
   //leg->SetHeader(type);
@@ -116,13 +116,13 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   th1d_v22->SetMarkerStyle(kOpenCross);
   th1d_v22->SetMarkerColor(kRed);
   th1d_v22->SetLineColor(kRed);
-  gv22_sys->Draw("same E5");
   th1d_v22->Draw("same ex0p");
+  gv22_sys->Draw("same E5");
   th1d_v22ab->SetMarkerStyle(kOpenDiamond);
   th1d_v22ab->SetMarkerColor(kMagenta+2);
   th1d_v22ab->SetLineColor(kMagenta+2);
-  gv22ab_sys->Draw("same E5");
   th1d_v22ab->Draw("same ex0p");
+  gv22ab_sys->Draw("same E5");
   TLegend* leg2 = new TLegend(0.48,0.72,0.62,0.88);
   //leg2->SetHeader("Run14AuAu200");
   leg2->SetTextSize(0.045);
