@@ -14,6 +14,8 @@ void process_cumulants_centrality()
 void do_process(const char* type, int rebin)
 {
 
+  TCanvas* c1 = new TCanvas("c1","");
+
   // --- get the file with the cumulants (considering making a function with a flag to take the collision system)
   TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
 
@@ -368,7 +370,7 @@ void do_process(const char* type, int rebin)
   // tge_star_v2LYZS->Draw("p");
   // tge_star_v2LYZP->Draw("p");
   leg->Draw();
-  TLegend* leg2 = new TLegend(0.18,0.68,0.38,0.88);
+  TLegend* leg2 = new TLegend(0.18,0.78,0.38,0.93);
   leg2->SetHeader("STAR, PRC 72 014904 (2005)");
   leg2->AddEntry(tge_star_v22,"v_{2}{2} |#eta|<1","p");
   leg2->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1","p");
@@ -379,6 +381,7 @@ void do_process(const char* type, int rebin)
   leg2->Draw();
   c1->Print(Form("FigsFour/simpleR%d_v22andv24andgapandSTAR_%s.png",rebin,type));
   c1->Print(Form("FigsFour/simpleR%d_v22andv24andgapandSTAR_%s.pdf",rebin,type));
+  // ---
   th1d_corr_v22->SetLineColor(kBlack);
   th1d_corr_v22->SetMarkerColor(kRed);
   th1d_corr_v22->SetMarkerStyle(kOpenDiamond);
@@ -401,9 +404,49 @@ void do_process(const char* type, int rebin)
   th1d_corr_v22->Scale(1.25);
   th1d_corr_v24->Scale(1.25);
   th1d_corr_v2G->Scale(1.25);
-  th1d_corr_v22->GetXaxis()->SetRangeUser(0,90);
-  th1d_corr_v24->GetXaxis()->SetRangeUser(5,70);
-  th1d_corr_v2G->GetXaxis()->SetRangeUser(0,90);
+  // --- get the systmatics histos
+  TH1D* gv22_sys = (TH1D*) th1d_corr_v22->Clone("gv22_sys");
+  gv22_sys->SetMarkerStyle(0);
+  gv22_sys->SetMarkerSize(0);
+  gv22_sys->SetFillColorAlpha(kRed, 0.35);
+  for ( int i = 0; i < gv22_sys->GetNbinsX(); ++i )
+  {
+    double y = gv22_sys->GetBinContent(i);
+    double err = y * 0.1;
+    //if ( i < 10 ) err = 0.005;
+    if ( y > 0 ) gv22_sys->SetBinError(i, err);
+  } // i
+  TH1D* gv22ab_sys = (TH1D*) th1d_corr_v2G->Clone("gv22ab_sys");
+  gv22ab_sys->SetMarkerStyle(0);
+  gv22ab_sys->SetMarkerSize(0);
+  gv22ab_sys->SetFillColorAlpha(kMagenta+2, 0.35);
+  for ( int i = 0; i < gv22ab_sys->GetNbinsX(); ++i )
+  {
+    double y = gv22ab_sys->GetBinContent(i);
+    double err = y * 0.1;
+    //if ( i < 10 ) err = 0.005;
+    if ( y > 0 ) gv22ab_sys->SetBinError(i, err);
+  } // i
+  TH1D* gv24_sys = (TH1D*) th1d_corr_v24->Clone("gv24_sys");
+  gv24_sys->SetMarkerStyle(0);
+  gv24_sys->SetMarkerSize(0);
+  gv24_sys->SetFillColorAlpha(kBlue, 0.35);
+  for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
+  {
+    double y = gv24_sys->GetBinContent(i);
+    double err = y * 0.1;
+    if ( y > 0 ) gv24_sys->SetBinError(i, err);
+  } // i
+  // ---
+  gv22_sys->GetXaxis()->SetRangeUser(1,90);
+  gv24_sys->GetXaxis()->SetRangeUser(7,65);
+  gv22ab_sys->GetXaxis()->SetRangeUser(1,90);
+  th1d_corr_v22->GetXaxis()->SetRangeUser(1,90);
+  th1d_corr_v24->GetXaxis()->SetRangeUser(7,65);
+  th1d_corr_v2G->GetXaxis()->SetRangeUser(1,90);
+  gv22_sys->Draw("same E5");
+  gv22ab_sys->Draw("same E5");
+  gv24_sys->Draw("same E5");
   th1d_corr_v22->Draw("ex0p same");
   th1d_corr_v24->Draw("ex0p same");
   th1d_corr_v2G->Draw("ex0p same");
@@ -413,7 +456,7 @@ void do_process(const char* type, int rebin)
   // tge_star_v2LYZS->Draw("p");
   // tge_star_v2LYZP->Draw("p");
   delete leg;
-  leg = new TLegend(0.62,0.68,0.88,0.88);
+  leg = new TLegend(0.62,0.73,0.88,0.93);
   //leg->SetHeader("Scaled by 1.35");
   //leg->SetHeader("Scaled by 1.1");
   //leg->SetHeader("Scaled by 1.2");
