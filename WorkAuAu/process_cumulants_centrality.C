@@ -412,8 +412,8 @@ void do_process(const char* type, int rebin)
   for ( int i = 0; i < gv22_sys->GetNbinsX(); ++i )
   {
     double y = gv22_sys->GetBinContent(i);
-    double err = y * 0.1;
-    if ( err < 0.005 ) err = 0.005;
+    double err = y * 0.09;
+    if ( err < 0.005*1.25 ) err = 0.005*1.25;
     if ( y > 0 ) gv22_sys->SetBinError(i, err);
   } // i
   TH1D* gv22ab_sys = (TH1D*) th1d_corr_v2G->Clone("gv22ab_sys");
@@ -424,7 +424,7 @@ void do_process(const char* type, int rebin)
   {
     double y = gv22ab_sys->GetBinContent(i);
     double err = y * 0.1;
-    if ( err < 0.005 ) err = 0.005;
+    if ( err < 0.005*1.25 ) err = 0.005*1.25;
     if ( y > 0 ) gv22ab_sys->SetBinError(i, err);
   } // i
   TH1D* gv24_sys = (TH1D*) th1d_corr_v24->Clone("gv24_sys");
@@ -434,8 +434,8 @@ void do_process(const char* type, int rebin)
   for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
   {
     double y = gv24_sys->GetBinContent(i);
-    double err = y * 0.1;
-    if ( err < 0.005 ) err = 0.005;
+    double err = y * 0.06;
+    if ( err < 0.005*1.25 ) err = 0.005*1.25;
     if ( y > 0 ) gv24_sys->SetBinError(i, err);
   } // i
   // ---

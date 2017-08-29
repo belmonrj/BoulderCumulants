@@ -14,7 +14,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   for ( int i = 0; i < gv22_sys->GetNbinsX(); ++i )
   {
     double y = gv22_sys->GetBinContent(i);
-    double err = y * 0.1;
+    double err = y * 0.09;
     if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv22_sys->SetBinError(i, err);
   } // i
@@ -37,7 +37,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
   {
     double y = gv24_sys->GetBinContent(i);
-    double err = y * 0.1;
+    double err = y * 0.06;
     if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv24_sys->SetBinError(i, err);
   } // i
@@ -48,7 +48,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   for ( int i = 0; i < gv24aabb_sys->GetNbinsX(); ++i )
   {
     double y = gv24aabb_sys->GetBinContent(i);
-    double err = y * 0.1;
+    double err = y * 0.07;
     if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv24aabb_sys->SetBinError(i, err);
   } // i
@@ -59,7 +59,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   for ( int i = 0; i < gv24abab_sys->GetNbinsX(); ++i )
   {
     double y = gv24abab_sys->GetBinContent(i);
-    double err = y * 0.1;
+    double err = y * 0.06;
     if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv24abab_sys->SetBinError(i, err);
   } // i
