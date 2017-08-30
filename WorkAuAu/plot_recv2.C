@@ -80,6 +80,32 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   } // i
 
 
+  // --- set up the various drawing options
+  if ( iscent )
+  {
+  th1d_v22->GetXaxis()->SetRangeUser(1,90);
+  th1d_v24->GetXaxis()->SetRangeUser(7,65);
+  th1d_v26->GetXaxis()->SetRangeUser(7,60);
+  th1d_v28->GetXaxis()->SetRangeUser(10,50);
+  gv22_sys->GetXaxis()->SetRangeUser(1,90);
+  gv24_sys->GetXaxis()->SetRangeUser(7,65);
+  gv26_sys->GetXaxis()->SetRangeUser(7,60);
+  gv28_sys->GetXaxis()->SetRangeUser(10,50);
+  }
+  th1d_v26->SetMarkerStyle(kOpenCircle);
+  th1d_v26->SetMarkerColor(kBlack);
+  th1d_v26->SetLineColor(kBlack);
+  th1d_v24->SetMarkerStyle(kOpenSquare);
+  th1d_v24->SetMarkerColor(kBlue);
+  th1d_v24->SetLineColor(kBlue);
+  th1d_v22->SetMarkerStyle(kOpenCross);
+  th1d_v22->SetMarkerColor(kRed);
+  th1d_v22->SetLineColor(kRed);
+  th1d_v28->SetMarkerStyle(kFullDiamond);
+  th1d_v28->SetMarkerColor(kGreen+2);
+  th1d_v28->SetLineColor(kGreen+2);
+  // ---
+
   // --- considering passing these as arguments...
   double xmin = 0.0;
   double xmax = 100.0;
@@ -93,84 +119,46 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("v_{2}");
-  if ( iscent )
-  {
-  th1d_v22->GetXaxis()->SetRangeUser(1,90);
-  th1d_v24->GetXaxis()->SetRangeUser(7,65);
-  th1d_v26->GetXaxis()->SetRangeUser(7,60);
-  gv22_sys->GetXaxis()->SetRangeUser(1,90);
-  gv24_sys->GetXaxis()->SetRangeUser(7,65);
-  gv26_sys->GetXaxis()->SetRangeUser(7,60);
-  }
-  th1d_v26->SetMarkerStyle(kOpenCircle);
-  th1d_v26->SetMarkerColor(kBlack);
-  th1d_v26->SetLineColor(kBlack);
-  th1d_v26->Draw("same ex0p");
-  TLegend* leg = new TLegend(0.66,0.72,0.92,0.92);
-  //leg->SetHeader("Run14AuAu200");
-  leg->SetTextSize(0.045);
-  leg->SetFillStyle(0);
-  leg->AddEntry(th1d_v26,"v_{2}{6}","p");
-  leg->Draw();
-  gv26_sys->Draw("E5 same");
-  c1->Print(Form("FigsRecursion/recursion_%s_v26.png",handle));
-  c1->Print(Form("FigsRecursion/recursion_%s_v26.pdf",handle));
+  // --- first v22
   gv22_sys->Draw("E5 same");
-  gv24_sys->Draw("E5 same");
-  th1d_v24->SetMarkerStyle(kOpenSquare);
-  th1d_v24->SetMarkerColor(kBlue);
-  th1d_v24->SetLineColor(kBlue);
-  th1d_v24->Draw("same ex0p");
-  th1d_v22->SetMarkerStyle(kOpenCross);
-  th1d_v22->SetMarkerColor(kRed);
-  th1d_v22->SetLineColor(kRed);
   th1d_v22->Draw("same ex0p");
-  leg->AddEntry(th1d_v24,"v_{2}{4}","p");
-  leg->AddEntry(th1d_v22,"v_{2}{2}","p");
-  leg->Draw();
-  c1->Print(Form("FigsRecursion/recursion_%s_v2642.png",handle));
-  c1->Print(Form("FigsRecursion/recursion_%s_v2642.pdf",handle));
-
-  ymin = 0.0;
-  ymax = 0.12;
-  if ( empty ) delete empty;
-  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
-  empty->Draw();
-  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
-  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("v_{2}");
-  if ( iscent )
-  {
-  th1d_v28->GetXaxis()->SetRangeUser(10,50);
-  gv28_sys->GetXaxis()->SetRangeUser(10,50);
-  }
-  th1d_v28->SetMarkerStyle(kFullDiamond);
-  th1d_v28->SetMarkerColor(kGreen+2);
-  th1d_v28->SetLineColor(kGreen+2);
-  th1d_v28->Draw("same ex0p");
-  if ( leg ) delete leg;
-  leg = new TLegend(0.66,0.72,0.92,0.92);
-  //leg->SetHeader("Run14AuAu200");
-  leg->SetTextSize(0.045);
-  leg->SetFillStyle(0);
-  leg->AddEntry(th1d_v28,"v_{2}{8}","p");
-  leg->Draw();
+  TLegend* leg22 = new TLegend(0.66,0.87,0.92,0.92);
+  leg22->SetTextSize(0.05);
+  leg22->SetFillStyle(0);
+  leg22->AddEntry(th1d_v22,"v_{2}{2}","p");
+  leg22->Draw();
+  c1->Print(Form("FigsRecursion/recursion_%s_v22.png",handle));
+  c1->Print(Form("FigsRecursion/recursion_%s_v22.pdf",handle));
+  // --- then animate on v24
+  gv24_sys->Draw("E5 same");
+  th1d_v24->Draw("same ex0p");
+  TLegend* leg24 = new TLegend(0.66,0.82,0.92,0.87);
+  leg24->SetTextSize(0.05);
+  leg24->SetFillStyle(0);
+  leg24->AddEntry(th1d_v24,"v_{2}{4}","p");
+  leg24->Draw();
+  c1->Print(Form("FigsRecursion/recursion_%s_v224.png",handle));
+  c1->Print(Form("FigsRecursion/recursion_%s_v224.pdf",handle));
+  // --- then animate on v26
+  gv26_sys->Draw("E5 same");
+  th1d_v26->Draw("same ex0p");
+  TLegend* leg26 = new TLegend(0.66,0.77,0.92,0.82);
+  leg26->SetTextSize(0.05);
+  leg26->SetFillStyle(0);
+  leg26->AddEntry(th1d_v26,"v_{2}{6}","p");
+  leg26->Draw();
+  c1->Print(Form("FigsRecursion/recursion_%s_v2246.png",handle));
+  c1->Print(Form("FigsRecursion/recursion_%s_v2246.pdf",handle));
+  // --- then animate on v28
   gv28_sys->Draw("E5 same");
-  c1->Print(Form("FigsRecursion/recursion_%s_v28.png",handle));
-  c1->Print(Form("FigsRecursion/recursion_%s_v28.pdf",handle));
-  gv22_sys->Draw("E5 same");
-  gv24_sys->Draw("E5 same");
-  gv26_sys->Draw("E5 same");
-  th1d_v26->Draw("same ex0p");
-  th1d_v24->Draw("same ex0p");
-  th1d_v22->Draw("same ex0p");
   th1d_v28->Draw("same ex0p");
-  leg->AddEntry(th1d_v26,"v_{2}{6}","p");
-  leg->AddEntry(th1d_v24,"v_{2}{4}","p");
-  leg->AddEntry(th1d_v22,"v_{2}{2}","p");
-  leg->Draw();
-  c1->Print(Form("FigsRecursion/recursion_%s_v28642.png",handle));
-  c1->Print(Form("FigsRecursion/recursion_%s_v28642.pdf",handle));
+  TLegend* leg28 = new TLegend(0.66,0.72,0.92,0.77);
+  leg28->SetTextSize(0.05);
+  leg28->SetFillStyle(0);
+  leg28->AddEntry(th1d_v28,"v_{2}{8}","p");
+  leg28->Draw();
+  c1->Print(Form("FigsRecursion/recursion_%s_v22468.png",handle));
+  c1->Print(Form("FigsRecursion/recursion_%s_v22468.pdf",handle));
 
   if ( empty ) delete empty;
   if ( c1 ) delete c1;
