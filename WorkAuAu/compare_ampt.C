@@ -65,25 +65,39 @@ void compare_4part()
 
   // --------------------------------------------------------------------------------
   // --- turn the ampt c24 into a tgrapherrors
-  // int n = th1d_c24_ampt->GetNbinsX();
-  // double* x = new double[n];
-  // double* y = new double[n];
-  // double* ex = new double[n];
-  // double* ey = new double[n];
-  // for ( int i = 0; i < n; ++i )
-  //   {
-  //     x[i] = th1d_c24_ampt->GetBinCenter(i+1);
-  //     y[i] = th1d_c24_ampt->GetBinContent(i+1);
-  //     ex[i] = 0;
-  //     ey[i] = th1d_c24_ampt->GetBinError(i+1);
-  //   }
-  // TGraphErrors* tge_c24_ampt = new TGraphErrors(n,x,y,ex,ey);
+  int n = th1d_c24_ampt->GetNbinsX();
+  double* x = new double[n];
+  double* y = new double[n];
+  double* ex = new double[n];
+  double* ey = new double[n];
+  int count = 0;
+  for ( int i = 0; i < n; ++i )
+    {
+      if ( i < 1 ) continue; // adjust as needed...
+      x[count] = th1d_c24_ampt->GetBinCenter(i+1);
+      y[count] = th1d_c24_ampt->GetBinContent(i+1);
+      ex[count] = 0;
+      ey[count] = th1d_c24_ampt->GetBinError(i+1);
+      x[count] *= 1.15; // scaling to match ncharge distribution
+      if ( count < 10 )
+        {
+          //cout << count << " " << y[count] << " " << ey[count] << " " << 1.0/sqrt(tp1f_for_ampt->GetBinEntries(count+1)) << endl;
+          cout << count << " " << y[count] << " " << ey[count] << " "
+               << 1.0/sqrt(tp1f_for_ampt->GetBinEntries(count+1)) << " "
+               << ey[count]*sqrt(tp1f_for_ampt->GetBinEntries(count+1)) << endl;
+        }
+      ++count;
+    }
+  // --- error bars need some adjustment...
+  // ey[0] = ey[2];
+  // ey[1] = ey[2];
+  TGraphErrors* tge_c24_ampt = new TGraphErrors(count,x,y,ex,ey);
   // --------------------------------------------------------------------------------
   // --- make some plots
 
   // --------------------------------------------------------------------------------
   // --- turn the ampt c24 into a tgrapherrors
-  int n = th1d_c24_ampt->GetNbinsX();
+  //int n = th1d_c24_ampt->GetNbinsX();
   for ( int i = 0; i < n; ++i )
     {
       double c24 = th1d_c24_ampt->GetBinContent(i+1);
@@ -109,7 +123,8 @@ void compare_4part()
   // --- make some plots
 
   double xmin = 0.0;
-  double xmax = 99.9;
+  //double xmax = 99.9;
+  double xmax = 49.9;
   double ymin = -1e-4;
   double ymax = 1e-4;
 
@@ -207,19 +222,20 @@ void compare_4part()
   // --- this part is tricky
   //th1d_c24_ampt->SetLineColor(kBlack);
   //th1d_c24_ampt->Draw("same HIST L");
-  // tge_c24_ampt->SetLineColor(kBlack);
-  // tge_c24_ampt->SetFillColor(kGray);
-  // tge_c24_ampt->Draw("LE3");
+  tge_c24_ampt->SetLineColor(kGreen+2);
+  tge_c24_ampt->SetLineWidth(2);
+  tge_c24_ampt->SetFillColorAlpha(kGreen+2,0.35);
+  tge_c24_ampt->Draw("L3");
   //th1d_c24_ampt->GetXaxis()->SetRangeUser(4,xmax);
-  th1d_c24_ampt->GetXaxis()->SetRangeUser(5,xmax);
-  th1d_c24_ampt->SetMarkerSize(0);
-  th1d_c24_ampt->SetLineWidth(2);
-  th1d_c24_ampt->SetLineColor(kGreen+2);
-  th1d_c24_ampt->SetFillColorAlpha(kGreen+2, 0.4);
-  TH1D* cloned = (TH1D*)th1d_c24_ampt->Clone("cloned");
-  cloned->SetFillColorAlpha(kGreen+2,0.0);
-  cloned->Draw("HIST L same");
-  th1d_c24_ampt->Draw("LE3 same");
+  // th1d_c24_ampt->GetXaxis()->SetRangeUser(5,xmax);
+  // th1d_c24_ampt->SetMarkerSize(0);
+  // th1d_c24_ampt->SetLineWidth(2);
+  // th1d_c24_ampt->SetLineColor(kGreen+2);
+  // th1d_c24_ampt->SetFillColorAlpha(kGreen+2, 0.4);
+  // TH1D* cloned = (TH1D*)th1d_c24_ampt->Clone("cloned");
+  // cloned->SetFillColorAlpha(kGreen+2,0.0);
+  // cloned->Draw("HIST L same");
+  // th1d_c24_ampt->Draw("LE3 same");
   // ---
   th1d_c24_data->GetXaxis()->SetRangeUser(4,xmax);
   th1d_c24_data->SetMarkerStyle(kFullCircle);
@@ -230,7 +246,8 @@ void compare_4part()
   leg_cumu4->SetTextSize(0.090);
   leg_cumu4->SetFillStyle(0);
   leg_cumu4->AddEntry(th1d_c24_data,"c_{2}{4} = #LT#LT4#GT#GT - 2#LT#LT2#GT#GT^{2}","p");
-  leg_cumu4->AddEntry(th1d_c24_ampt,"AMPT","l");
+  //leg_cumu4->AddEntry(th1d_c24_ampt,"AMPT","l");
+  leg_cumu4->AddEntry(tge_c24_ampt,"AMPT","l");
   leg_cumu4->Draw();
   cline->Draw();
   ccomp4->Print("FigsAmpt/comp_ampt_cumulant4.png");
@@ -395,6 +412,11 @@ void compare_sigma()
   TH1D* th1d_SVV_ampt = (TH1D*)th1d_c24_ampt->Clone("th1d_SVV_ampt");
   TH1D* th1d_SVG_ampt = (TH1D*)th1d_c24_ampt->Clone("th1d_SVG_ampt");
 
+  // int nmax = 0;
+  // double max = 0;
+  // th1d_SVG_ampt->GetXaxis()->SetLimits(0,max*1.15);
+
+
   nbins = th1d_gap_ampt->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
     {
@@ -532,6 +554,12 @@ void compare_sigma()
   empty->Draw();
   th1d_SVG_data->GetXaxis()->SetRangeUser(30,470);
   th1d_SVG_data->Draw("same ex0p");
+  // int nmax = 0;
+  // double max = 0;
+  // nbins = clonet->GetNbinsX();
+  // max = clonet->GetBinCenter(nmax);
+  // clonet->GetXaxis()->SetLimits(0,max*1.15);
+  // th1d_SVG_ampt->GetXaxis()->SetLimits(0,max*1.15);
   clonet->Draw("HIST L same");
   th1d_SVG_ampt->Draw("LE3 same");
   delete leg;
@@ -558,6 +586,34 @@ void compare_sigma()
   gsys->Draw("same E5");
   c1->Print("FigsAmpt/sigma_ampt_x03.png");
   c1->Print("FigsAmpt/sigma_ampt_x03.pdf");
+
+  double* x = new double[nbins];
+  double* y = new double[nbins];
+  double* ex = new double[nbins];
+  double* ey = new double[nbins];
+  int count = 0;
+  for ( int i = 0; i < nbins; ++i )
+    {
+      if ( i < 1 || i > 16 ) continue;
+      x[count] = th1d_SVG_ampt->GetBinCenter(i+1);
+      y[count] = th1d_SVG_ampt->GetBinContent(i+1);
+      ex[count] = 0;
+      ey[count] = th1d_SVG_ampt->GetBinError(i+1);
+      x[count] *= 1.15; // scaling to match ncharge distribution
+      ++count;
+    }
+  TGraphErrors* tge_svg_ampt = new TGraphErrors(count,x,y,ex,ey);
+  tge_svg_ampt->SetLineColor(kGreen+2);
+  tge_svg_ampt->SetLineWidth(2);
+  tge_svg_ampt->SetFillColorAlpha(kGreen+2,0.35);
+
+  empty->Draw();
+  th1d_SVG_data->Draw("same ex0p");
+  gsys->Draw("same E5");
+  tge_svg_ampt->Draw("L3");
+  leg->Draw();
+  c1->Print("FigsAmpt/sigma_ampt_x04.png");
+  c1->Print("FigsAmpt/sigma_ampt_x04.pdf");
 
   delete c1;
 
