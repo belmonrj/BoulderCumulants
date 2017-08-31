@@ -576,7 +576,9 @@ void compare_sigma()
   clonet->Draw("HIST L same");
   th1d_SVG_ampt->Draw("LE3 same");
   delete leg;
-  leg = new TLegend(0.22,0.72,0.48,0.92);
+  //leg = new TLegend(0.22,0.72,0.48,0.92);
+ // leg = new TLegend(0.22,0.62,0.48,0.72);
+  leg = new TLegend(0.22,0.70,0.48,0.85);
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVG_data,"Data","p");
@@ -617,7 +619,7 @@ void compare_sigma()
     }
   TGraphErrors* tge_svg_ampt = new TGraphErrors(count,x,y,ex,ey);
   tge_svg_ampt->SetLineColor(kGreen+2);
-  tge_svg_ampt->SetLineWidth(2);
+  tge_svg_ampt->SetLineWidth(3);
   tge_svg_ampt->SetFillColorAlpha(kGreen+2,0.35);
 
   empty->Draw();
@@ -625,6 +627,15 @@ void compare_sigma()
   gsys->Draw("same E5");
   tge_svg_ampt->Draw("L3");
   leg->Draw();
+  double Rmarg = 0.08;
+  TLatex latt;
+  latt.SetNDC();
+  //latt.SetTextFont(62);
+  latt.SetTextSize(0.05);
+  latt.SetTextAlign(11);
+  latt.DrawLatex(0.30 - Rmarg, 0.87, "PHENIX");
+  latt.DrawLatex(0.56 - Rmarg, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+  latt.DrawLatex(0.56 - Rmarg, 0.80, "1 < |#eta| < 3");
   c1->Print("FigsAmpt/sigma_ampt_x04.png");
   c1->Print("FigsAmpt/sigma_ampt_x04.pdf");
 
