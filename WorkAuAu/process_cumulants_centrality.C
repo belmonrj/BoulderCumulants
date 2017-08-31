@@ -218,8 +218,8 @@ void do_process(const char* type, int rebin)
   leg->SetHeader(type);
   leg->SetTextSize(0.045);
   //leg->SetFillStyle(0);
-  leg->AddEntry(th1d_corr_v22,"v_{2}{2} 1<|#eta|<3","p");
-  leg->AddEntry(th1d_corr_v24,"v_{2}{4} 1<|#eta|<3","p");
+  leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
+  leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
   leg->Draw();
   c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.png",rebin,type));
   c1->Print(Form("FigsFour/simpleR%d_v22andv24_%s.pdf",rebin,type));
@@ -370,7 +370,8 @@ void do_process(const char* type, int rebin)
   // tge_star_v2LYZS->Draw("p");
   // tge_star_v2LYZP->Draw("p");
   leg->Draw();
-  TLegend* leg2 = new TLegend(0.18,0.78,0.38,0.93);
+  //TLegend* leg2 = new TLegend(0.18,0.78,0.38,0.93);
+  TLegend* leg2 = new TLegend(0.48,0.16,0.68,0.31);
   leg2->SetHeader("STAR, PRC 72 014904 (2005)");
   leg2->AddEntry(tge_star_v22,"v_{2}{2} |#eta|<1","p");
   leg2->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1","p");
@@ -457,19 +458,29 @@ void do_process(const char* type, int rebin)
   // tge_star_v2LYZS->Draw("p");
   // tge_star_v2LYZP->Draw("p");
   delete leg;
-  leg = new TLegend(0.62,0.73,0.88,0.93);
+  leg = new TLegend(0.195,0.605,0.455,0.805);
   //leg->SetHeader("Scaled by 1.35");
   //leg->SetHeader("Scaled by 1.1");
   //leg->SetHeader("Scaled by 1.2");
-  leg->SetHeader("Scaled by 1.25");
-  leg->SetTextSize(0.045);
+  leg->SetHeader("1<|#eta|<3 Scaled by 1.25");
+  leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
-  leg->AddEntry(th1d_corr_v22,"v_{2}{2} 1<|#eta|<3","p");
-  leg->AddEntry(th1d_corr_v24,"v_{2}{4} 1<|#eta|<3","p");
   leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
+  leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
+  leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
   leg->Draw();
   leg->Draw();
   leg2->Draw();
+  // ---
+  TLatex* tex_phenix = new TLatex(0.2,0.882,"PHENIX");
+  tex_phenix->SetTextSize(0.05);
+  tex_phenix->SetNDC();
+  tex_phenix->Draw();
+  TLatex* tex_system = new TLatex(0.2,0.83,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  tex_system->SetTextSize(0.05);
+  tex_system->SetNDC();
+  tex_system->Draw();
+  // ---
   c1->Print(Form("FigsFour/simpleR%d_v22andv24andgapandSTARSCALE_%s.png",rebin,type));
   c1->Print(Form("FigsFour/simpleR%d_v22andv24andgapandSTARSCALE_%s.pdf",rebin,type));
 
