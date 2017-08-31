@@ -213,8 +213,10 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   TGraph* tg_sig2 = (TGraph*)fglauber->Get("fulle2fluc"); // estimate with cumulants (need to double check with Jamie)
   tg_sig1->SetLineColor(kBlue);
   tg_sig2->SetLineColor(kBlue);
-  tg_sig1->SetLineWidth(2);
-  tg_sig2->SetLineWidth(2);
+  // tg_sig1->SetLineWidth(2);
+  // tg_sig2->SetLineWidth(2);
+  tg_sig1->SetLineWidth(3);
+  tg_sig2->SetLineWidth(3);
   tg_sig1->SetLineStyle(2);
   tg_sig2->SetLineStyle(1);
   // ---
@@ -279,10 +281,11 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   tg_sig1->Draw("l");
   tg_sig2->Draw("l");
   delete leg;
-  leg = new TLegend(0.22,0.72,0.48,0.92);
-  leg->AddEntry(th1d_SVG,"Data","p");
+  //leg = new TLegend(0.22,0.72,0.48,0.92);
+  leg = new TLegend(0.22,0.58,0.48,0.78);
   leg->AddEntry(tg_sig2,"MC Glauber, data style estimate","l");
   leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
+  leg->AddEntry(th1d_SVG,"Data","p");
   leg->SetTextSize(0.05);
   leg->Draw();
   c1->Print(Form("FigsSigma/sigma_%s_x03.png",handle));
@@ -300,6 +303,15 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   } // i
   gsys->GetXaxis()->SetRangeUser(7,65);
   gsys->Draw("same E5");
+  double Rmarg = 0.08;
+  TLatex latt;
+  latt.SetNDC();
+  //latt.SetTextFont(62);
+  latt.SetTextSize(0.05);
+  latt.SetTextAlign(11);
+  latt.DrawLatex(0.30 - Rmarg, 0.87, "PHENIX");
+  latt.DrawLatex(0.56 - Rmarg, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+  latt.DrawLatex(0.56 - Rmarg, 0.80, "1 < |#eta| < 3");
   c1->Print(Form("FigsSigma/sigma_%s_x04.png",handle));
   c1->Print(Form("FigsSigma/sigma_%s_x04.pdf",handle));
   }
