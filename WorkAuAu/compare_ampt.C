@@ -172,13 +172,15 @@ void compare_4part()
   empty_comp4->GetYaxis()->SetTitle("components");
   empty_comp4->GetYaxis()->SetTitleOffset(0.92);
   empty_comp4->GetYaxis()->SetNdivisions(6,5,0);
-  th1d_222_data->SetMarkerStyle(kFullCircle);
+  th1d_222_data->SetMarkerStyle(kFullSquare);
   th1d_222_data->SetMarkerColor(kRed);
+  th1d_222_data->SetMarkerSize(1.0);
   th1d_222_data->SetLineColor(kBlack);
   th1d_222_data->GetXaxis()->SetRangeUser(4,xmax);
   th1d_222_data->Draw("same ex0p");
-  th1d_for_data->SetMarkerStyle(kFullSquare);
+  th1d_for_data->SetMarkerStyle(kFullCircle);
   th1d_for_data->SetMarkerColor(kBlue);
+  th1d_for_data->SetMarkerSize(1.0);
   th1d_for_data->SetLineColor(kBlack);
   th1d_for_data->GetXaxis()->SetRangeUser(4,xmax);
   th1d_for_data->Draw("same ex0p");
@@ -186,8 +188,17 @@ void compare_4part()
   cline->SetLineWidth(2);
   cline->SetLineStyle(2);
   cline->Draw();
+  TLatex latt;
+  latt.SetNDC();
+  latt.SetTextFont(62);
+  latt.SetTextSize(0.075);
+  latt.SetTextAlign(22);
+  latt.DrawLatex(0.40 - Rmarg, 0.93 - 0.1, "PHENIX");
+  latt.DrawLatex(0.76 - Rmarg, 0.93 - 0.1, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+  latt.DrawLatex(0.80 - Rmarg, 0.86 - 0.1, "1 < |#eta| < 3");
   //TLegend* leg_comp4 = new TLegend(0.68,0.70,0.9,0.85);
-  TLegend* leg_comp4 = new TLegend(0.68,0.55,0.9,0.75);
+  //TLegend* leg_comp4 = new TLegend(0.68,0.55,0.9,0.75);
+  TLegend* leg_comp4 = new TLegend(0.68,0.55,0.9,0.73);
   leg_comp4->SetTextFont(62);
   leg_comp4->SetTextSize(0.075);
   leg_comp4->SetFillStyle(0);
@@ -239,6 +250,8 @@ void compare_4part()
   // ---
   th1d_c24_data->GetXaxis()->SetRangeUser(4,xmax);
   th1d_c24_data->SetMarkerStyle(kFullCircle);
+  th1d_c24_data->SetMarkerColor(kBlack);
+  th1d_c24_data->SetMarkerSize(1.0);
   th1d_c24_data->SetLineColor(kBlack);
   th1d_c24_data->Draw("same ex0p");
   TLegend* leg_cumu4 = new TLegend(0.48,0.75,0.90,0.95);
