@@ -65,15 +65,6 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   } // i
 
 
-  double xmin = 0.0;
-  double xmax = 100.0;
-  double ymin = 0.0;
-  double ymax = 0.12;
-  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
-  empty->Draw();
-  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
-  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("v_{2}");
   if ( iscent )
   {
   gv24_sys->GetXaxis()->SetRangeUser(7,65);
@@ -83,31 +74,25 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   th1d_v24aabb->GetXaxis()->SetRangeUser(7,63);
   th1d_v24abab->GetXaxis()->SetRangeUser(7,63);
   }
-  gv24_sys->Draw("E5 same");
-  gv24aabb_sys->Draw("E5 same");
-  gv24abab_sys->Draw("E5 same");
   th1d_v24aabb->SetMarkerStyle(kOpenSquare);
   th1d_v24aabb->SetMarkerColor(kRed);
   th1d_v24aabb->SetLineColor(kRed);
-  th1d_v24aabb->Draw("same ex0p");
   th1d_v24abab->SetMarkerStyle(kOpenDiamond);
   th1d_v24abab->SetMarkerColor(kBlue);
   th1d_v24abab->SetLineColor(kBlue);
-  th1d_v24abab->Draw("same ex0p");
   th1d_v24->SetMarkerStyle(kOpenCircle);
   th1d_v24->SetMarkerColor(kBlack);
   th1d_v24->SetLineColor(kBlack);
-  th1d_v24->Draw("same ex0p");
-  //if ( leg ) delete leg;
-  TLegend* leg = new TLegend(0.62,0.72,0.88,0.92);
-  //leg->SetHeader(type);
-  //leg->SetHeader("Run14AuAu200");
-  leg->SetTextSize(0.05);
-  leg->SetFillStyle(0);
-  leg->AddEntry(th1d_v24,"v_{2}{4}","p");
-  leg->AddEntry(th1d_v24aabb,"v_{2}{4}_{aa|bb}","p");
-  leg->AddEntry(th1d_v24abab,"v_{2}{4}_{ab|ab}","p");
-  leg->Draw();
+
+  double xmin = 0.0;
+  double xmax = 100.0;
+  double ymin = 0.0;
+  double ymax = 0.12;
+  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  empty->GetYaxis()->SetTitle("v_{2}");
   TLatex* tex_phenix = new TLatex(0.2,0.87,"PHENIX");
   tex_phenix->SetTextSize(0.05);
   tex_phenix->SetNDC();
@@ -116,8 +101,40 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   tex_system->SetTextSize(0.05);
   tex_system->SetNDC();
   tex_system->Draw();
-  c1->Print("FigsSubevents/cent_subevents4.png");
-  c1->Print("FigsSubevents/cent_subevents4.pdf");
+  gv24_sys->Draw("E5 same");
+  th1d_v24->Draw("same ex0p");
+  TLegend* leg24 = new TLegend(0.62,0.86,0.88,0.92);
+  leg24->SetTextSize(0.05);
+  leg24->SetFillStyle(0);
+  leg24->AddEntry(th1d_v24,"v_{2}{4}","p");
+  leg24->Draw();
+  c1->Print("FigsSubevents/cent_subevents_v24x01.png");
+  c1->Print("FigsSubevents/cent_subevents_v24x01.pdf");
+  gv24abab_sys->Draw("E5 same");
+  th1d_v24abab->Draw("same ex0p");
+  TLegend* leg24abab = new TLegend(0.62,0.80,0.88,0.86);
+  leg24abab->SetTextSize(0.05);
+  leg24abab->SetFillStyle(0);
+  leg24abab->AddEntry(th1d_v24abab,"v_{2}{4}_{ab|ab}","p");
+  leg24abab->Draw();
+  c1->Print("FigsSubevents/cent_subevents_v24x02.png");
+  c1->Print("FigsSubevents/cent_subevents_v24x02.pdf");
+  gv24aabb_sys->Draw("E5 same");
+  th1d_v24aabb->Draw("same ex0p");
+  TLegend* leg24aabb = new TLegend(0.62,0.74,0.88,0.80);
+  leg24aabb->SetTextSize(0.05);
+  leg24aabb->SetFillStyle(0);
+  leg24aabb->AddEntry(th1d_v24aabb,"v_{2}{4}_{aa|bb}","p");
+  leg24aabb->Draw();
+  c1->Print("FigsSubevents/cent_subevents_v24x03.png");
+  c1->Print("FigsSubevents/cent_subevents_v24x03.pdf");
+
+  // leg->AddEntry(th1d_v24aabb,"v_{2}{4}_{aa|bb}","p");
+  // leg->AddEntry(th1d_v24abab,"v_{2}{4}_{ab|ab}","p");
+  // gv24aabb_sys->Draw("E5 same");
+  // gv24abab_sys->Draw("E5 same");
+  // th1d_v24aabb->Draw("same ex0p");
+  // th1d_v24abab->Draw("same ex0p");
   // if ( iscent )
   // {
   // gv22_sys->GetXaxis()->SetRangeUser(1,90);
