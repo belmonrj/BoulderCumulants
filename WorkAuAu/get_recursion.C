@@ -1,4 +1,4 @@
-#include "get_cumulants.C"
+#include "calc_cumulants.C"
 #include "plot_recv2.C"
 #include "plot_recomp.C"
 

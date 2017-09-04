@@ -11,7 +11,7 @@ void plot_recv2(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TPro
   TH1D* v24 = NULL;
   TH1D* v22 = NULL;
   // --- get all the v2{k}, c2{k}, and component histograms
-  get_cumulants(tp1f_eit, tp1f_six, tp1f_for, tp1f_two,
+  calc_cumulants(tp1f_eit, tp1f_six, tp1f_for, tp1f_two,
                 &v28,  &v26,  &v24,  &v22,
                 rebin);
   // --- plot the v2{k}

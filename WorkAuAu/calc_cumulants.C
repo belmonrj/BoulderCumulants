@@ -1,4 +1,4 @@
-void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
+void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22,
                    TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22,
                    TH1D** out_eit, TH1D** out_six, TH1D** out_for, TH1D** out_two,
@@ -183,29 +183,29 @@ void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TPr
 }
 
 
-void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
+void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22,
                    TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22,
                    int rebin)
 {
   TH1D* h = NULL;
-  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,out_c28,out_c26,out_c24,out_c22,
+  calc_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,out_c28,out_c26,out_c24,out_c22,
                 &h,&h,&h,&h,&h,&h,&h,&h,&h,&h,&h,rebin);
 }
 
 
-void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
+void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22, int rebin)
 {
   TH1D* h = NULL;
-  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,&h,&h,&h,&h,rebin);
+  calc_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,&h,&h,&h,&h,rebin);
 }
 
 
-void get_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
+void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22)
 {
   TH1D* h = NULL;
-  get_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,&h,&h,&h,&h,1);
+  calc_cumulants(tp1f_eit,tp1f_six,tp1f_for,tp1f_two,out_v28,out_v26,out_v24,out_v22,&h,&h,&h,&h,1);
 }
 

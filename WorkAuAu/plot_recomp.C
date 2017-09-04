@@ -31,7 +31,7 @@ void plot_recomp(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TPr
   TH1D* h123 = NULL;
   TH1D* h222 = NULL;
   // --- get all the v2{k}, c2{k}, and component histograms
-  get_cumulants(tp1f_eit, tp1f_six, tp1f_for, tp1f_two,
+  calc_cumulants(tp1f_eit, tp1f_six, tp1f_for, tp1f_two,
                 &v28,  &v26,  &v24,  &v22,
                 &c28,  &c26,  &c24,  &c22,
                 &heit, &hsix, &hfor, &htwo,
