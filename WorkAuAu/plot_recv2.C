@@ -25,8 +25,10 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   TCanvas* c1 = new TCanvas("c1","");
 
   bool iscent = false;
+  bool isscent = false;
   bool isntrk = false;
   if ( strcmp(handle,"cent") == 0 ) iscent = true;
+  if ( strcmp(handle,"scent") == 0 ) {iscent = true; isscent = true;}
   if ( strcmp(handle,"ntrk") == 0 ) isntrk = true;
   bool isamptntrk = false;
   if ( strcmp(handle,"amptntrk") == 0 ) { isamptntrk = true; isntrk = true; }
@@ -38,6 +40,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   gv22_sys->SetMarkerStyle(0);
   gv22_sys->SetMarkerSize(0);
   gv22_sys->SetFillColorAlpha(kRed, 0.35);
+  if ( isscent ) gv22_sys->SetFillColorAlpha(kMagenta+2, 0.35);
   for ( int i = 0; i < gv22_sys->GetNbinsX(); ++i )
   {
     double y = gv22_sys->GetBinContent(i);
@@ -101,6 +104,12 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   th1d_v22->SetMarkerStyle(kOpenCross);
   th1d_v22->SetMarkerColor(kRed);
   th1d_v22->SetLineColor(kRed);
+  if ( isscent )
+  {
+  th1d_v22->SetMarkerStyle(kOpenDiamond);
+  th1d_v22->SetMarkerColor(kMagenta+2);
+  th1d_v22->SetLineColor(kMagenta+2);
+  }
   th1d_v28->SetMarkerStyle(kFullDiamond);
   th1d_v28->SetMarkerColor(kGreen+2);
   th1d_v28->SetLineColor(kGreen+2);
@@ -133,7 +142,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   TLegend* leg22 = new TLegend(0.66,0.87,0.92,0.92);
   leg22->SetTextSize(0.05);
   leg22->SetFillStyle(0);
-  leg22->AddEntry(th1d_v22,"v_{2}{2}","p");
+  if ( !isscent ) leg22->AddEntry(th1d_v22,"v_{2}{2}","p");
+  if ( isscent ) leg22->AddEntry(th1d_v22,"v_{2}{2,|#Delta#eta|>2}","p");
   leg22->Draw();
   c1->Print(Form("FigsRecursion/recursion_%s_v22.png",handle));
   c1->Print(Form("FigsRecursion/recursion_%s_v22.pdf",handle));
