@@ -314,7 +314,30 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   latt.DrawLatex(0.56 - Rmarg, 0.80, "1 < |#eta| < 3");
   c1->Print(Form("FigsSigma/sigma_%s_x04.png",handle));
   c1->Print(Form("FigsSigma/sigma_%s_x04.pdf",handle));
-  }
+  ifstream fampt("input/temp_ampt.dat");
+  double cent[16], ntrk[16], y[16], ey[16];
+  for ( int i = 0; i < 16; ++i )
+    {
+      fampt >> cent[i] >> ntrk[i] >> y[i] >> ey[i];
+      cout << cent[i] << " " << ntrk[i] << " " << y[i] << " " << ey[i] << endl;
+    }
+  TGraphErrors* tge_amptcent = new TGraphErrors(16,cent,y,0,ey);
+  tge_amptcent->SetLineColor(kGreen+2);
+  tge_amptcent->SetLineWidth(3);
+  tge_amptcent->SetLineStyle(1);
+  tge_amptcent->SetFillColorAlpha(kGreen+2,0.35);
+  tge_amptcent->Draw("L3");
+  delete leg;
+  leg = new TLegend(0.22,0.515,0.48,0.78);
+  leg->AddEntry(tg_sig2,"MC Glauber, data style estimate","l");
+  leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
+  leg->AddEntry(tge_amptcent,"AMPT","l");
+  leg->AddEntry(th1d_SVG,"Data","p");
+  leg->SetTextSize(0.05);
+  leg->Draw();
+  c1->Print(Form("FigsSigma/sigma_%s_x05.png",handle));
+  c1->Print(Form("FigsSigma/sigma_%s_x05.pdf",handle));
+  } // --- matches if ( iscent )
 
 }
 

@@ -234,7 +234,7 @@ void compare_4part()
   //th1d_c24_ampt->SetLineColor(kBlack);
   //th1d_c24_ampt->Draw("same HIST L");
   tge_c24_ampt->SetLineColor(kGreen+2);
-  tge_c24_ampt->SetLineWidth(2);
+  tge_c24_ampt->SetLineWidth(3);
   tge_c24_ampt->SetFillColorAlpha(kGreen+2,0.35);
   tge_c24_ampt->Draw("L3");
   //th1d_c24_ampt->GetXaxis()->SetRangeUser(4,xmax);
@@ -532,7 +532,7 @@ void compare_sigma()
   // ---------------------------------------------
   th1d_SVV_ampt->GetXaxis()->SetRangeUser(30,300);
   th1d_SVV_ampt->SetMarkerSize(0);
-  th1d_SVV_ampt->SetLineWidth(2);
+  th1d_SVV_ampt->SetLineWidth(3);
   th1d_SVV_ampt->SetLineColor(kBlue);
   th1d_SVV_ampt->SetFillColorAlpha(kBlue, 0.4);
   TH1D* cloned = (TH1D*)th1d_SVV_ampt->Clone("cloned");
@@ -542,7 +542,7 @@ void compare_sigma()
   // ---------------------------------------------
   th1d_SVG_ampt->GetXaxis()->SetRangeUser(30,300);
   th1d_SVG_ampt->SetMarkerSize(0);
-  th1d_SVG_ampt->SetLineWidth(2);
+  th1d_SVG_ampt->SetLineWidth(3);
   th1d_SVG_ampt->SetLineColor(kGreen+2);
   th1d_SVG_ampt->SetFillColorAlpha(kGreen+2, 0.4);
   TH1D* clonet = (TH1D*)th1d_SVG_ampt->Clone("clonet");
@@ -577,8 +577,9 @@ void compare_sigma()
   th1d_SVG_ampt->Draw("LE3 same");
   delete leg;
   //leg = new TLegend(0.22,0.72,0.48,0.92);
- // leg = new TLegend(0.22,0.62,0.48,0.72);
-  leg = new TLegend(0.22,0.70,0.48,0.85);
+  //leg = new TLegend(0.22,0.62,0.48,0.72);
+  //leg = new TLegend(0.22,0.70,0.48,0.85);
+  leg = new TLegend(0.20,0.70,0.46,0.85);
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVG_data,"Data","p");
@@ -615,6 +616,7 @@ void compare_sigma()
       ex[count] = 0;
       ey[count] = th1d_SVG_ampt->GetBinError(i+1);
       x[count] *= 1.15; // scaling to match ncharge distribution
+      cout << x[count] << " " << y[count] << " " << ey[count] << endl;
       ++count;
     }
   TGraphErrors* tge_svg_ampt = new TGraphErrors(count,x,y,ex,ey);
@@ -639,6 +641,47 @@ void compare_sigma()
   c1->Print("FigsAmpt/sigma_ampt_x04.png");
   c1->Print("FigsAmpt/sigma_ampt_x04.pdf");
 
+  TFile* fglauber = TFile::Open("input/fout_auau200gev_mcglauber_e2fluc.root");
+  TGraph* tg_sig1 = (TGraph*)fglauber->Get("sigmae2overe2"); // direct calculation (need to double check with Jamie)
+  TGraph* tg_sig2 = (TGraph*)fglauber->Get("fulle2fluc"); // estimate with cumulants (need to double check with Jamie)
+  int n1 = tg_sig1->GetN();
+  int n2 = tg_sig2->GetN();
+  //cout << n1 << " " << n2 << endl;
+  // good news!  n1 = n2 = 19;
+  double x1[19];
+  double y1[19];
+  double x2[19];
+  double y2[19];
+  // for ( int i = 0; i < n1; ++i ) tg1->GetPoint(i,x1[i],y1[i]);
+  // for ( int i = 0; i < n2; ++i ) tg2->GetPoint(i,x2[i],y2[i]);
+  for ( int i = 0; i < 19; ++i )
+    {
+      tg_sig1->GetPoint(i,x1[i],y1[i]);
+      tg_sig2->GetPoint(i,x2[i],y2[i]);
+      //cout << x1[i] << " " << x2[i] << endl;
+    }
+  double xnew[19] = {536,460,399,346,300,258,221,187,157,129,105,84,65,49,37,27,19,13,9};
+  TGraph* tg_newsig1 = new TGraph(19,xnew,y1);
+  TGraph* tg_newsig2 = new TGraph(19,xnew,y2);
+  tg_newsig1->SetLineColor(kBlue);
+  tg_newsig2->SetLineColor(kBlue);
+  tg_newsig1->SetLineWidth(3);
+  tg_newsig2->SetLineWidth(3);
+  tg_newsig1->SetLineStyle(2);
+  tg_newsig2->SetLineStyle(1);
+  tg_newsig1->Draw("l");
+  tg_newsig2->Draw("l");
+  delete leg;
+  leg = new TLegend(0.20,0.55,0.46,0.85);
+  leg->SetTextSize(0.05);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_SVG_data,"Data","p");
+  leg->AddEntry(th1d_SVG_ampt,"AMPT","l");
+  leg->AddEntry(tg_newsig2,"MC Glauber, data style estimate","l");
+  leg->AddEntry(tg_newsig1,"MC Glauber, direct calculation","l");
+  leg->Draw();
+  c1->Print("FigsAmpt/sigma_ampt_x05.png");
+  c1->Print("FigsAmpt/sigma_ampt_x05.pdf");
   delete c1;
 
 }
