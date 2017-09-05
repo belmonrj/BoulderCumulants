@@ -212,18 +212,18 @@ void do_process(const char* type, int rebin)
   //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
-  th1d_corr_v22->Draw("ex0p same");
-  th1d_corr_v24->Draw("ex0p same");
-  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
-  leg->SetHeader(type);
-  leg->SetTextSize(0.045);
-  //leg->SetFillStyle(0);
-  leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
-  leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
-  leg->Draw();
-  th1d_corr_v2G->Draw("ex0p same");
-  leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
-  leg->Draw();
+  // th1d_corr_v22->Draw("ex0p same");
+  // th1d_corr_v24->Draw("ex0p same");
+  // TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
+  // leg->SetHeader(type);
+  // leg->SetTextSize(0.045);
+  // //leg->SetFillStyle(0);
+  // leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
+  // leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
+  // leg->Draw();
+  // th1d_corr_v2G->Draw("ex0p same");
+  // leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
+  // leg->Draw();
   // -----------------------------------------------------------------------------
   // -----------------------------------------------------------------------------
   double cent[9] = {75,65,55,45,35,25,15,7.5,2.5};
@@ -306,19 +306,10 @@ void do_process(const char* type, int rebin)
   empty->Draw();
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
-  th1d_corr_v22->Draw("ex0p same");
-  th1d_corr_v24->Draw("ex0p same");
-  th1d_corr_v2G->Draw("ex0p same");
-  tge_star_v22->Draw("p");
-  tge_star_v24->Draw("p");
-  leg->Draw();
-  //TLegend* leg2 = new TLegend(0.18,0.78,0.38,0.93);
-  TLegend* leg2 = new TLegend(0.48,0.16,0.68,0.31);
-  leg2->SetHeader("STAR, PRC 72 014904 (2005)");
-  leg2->AddEntry(tge_star_v22,"v_{2}{2} |#eta|<1","p");
-  leg2->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1","p");
-  leg2->SetTextSize(0.045);
-  leg2->Draw();
+  // th1d_corr_v22->Draw("ex0p same");
+  // th1d_corr_v24->Draw("ex0p same");
+  // th1d_corr_v2G->Draw("ex0p same");
+  // leg->Draw();
   // ---
   th1d_corr_v22->SetLineColor(kBlack);
   th1d_corr_v22->SetMarkerColor(kRed);
@@ -330,9 +321,9 @@ void do_process(const char* type, int rebin)
   th1d_corr_v24->SetMarkerColor(kBlue);
   th1d_corr_v24->SetMarkerStyle(kOpenSquare);
   empty->Draw();
-  th1d_corr_v22->Scale(1.25);
-  th1d_corr_v24->Scale(1.25);
-  th1d_corr_v2G->Scale(1.25);
+  // th1d_corr_v22->Scale(1.25);
+  // th1d_corr_v24->Scale(1.25);
+  // th1d_corr_v2G->Scale(1.25);
   // --- get the systmatics histos
   TH1D* gv22_sys = (TH1D*) th1d_corr_v22->Clone("gv22_sys");
   gv22_sys->SetMarkerStyle(0);
@@ -380,19 +371,16 @@ void do_process(const char* type, int rebin)
   th1d_corr_v22->Draw("ex0p same");
   th1d_corr_v24->Draw("ex0p same");
   //th1d_corr_v2G->Draw("ex0p same");
-  tge_star_v22->Draw("p");
-  tge_star_v24->Draw("p");
-  delete leg;
-  leg = new TLegend(0.195,0.655,0.455,0.805);
+  // tge_star_v22->Draw("p");
+  // tge_star_v24->Draw("p");
+  //delete leg;
+  TLegend* leg = new TLegend(0.195,0.655,0.455,0.805);
   leg->SetHeader("1<|#eta|<3 Scaled by 1.25");
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
-  //leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
   leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
   leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
   leg->Draw();
-  leg->Draw();
-  leg2->Draw();
   // ---
   TLatex* tex_phenix = new TLatex(0.2,0.882,"PHENIX");
   tex_phenix->SetTextSize(0.05);
@@ -405,19 +393,16 @@ void do_process(const char* type, int rebin)
   // ---
   c1->Print(Form("FigsStar/star%d_v224_%s.png",rebin,type));
   c1->Print(Form("FigsStar/star%d_v224_%s.pdf",rebin,type));
-  th1d_corr_v2G->Draw("ex0p same");
-  gv22ab_sys->Draw("same E5");
-  delete leg;
-  leg = new TLegend(0.195,0.605,0.455,0.805);
-  leg->SetHeader("1<|#eta|<3 Scaled by 1.25");
-  leg->SetTextSize(0.05);
-  leg->SetFillStyle(0);
-  leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
-  leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
-  leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
-  leg->Draw();
-  c1->Print(Form("FigsStar/star%d_v22g4_%s.png",rebin,type));
-  c1->Print(Form("FigsStar/star%d_v22g4_%s.pdf",rebin,type));
+  tge_star_v22->Draw("p");
+  tge_star_v24->Draw("p");
+  TLegend* leg2 = new TLegend(0.48,0.16,0.68,0.31);
+  leg2->SetHeader("STAR, PRC 72 014904 (2005)");
+  leg2->AddEntry(tge_star_v22,"v_{2}{2} |#eta|<1","p");
+  leg2->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1","p");
+  leg2->SetTextSize(0.045);
+  leg2->Draw();
+  c1->Print(Form("FigsStar/starstar%d_v224_%s.png",rebin,type));
+  c1->Print(Form("FigsStar/starstar%d_v224_%s.pdf",rebin,type));
 
 
 }
