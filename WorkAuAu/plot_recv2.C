@@ -128,11 +128,21 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   empty->GetYaxis()->SetTitle("v_{2}");
-  TLatex* tex_phenix = new TLatex(0.2,0.882,"PHENIX");
-  tex_phenix->SetTextSize(0.05);
-  tex_phenix->SetNDC();
-  tex_phenix->Draw();
-  TLatex* tex_system = new TLatex(0.2,0.83,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  empty->GetYaxis()->SetTitleOffset(1.2);
+  // ---
+  // TLatex* tex_phenix = new TLatex(0.2,0.882,"PHENIX");
+  // tex_phenix->SetTextSize(0.05);
+  // tex_phenix->SetNDC();
+  // tex_phenix->Draw();
+  // TLatex* tex_system = new TLatex(0.2,0.83,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  // tex_system->SetTextSize(0.05);
+  // tex_system->SetNDC();
+  // tex_system->Draw();
+  TLatex* tex_tracks = new TLatex(0.2,0.83,"h^{#pm} 1<|#eta|<3");
+  tex_tracks->SetTextSize(0.05);
+  tex_tracks->SetNDC();
+  tex_tracks->Draw();
+  TLatex* tex_system = new TLatex(0.2,0.882,"Au+Au #sqrt{s_{NN}} = 200 GeV");
   tex_system->SetTextSize(0.05);
   tex_system->SetNDC();
   tex_system->Draw();
