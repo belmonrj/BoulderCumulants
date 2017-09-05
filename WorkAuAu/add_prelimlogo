@@ -1,0 +1,19 @@
+#!/bin/sh
+
+preliminary.pl --input=CollectFigures/cent_subevents_v24x01.pdf  --output=CollectFigures/logo_cent_subevents_v24x01.pdf    --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/cent_subevents_v24x02.pdf  --output=CollectFigures/logo_cent_subevents_v24x02.pdf    --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/cent_subevents_v24x03.pdf  --output=CollectFigures/logo_cent_subevents_v24x03.pdf    --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/comp_ampt_cumulant4.pdf    --output=CollectFigures/logo_comp_ampt_cumulant4.pdf      --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/recursion_cent_v22.pdf     --output=CollectFigures/logo_recursion_cent_v22.pdf       --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/recursion_cent_v224.pdf    --output=CollectFigures/logo_recursion_cent_v224.pdf      --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/recursion_cent_v2246.pdf   --output=CollectFigures/logo_recursion_cent_v2246.pdf     --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/recursion_cent_v22468.pdf  --output=CollectFigures/logo_recursion_cent_v22468.pdf    --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/recursion_scent_v22.pdf    --output=CollectFigures/logo_recursion_scent_v22.pdf      --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/recursion_scent_v224.pdf   --output=CollectFigures/logo_recursion_scent_v224.pdf     --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/recursion_scent_v2246.pdf  --output=CollectFigures/logo_recursion_scent_v2246.pdf    --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/recursion_scent_v22468.pdf --output=CollectFigures/logo_recursion_scent_v22468.pdf   --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/sigma_ampt_x04.pdf         --output=CollectFigures/logo_sigma_ampt_x04.pdf           --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/sigma_ampt_x05.pdf         --output=CollectFigures/logo_sigma_ampt_x05.pdf           --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/sigma_cent_x04.pdf         --output=CollectFigures/logo_sigma_cent_x04.pdf           --x=360 --y=90 --scale=0.4
+preliminary.pl --input=CollectFigures/sigma_cent_x05.pdf         --output=CollectFigures/logo_sigma_cent_x05.pdf           --x=360 --y=90 --scale=0.4
+
