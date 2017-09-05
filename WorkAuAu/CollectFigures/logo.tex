@@ -1,0 +1,189 @@
+\documentclass[compress,8pt]{beamer} %%%
+\usetheme{Warsaw} %%%
+%\usecolortheme{cu} %%%
+
+%\setbeamersize{text margin left=10pt,text margin right=10pt}
+
+\usepackage{changepage}
+
+\newcommand{\lenitem}[2][.7\linewidth]{\parbox[t]{#1}{\strut #2\strut}}
+
+%\newcommand\Fontvi{\fontsize{6}{7.2}\selectfont} %%% doesn't hel for subbullets :(
+%\setlength{\columnsep}{-20pt} % doesn't work
+
+%%% define my own headline
+\setbeamertemplate{headline}
+{%
+  \leavevmode%
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.125ex]{section in head/foot}%
+    \insertsectionnavigationhorizontal{\paperwidth}{\hskip0pt}{}%
+  \end{beamercolorbox}%
+  \vskip2pt%
+}
+
+%%% define my own footline
+\setbeamertemplate{footline}
+{%
+  \leavevmode%
+  \hbox{\begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm plus1fill,rightskip=.3cm]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.5ex,dp=1.125ex,leftskip=.3cm,rightskip=.3cm plus1fil]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+%%% set another another option
+\setbeamertemplate{navigation symbols}{} % this is the same as \beamertemplatenavigationsymbolsempty
+
+%%% add some packages
+\usepackage{amsmath,amssymb,amsfonts,amsthm,amsbsy} % math symbols and the like
+\usepackage{slashed} % Feynman slashed notatation
+\usepackage{tikz}
+\usepackage{pdfpages} % include pdfs as a whole page
+%\usepackage{bbding} %% checkmark...
+
+%%% Cyrillic fonts
+\input cyracc.def
+%\font\tencyr=wncyr10
+\font\tencyr=wncyr9
+\def\cyr{\tencyr\cyracc}
+
+%makes footnote with symbol instead of number
+\long\def\symbolfootnote[#1]#2{\begingroup\def\thefootnote{\fnsymbol{footnote}}\footnote[#1]{#2}\endgroup}
+
+%\symbolfootnote[sym #]{footnote text}     %makes footnote with symbol instead of number
+%\long\def\symbolfootnote[#1]#2{\begingroup
+%\def\thefootnote{\fnsymbol{footnote}}\footnotetext[#1]{#2}\endgroup}
+
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}} %% Creates a partial derivative
+\newcommand{\totd}[2]{\frac{d #1}{d #2}} %% Creates a total derivative
+\newcommand{\bracket}[1]{\left< #1 \right>}
+\newcommand{\covariance}[2]{\left< #1 #2 \right> - \left< #1 \right>\left< #2 \right>}
+
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\lb}{\left<}
+\newcommand{\rb}{\right>}
+
+\newcommand{ \eps }{\varepsilon}
+\newcommand{ \mean }[1]{\la #1 \ra}
+\newcommand{ \dmean }[1]{\la\la #1 \ra\ra}
+\newcommand{ \sump }{\sideset{}{'}\sum}
+
+\newcommand{\vt}{v_2}
+\newcommand{\vtt}{v_2\{2\}}
+\newcommand{\vtf}{v_2\{4\}}
+\newcommand{\vts}{v_2\{6\}}
+\newcommand{\vte}{v_2\{8\}}
+\newcommand{\vtg}{v_2\{2,|\Delta\eta|>2\}}
+\newcommand{\ctt}{c_2\{2\}}
+\newcommand{\ctf}{c_2\{4\}}
+\newcommand{\cts}{c_2\{6\}}
+\newcommand{\cte}{c_2\{8\}}
+\newcommand{\ctg}{c_2\{2,|\Delta\eta|>2\}}
+\newcommand{\vnt}{v_n\{2\}}
+\newcommand{\vnf}{v_n\{4\}}
+\newcommand{\vns}{v_n\{6\}}
+\newcommand{\vne}{v_n\{8\}}
+\newcommand{\vng}{v_n\{2,|\Delta\eta|>2\}}
+\newcommand{\cnt}{c_n\{2\}}
+\newcommand{\cnf}{c_n\{4\}}
+\newcommand{\cns}{c_n\{6\}}
+\newcommand{\cne}{c_n\{8\}}
+\newcommand{\cng}{c_n\{2,|\Delta\eta|>2\}}
+\newcommand{\nfvtxt}{N_{tracks}^{FVTX}}
+
+
+%%% title and basic information
+\title[PLHF \today~-~Slide \insertframenumber]{Systematic studies for multiparticle $v_2$ in Au+Au at 200 GeV}
+\author[CU-Boulder]{Ron B. \\ CU Boulder}
+\date{\today}
+%\title[\today~-~Slide \insertframenumber]{$c_2\{4\}$ in AMPT and real data}
+%\author[CU-Boulder]{Ron B. \\ CU Boulder}
+%\date{\today}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% remove line above footnotes...
+\renewcommand{\footnoterule}{
+  \kern -3pt
+  \hrule width \textwidth height 0pt
+  \kern 3pt
+}
+
+
+%\titlegraphic{\includegraphics[height=1.0cm]{logos/sphenixlogo.pdf}\hfill\includegraphics[trim=0 44 0 30, clip=true, height=1.0cm]{logos/Boulder_FL.pdf}}
+%\titlegraphic{\includegraphics[height=1.0cm]{logos/sphenixlogo.pdf}\hfill\includegraphics[trim=0 30 0 30, clip=true, height=1.0cm]{logos/Boulder_FL.pdf}}
+%\titlegraphic{\includegraphics[height=1.2cm]{logos/sphenixlogo.pdf}\hfill\includegraphics[trim=0 30 0 30, clip=true, height=1.2cm]{logos/Boulder_FL.pdf}}
+\titlegraphic{\includegraphics[height=1.0cm]{logos/phenixlogo.pdf}\hfill\includegraphics[trim=0 30 0 30, clip=true, height=1.2cm]{logos/Boulder_FL.pdf}}
+
+
+%%% - now begin document
+\begin{document}
+
+
+%%% - title slide
+
+
+%\begin{frame}
+%\titlepage
+%\end{frame}
+
+\iffalse
+\begin{frame}{$\vtt$, $\vtf$ and comparison to STAR}
+\begin{adjustwidth}{-3em}{-3em}
+\begin{center}
+\includegraphics[width=0.65\linewidth]{logo_}
+\end{center}
+\end{adjustwidth}
+\begin{itemize}
+\item Logo
+\end{itemize}
+\end{frame}
+\fi
+
+\begin{frame}{$\vtf$ in subevents vs centrality}
+\begin{adjustwidth}{-3em}{-3em}
+\begin{center}
+\includegraphics<1>[width=0.65\linewidth]{logo_cent_subevents_v24x01.pdf}
+\includegraphics<2>[width=0.65\linewidth]{logo_cent_subevents_v24x02.pdf}
+\includegraphics<3>[width=0.65\linewidth]{logo_cent_subevents_v24x03.pdf}
+\end{center}
+\end{adjustwidth}
+\begin{itemize}
+\item Logo
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$\vte$ vs centrality}
+\begin{adjustwidth}{-3em}{-3em}
+\begin{center}
+\includegraphics<1>[width=0.65\linewidth]{logo_recursion_cent_v22.pdf}
+\includegraphics<2>[width=0.65\linewidth]{logo_recursion_cent_v224.pdf}
+\includegraphics<3>[width=0.65\linewidth]{logo_recursion_cent_v2246.pdf}
+\includegraphics<4>[width=0.65\linewidth]{logo_recursion_cent_v22468.pdf}
+\end{center}
+\end{adjustwidth}
+\begin{itemize}
+\item Logo
+\end{itemize}
+\end{frame}
+
+\begin{frame}{$sigma_{v_2}/v_2$}
+\begin{adjustwidth}{-3em}{-3em}
+\begin{center}
+\includegraphics<1>[width=0.5\linewidth]{logo_sigma_ampt_x04.pdf}
+\includegraphics<1>[width=0.5\linewidth]{logo_sigma_cent_x04.pdf}
+\includegraphics<2>[width=0.5\linewidth]{logo_sigma_ampt_x04.pdf}
+\includegraphics<2>[width=0.5\linewidth]{logo_sigma_cent_x04.pdf}
+\end{center}
+\end{adjustwidth}
+\begin{itemize}
+\item Logo
+\end{itemize}
+\end{frame}
+
+
+\end{document}
+
