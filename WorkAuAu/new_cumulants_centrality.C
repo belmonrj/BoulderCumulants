@@ -1,4 +1,4 @@
-TFile* fout;
+
 
 double calc_corr_four(double,double,double,double,double,double,double,double);
 
@@ -6,9 +6,7 @@ void do_process(const char*,int); // get it? :)
 
 void new_cumulants_centrality()
 {
-  fout = TFile::Open("all_cumulants_cent.root","recreate");
   do_process("Run14AuAu200",1);
-  fout->Close();
 }
 
 void do_process(const char* type, int rebin)
@@ -146,10 +144,6 @@ void do_process(const char* type, int rebin)
   double xmax = 100.0;
   double ymin = 0.0;
   double ymax = 0.199;
-  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
-  empty->Draw();
-  empty->GetXaxis()->SetTitle("Centrality (%)");
-  empty->GetYaxis()->SetTitle("v_{2}");
   // -----------------------------------------------------------------------------
   double cent[9] = {75,65,55,45,35,25,15,7.5,2.5};
   double star_v22[9]={0};
@@ -198,6 +192,15 @@ void do_process(const char* type, int rebin)
       star_ev24[i] /= 100.0;
       star_ev26[i] /= 100.0;
     }
+  for ( int i = 0; i < 9; ++i )
+    {
+      star_v22[i] /= 1.25;
+      star_v24[i] /= 1.25;
+      star_v26[i] /= 1.25;
+      star_ev22[i] /= 1.25;
+      star_ev24[i] /= 1.25;
+      star_ev26[i] /= 1.25;
+    }
   TGraphErrors* tge_star_v22 = new TGraphErrors(9,cent,star_v22,0,star_ev22);
   TGraphErrors* tge_star_v24 = new TGraphErrors(9,cent,star_v24,0,star_ev24);
   TGraphErrors* tge_star_v26 = new TGraphErrors(9,cent,star_v26,0,star_ev26);
@@ -210,9 +213,9 @@ void do_process(const char* type, int rebin)
   tge_star_v26->SetMarkerStyle(kFullStar);
   tge_star_v26->SetMarkerColor(kBlack);
   tge_star_v26->SetLineColor(kBlack);
-  tge_star_v22->SetMarkerSize(2.9);
-  tge_star_v24->SetMarkerSize(2.9);
-  tge_star_v26->SetMarkerSize(2.9);
+  tge_star_v22->SetMarkerSize(2.5);
+  tge_star_v24->SetMarkerSize(2.5);
+  tge_star_v26->SetMarkerSize(2.5);
   // ---
   TGraphErrors* tge_star_v2LYZS = new TGraphErrors(9,cent,star_v2LYZS,0,star_ev2LYZS);
   TGraphErrors* tge_star_v2LYZP = new TGraphErrors(9,cent,star_v2LYZP,0,star_ev2LYZP);
@@ -222,15 +225,15 @@ void do_process(const char* type, int rebin)
   tge_star_v2LYZP->SetMarkerStyle(kOpenStar);
   tge_star_v2LYZP->SetMarkerColor(kBlack);
   tge_star_v2LYZP->SetLineColor(kBlack);
-  tge_star_v2LYZS->SetMarkerSize(2.9);
-  tge_star_v2LYZP->SetMarkerSize(2.9);
+  tge_star_v2LYZS->SetMarkerSize(2.5);
+  tge_star_v2LYZP->SetMarkerSize(2.5);
   // ---
   ymax = 0.12;
-  delete empty;
-  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
+  empty->GetYaxis()->SetTitleOffset(1.2);
   // ---
   th1d_corr_v22->SetLineColor(kBlack);
   th1d_corr_v22->SetMarkerColor(kRed);
@@ -287,33 +290,58 @@ void do_process(const char* type, int rebin)
   gv24_sys->Draw("same E5");
   th1d_corr_v22->Draw("ex0p same");
   th1d_corr_v24->Draw("ex0p same");
-  TLegend* leg = new TLegend(0.195,0.655,0.455,0.805);
-  leg->SetHeader("1<|#eta|<3 Scaled by 1.25");
+  // ---
+  // --- these are all very useful, do not delete
+  // TLegend* leg = new TLegend(0.195,0.655,0.455,0.805);
+  // leg->SetHeader("h^{#pm} 1<|#eta|<3");
+  // leg->SetTextSize(0.05);
+  // leg->SetFillStyle(0);
+  // leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
+  // leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
+  // leg->Draw();
+  // TLatex* tex_phenix = new TLatex(0.2,0.882,"PHENIX");
+  // tex_phenix->SetTextSize(0.05);
+  // tex_phenix->SetNDC();
+  // tex_phenix->Draw();
+  // TLatex* tex_system = new TLatex(0.2,0.83,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  // tex_system->SetTextSize(0.05);
+  // tex_system->SetNDC();
+  // tex_system->Draw();
+  // ---
+  // --- this is for the preliminary
+  TLegend* leg = new TLegend(0.195,0.70,0.455,0.81);
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
   leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
   leg->Draw();
-  // ---
-  TLatex* tex_phenix = new TLatex(0.2,0.882,"PHENIX");
-  tex_phenix->SetTextSize(0.05);
-  tex_phenix->SetNDC();
-  tex_phenix->Draw();
-  TLatex* tex_system = new TLatex(0.2,0.83,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  TLatex* tex_tracks = new TLatex(0.2,0.82,"h^{#pm} 1<|#eta|<3");
+  tex_tracks->SetTextSize(0.05);
+  tex_tracks->SetNDC();
+  tex_tracks->Draw();
+  TLatex* tex_system = new TLatex(0.2,0.882,"Au+Au #sqrt{s_{NN}} = 200 GeV");
   tex_system->SetTextSize(0.05);
   tex_system->SetNDC();
   tex_system->Draw();
   // ---
   c1->Print(Form("FigsStar/star%d_v224_%s.png",rebin,type));
   c1->Print(Form("FigsStar/star%d_v224_%s.pdf",rebin,type));
+  TGraphErrors* tge_blackstar_v22 = (TGraphErrors*)tge_star_v22->Clone();
+  TGraphErrors* tge_blackstar_v24 = (TGraphErrors*)tge_star_v24->Clone();
+  tge_blackstar_v22->SetMarkerColor(kBlack);
+  tge_blackstar_v24->SetMarkerColor(kBlack);
+  tge_blackstar_v22->SetMarkerSize(3.5);
+  tge_blackstar_v24->SetMarkerSize(3.5);
+  tge_blackstar_v22->Draw("p");
+  tge_blackstar_v24->Draw("p");
   tge_star_v22->Draw("p");
   tge_star_v24->Draw("p");
-  TLegend* leg2 = new TLegend(0.48,0.16,0.68,0.31);
-  leg2->SetHeader("STAR, PRC 72 014904 (2005)");
-  leg2->AddEntry(tge_star_v22,"v_{2}{2} |#eta|<1","p");
-  leg2->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1","p");
-  leg2->SetTextSize(0.045);
-  leg2->Draw();
+  TLegend* legstar = new TLegend(0.48,0.16,0.68,0.31);
+  legstar->SetHeader("STAR, PRC 72 014904 (2005)");
+  legstar->AddEntry(tge_star_v22,"v_{2}{2} |#eta|<1 (#times 0.8)","p");
+  legstar->AddEntry(tge_star_v24,"v_{2}{4} |#eta|<1 (#times 0.8)","p");
+  legstar->SetTextSize(0.045);
+  legstar->Draw();
   c1->Print(Form("FigsStar/starstar%d_v224_%s.png",rebin,type));
   c1->Print(Form("FigsStar/starstar%d_v224_%s.pdf",rebin,type));
 
