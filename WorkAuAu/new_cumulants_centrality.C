@@ -309,17 +309,17 @@ void do_process(const char* type, int rebin)
   // tex_system->Draw();
   // ---
   // --- this is for the preliminary
-  TLegend* leg = new TLegend(0.195,0.70,0.455,0.81);
+  TLegend* leg = new TLegend(0.195,0.70-0.02,0.455,0.81-0.02);
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
   leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
   leg->Draw();
-  TLatex* tex_tracks = new TLatex(0.2,0.82,"h^{#pm} 1<|#eta|<3");
+  TLatex* tex_tracks = new TLatex(0.2,0.82-0.02,"h^{#pm} 1<|#eta|<3");
   tex_tracks->SetTextSize(0.05);
   tex_tracks->SetNDC();
   tex_tracks->Draw();
-  TLatex* tex_system = new TLatex(0.2,0.882,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  TLatex* tex_system = new TLatex(0.2,0.882-0.02,"Au+Au #sqrt{s_{NN}} = 200 GeV");
   tex_system->SetTextSize(0.05);
   tex_system->SetNDC();
   tex_system->Draw();
