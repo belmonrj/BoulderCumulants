@@ -59,14 +59,6 @@ void do_process(const char* type, int rebin)
   TH1D* th1d_corr_v24  = (TH1D*)th1d_four->Clone("th1d_corr_v24");
   TH1D* th1d_corr_v22  = (TH1D*)th1d_four->Clone("th1d_corr_v22");
   TH1D* th1d_corr_v2G  = (TH1D*)th1d_four->Clone("th1d_corr_v2G");
-  TH1D* th1d_uncorr_four = (TH1D*)th1d_four->Clone("th1d_uncorr_four");
-  TH1D* th1d_uncorr_222  = (TH1D*)th1d_four->Clone("th1d_uncorr_222");
-  TH1D* th1d_uncorr_c24  = (TH1D*)th1d_four->Clone("th1d_uncorr_c24");
-  TH1D* th1d_uncorr_c22  = (TH1D*)th1d_four->Clone("th1d_uncorr_c22");
-  TH1D* th1d_uncorr_c2G  = (TH1D*)th1d_four->Clone("th1d_uncorr_c2G");
-  TH1D* th1d_uncorr_v24  = (TH1D*)th1d_four->Clone("th1d_uncorr_v24");
-  TH1D* th1d_uncorr_v22  = (TH1D*)th1d_four->Clone("th1d_uncorr_v22");
-  TH1D* th1d_uncorr_v2G  = (TH1D*)th1d_four->Clone("th1d_uncorr_v2G");
 
   // --- get the number of bins and do a loop
   int nbinsx = tp1f_four->GetNbinsX();
@@ -89,11 +81,6 @@ void do_process(const char* type, int rebin)
       double corr_c24 = calc_corr_four(four,two,cos1,sin1,cossum2,sinsum2,cos3,sin3);
       double corr_222 = 2*corr_c22*corr_c22;
       double corr_four = corr_c24 + corr_222;
-      // --- also useful to look at some things without the corrections
-      double uncorr_four = four;
-      double uncorr_222 = 2*two*two;
-      double uncorr_c24 = four - 2*two*two;
-      double uncorr_c22 = two;
       // --- now look at G
       double cos1_north = tp1f_cos1_north->GetBinContent(i+1);
       double sin1_north = tp1f_sin1_north->GetBinContent(i+1);
@@ -104,7 +91,6 @@ void do_process(const char* type, int rebin)
       double corr_c2G   = two_G - cos1_north*cos1_south - sin1_north*sin1_south;
       //double corr_c2G   = two_G - cos1_north*cos1_south; // this is a dumb idea and it doesn't work anyway
       //double corr_c2G   = two_G - cos1*cos1 - sin1*sin1; // interesting to note this looks much much worse
-      double uncorr_c2G = two_G;
       // --- calculate the harmonics
       double corr_v24 = -9;
       double corr_v22 = -9;
@@ -112,12 +98,6 @@ void do_process(const char* type, int rebin)
       if ( corr_c22 > 0 ) corr_v22 = sqrt(corr_c22);
       if ( corr_c2G > 0 ) corr_v2G = sqrt(corr_c2G);
       if ( corr_c24 < 0 ) corr_v24 = sqrt(sqrt(-corr_c24));
-      double uncorr_v24 = -9;
-      double uncorr_v22 = -9;
-      double uncorr_v2G = -9;
-      if ( uncorr_c22 > 0 ) uncorr_v22 = sqrt(uncorr_c22);
-      if ( uncorr_c2G > 0 ) uncorr_v2G = sqrt(uncorr_c2G);
-      if ( uncorr_c24 < 0 ) uncorr_v24 = sqrt(sqrt(-uncorr_c24));
       // --- calculate statistical uncertainties
       double ecorr_four = efour;
       double ecorr_222 = 4*two*etwo;
@@ -130,17 +110,6 @@ void do_process(const char* type, int rebin)
       if ( corr_c2G > 0 ) ecorr_v2G = sqrt(1.0/corr_v2G)*ecorr_c2G;
       if ( corr_c22 > 0 ) ecorr_v22 = sqrt(1.0/corr_v22)*ecorr_c22;
       if ( corr_c24 < 0 ) ecorr_v24 = (1.0/pow(-corr_c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
-      double euncorr_four = efour;
-      double euncorr_222 = 4*two*etwo;
-      double euncorr_c2G = etwo_G;
-      double euncorr_c22 = etwo;
-      double euncorr_c24 = (efour/four)*uncorr_c24;
-      double euncorr_v2G = 0;
-      double euncorr_v22 = 0;
-      double euncorr_v24 = 0;
-      if ( uncorr_c2G > 0 ) euncorr_v2G = sqrt(1.0/uncorr_v2G)*euncorr_c2G;
-      if ( uncorr_c22 > 0 ) euncorr_v22 = sqrt(1.0/uncorr_v22)*euncorr_c22;
-      if ( uncorr_c24 < 0 ) euncorr_v24 = (1.0/pow(-uncorr_c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
       // --- now set the histogram values
       th1d_corr_four->SetBinContent(i+1,corr_four);
       th1d_corr_222->SetBinContent(i+1,corr_222);
@@ -150,14 +119,6 @@ void do_process(const char* type, int rebin)
       th1d_corr_v24->SetBinContent(i+1,corr_v24);
       th1d_corr_v22->SetBinContent(i+1,corr_v22);
       th1d_corr_v2G->SetBinContent(i+1,corr_v2G);
-      th1d_uncorr_four->SetBinContent(i+1,uncorr_four);
-      th1d_uncorr_222->SetBinContent(i+1,uncorr_222);
-      th1d_uncorr_c24->SetBinContent(i+1,uncorr_c24);
-      th1d_uncorr_c22->SetBinContent(i+1,uncorr_c22);
-      th1d_uncorr_c2G->SetBinContent(i+1,uncorr_c2G);
-      th1d_uncorr_v24->SetBinContent(i+1,uncorr_v24);
-      th1d_uncorr_v22->SetBinContent(i+1,uncorr_v22);
-      th1d_uncorr_v2G->SetBinContent(i+1,uncorr_v2G);
       // --- now set the histogram uncertainties
       th1d_corr_four->SetBinError(i+1,ecorr_four);
       th1d_corr_222->SetBinError(i+1,ecorr_222);
@@ -167,14 +128,6 @@ void do_process(const char* type, int rebin)
       th1d_corr_v24->SetBinError(i+1,ecorr_v24);
       th1d_corr_v22->SetBinError(i+1,ecorr_v22);
       th1d_corr_v2G->SetBinError(i+1,ecorr_v2G);
-      th1d_uncorr_four->SetBinError(i+1,euncorr_four);
-      th1d_uncorr_222->SetBinError(i+1,euncorr_222);
-      th1d_uncorr_c24->SetBinError(i+1,euncorr_c24);
-      th1d_uncorr_c22->SetBinError(i+1,euncorr_c22);
-      th1d_uncorr_c2G->SetBinError(i+1,euncorr_c2G);
-      th1d_uncorr_v24->SetBinError(i+1,euncorr_v24);
-      th1d_uncorr_v22->SetBinError(i+1,euncorr_v22);
-      th1d_uncorr_v2G->SetBinError(i+1,euncorr_v2G);
     }
 
   // --- now we have all the histograms with proper uncertainties, so let's make some plots
@@ -188,43 +141,15 @@ void do_process(const char* type, int rebin)
   th1d_corr_v24->SetMarkerColor(kBlue);
   th1d_corr_v24->SetMarkerStyle(kFullSquare);
 
-  th1d_uncorr_v22->SetLineColor(kBlack);
-  th1d_uncorr_v22->SetMarkerColor(kRed);
-  th1d_uncorr_v22->SetMarkerStyle(kFullDiamond);
-  th1d_uncorr_v2G->SetLineColor(kBlack);
-  th1d_uncorr_v2G->SetMarkerColor(kMagenta+2);
-  th1d_uncorr_v2G->SetMarkerStyle(kFullDiamond);
-  th1d_uncorr_v24->SetLineColor(kBlack);
-  th1d_uncorr_v24->SetMarkerColor(kBlue);
-  th1d_uncorr_v24->SetMarkerStyle(kFullSquare);
 
   double xmin = 0.0;
   double xmax = 100.0;
   double ymin = 0.0;
   double ymax = 0.199;
-  // if ( strcmp(type,"Run15pAu200") == 0 ) xmax = 70.0;
-  // if ( strcmp(type,"Run16dAu200") == 0 ) xmax = 70.0;
-  // if ( strcmp(type,"Run16dAu62") == 0 ) xmax = 70.0;
-  // if ( strcmp(type,"Run16dAu39") == 0 ) xmax = 70.0;
-  // if ( strcmp(type,"Run16dAu20") == 0 ) xmax = 70.0;
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
-  // th1d_corr_v22->Draw("ex0p same");
-  // th1d_corr_v24->Draw("ex0p same");
-  // TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
-  // leg->SetHeader(type);
-  // leg->SetTextSize(0.045);
-  // //leg->SetFillStyle(0);
-  // leg->AddEntry(th1d_corr_v22,"v_{2}{2}","p");
-  // leg->AddEntry(th1d_corr_v24,"v_{2}{4}","p");
-  // leg->Draw();
-  // th1d_corr_v2G->Draw("ex0p same");
-  // leg->AddEntry(th1d_corr_v2G,"v_{2}{2,|#Delta#eta|>2}","p");
-  // leg->Draw();
-  // -----------------------------------------------------------------------------
   // -----------------------------------------------------------------------------
   double cent[9] = {75,65,55,45,35,25,15,7.5,2.5};
   double star_v22[9]={0};
@@ -306,10 +231,6 @@ void do_process(const char* type, int rebin)
   empty->Draw();
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("v_{2}");
-  // th1d_corr_v22->Draw("ex0p same");
-  // th1d_corr_v24->Draw("ex0p same");
-  // th1d_corr_v2G->Draw("ex0p same");
-  // leg->Draw();
   // ---
   th1d_corr_v22->SetLineColor(kBlack);
   th1d_corr_v22->SetMarkerColor(kRed);
@@ -321,9 +242,6 @@ void do_process(const char* type, int rebin)
   th1d_corr_v24->SetMarkerColor(kBlue);
   th1d_corr_v24->SetMarkerStyle(kOpenSquare);
   empty->Draw();
-  // th1d_corr_v22->Scale(1.25);
-  // th1d_corr_v24->Scale(1.25);
-  // th1d_corr_v2G->Scale(1.25);
   // --- get the systmatics histos
   TH1D* gv22_sys = (TH1D*) th1d_corr_v22->Clone("gv22_sys");
   gv22_sys->SetMarkerStyle(0);
@@ -366,14 +284,9 @@ void do_process(const char* type, int rebin)
   th1d_corr_v24->GetXaxis()->SetRangeUser(7,65);
   th1d_corr_v2G->GetXaxis()->SetRangeUser(1,90);
   gv22_sys->Draw("same E5");
-  //gv22ab_sys->Draw("same E5");
   gv24_sys->Draw("same E5");
   th1d_corr_v22->Draw("ex0p same");
   th1d_corr_v24->Draw("ex0p same");
-  //th1d_corr_v2G->Draw("ex0p same");
-  // tge_star_v22->Draw("p");
-  // tge_star_v24->Draw("p");
-  //delete leg;
   TLegend* leg = new TLegend(0.195,0.655,0.455,0.805);
   leg->SetHeader("1<|#eta|<3 Scaled by 1.25");
   leg->SetTextSize(0.05);
