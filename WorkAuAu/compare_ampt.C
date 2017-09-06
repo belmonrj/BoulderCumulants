@@ -579,7 +579,8 @@ void compare_sigma()
   //leg = new TLegend(0.22,0.72,0.48,0.92);
   //leg = new TLegend(0.22,0.62,0.48,0.72);
   //leg = new TLegend(0.22,0.70,0.48,0.85);
-  leg = new TLegend(0.20,0.70,0.46,0.85);
+  double legoff = 0.075;
+  leg = new TLegend(0.20,0.70+legoff,0.46,0.85+legoff);
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVG_data,"Data","p");
@@ -672,7 +673,7 @@ void compare_sigma()
   tg_newsig1->Draw("l");
   tg_newsig2->Draw("l");
   delete leg;
-  leg = new TLegend(0.20,0.55,0.46,0.85);
+  leg = new TLegend(0.20,0.55+legoff,0.46,0.85+legoff);
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVG_data,"Data","p");

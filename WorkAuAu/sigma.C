@@ -311,7 +311,7 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   latt.SetTextAlign(11);
   //latt.DrawLatex(0.30 - Rmarg, 0.87, "PHENIX");
   latt.DrawLatex(0.56 - Rmarg, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
-  latt.DrawLatex(0.56 - Rmarg, 0.80, "1 < |#eta| < 3");
+  latt.DrawLatex(0.56 - Rmarg, 0.80, "h^{#pm} 1<|#eta|<3");
   c1->Print(Form("FigsSigma/sigma_%s_x04.png",handle));
   c1->Print(Form("FigsSigma/sigma_%s_x04.pdf",handle));
   ifstream fampt("input/temp_ampt.dat");
