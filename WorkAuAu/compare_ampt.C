@@ -193,9 +193,9 @@ void compare_4part()
   latt.SetTextFont(62);
   latt.SetTextSize(0.075);
   latt.SetTextAlign(22);
-  latt.DrawLatex(0.40 - Rmarg, 0.93 - 0.1, "PHENIX");
+  //latt.DrawLatex(0.40 - Rmarg, 0.93 - 0.1, "PHENIX");
   latt.DrawLatex(0.76 - Rmarg, 0.93 - 0.1, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
-  latt.DrawLatex(0.80 - Rmarg, 0.86 - 0.1, "1 < |#eta| < 3");
+  latt.DrawLatex(0.80 - Rmarg, 0.86 - 0.1, "h^{#pm} 1<|#eta|<3");
   //TLegend* leg_comp4 = new TLegend(0.68,0.70,0.9,0.85);
   //TLegend* leg_comp4 = new TLegend(0.68,0.55,0.9,0.75);
   TLegend* leg_comp4 = new TLegend(0.68,0.55,0.9,0.73);
@@ -635,9 +635,9 @@ void compare_sigma()
   //latt.SetTextFont(62);
   latt.SetTextSize(0.05);
   latt.SetTextAlign(11);
-  latt.DrawLatex(0.30 - Rmarg, 0.87, "PHENIX");
+  //latt.DrawLatex(0.30 - Rmarg, 0.87, "PHENIX");
   latt.DrawLatex(0.56 - Rmarg, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
-  latt.DrawLatex(0.56 - Rmarg, 0.80, "1 < |#eta| < 3");
+  latt.DrawLatex(0.56 - Rmarg, 0.80, "h^{#pm} 1<|#eta|<3");
   c1->Print("FigsAmpt/sigma_ampt_x04.png");
   c1->Print("FigsAmpt/sigma_ampt_x04.pdf");
 
