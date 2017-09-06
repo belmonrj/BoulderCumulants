@@ -16,4 +16,6 @@ cp FigsSigma/sigma_cent_x05.pdf CollectFigures
 cp FigsAmpt/comp_ampt_cumulant4.pdf CollectFigures
 cp FigsAmpt/sigma_ampt_x04.pdf CollectFigures
 cp FigsAmpt/sigma_ampt_x05.pdf CollectFigures
+cp FigsStar/star1_v224_Run14AuAu200.pdf CollectFigures
+cp FigsStar/starstar1_v224_Run14AuAu200.pdf CollectFigures
 
