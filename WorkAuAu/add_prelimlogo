@@ -11,6 +11,11 @@ preliminary.pl --input=CollectFigures/recursion_scent_v22.pdf    --output=Collec
 preliminary.pl --input=CollectFigures/recursion_scent_v224.pdf   --output=CollectFigures/logo_recursion_scent_v224.pdf     --x=225 --y=290 --scale=0.9
 preliminary.pl --input=CollectFigures/recursion_scent_v2246.pdf  --output=CollectFigures/logo_recursion_scent_v2246.pdf    --x=225 --y=290 --scale=0.9
 preliminary.pl --input=CollectFigures/recursion_scent_v22468.pdf --output=CollectFigures/logo_recursion_scent_v22468.pdf   --x=225 --y=290 --scale=0.9
+preliminary.pl --input=CollectFigures/special_cent_v22.pdf       --output=CollectFigures/logo_special_cent_v22.pdf         --x=225 --y=290 --scale=0.9
+preliminary.pl --input=CollectFigures/special_cent_v222.pdf      --output=CollectFigures/logo_special_cent_v222.pdf        --x=225 --y=290 --scale=0.9
+preliminary.pl --input=CollectFigures/special_cent_v2224.pdf     --output=CollectFigures/logo_special_cent_v2224.pdf       --x=225 --y=290 --scale=0.9
+preliminary.pl --input=CollectFigures/special_cent_v22246.pdf    --output=CollectFigures/logo_special_cent_v22246.pdf      --x=225 --y=290 --scale=0.9
+preliminary.pl --input=CollectFigures/special_cent_v222468.pdf   --output=CollectFigures/logo_special_cent_v222468.pdf     --x=225 --y=290 --scale=0.9
 preliminary.pl --input=CollectFigures/sigma_ampt_x04.pdf         --output=CollectFigures/logo_sigma_ampt_x04.pdf           --x=360 --y=70  --scale=0.9
 preliminary.pl --input=CollectFigures/sigma_ampt_x05.pdf         --output=CollectFigures/logo_sigma_ampt_x05.pdf           --x=360 --y=70  --scale=0.9
 preliminary.pl --input=CollectFigures/sigma_cent_x04.pdf         --output=CollectFigures/logo_sigma_cent_x04.pdf           --x=360 --y=70  --scale=0.9
@@ -18,4 +23,3 @@ preliminary.pl --input=CollectFigures/sigma_cent_x05.pdf         --output=Collec
 preliminary.pl --input=CollectFigures/comp_ampt_cumulant4.pdf    --output=CollectFigures/logo_comp_ampt_cumulant4.pdf      --x=250 --y=450 --scale=0.9
 preliminary.pl --input=CollectFigures/star1_v224_Run14AuAu200.pdf      --output=CollectFigures/logo_star1_v224_Run14AuAu200.pdf      --x=225 --y=275 --scale=0.9
 preliminary.pl --input=CollectFigures/starstar1_v224_Run14AuAu200.pdf  --output=CollectFigures/logo_starstar1_v224_Run14AuAu200.pdf  --x=225 --y=275 --scale=0.9
-
