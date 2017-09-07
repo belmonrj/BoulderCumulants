@@ -109,6 +109,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   th1d_nfvtxt_north = NULL;
   th1d_nfvtxt_south = NULL;
   th2d_nfvtxt_bbcsum = NULL;
+  th2d_nfvtxt_centrality = NULL;
   th2d_nfvtxt_bbcsumratio = NULL;
   th1d_track_deta = NULL;
   th1d_track_dphi = NULL;
@@ -568,6 +569,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   th1d_nfvtxt_combinedER = new TH1D("th1d_nfvtxt_combinedER","",5000, -0.5, 4999.5);
   th1d_nfvtxt_combined = new TH1D("th1d_nfvtxt_combined","",2000, -0.5, 1999.5);
   th2d_nfvtxt_bbcsum = new TH2D("th2d_nfvtxt_bbcsum","",2000, -0.5, 1999.5, 1000, 0, 4000);
+  th2d_nfvtxt_centrality = new TH2D("th2d_nfvtxt_centrality","",2000, -0.5, 1999.5, 100, -0.5, 99.5);
   th2d_nfvtxt_bbcsumratio = new TH2D("th2d_nfvtxt_bbcsumratio","",2000, -0.5, 1999.5, 1000, 0, 5);
   th1d_nfvtxt_north = new TH1D("th1d_nfvtxt_north","",2000, -0.5, 1999.5);
   th1d_nfvtxt_south = new TH1D("th1d_nfvtxt_south","",2000, -0.5, 1999.5);
@@ -1692,6 +1694,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   th1d_nfvtxt_south->Fill(nfvtxt_south);
 
   th2d_nfvtxt_bbcsum->Fill(nfvtxt,bbc_charge_sum);
+  th2d_nfvtxt_centrality->Fill(nfvtxt,centrality);
   th2d_nfvtxt_bbcsumratio->Fill(nfvtxt,bbc_charge_sum/(float)nfvtxt);
 
   bool passes = PassesTracksChargeRatio(nfvtxt,bbc_charge_sum);
