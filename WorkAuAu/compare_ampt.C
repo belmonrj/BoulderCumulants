@@ -79,13 +79,17 @@ void compare_4part()
       ex[count] = 0;
       ey[count] = th1d_c24_ampt->GetBinError(i+1);
       x[count] *= 1.15; // scaling to match ncharge distribution
+      // --- this is very interesting, further study is warranted
+      // --- for now, making it quiet
+      /*
       if ( count < 10 )
         {
-          //cout << count << " " << y[count] << " " << ey[count] << " " << 1.0/sqrt(tp1f_for_ampt->GetBinEntries(count+1)) << endl;
-          cout << count << " " << y[count] << " " << ey[count] << " "
-               << 1.0/sqrt(tp1f_for_ampt->GetBinEntries(count+1)) << " "
-               << ey[count]*sqrt(tp1f_for_ampt->GetBinEntries(count+1)) << endl;
+          // cout << count << " " << y[count] << " " << ey[count] << " " << 1.0/sqrt(tp1f_for_ampt->GetBinEntries(count+1)) << endl;
+          // cout << count << " " << y[count] << " " << ey[count] << " "
+          //      << 1.0/sqrt(tp1f_for_ampt->GetBinEntries(count+1)) << " "
+          //      << ey[count]*sqrt(tp1f_for_ampt->GetBinEntries(count+1)) << endl;
         }
+      */
       ++count;
     }
   // --- error bars need some adjustment...
@@ -520,7 +524,7 @@ void compare_sigma()
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("#sigma_{v_{2}}/v_{2}");
+  empty->GetYaxis()->SetTitle("#sigma_{v_{2}}/#LTv_{2}#GT");
   th1d_SVV_data->SetMarkerStyle(kOpenCircle);
   th1d_SVV_data->SetMarkerColor(kBlack);
   th1d_SVV_data->SetLineColor(kBlack);
@@ -580,7 +584,8 @@ void compare_sigma()
   //leg = new TLegend(0.22,0.62,0.48,0.72);
   //leg = new TLegend(0.22,0.70,0.48,0.85);
   double legoff = 0.075;
-  leg = new TLegend(0.20,0.70+legoff,0.46,0.85+legoff);
+  double legleft = 0.02;
+  leg = new TLegend(0.20-legleft,0.70+legoff,0.46-legleft,0.85+legoff);
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVG_data,"Data","p");
@@ -617,7 +622,7 @@ void compare_sigma()
       ex[count] = 0;
       ey[count] = th1d_SVG_ampt->GetBinError(i+1);
       x[count] *= 1.15; // scaling to match ncharge distribution
-      cout << x[count] << " " << y[count] << " " << ey[count] << endl;
+      //cout << x[count] << " " << y[count] << " " << ey[count] << endl;
       ++count;
     }
   TGraphErrors* tge_svg_ampt = new TGraphErrors(count,x,y,ex,ey);
@@ -673,7 +678,7 @@ void compare_sigma()
   tg_newsig1->Draw("l");
   tg_newsig2->Draw("l");
   delete leg;
-  leg = new TLegend(0.20,0.55+legoff,0.46,0.85+legoff);
+  leg = new TLegend(0.20-legleft,0.55+legoff,0.46-legleft,0.85+legoff);
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVG_data,"Data","p");

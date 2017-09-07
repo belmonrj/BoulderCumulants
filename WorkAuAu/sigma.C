@@ -231,7 +231,7 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   empty->Draw();
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("#sigma_{v_{2}}/v_{2}");
+  empty->GetYaxis()->SetTitle("#sigma_{v_{2}}/#LTv_{2}#GT");
   if ( iscent )
   {
   th1d_SVV->GetXaxis()->SetRangeUser(0,70);
@@ -255,7 +255,6 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVV,"Using v_{2}{2} no eta gap","p");
-  //leg->AddEntry(th1d_SV4,"Using v_{2}{2} no eta gap, alternate algebra","p");
   leg->AddEntry(th1d_SVG,"Using v_{2}{2} with eta gap","p");
   leg->Draw();
   c1->Print(Form("FigsSigma/sigma_%s_x01.png",handle));
@@ -281,7 +280,6 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   tg_sig1->Draw("l");
   tg_sig2->Draw("l");
   delete leg;
-  //leg = new TLegend(0.22,0.72,0.48,0.92);
   leg = new TLegend(0.22,0.58,0.48,0.78);
   leg->AddEntry(tg_sig2,"MC Glauber, data style estimate","l");
   leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
@@ -319,7 +317,7 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   for ( int i = 0; i < 16; ++i )
     {
       fampt >> cent[i] >> ntrk[i] >> y[i] >> ey[i];
-      cout << cent[i] << " " << ntrk[i] << " " << y[i] << " " << ey[i] << endl;
+      //cout << cent[i] << " " << ntrk[i] << " " << y[i] << " " << ey[i] << endl;
     }
   TGraphErrors* tge_amptcent = new TGraphErrors(16,cent,y,0,ey);
   tge_amptcent->SetLineColor(kGreen+2);
