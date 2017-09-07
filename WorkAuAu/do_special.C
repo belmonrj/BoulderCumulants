@@ -3,6 +3,7 @@
 #include "plot_recomp.C"
 #include "calc_subevents.C"
 #include "plot_subv2.C"
+#include "plot_special.C"
 
 
 void do_special()
@@ -57,5 +58,8 @@ void do_special()
 
   // --- plot the v2{k} with subevent v2 instead...
   plot_recv2(v28,v26,v24,hv22ab,"scent");
+
+  // --- now do a special plot with all 5...
+  plot_special(v28,v26,v24,v22,hv22ab,"cent");
 
 }
