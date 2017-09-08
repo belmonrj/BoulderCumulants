@@ -29,3 +29,5 @@ cp FigsSpecial/special_cent_v2224.pdf CollectFigures
 cp FigsSpecial/special_cent_v22246.pdf CollectFigures
 cp FigsSpecial/special_cent_v222468.pdf CollectFigures
 
+cp FigsCorrelation/correlation_centrality_nfvtxt.pdf CollectFigures
+

@@ -23,3 +23,4 @@ preliminary.pl --input=CollectFigures/sigma_cent_x05.pdf         --output=Collec
 preliminary.pl --input=CollectFigures/comp_ampt_cumulant4.pdf    --output=CollectFigures/logo_comp_ampt_cumulant4.pdf      --x=250 --y=450 --scale=0.9
 preliminary.pl --input=CollectFigures/star1_v224_Run14AuAu200.pdf      --output=CollectFigures/logo_star1_v224_Run14AuAu200.pdf      --x=225 --y=275 --scale=0.9
 preliminary.pl --input=CollectFigures/starstar1_v224_Run14AuAu200.pdf  --output=CollectFigures/logo_starstar1_v224_Run14AuAu200.pdf  --x=225 --y=275 --scale=0.9
+preliminary.pl --input=CollectFigures/correlation_centrality_nfvtxt.pdf  --output=CollectFigures/logo_correlation_centrality_nfvtxt.pdf  --x=315 --y=215 --scale=0.9
