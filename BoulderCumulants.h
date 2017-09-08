@@ -175,6 +175,7 @@ class BoulderCumulants: public SubsysReco
   TH1D* th1d_nfvtxt_south;
   TH2D* th2d_nfvtxt_bbcsum;
   TH2D* th2d_nfvtxt_centrality;
+  TH2D* th2d_nfvtxt_centralityA;
   TH2D* th2d_nfvtxt_bbcsumratio;
   TH1D* th1d_track_deta;
   TH1D* th1d_track_dphi;
