@@ -63,7 +63,7 @@ void get_recursion()
   // --- plot the v3{k}
   plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk",3);
   // --- plot the components and cumulants
-  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,1,"ntrk",3);
+  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk",3);
 
   // --- get the k-p correlator histograms from the file
   eit_ntrk = NULL;
@@ -71,9 +71,9 @@ void get_recursion()
   for_ntrk = (TProfile*)fin->Get("nfvtxt_recursion_0_9");
   two_ntrk = (TProfile*)fin->Get("nfvtxt_recursion_0_7");
   // --- plot the v4{k}
-  plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,1,"ntrk",4);
+  plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk",4);
   // --- plot the components and cumulants
-  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,1,"ntrk",4);
+  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk",4);
 
   // ------------------------------------------------------------------------
 
