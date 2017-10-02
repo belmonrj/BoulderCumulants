@@ -1,4 +1,4 @@
-void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
+void calc_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22,
                    TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22,
                    TH1D** out_eit, TH1D** out_six, TH1D** out_for, TH1D** out_two,
@@ -10,6 +10,79 @@ void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TP
   double rand = gRandom->Rndm();
   int helper = rand*10000;
   // cout << "using random number helper " << helper << " to prevent memory leaks" << endl;
+
+  // ---------------------------------------------------------------------------
+  // --- build in fault tolerance for null histos
+  // --- 8-particle fault tolerance
+  if ( tp1f_eit == NULL )
+    {
+      // --- make a helper histo
+      TProfile *h = NULL;
+      // --- find a non-null histo
+      if ( h == NULL ) h = tp1f_six;
+      if ( h == NULL ) h = tp1f_for;
+      if ( h == NULL ) h = tp1f_two;
+      // --- if even two particle histo is NULL, exit
+      if ( h == NULL )
+        {
+          cout << "ERROR: Need at least one non-null histogram " << endl;
+          return;
+        }
+      cout << "WARNING: 8-particle histogram found to be null" << endl;
+      // --- make a clone and set all values to zero
+      tp1f_eit = (TProfile*)h->Clone("tp1f_eit");
+      for ( int i = 0; i < h->GetNbinsX(); ++i )
+        {
+          tp1f_eit->SetBinContent(i+1,0.0);
+          tp1f_eit->SetBinError(i+1,0.0);
+        }
+    }
+  // --- 6-particle fault tolerance
+  if ( tp1f_six == NULL )
+    {
+      // --- make a helper histo
+      TProfile *h = NULL;
+      // --- find a non-null histo
+      if ( h == NULL ) h = tp1f_for;
+      if ( h == NULL ) h = tp1f_two;
+      // --- if even two particle histo is NULL, exit
+      if ( h == NULL )
+        {
+          cout << "ERROR: Need at least one non-null histogram " << endl;
+          return;
+        }
+      cout << "WARNING: 6-particle histogram found to be null" << endl;
+      // --- make a clone and set all values to zero
+      tp1f_six = (TProfile*)h->Clone("tp1f_six");
+      for ( int i = 0; i < h->GetNbinsX(); ++i )
+        {
+          tp1f_six->SetBinContent(i+1,0.0);
+          tp1f_six->SetBinError(i+1,0.0);
+        }
+    }
+  // --- 4-particle fault tolerance
+  if ( tp1f_for == NULL )
+    {
+      // --- make a helper histo
+      TProfile *h = NULL;
+      // --- find a non-null histo
+      if ( h == NULL ) h = tp1f_two;
+      // --- if even two particle histo is NULL, exit
+      if ( h == NULL )
+        {
+          cout << "ERROR: Need at least one non-null histogram " << endl;
+          return;
+        }
+      cout << "WARNING: 6-particle histogram found to be null" << endl;
+      // --- make a clone and set all values to zero
+      tp1f_for = (TProfile*)h->Clone("tp1f_for");
+      for ( int i = 0; i < h->GetNbinsX(); ++i )
+        {
+          tp1f_for->SetBinContent(i+1,0.0);
+          tp1f_for->SetBinError(i+1,0.0);
+        }
+    }
+  // ---------------------------------------------------------------------------
 
   TProfile* ctp1f_eit = (TProfile*)tp1f_eit->Clone(Form("ctp1f_eit_%d",helper));
   TProfile* ctp1f_six = (TProfile*)tp1f_six->Clone(Form("ctp1f_eit_%d",helper));
@@ -183,7 +256,7 @@ void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TP
 }
 
 
-void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
+void calc_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22,
                    TH1D** out_c28, TH1D** out_c26, TH1D** out_c24, TH1D** out_c22,
                    int rebin)
@@ -194,7 +267,7 @@ void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TP
 }
 
 
-void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
+void calc_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22, int rebin)
 {
   TH1D* h = NULL;
@@ -202,7 +275,7 @@ void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TP
 }
 
 
-void calc_cumulants(const TProfile* tp1f_eit, const TProfile* tp1f_six, const TProfile* tp1f_for, const TProfile* tp1f_two,
+void calc_cumulants(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two,
                    TH1D** out_v28, TH1D** out_v26, TH1D** out_v24, TH1D** out_v22)
 {
   TH1D* h = NULL;
