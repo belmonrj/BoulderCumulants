@@ -1,13 +1,13 @@
-void plot_recomp(TProfile*, TProfile*, TProfile*, TProfile*, int, const char*);
+void plot_recomp(TProfile*, TProfile*, TProfile*, TProfile*, int, const char*, int);
 void plot_recomp(TH1D*, TH1D*, TH1D*, TH1D*,
                  TH1D*, TH1D*, TH1D*, TH1D*,
                  TH1D*, TH1D*, TH1D*, TH1D*,
                  TH1D*, TH1D*, TH1D*,
-                 const char*
+                 const char*, int
                  );
 
 
-void plot_recomp(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
+void plot_recomp(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle, int harmonic)
 {
   cout << "Using hidden method!" << endl;
   // --- initialize the pointers
@@ -43,7 +43,7 @@ void plot_recomp(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TPr
               heit, hsix, hfor, htwo,
               h862, h842, h822, h824,
               h942, h123, h222,
-              handle);
+              handle,harmonic);
 }
 
 
@@ -51,7 +51,7 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
                  TH1D* th1d_eit, TH1D* th1d_six, TH1D* th1d_for, TH1D* th1d_two,
                  TH1D* th1d_862, TH1D* th1d_842, TH1D* th1d_822, TH1D* th1d_824,
                  TH1D* th1d_942, TH1D* th1d_123, TH1D* th1d_222,
-                 const char* handle
+                 const char* handle, int harmonic
                  )
 {
 
@@ -168,8 +168,8 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   leg_cumu4->AddEntry(th1d_c24,"c_{2}{4} = -v_{2}^{4}","p");
   leg_cumu4->Draw();
   cline->Draw();
-  ccomp4->Print(Form("FigsRecursion/recursion_%s_cumulant4.png",handle));
-  ccomp4->Print(Form("FigsRecursion/recursion_%s_cumulant4.pdf",handle));
+  ccomp4->Print(Form("FigsRecursion/recursion_h%d_%s_cumulant4.png",harmonic,handle));
+  ccomp4->Print(Form("FigsRecursion/recursion_h%d_%s_cumulant4.pdf",harmonic,handle));
   delete ccomp4;
   delete empty_cumu4;
   delete empty_comp4;
@@ -257,8 +257,8 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   leg_cumu6->AddEntry(th1d_c26,"c_{2}{6} = 4v_{2}^{6}","p");
   leg_cumu6->Draw();
   cline->Draw();
-  ccomp6->Print(Form("FigsRecursion/recursion_%s_cumulant6.png",handle));
-  ccomp6->Print(Form("FigsRecursion/recursion_%s_cumulant6.pdf",handle));
+  ccomp6->Print(Form("FigsRecursion/recursion_h%d_%s_cumulant6.png",harmonic,handle));
+  ccomp6->Print(Form("FigsRecursion/recursion_h%d_%s_cumulant6.pdf",harmonic,handle));
   delete ccomp6;
   delete empty_cumu6;
   delete empty_comp6;
@@ -356,8 +356,8 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   leg_cumu8->AddEntry(th1d_c28,"c_{2}{8} = -33v_{2}^{8}","p");
   leg_cumu8->Draw();
   cline->Draw();
-  ccomp8->Print(Form("FigsRecursion/recursion_%s_cumulant8.png",handle));
-  ccomp8->Print(Form("FigsRecursion/recursion_%s_cumulant8.pdf",handle));
+  ccomp8->Print(Form("FigsRecursion/recursion_h%d_%s_cumulant8.png",harmonic,handle));
+  ccomp8->Print(Form("FigsRecursion/recursion_h%d_%s_cumulant8.pdf",harmonic,handle));
   delete ccomp8;
   delete empty_cumu8;
   delete empty_comp8;

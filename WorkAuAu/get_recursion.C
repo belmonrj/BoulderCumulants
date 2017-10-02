@@ -24,7 +24,7 @@ void get_recursion()
   plot_recv2(eit_cent,six_cent,for_cent,two_cent,1,"cent");
 
   // --- plot the components and cumulants
-  plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent");
+  plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent",2);
 
 
 
@@ -39,7 +39,7 @@ void get_recursion()
 
   // --- plot the components and cumulants
   // --- need to come up with something for this...
-  //plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent");
+  plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent",3);
 
 
 
@@ -56,7 +56,7 @@ void get_recursion()
   plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk");
 
   // --- plot the components and cumulants
-  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk");
+  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk",2);
 
   // --- get the k-p correlator histograms from the file
   eit_ntrk = NULL;
@@ -69,7 +69,7 @@ void get_recursion()
 
   // --- plot the components and cumulants
   // --- need to come up with something for this...
-  //plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,1,"ntrk");
+  plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,1,"ntrk",3);
 
   // ------------------------------------------------------------------------
 
