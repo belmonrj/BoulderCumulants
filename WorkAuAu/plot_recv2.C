@@ -128,7 +128,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   empty->Draw();
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("v_{2}");
+  empty->GetYaxis()->SetTitle(Form("v_{%d}",harmonic));
   empty->GetYaxis()->SetTitleOffset(1.2);
   // ---
   // TLatex* tex_phenix = new TLatex(0.2,0.882,"PHENIX");
@@ -153,8 +153,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   TLegend* leg22 = new TLegend(0.66,0.87,0.92,0.92);
   leg22->SetTextSize(0.05);
   leg22->SetFillStyle(0);
-  if ( !isscent ) leg22->AddEntry(th1d_v22,"v_{2}{2}","p");
-  if ( isscent ) leg22->AddEntry(th1d_v22,"v_{2}{2,|#Delta#eta|>2}","p");
+  if ( !isscent ) leg22->AddEntry(th1d_v22,Form("v_{%d}{2}",harmonic),"p");
+  if ( isscent ) leg22->AddEntry(th1d_v22,Form("v_{%d}{2,|#Delta#eta|>2}",harmonic),"p");
   leg22->Draw();
   c1->Print(Form("FigsRecursion/recursion_%s_v%d2.png",handle,harmonic));
   c1->Print(Form("FigsRecursion/recursion_%s_v%d2.pdf",handle,harmonic));
@@ -164,7 +164,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   TLegend* leg24 = new TLegend(0.66,0.82,0.92,0.87);
   leg24->SetTextSize(0.05);
   leg24->SetFillStyle(0);
-  leg24->AddEntry(th1d_v24,"v_{2}{4}","p");
+  leg24->AddEntry(th1d_v24,Form("v_{%d}{4}",harmonic),"p");
   leg24->Draw();
   c1->Print(Form("FigsRecursion/recursion_%s_v%d24.png",handle,harmonic));
   c1->Print(Form("FigsRecursion/recursion_%s_v%d24.pdf",handle,harmonic));
@@ -174,7 +174,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   TLegend* leg26 = new TLegend(0.66,0.77,0.92,0.82);
   leg26->SetTextSize(0.05);
   leg26->SetFillStyle(0);
-  leg26->AddEntry(th1d_v26,"v_{2}{6}","p");
+  leg26->AddEntry(th1d_v26,Form("v_{%d}{6}",harmonic),"p");
   leg26->Draw();
   c1->Print(Form("FigsRecursion/recursion_%s_v%d246.png",handle,harmonic));
   c1->Print(Form("FigsRecursion/recursion_%s_v%d246.pdf",handle,harmonic));
@@ -184,7 +184,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   TLegend* leg28 = new TLegend(0.66,0.72,0.92,0.77);
   leg28->SetTextSize(0.05);
   leg28->SetFillStyle(0);
-  leg28->AddEntry(th1d_v28,"v_{2}{8}","p");
+  leg28->AddEntry(th1d_v28,Form("v_{%d}{8}",harmonic),"p");
   leg28->Draw();
   c1->Print(Form("FigsRecursion/recursion_%s_v%d2468.png",handle,harmonic));
   c1->Print(Form("FigsRecursion/recursion_%s_v%d2468.pdf",handle,harmonic));
