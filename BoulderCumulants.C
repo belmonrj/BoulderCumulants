@@ -159,6 +159,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   nfvtxt_ac_fvtxs_tracks_c36 = NULL;
   nfvtxt_ac_fvtxn_tracks_c36 = NULL;
   nfvtxt_ac_fvtxc_tracks_c36 = NULL;
+  nfvtxt_ac_fvtxsfvtxn_tracks_c42  = NULL;
   nfvtxt_ac_fvtxsfvtxn_tracks_c32  = NULL;
   nfvtxt_ac_fvtxsfvtxn_tracks_c34  = NULL;
   nfvtxt_ac_fvtxsfvtxn_tracks_c34a = NULL;
@@ -221,6 +222,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   centrality_ac_fvtxs_tracks_c32 = NULL;
   centrality_ac_fvtxn_tracks_c32 = NULL;
   centrality_ac_fvtxc_tracks_c32 = NULL;
+  centrality_ac_fvtxsfvtxn_tracks_c42  = NULL;
   centrality_ac_fvtxsfvtxn_tracks_c32  = NULL;
   centrality_ac_fvtxs_tracks_cos31 = NULL;
   centrality_ac_fvtxn_tracks_cos31 = NULL;
@@ -273,6 +275,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   nfvtxt_os_fvtxs_tracks_c36 = NULL;
   nfvtxt_os_fvtxn_tracks_c36 = NULL;
   nfvtxt_os_fvtxc_tracks_c36 = NULL;
+  nfvtxt_os_fvtxsfvtxn_tracks_c42  = NULL;
   nfvtxt_os_fvtxsfvtxn_tracks_c32  = NULL;
   nfvtxt_os_fvtxsfvtxn_tracks_c34  = NULL;
   nfvtxt_os_fvtxsfvtxn_tracks_c34a = NULL;
@@ -335,6 +338,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   centrality_os_fvtxs_tracks_c32 = NULL;
   centrality_os_fvtxn_tracks_c32 = NULL;
   centrality_os_fvtxc_tracks_c32 = NULL;
+  centrality_os_fvtxsfvtxn_tracks_c42  = NULL;
   centrality_os_fvtxsfvtxn_tracks_c32  = NULL;
   centrality_os_fvtxs_tracks_cos31 = NULL;
   centrality_os_fvtxn_tracks_cos31 = NULL;
@@ -789,6 +793,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   nfvtxt_os_fvtxs_tracks_c36 = new TProfile(Form("nfvtxt_os_fvtxs_tracks_c36"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxn_tracks_c36 = new TProfile(Form("nfvtxt_os_fvtxn_tracks_c36"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxc_tracks_c36 = new TProfile(Form("nfvtxt_os_fvtxc_tracks_c36"),"",2000, -0.5, 1999.5, -1.1, 1.1);
+  nfvtxt_os_fvtxsfvtxn_tracks_c42  = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c42"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxsfvtxn_tracks_c32  = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c32"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxsfvtxn_tracks_c34  = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c34"),"",2000, -0.5, 1999.5, -1.1, 1.1);
   nfvtxt_os_fvtxsfvtxn_tracks_c34a = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c34a"),"",2000, -0.5, 1999.5, -1.1, 1.1);
@@ -878,6 +883,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   centrality_os_fvtxn_tracks_c32 = new TProfile(Form("centrality_os_fvtxn_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_os_fvtxc_tracks_c32 = new TProfile(Form("centrality_os_fvtxc_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_os_fvtxsfvtxn_tracks_c32  = new TProfile(Form("centrality_os_fvtxsfvtxn_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_os_fvtxsfvtxn_tracks_c42  = new TProfile(Form("centrality_os_fvtxsfvtxn_tracks_c42"),"",100, -0.5, 99.5, -1.1, 1.1);
   // --- <<cos(n(phi1))>>
   centrality_os_fvtxs_tracks_cos31 = new TProfile(Form("centrality_os_fvtxs_tracks_cos31"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_os_fvtxn_tracks_cos31 = new TProfile(Form("centrality_os_fvtxn_tracks_cos31"),"",100, -0.5, 99.5, -1.1, 1.1);
@@ -1916,6 +1922,58 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   double wEightRecursion = 1.0;
   nfvtxt_recursion[0][6]->Fill(nfvtxt,eightRecursion.Re(),wEightRecursion);
   nfvtxt_recursion[1][6]->Fill(nfvtxt,eightRecursion.Im(),wEightRecursion);
+  // --- now some stuff for the third harmonic
+  // --- v3{2}
+  int harmonics_Twov3_Num[2] = {3,-3};
+  int harmonics_Twov3_Den[2] = {0,0};
+  TComplex twov3Recursion = Recursion(2,harmonics_Twov3_Num)/Recursion(2,harmonics_Twov3_Den).Re();
+  double wTwov3Recursion = 1.0;
+  nfvtxt_recursion[0][1]->Fill(nfvtxt,twov3Recursion.Re(),wTwov3Recursion);
+  nfvtxt_recursion[1][1]->Fill(nfvtxt,twov3Recursion.Im(),wTwov3Recursion);
+  // --- v3{4}
+  int harmonics_Fourv3_Num[4] = {3,3,-3,-3};
+  int harmonics_Fourv3_Den[4] = {0,0,0,0};
+  TComplex fourv3Recursion = Recursion(4,harmonics_Fourv3_Num)/Recursion(4,harmonics_Fourv3_Den).Re();
+  double wFourv3Recursion = 1.0;
+  nfvtxt_recursion[0][3]->Fill(nfvtxt,fourv3Recursion.Re(),wFourv3Recursion);
+  nfvtxt_recursion[1][3]->Fill(nfvtxt,fourv3Recursion.Im(),wFourv3Recursion);
+  // --- v3{6}
+  int harmonics_Sixv3_Num[6] = {3,3,3,-3,-3,-3};
+  int harmonics_Sixv3_Den[6] = {0,0,0,0,0,0};
+  TComplex sixv3Recursion = Recursion(6,harmonics_Sixv3_Num)/Recursion(6,harmonics_Sixv3_Den).Re();
+  double wSixv3Recursion = 1.0;
+  nfvtxt_recursion[0][5]->Fill(nfvtxt,sixv3Recursion.Re(),wSixv3Recursion);
+  nfvtxt_recursion[1][5]->Fill(nfvtxt,sixv3Recursion.Im(),wSixv3Recursion);
+  // --- now some stuff for the fourth harmonic
+  // --- v4{2}
+  int harmonics_Twov4_Num[2] = {3,-3};
+  int harmonics_Twov4_Den[2] = {0,0};
+  TComplex twov4Recursion = Recursion(2,harmonics_Twov4_Num)/Recursion(2,harmonics_Twov4_Den).Re();
+  double wTwov4Recursion = 1.0;
+  nfvtxt_recursion[0][7]->Fill(nfvtxt,twov4Recursion.Re(),wTwov4Recursion);
+  nfvtxt_recursion[1][7]->Fill(nfvtxt,twov4Recursion.Im(),wTwov4Recursion);
+  // --- v4{4}
+  int harmonics_Fourv4_Num[4] = {3,3,-3,-3};
+  int harmonics_Fourv4_Den[4] = {0,0,0,0};
+  TComplex fourv4Recursion = Recursion(4,harmonics_Fourv4_Num)/Recursion(4,harmonics_Fourv4_Den).Re();
+  double wFourv4Recursion = 1.0;
+  nfvtxt_recursion[0][9]->Fill(nfvtxt,fourv4Recursion.Re(),wFourv4Recursion);
+  nfvtxt_recursion[1][9]->Fill(nfvtxt,fourv4Recursion.Im(),wFourv4Recursion);
+  // --- now some symmetric cumulants
+  // --- SC(2,3)
+  int harmonics_FourSC23_Num[4] = {2,3,-2,-3};
+  int harmonics_FourSC23_Den[4] = {0,0,0,0};
+  TComplex fourSC23Recursion = Recursion(4,harmonics_FourSC23_Num)/Recursion(4,harmonics_FourSC23_Den).Re();
+  double wFourSC23Recursion = 1.0;
+  nfvtxt_recursion[0][10]->Fill(nfvtxt,fourSC23Recursion.Re(),wFourSC23Recursion);
+  nfvtxt_recursion[1][10]->Fill(nfvtxt,fourSC23Recursion.Im(),wFourSC23Recursion);
+  // --- SC(2,4)
+  int harmonics_FourSC24_Num[4] = {2,4,-2,-4};
+  int harmonics_FourSC24_Den[4] = {0,0,0,0};
+  TComplex fourSC24Recursion = Recursion(4,harmonics_FourSC24_Num)/Recursion(4,harmonics_FourSC24_Den).Re();
+  double wFourSC24Recursion = 1.0;
+  nfvtxt_recursion[0][11]->Fill(nfvtxt,fourSC24Recursion.Re(),wFourSC24Recursion);
+  nfvtxt_recursion[1][11]->Fill(nfvtxt,fourSC24Recursion.Im(),wFourSC24Recursion);
   // ------------------------------------------------------------------------------------------------------
   for ( int cs = 0; cs < maxHarmonic; ++cs )
     {
@@ -1991,6 +2049,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       cout << "4 " << ac_fvtxc_tracks_qqqq24 << " " << fourRecursion.Re() << endl;
       cout << "6 " << ac_fvtxc_tracks_six    << " " <<  sixRecursion.Re() << endl;
     }
+  // --- v2
   centrality_recursion[0][0]->Fill(centrality,twoRecursion.Re(),wTwoRecursion);
   centrality_recursion[1][0]->Fill(centrality,twoRecursion.Im(),wTwoRecursion);
   centrality_recursion[0][2]->Fill(centrality,fourRecursion.Re(),wFourRecursion);
@@ -1999,6 +2058,23 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality_recursion[1][4]->Fill(centrality,sixRecursion.Im(),wSixRecursion);
   centrality_recursion[0][6]->Fill(centrality,eightRecursion.Re(),wEightRecursion);
   centrality_recursion[1][6]->Fill(centrality,eightRecursion.Im(),wEightRecursion);
+  // --- v3
+  centrality_recursion[0][1]->Fill(centrality,twov3Recursion.Re(),wTwov3Recursion);
+  centrality_recursion[1][1]->Fill(centrality,twov3Recursion.Im(),wTwov3Recursion);
+  centrality_recursion[0][3]->Fill(centrality,fourv3Recursion.Re(),wFourv3Recursion);
+  centrality_recursion[1][3]->Fill(centrality,fourv3Recursion.Im(),wFourv3Recursion);
+  centrality_recursion[0][5]->Fill(centrality,sixv3Recursion.Re(),wSixv3Recursion);
+  centrality_recursion[1][5]->Fill(centrality,sixv3Recursion.Im(),wSixv3Recursion);
+  // --- v4
+  centrality_recursion[0][7]->Fill(centrality,twov4Recursion.Re(),wTwov4Recursion);
+  centrality_recursion[1][7]->Fill(centrality,twov4Recursion.Im(),wTwov4Recursion);
+  centrality_recursion[0][9]->Fill(centrality,fourv4Recursion.Re(),wFourv4Recursion);
+  centrality_recursion[1][9]->Fill(centrality,fourv4Recursion.Im(),wFourv4Recursion);
+  // --- symmetric cumulants
+  centrality_recursion[0][10]->Fill(centrality,fourSC23Recursion.Re(),wFourSC23Recursion);
+  centrality_recursion[1][10]->Fill(centrality,fourSC23Recursion.Im(),wFourSC23Recursion);
+  centrality_recursion[0][11]->Fill(centrality,fourSC24Recursion.Re(),wFourSC24Recursion);
+  centrality_recursion[1][11]->Fill(centrality,fourSC24Recursion.Im(),wFourSC24Recursion);
   for ( int cs = 0; cs < maxHarmonic; ++cs )
     {
       centrality_recoffsets[0][cs]->Fill(centrality,Qvector[cs][1].Re()/Qvector[0][1].Re());
@@ -2129,8 +2205,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   float os_fvtxs_tracks_qw = fvtxs_tracks_qw[0];
   float os_fvtxs_tracks_qx2 = fvtxs_tracks_qx2[0] - offset_centrality_qx2_south[icent]*os_fvtxs_tracks_qw;
   float os_fvtxs_tracks_qy2 = fvtxs_tracks_qy2[0] - offset_centrality_qy2_south[icent]*os_fvtxs_tracks_qw;
-  float os_fvtxs_tracks_qx3 = fvtxs_tracks_qx3[0];
-  float os_fvtxs_tracks_qy3 = fvtxs_tracks_qy3[0];
+  float os_fvtxs_tracks_qx3 = fvtxs_tracks_qx3[0] - qvoff_cent_south[icent][0][3]*os_fvtxs_tracks_qw;
+  float os_fvtxs_tracks_qy3 = fvtxs_tracks_qy3[0] - qvoff_cent_south[icent][1][3]*os_fvtxs_tracks_qw;
   float os_fvtxs_tracks_qx4 = fvtxs_tracks_qx4[0] - offset_centrality_qx4_south[icent]*os_fvtxs_tracks_qw;
   float os_fvtxs_tracks_qy4 = fvtxs_tracks_qy4[0] - offset_centrality_qy4_south[icent]*os_fvtxs_tracks_qw;
   float os_fvtxs_tracks_qx6 = fvtxs_tracks_qx6[0] - offset_centrality_qx6_south[icent]*os_fvtxs_tracks_qw;
@@ -2168,8 +2244,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   float os_fvtxn_tracks_qw = fvtxn_tracks_qw[0];
   float os_fvtxn_tracks_qx2 = fvtxn_tracks_qx2[0] - offset_centrality_qx2_north[icent]*os_fvtxn_tracks_qw;
   float os_fvtxn_tracks_qy2 = fvtxn_tracks_qy2[0] - offset_centrality_qy2_north[icent]*os_fvtxn_tracks_qw;
-  float os_fvtxn_tracks_qx3 = fvtxn_tracks_qx3[0];
-  float os_fvtxn_tracks_qy3 = fvtxn_tracks_qy3[0];
+  float os_fvtxn_tracks_qx3 = fvtxn_tracks_qx3[0] - qvoff_cent_north[icent][0][3]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qy3 = fvtxn_tracks_qy3[0] - qvoff_cent_north[icent][1][3]*os_fvtxn_tracks_qw;
   float os_fvtxn_tracks_qx4 = fvtxn_tracks_qx4[0] - offset_centrality_qx4_north[icent]*os_fvtxn_tracks_qw;
   float os_fvtxn_tracks_qy4 = fvtxn_tracks_qy4[0] - offset_centrality_qy4_north[icent]*os_fvtxn_tracks_qw;
   float os_fvtxn_tracks_qx6 = fvtxn_tracks_qx6[0] - offset_centrality_qx6_north[icent]*os_fvtxn_tracks_qw;
@@ -2245,8 +2321,10 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // --- scalar product, fvtxs dot fvtxn
   float os_fvtxsfvtxn_tracks_qq2 = ( (os_fvtxs_tracks_qx2*os_fvtxn_tracks_qx2) + (os_fvtxs_tracks_qy2*os_fvtxn_tracks_qy2) ) / ( os_fvtxs_tracks_qw*os_fvtxn_tracks_qw );
   float os_fvtxsfvtxn_tracks_qq3 = ( (os_fvtxs_tracks_qx3*os_fvtxn_tracks_qx3) + (os_fvtxs_tracks_qy3*os_fvtxn_tracks_qy3) ) / ( os_fvtxs_tracks_qw*os_fvtxn_tracks_qw );
+  float os_fvtxsfvtxn_tracks_qq4 = ( (os_fvtxs_tracks_qx4*os_fvtxn_tracks_qx4) + (os_fvtxs_tracks_qy4*os_fvtxn_tracks_qy4) ) / ( os_fvtxs_tracks_qw*os_fvtxn_tracks_qw );
   nfvtxt_os_fvtxsfvtxn_tracks_c22->Fill(nfvtxt,os_fvtxsfvtxn_tracks_qq2);
   nfvtxt_os_fvtxsfvtxn_tracks_c32->Fill(nfvtxt,os_fvtxsfvtxn_tracks_qq3);
+  nfvtxt_os_fvtxsfvtxn_tracks_c42->Fill(nfvtxt,os_fvtxsfvtxn_tracks_qq4);
 
   // --- now have a look at some 4 particle cumulants
   // --- calc4_event has the protection/requirement on the minimum number of tracks
@@ -2340,6 +2418,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // --- scalar product
   centrality_os_fvtxsfvtxn_tracks_c22->Fill(centrality,os_fvtxsfvtxn_tracks_qq2);
   centrality_os_fvtxsfvtxn_tracks_c32->Fill(centrality,os_fvtxsfvtxn_tracks_qq3);
+  centrality_os_fvtxsfvtxn_tracks_c42->Fill(centrality,os_fvtxsfvtxn_tracks_qq4);
   // --- four particle
   centrality_os_fvtxs_tracks_c24->Fill(centrality,os_fvtxs_tracks_qqqq24);
   centrality_os_fvtxn_tracks_c24->Fill(centrality,os_fvtxn_tracks_qqqq24);

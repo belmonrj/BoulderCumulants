@@ -71,7 +71,7 @@ class BoulderCumulants: public SubsysReco
   //static const int maxCorrelator = 8; // We will not go beyond 8-p correlations
   //static const int maxHarmonic = sum+1;
   //static const int maxPower = maxCorrelator+1;
-  static const int maxCorrelator = 8; // We will not go beyond 8-p correlations
+  static const int maxCorrelator = 12; // Somewhat abusing the setup as it is...
   static const int maxHarmonic = 10; // Need to assess on case-by-case basis, but this gets you v2{8} and v3{6}
   static const int maxPower = 9;
   TComplex Qvector[maxHarmonic][maxPower]; // All needed Q-vector components
@@ -244,6 +244,7 @@ class BoulderCumulants: public SubsysReco
   TProfile* nfvtxt_ac_fvtxn_tracks_c36;
   TProfile* nfvtxt_ac_fvtxc_tracks_c36;
   // --- 2-particle scalr product
+  TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c42 ;
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c32 ;
   // --- experimental 4-particle correlations
   TProfile* nfvtxt_ac_fvtxsfvtxn_tracks_c34 ;
@@ -337,6 +338,7 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_ac_fvtxs_tracks_sin31;
   TProfile* centrality_ac_fvtxn_tracks_sin31;
   TProfile* centrality_ac_fvtxc_tracks_sin31;
+  TProfile* centrality_ac_fvtxsfvtxn_tracks_c42;
   TProfile* centrality_ac_fvtxsfvtxn_tracks_c32;
 
   // --- come back here
@@ -404,6 +406,7 @@ class BoulderCumulants: public SubsysReco
   TProfile* nfvtxt_os_fvtxn_tracks_c36;
   TProfile* nfvtxt_os_fvtxc_tracks_c36;
   // --- 2-particle scalr product
+  TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c42 ;
   TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c32 ;
   // --- experimental 4-particle correlations
   TProfile* nfvtxt_os_fvtxsfvtxn_tracks_c34 ;
@@ -497,6 +500,7 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_os_fvtxs_tracks_sin31;
   TProfile* centrality_os_fvtxn_tracks_sin31;
   TProfile* centrality_os_fvtxc_tracks_sin31;
+  TProfile* centrality_os_fvtxsfvtxn_tracks_c42;
   TProfile* centrality_os_fvtxsfvtxn_tracks_c32;
 
 
