@@ -1946,14 +1946,14 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_recursion[1][5]->Fill(nfvtxt,sixv3Recursion.Im(),wSixv3Recursion);
   // --- now some stuff for the fourth harmonic
   // --- v4{2}
-  int harmonics_Twov4_Num[2] = {3,-3};
+  int harmonics_Twov4_Num[2] = {4,-4};
   int harmonics_Twov4_Den[2] = {0,0};
   TComplex twov4Recursion = Recursion(2,harmonics_Twov4_Num)/Recursion(2,harmonics_Twov4_Den).Re();
   double wTwov4Recursion = 1.0;
   nfvtxt_recursion[0][7]->Fill(nfvtxt,twov4Recursion.Re(),wTwov4Recursion);
   nfvtxt_recursion[1][7]->Fill(nfvtxt,twov4Recursion.Im(),wTwov4Recursion);
   // --- v4{4}
-  int harmonics_Fourv4_Num[4] = {3,3,-3,-3};
+  int harmonics_Fourv4_Num[4] = {4,4,-4,-4};
   int harmonics_Fourv4_Den[4] = {0,0,0,0};
   TComplex fourv4Recursion = Recursion(4,harmonics_Fourv4_Num)/Recursion(4,harmonics_Fourv4_Den).Re();
   double wFourv4Recursion = 1.0;
