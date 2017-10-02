@@ -1,8 +1,8 @@
-void plot_recv2(TProfile*, TProfile*, TProfile*, TProfile*, int, const char*);
-void plot_recv2(TH1D*, TH1D*, TH1D*, TH1D*, const char*);
+void plot_recv2(TProfile*, TProfile*, TProfile*, TProfile*, int, const char*, int);
+void plot_recv2(TH1D*, TH1D*, TH1D*, TH1D*, const char*, int);
 
 
-void plot_recv2(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
+void plot_recv2(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle, int harmonic)
 {
   cout << "Using hidden method!" << endl;
   // --- initialize the pointers
@@ -15,11 +15,11 @@ void plot_recv2(TProfile* tp1f_eit, TProfile* tp1f_six, TProfile* tp1f_for, TPro
                 &v28,  &v26,  &v24,  &v22,
                 rebin);
   // --- plot the v2{k}
-  plot_recv2(v28,v26,v24,v22,handle);
+  plot_recv2(v28,v26,v24,v22,handle,harmonic);
 }
 
 
-void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, const char* handle)
+void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, const char* handle, int harmonic)
 {
 
   TCanvas* c1 = new TCanvas("c1","");
@@ -156,8 +156,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   if ( !isscent ) leg22->AddEntry(th1d_v22,"v_{2}{2}","p");
   if ( isscent ) leg22->AddEntry(th1d_v22,"v_{2}{2,|#Delta#eta|>2}","p");
   leg22->Draw();
-  c1->Print(Form("FigsRecursion/recursion_%s_v22.png",handle));
-  c1->Print(Form("FigsRecursion/recursion_%s_v22.pdf",handle));
+  c1->Print(Form("FigsRecursion/recursion_%s_v%d2.png",handle,harmonic));
+  c1->Print(Form("FigsRecursion/recursion_%s_v%d2.pdf",handle,harmonic));
   // --- then animate on v24
   gv24_sys->Draw("E5 same");
   th1d_v24->Draw("same ex0p");
@@ -166,8 +166,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   leg24->SetFillStyle(0);
   leg24->AddEntry(th1d_v24,"v_{2}{4}","p");
   leg24->Draw();
-  c1->Print(Form("FigsRecursion/recursion_%s_v224.png",handle));
-  c1->Print(Form("FigsRecursion/recursion_%s_v224.pdf",handle));
+  c1->Print(Form("FigsRecursion/recursion_%s_v%d24.png",handle,harmonic));
+  c1->Print(Form("FigsRecursion/recursion_%s_v%d24.pdf",handle,harmonic));
   // --- then animate on v26
   gv26_sys->Draw("E5 same");
   th1d_v26->Draw("same ex0p");
@@ -176,8 +176,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   leg26->SetFillStyle(0);
   leg26->AddEntry(th1d_v26,"v_{2}{6}","p");
   leg26->Draw();
-  c1->Print(Form("FigsRecursion/recursion_%s_v2246.png",handle));
-  c1->Print(Form("FigsRecursion/recursion_%s_v2246.pdf",handle));
+  c1->Print(Form("FigsRecursion/recursion_%s_v%d246.png",handle,harmonic));
+  c1->Print(Form("FigsRecursion/recursion_%s_v%d246.pdf",handle,harmonic));
   // --- then animate on v28
   gv28_sys->Draw("E5 same");
   th1d_v28->Draw("same ex0p");
@@ -186,8 +186,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   leg28->SetFillStyle(0);
   leg28->AddEntry(th1d_v28,"v_{2}{8}","p");
   leg28->Draw();
-  c1->Print(Form("FigsRecursion/recursion_%s_v22468.png",handle));
-  c1->Print(Form("FigsRecursion/recursion_%s_v22468.pdf",handle));
+  c1->Print(Form("FigsRecursion/recursion_%s_v%d2468.png",handle,harmonic));
+  c1->Print(Form("FigsRecursion/recursion_%s_v%d2468.pdf",handle,harmonic));
 
   if ( empty ) delete empty;
   if ( c1 ) delete c1;

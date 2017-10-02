@@ -1,6 +1,6 @@
 #include "calc_cumulants.C"
 #include "plot_recv2.C"
-#include "plot_recv3.C"
+//#include "plot_recv3.C"
 #include "plot_recomp.C"
 
 
@@ -21,7 +21,7 @@ void get_recursion()
   TProfile* two_cent = (TProfile*)fin->Get("centrality_recursion_0_0");
 
   // --- plot the v2{k}
-  plot_recv2(eit_cent,six_cent,for_cent,two_cent,1,"cent");
+  plot_recv2(eit_cent,six_cent,for_cent,two_cent,1,"cent",2);
 
   // --- plot the components and cumulants
   plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent",2);
@@ -35,7 +35,7 @@ void get_recursion()
   two_cent = (TProfile*)fin->Get("centrality_recursion_0_1");
 
   // --- plot the v3{k}
-  plot_recv3(eit_cent,six_cent,for_cent,two_cent,1,"cent");
+  plot_recv2(eit_cent,six_cent,for_cent,two_cent,1,"cent",3);
 
   // --- plot the components and cumulants
   // --- need to come up with something for this...
@@ -53,7 +53,7 @@ void get_recursion()
   TProfile* two_ntrk = (TProfile*)fin->Get("nfvtxt_recursion_0_0");
 
   // --- plot the v2{k}
-  plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk");
+  plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk",2);
 
   // --- plot the components and cumulants
   plot_recomp(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk",2);
@@ -65,7 +65,7 @@ void get_recursion()
   two_ntrk = (TProfile*)fin->Get("nfvtxt_recursion_0_1");
 
   // --- plot the v3{k}
-  plot_recv3(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk");
+  plot_recv2(eit_ntrk,six_ntrk,for_ntrk,two_ntrk,10,"ntrk",3);
 
   // --- plot the components and cumulants
   // --- need to come up with something for this...
