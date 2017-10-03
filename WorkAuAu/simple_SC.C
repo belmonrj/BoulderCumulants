@@ -123,11 +123,16 @@ void doit(TProfile* tp1f_2323, TProfile* tp1f_2424, TProfile* tp1f_22, TProfile*
   leg->SetFillStyle(0);
   leg->SetTextSize(0.05);
   leg->Draw();
+  TLine* line = new TLine(xmin,0,xmax,0);
+  line->SetLineStyle(2);
+  line->SetLineWidth(2);
+  line->Draw();
   c1->Print(Form("FigsSymmetricCumulants/physics_%s.png",handle));
   c1->Print(Form("FigsSymmetricCumulants/physics_%s.pdf",handle));
 
   delete c1;
   delete empty;
   delete leg;
+  delete line;
 
 }
