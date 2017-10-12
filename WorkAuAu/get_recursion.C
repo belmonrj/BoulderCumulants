@@ -28,9 +28,9 @@ void get_recursion()
   for_cent = (TProfile*)fin->Get("centrality_recursion_0_3");
   two_cent = (TProfile*)fin->Get("centrality_recursion_0_1");
   // --- plot the v3{k}
-  plot_recv2(eit_cent,six_cent,for_cent,two_cent,1,"cent",3);
+  plot_recv2(eit_cent,six_cent,for_cent,two_cent,2,"cent",3);
   // --- plot the components and cumulants
-  plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent",3);
+  plot_recomp(eit_cent,six_cent,for_cent,two_cent,2,"cent",3);
 
   // --- get the k-p correlator histograms from the file
   eit_cent = NULL;
@@ -38,9 +38,9 @@ void get_recursion()
   for_cent = (TProfile*)fin->Get("centrality_recursion_0_9");
   two_cent = (TProfile*)fin->Get("centrality_recursion_0_7");
   // --- plot the v4{k}
-  plot_recv2(eit_cent,six_cent,for_cent,two_cent,1,"cent",4);
+  plot_recv2(eit_cent,six_cent,for_cent,two_cent,2,"cent",4);
   // --- plot the components and cumulants
-  plot_recomp(eit_cent,six_cent,for_cent,two_cent,1,"cent",4);
+  plot_recomp(eit_cent,six_cent,for_cent,two_cent,2,"cent",4);
 
   // ------------------------------------------------------------------------
   // --- N_{tracks}^{FVTX} histograms

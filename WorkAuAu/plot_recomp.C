@@ -110,6 +110,16 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   pcomp4->cd();
   ymin = -1e-5;
   ymax = 1e-4;
+  if ( harmonic == 3 )
+    {
+      ymin = -1e-6;
+      ymax = 1e-5;
+    }
+  if ( harmonic == 4 )
+    {
+      ymin = -1e-6;
+      ymax = 1e-5;
+    }
   TH2D* empty_comp4 = new TH2D("empty_comp4","",1,xmin,xmax,1,ymin,ymax);
   empty_comp4->Draw();
   empty_comp4->GetXaxis()->SetLabelSize(0.0);
@@ -144,6 +154,16 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   pcumu4->cd();
   ymin = -1.4999e-5;
   ymax = 1.4999e-5;
+  if ( harmonic == 3 )
+    {
+      ymin = -1.4999e-6;
+      ymax = 1.4999e-6;
+    }
+  if ( harmonic == 4 )
+    {
+      ymin = -1.4999e-6;
+      ymax = 1.4999e-6;
+    }
   TH2D* empty_cumu4 = new TH2D("empty_cumu4","",1,xmin,xmax,1,ymin,ymax);
   empty_cumu4->Draw();
   if ( iscent ) empty_cumu4->GetXaxis()->SetTitle("Centrality (%)");
@@ -165,7 +185,7 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   leg_cumu4->SetTextFont(62);
   leg_cumu4->SetTextSize(0.08);
   leg_cumu4->SetFillStyle(0);
-  leg_cumu4->AddEntry(th1d_c24,"c_{2}{4} = -v_{2}^{4}","p");
+  leg_cumu4->AddEntry(th1d_c24,Form("c_{%d}{4} = -v_{%d}^{4}",harmonic,harmonic),"p");
   leg_cumu4->Draw();
   cline->Draw();
   ccomp4->Print(Form("FigsRecursion/recursion_h%d_%s_cumulant4.png",harmonic,handle));
@@ -197,6 +217,11 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   pcomp6->cd();
   ymin = -3e-7;
   ymax = 3e-6;
+  if ( harmonic == 3 )
+    {
+      ymin = -3e-8;
+      ymax = 3e-7;
+    }
   TH2D* empty_comp6 = new TH2D("empty_comp6","",1,xmin,xmax,1,ymin,ymax);
   empty_comp6->Draw();
   empty_comp6->GetXaxis()->SetLabelSize(0.0);
@@ -233,6 +258,11 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   pcumu6->cd();
   ymin = -1.9999e-7;
   ymax = 1.9999e-7;
+  if ( harmonic == 3 )
+    {
+      ymin = -1.4999e-8;
+      ymax = 1.4999e-8;
+    }
   TH2D* empty_cumu6 = new TH2D("empty_cumu6","",1,xmin,xmax,1,ymin,ymax);
   empty_cumu6->Draw();
   if ( iscent ) empty_cumu6->GetXaxis()->SetTitle("Centrality (%)");
@@ -254,7 +284,7 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   leg_cumu6->SetTextFont(62);
   leg_cumu6->SetTextSize(0.08);
   leg_cumu6->SetFillStyle(0);
-  leg_cumu6->AddEntry(th1d_c26,"c_{2}{6} = 4v_{2}^{6}","p");
+  leg_cumu6->AddEntry(th1d_c26,Form("c_{%d}{6} = 4v_{%d}^{6}",harmonic,harmonic),"p");
   leg_cumu6->Draw();
   cline->Draw();
   ccomp6->Print(Form("FigsRecursion/recursion_h%d_%s_cumulant6.png",harmonic,handle));
@@ -353,7 +383,7 @@ void plot_recomp(TH1D* th1d_c28, TH1D* th1d_c26, TH1D* th1d_c24, TH1D* th1d_c22,
   leg_cumu8->SetTextFont(62);
   leg_cumu8->SetTextSize(0.08);
   leg_cumu8->SetFillStyle(0);
-  leg_cumu8->AddEntry(th1d_c28,"c_{2}{8} = -33v_{2}^{8}","p");
+  leg_cumu8->AddEntry(th1d_c28,Form("c_{%d}{8} = -33v_{%d}^{8}",harmonic,harmonic),"p");
   leg_cumu8->Draw();
   cline->Draw();
   ccomp8->Print(Form("FigsRecursion/recursion_h%d_%s_cumulant8.png",harmonic,handle));
