@@ -29,7 +29,7 @@ void do_special()
                 &v28,  &v26,  &v24,  &v22,
                 1);
   // --- plot the v2{k}
-  plot_recv2(v28,v26,v24,v22,"cent");
+  plot_recv2(v28,v26,v24,v22,"cent",2);
 
   // --- now get the subevent v2{2}
 
@@ -57,7 +57,7 @@ void do_special()
                  1);
 
   // --- plot the v2{k} with subevent v2 instead...
-  plot_recv2(v28,v26,v24,hv22ab,"scent");
+  plot_recv2(v28,v26,v24,hv22ab,"scent",2);
 
   // --- now do a special plot with all 5...
   plot_special(v28,v26,v24,v22,hv22ab,"cent");
