@@ -117,7 +117,7 @@ void doit(TProfile* tp1f_2323, TProfile* tp1f_2424, TProfile* tp1f_22, TProfile*
   th1d_SC24->SetMarkerColor(kRed);
   th1d_SC24->SetLineColor(kRed);
   th1d_SC24->Draw("ex0p same");
-  TLegend* leg = new TLegend(0.6,0.6,0.8,0.8);
+  TLegend* leg = new TLegend(0.6,0.2,0.8,0.4);
   leg->AddEntry(th1d_SC23,"SC(2,3)","p");
   leg->AddEntry(th1d_SC24,"SC(2,4)","p");
   leg->SetFillStyle(0);
@@ -129,6 +129,58 @@ void doit(TProfile* tp1f_2323, TProfile* tp1f_2424, TProfile* tp1f_22, TProfile*
   line->Draw();
   c1->Print(Form("FigsSymmetricCumulants/physics_%s.png",handle));
   c1->Print(Form("FigsSymmetricCumulants/physics_%s.pdf",handle));
+
+  // --- now do normalization
+
+  th1d_SC23->Divide(th1d_2233);
+  th1d_SC24->Divide(th1d_2244);
+
+  ymin = -10;
+  ymax = 20;
+  // --- do the plotting
+  if ( empty ) delete empty;
+  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  empty->GetYaxis()->SetTitle("Symmetric Cumulant");
+  empty->GetYaxis()->SetTitleOffset(1.2);
+  if ( tex_tracks ) delete tex_tracks;
+  tex_tracks = new TLatex(0.2,0.83,"h^{#pm} 1<|#eta|<3");
+  tex_tracks->SetTextSize(0.05);
+  tex_tracks->SetNDC();
+  tex_tracks->Draw();
+  if ( tex_system ) delete tex_system;
+  tex_system = new TLatex(0.2,0.882,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  tex_system->SetTextSize(0.05);
+  tex_system->SetNDC();
+  tex_system->Draw();
+  // ---
+  th1d_SC23->SetMarkerStyle(kFullCircle);
+  th1d_SC23->SetMarkerColor(kBlue);
+  th1d_SC23->SetLineColor(kBlue);
+  th1d_SC23->Draw("ex0p same");
+  th1d_SC24->SetMarkerStyle(kFullSquare);
+  th1d_SC24->SetMarkerColor(kRed);
+  th1d_SC24->SetLineColor(kRed);
+  th1d_SC24->Draw("ex0p same");
+  if ( leg ) delete leg;
+  leg = new TLegend(0.6,0.2,0.8,0.4);
+  leg->AddEntry(th1d_SC23,"SC(2,3)","p");
+  leg->AddEntry(th1d_SC24,"SC(2,4)","p");
+  leg->SetFillStyle(0);
+  leg->SetTextSize(0.05);
+  leg->Draw();
+  if ( line ) delete line;
+  line = new TLine(xmin,0,xmax,0);
+  line->SetLineStyle(2);
+  line->SetLineWidth(2);
+  line->Draw();
+  c1->Print(Form("FigsSymmetricCumulants/physics_norm_%s.png",handle));
+  c1->Print(Form("FigsSymmetricCumulants/physics_norm_%s.pdf",handle));
+
+
+
 
   delete c1;
   delete empty;
