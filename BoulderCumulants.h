@@ -503,6 +503,22 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_os_fvtxsfvtxn_tracks_c42;
   TProfile* centrality_os_fvtxsfvtxn_tracks_c32;
 
+  TProfile* centrality_ac_fvtxs_tracks_c34;
+  TProfile* centrality_ac_fvtxn_tracks_c34;
+  TProfile* centrality_ac_fvtxc_tracks_c34;
+  TProfile* centrality_ac_fvtxs_tracks_cossum32;
+  TProfile* centrality_ac_fvtxn_tracks_cossum32;
+  TProfile* centrality_ac_fvtxc_tracks_cossum32;
+  TProfile* centrality_ac_fvtxs_tracks_sinsum32;
+  TProfile* centrality_ac_fvtxn_tracks_sinsum32;
+  TProfile* centrality_ac_fvtxc_tracks_sinsum32;
+  TProfile* centrality_ac_fvtxs_tracks_cos33;
+  TProfile* centrality_ac_fvtxn_tracks_cos33;
+  TProfile* centrality_ac_fvtxc_tracks_cos33;
+  TProfile* centrality_ac_fvtxs_tracks_sin33;
+  TProfile* centrality_ac_fvtxn_tracks_sin33;
+  TProfile* centrality_ac_fvtxc_tracks_sin33;
+
 
   // --- event plane decorrelation stuff
   TProfile* tp1f_special_fvtx_tracks_ab[8];
