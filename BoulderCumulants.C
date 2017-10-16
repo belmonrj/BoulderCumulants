@@ -222,6 +222,9 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   centrality_ac_fvtxs_tracks_c32 = NULL;
   centrality_ac_fvtxn_tracks_c32 = NULL;
   centrality_ac_fvtxc_tracks_c32 = NULL;
+  centrality_ac_fvtxs_tracks_c34 = NULL;
+  centrality_ac_fvtxn_tracks_c34 = NULL;
+  centrality_ac_fvtxc_tracks_c34 = NULL;
   centrality_ac_fvtxsfvtxn_tracks_c42  = NULL;
   centrality_ac_fvtxsfvtxn_tracks_c32  = NULL;
   centrality_ac_fvtxs_tracks_cos31 = NULL;
@@ -230,6 +233,18 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   centrality_ac_fvtxs_tracks_sin31 = NULL;
   centrality_ac_fvtxn_tracks_sin31 = NULL;
   centrality_ac_fvtxc_tracks_sin31 = NULL;
+  centrality_ac_fvtxs_tracks_cossum32 = NULL;
+  centrality_ac_fvtxn_tracks_cossum32 = NULL;
+  centrality_ac_fvtxc_tracks_cossum32 = NULL;
+  centrality_ac_fvtxs_tracks_sinsum32 = NULL;
+  centrality_ac_fvtxn_tracks_sinsum32 = NULL;
+  centrality_ac_fvtxc_tracks_sinsum32 = NULL;
+  centrality_ac_fvtxs_tracks_cos33 = NULL;
+  centrality_ac_fvtxn_tracks_cos33 = NULL;
+  centrality_ac_fvtxc_tracks_cos33 = NULL;
+  centrality_ac_fvtxs_tracks_sin33 = NULL;
+  centrality_ac_fvtxn_tracks_sin33 = NULL;
+  centrality_ac_fvtxc_tracks_sin33 = NULL;
   // ---
   nfvtxt_os_fvtxs_tracks_c22 = NULL;
   nfvtxt_os_fvtxn_tracks_c22 = NULL;
@@ -725,6 +740,9 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   centrality_ac_fvtxs_tracks_c32 = new TProfile(Form("centrality_ac_fvtxs_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxn_tracks_c32 = new TProfile(Form("centrality_ac_fvtxn_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxc_tracks_c32 = new TProfile(Form("centrality_ac_fvtxc_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxs_tracks_c34 = new TProfile(Form("centrality_ac_fvtxs_tracks_c34"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxn_tracks_c34 = new TProfile(Form("centrality_ac_fvtxn_tracks_c34"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_c34 = new TProfile(Form("centrality_ac_fvtxc_tracks_c34"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxsfvtxn_tracks_c32  = new TProfile(Form("centrality_ac_fvtxsfvtxn_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
   // --- <<cos(n(phi1))>>
   centrality_ac_fvtxs_tracks_cos31 = new TProfile(Form("centrality_ac_fvtxs_tracks_cos31"),"",100, -0.5, 99.5, -1.1, 1.1);
@@ -2017,13 +2035,18 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality_ac_fvtxc_tracks_c22->Fill(centrality,ac_fvtxc_tracks_qq2);
   centrality_ac_fvtxc_tracks_cos21->Fill(centrality,ac_fvtxc_tracks_qx2/ac_fvtxc_tracks_qw);
   centrality_ac_fvtxc_tracks_sin21->Fill(centrality,ac_fvtxc_tracks_qy2/ac_fvtxc_tracks_qw);
-  centrality_ac_fvtxc_tracks_c32->Fill(centrality,ac_fvtxc_tracks_qq3);
+  centrality_ac_fvtxc_tracks_c32->Fill(centrality,ac_fvtxc_tracks_qq3); // come back here
   centrality_ac_fvtxc_tracks_cos31->Fill(centrality,ac_fvtxc_tracks_qx3/ac_fvtxc_tracks_qw);
   centrality_ac_fvtxc_tracks_sin31->Fill(centrality,ac_fvtxc_tracks_qy3/ac_fvtxc_tracks_qw);
   centrality_ac_fvtxc_tracks_cossum22->Fill(centrality,ac_fvtxc_tracks_cossum22);
   centrality_ac_fvtxc_tracks_sinsum22->Fill(centrality,ac_fvtxc_tracks_sinsum22);
   centrality_ac_fvtxc_tracks_cos23->Fill(centrality,ac_fvtxc_tracks_cos23);
   centrality_ac_fvtxc_tracks_sin23->Fill(centrality,ac_fvtxc_tracks_sin23);
+  // --- additional acceptance correction histos
+  centrality_ac_fvtxc_tracks_cossum32->Fill(centrality,ac_fvtxc_tracks_cossum32);
+  centrality_ac_fvtxc_tracks_sinsum32->Fill(centrality,ac_fvtxc_tracks_sinsum32);
+  centrality_ac_fvtxc_tracks_cos33->Fill(centrality,ac_fvtxc_tracks_cos33);
+  centrality_ac_fvtxc_tracks_sin33->Fill(centrality,ac_fvtxc_tracks_sin33);
   // --- scalar product
   centrality_ac_fvtxsfvtxn_tracks_c22->Fill(centrality,ac_fvtxsfvtxn_tracks_qq2);
   centrality_ac_fvtxsfvtxn_tracks_c32->Fill(centrality,ac_fvtxsfvtxn_tracks_qq3);
@@ -2031,6 +2054,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality_ac_fvtxs_tracks_c24->Fill(centrality,ac_fvtxs_tracks_qqqq24);
   centrality_ac_fvtxn_tracks_c24->Fill(centrality,ac_fvtxn_tracks_qqqq24);
   centrality_ac_fvtxc_tracks_c24->Fill(centrality,ac_fvtxc_tracks_qqqq24);
+  centrality_ac_fvtxs_tracks_c34->Fill(centrality,ac_fvtxs_tracks_qqqq34);
+  centrality_ac_fvtxn_tracks_c34->Fill(centrality,ac_fvtxn_tracks_qqqq34);
+  centrality_ac_fvtxc_tracks_c34->Fill(centrality,ac_fvtxc_tracks_qqqq34);
   // --- four particle 2sub
   centrality_ac_fvtxsfvtxn_tracks_c24a->Fill(centrality,answer_c24a);
   centrality_ac_fvtxsfvtxn_tracks_c24b->Fill(centrality,ac_fvtxs_tracks_qq2*ac_fvtxn_tracks_qq2);
