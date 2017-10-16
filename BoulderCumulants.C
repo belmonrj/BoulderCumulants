@@ -743,6 +743,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   centrality_ac_fvtxs_tracks_c34 = new TProfile(Form("centrality_ac_fvtxs_tracks_c34"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxn_tracks_c34 = new TProfile(Form("centrality_ac_fvtxn_tracks_c34"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxc_tracks_c34 = new TProfile(Form("centrality_ac_fvtxc_tracks_c34"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- ns sp
   centrality_ac_fvtxsfvtxn_tracks_c32  = new TProfile(Form("centrality_ac_fvtxsfvtxn_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
   // --- <<cos(n(phi1))>>
   centrality_ac_fvtxs_tracks_cos31 = new TProfile(Form("centrality_ac_fvtxs_tracks_cos31"),"",100, -0.5, 99.5, -1.1, 1.1);
@@ -752,6 +753,22 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   centrality_ac_fvtxs_tracks_sin31 = new TProfile(Form("centrality_ac_fvtxs_tracks_sin31"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxn_tracks_sin31 = new TProfile(Form("centrality_ac_fvtxn_tracks_sin31"),"",100, -0.5, 99.5, -1.1, 1.1);
   centrality_ac_fvtxc_tracks_sin31 = new TProfile(Form("centrality_ac_fvtxc_tracks_sin31"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<cos(n(phi1+phi2))>>
+  centrality_ac_fvtxs_tracks_cossum32 = new TProfile(Form("centrality_ac_fvtxs_tracks_cossum32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxn_tracks_cossum32 = new TProfile(Form("centrality_ac_fvtxn_tracks_cossum32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_cossum32 = new TProfile(Form("centrality_ac_fvtxc_tracks_cossum32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1+phi2))>>
+  centrality_ac_fvtxs_tracks_sinsum32 = new TProfile(Form("centrality_ac_fvtxs_tracks_sinsum32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxn_tracks_sinsum32 = new TProfile(Form("centrality_ac_fvtxn_tracks_sinsum32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_sinsum32 = new TProfile(Form("centrality_ac_fvtxc_tracks_sinsum32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<cos(n(phi1-phi2-phi3))>>
+  centrality_ac_fvtxs_tracks_cos33 = new TProfile(Form("centrality_ac_fvtxs_tracks_cos33"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxn_tracks_cos33 = new TProfile(Form("centrality_ac_fvtxn_tracks_cos33"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_cos33 = new TProfile(Form("centrality_ac_fvtxc_tracks_cos33"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1-phi2-phi3))>>
+  centrality_ac_fvtxs_tracks_sin33 = new TProfile(Form("centrality_ac_fvtxs_tracks_sin33"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxn_tracks_sin33 = new TProfile(Form("centrality_ac_fvtxn_tracks_sin33"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_sin33 = new TProfile(Form("centrality_ac_fvtxc_tracks_sin33"),"",100, -0.5, 99.5, -1.1, 1.1);
 
   // -----------------------------------------------------------------------------------------------------------
   // --- now offsets
