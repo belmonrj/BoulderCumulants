@@ -6,7 +6,8 @@ void do_process(const char*,int); // get it? :)
 
 void do_v3_analytical()
 {
-  do_process("Run14AuAu200",1);
+  //do_process("Run14AuAu200",1);
+  do_process("Run14AuAu200",2);
 }
 
 void do_process(const char* type, int rebin)
@@ -115,8 +116,6 @@ void do_process(const char* type, int rebin)
       double two_G      = tp1f_G_two->GetBinContent(i+1);
       double etwo_G     = tp1f_G_two->GetBinError(i+1);
       double corr_c3G   = two_G - cos1_north*cos1_south - sin1_north*sin1_south;
-      //double corr_c3G   = two_G - cos1_north*cos1_south; // this is a dumb idea and it doesn't work anyway
-      //double corr_c3G   = two_G - cos1*cos1 - sin1*sin1; // interesting to note this looks much much worse
       double uncorr_c3G = two_G;
       // --- calculate the harmonics
       double corr_v34 = -9;
@@ -203,54 +202,33 @@ void do_process(const char* type, int rebin)
 
   th1d_uncorr_v32->SetLineColor(kBlack);
   th1d_uncorr_v32->SetMarkerColor(kRed);
-  th1d_uncorr_v32->SetMarkerStyle(kFullDiamond);
+  th1d_uncorr_v32->SetMarkerStyle(kOpenDiamond);
   th1d_uncorr_v3G->SetLineColor(kBlack);
   th1d_uncorr_v3G->SetMarkerColor(kMagenta+2);
-  th1d_uncorr_v3G->SetMarkerStyle(kFullDiamond);
+  th1d_uncorr_v3G->SetMarkerStyle(kOpenDiamond);
   th1d_uncorr_v34->SetLineColor(kBlack);
   th1d_uncorr_v34->SetMarkerColor(kBlue);
-  th1d_uncorr_v34->SetMarkerStyle(kFullSquare);
+  th1d_uncorr_v34->SetMarkerStyle(kOpenSquare);
 
-  double xmin = 0.0;
-  double xmax = 100.0;
-  double ymin = 0.0;
-  double ymax = 0.199;
-  // if ( strcmp(type,"Run15pAu200") == 0 ) xmax = 70.0;
-  // if ( strcmp(type,"Run16dAu200") == 0 ) xmax = 70.0;
-  // if ( strcmp(type,"Run16dAu62") == 0 ) xmax = 70.0;
-  // if ( strcmp(type,"Run16dAu39") == 0 ) xmax = 70.0;
-  // if ( strcmp(type,"Run16dAu20") == 0 ) xmax = 70.0;
-  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
-  empty->Draw();
-  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
-  empty->GetXaxis()->SetTitle("Centrality (%)");
-  empty->GetYaxis()->SetTitle("v_{2}");
-  th1d_corr_v32->Draw("ex0p same");
-  th1d_corr_v34->Draw("ex0p same");
-  TLegend* leg = new TLegend(0.62,0.68,0.88,0.88);
-  leg->SetHeader(type);
-  leg->SetTextSize(0.045);
-  //leg->SetFillStyle(0);
-  leg->AddEntry(th1d_corr_v32,"v_{2}{2}","p");
-  leg->AddEntry(th1d_corr_v34,"v_{2}{4}","p");
-  leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_v32andv34_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v32andv34_%s.pdf",rebin,type));
-  th1d_corr_v3G->Draw("ex0p same");
-  leg->AddEntry(th1d_corr_v3G,"v_{2}{2,|#Delta#eta|>2}","p");
-  leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgap_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgap_%s.pdf",rebin,type));
-  // ---
-  th1d_corr_v32->SetLineColor(kBlack);
-  th1d_corr_v32->SetMarkerColor(kRed);
-  th1d_corr_v32->SetMarkerStyle(kOpenDiamond);
-  th1d_corr_v3G->SetLineColor(kBlack);
-  th1d_corr_v3G->SetMarkerColor(kMagenta+2);
-  th1d_corr_v3G->SetMarkerStyle(kOpenDiamond);
-  th1d_corr_v34->SetLineColor(kBlack);
-  th1d_corr_v34->SetMarkerColor(kBlue);
-  th1d_corr_v34->SetMarkerStyle(kOpenSquare);
+  th1d_corr_c32->SetLineColor(kBlack);
+  th1d_corr_c32->SetMarkerColor(kRed);
+  th1d_corr_c32->SetMarkerStyle(kFullDiamond);
+  th1d_corr_c3G->SetLineColor(kBlack);
+  th1d_corr_c3G->SetMarkerColor(kMagenta+2);
+  th1d_corr_c3G->SetMarkerStyle(kFullDiamond);
+  th1d_corr_c34->SetLineColor(kBlack);
+  th1d_corr_c34->SetMarkerColor(kBlue);
+  th1d_corr_c34->SetMarkerStyle(kFullSquare);
+
+  th1d_uncorr_c32->SetLineColor(kBlack);
+  th1d_uncorr_c32->SetMarkerColor(kRed);
+  th1d_uncorr_c32->SetMarkerStyle(kOpenDiamond);
+  th1d_uncorr_c3G->SetLineColor(kBlack);
+  th1d_uncorr_c3G->SetMarkerColor(kMagenta+2);
+  th1d_uncorr_c3G->SetMarkerStyle(kOpenDiamond);
+  th1d_uncorr_c34->SetLineColor(kBlack);
+  th1d_uncorr_c34->SetMarkerColor(kBlue);
+  th1d_uncorr_c34->SetMarkerStyle(kOpenSquare);
 
   // --- get the systmatics histos
   TH1D* gv32_sys = (TH1D*) th1d_corr_v32->Clone("gv32_sys");
@@ -287,17 +265,99 @@ void do_process(const char* type, int rebin)
     if ( y > 0 ) gv34_sys->SetBinError(i, err);
   } // i
 
+  // -----------------------
+  // --- now do the plotting
+  // -----------------------
+
+  double xmin = 0.0;
+  double xmax = 100.0;
+  double ymin = 0.0;
+  double ymax = 0.1;
+  TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetYaxis()->SetTitle("v_{3}");
+  th1d_corr_v32->Draw("ex0p same");
+  th1d_corr_v34->Draw("ex0p same");
+  TLegend* leg = new TLegend(0.20,0.68,0.40,0.88);
+  leg->SetHeader(type);
+  leg->SetTextSize(0.045);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_corr_v32,"v_{3}{2}","p");
+  leg->AddEntry(th1d_corr_v34,"v_{3}{4}","p");
+  leg->Draw();
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34_%s.pdf",rebin,type));
+  th1d_corr_v3G->Draw("ex0p same");
+  leg->AddEntry(th1d_corr_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
+  leg->Draw();
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgap_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgap_%s.pdf",rebin,type));
+  th1d_uncorr_v32->Draw("ex0p same");
+  th1d_uncorr_v34->Draw("ex0p same");
+  th1d_uncorr_v3G->Draw("ex0p same");
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgapanduncorr_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgapanduncorr_%s.pdf",rebin,type));
+
+  ymin = -1e-3;
+  ymax = 1e-3;
+  if ( empty ) delete empty;
+  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetYaxis()->SetTitle("c_{3}");
+  th1d_corr_c32->Draw("ex0p same");
+  th1d_corr_c3G->Draw("ex0p same");
+  if ( leg ) delete leg;
+  leg = new TLegend(0.20,0.68,0.40,0.88);
+  leg->SetHeader(type);
+  leg->SetTextSize(0.045);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_corr_c3G,"c_{3}{2,|#Delta#eta|>2}","p");
+  leg->AddEntry(th1d_corr_c32,"c_{3}{2}","p");
+  leg->Draw();
+  c1->Print(Form("FigsFour/simpleR%d_c32andgap_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_c32andgap_%s.pdf",rebin,type));
+  th1d_uncorr_c32->Draw("ex0p same");
+  th1d_uncorr_c3G->Draw("ex0p same");
+  c1->Print(Form("FigsFour/simpleR%d_c32andgapanduncorr_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_c32andgapanduncorr_%s.pdf",rebin,type));
+
+
+
+  ymin = -1e-6;
+  ymax = 1e-6;
+  if ( empty ) delete empty;
+  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  empty->GetXaxis()->SetTitle("Centrality (%)");
+  empty->GetYaxis()->SetTitle("c_{3}");
+  th1d_corr_c34->Draw("ex0p same");
+  if ( leg ) delete leg;
+  leg = new TLegend(0.20,0.68,0.40,0.88);
+  leg->SetHeader(type);
+  leg->SetTextSize(0.045);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_corr_c34,"c_{3}{4}","p");
+  leg->Draw();
+  c1->Print(Form("FigsFour/simpleR%d_c34_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_c34_%s.pdf",rebin,type));
+  th1d_uncorr_c34->Draw("ex0p same");
+  c1->Print(Form("FigsFour/simpleR%d_c34anduncorr_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_c34anduncorr_%s.pdf",rebin,type));
+
+
+
   th1d_corr_222->SetLineColor(kBlack);
   th1d_corr_222->SetMarkerColor(kGreen+2);
   th1d_corr_222->SetMarkerStyle(kFullCircle);
   th1d_corr_four->SetLineColor(kBlack);
   th1d_corr_four->SetMarkerColor(kOrange-5);
   th1d_corr_four->SetMarkerStyle(kFullSquare);
-  ymax = 3.0e-4;
+  ymax = 1.0e-5;
   delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("components");
   th1d_corr_222->Draw("ex0p same");
@@ -306,7 +366,7 @@ void do_process(const char* type, int rebin)
   leg = new TLegend(0.62,0.68,0.88,0.88);
   leg->SetHeader(type);
   leg->SetTextSize(0.045);
-  //leg->SetFillStyle(0);
+  leg->SetFillStyle(0);
   leg->AddEntry(th1d_corr_222,"2#LT#LT2#GT#GT^{2}","p");
   leg->AddEntry(th1d_corr_four,"#LT#LT4#GT#GT","p");
   leg->Draw();
@@ -319,11 +379,10 @@ void do_process(const char* type, int rebin)
   th1d_uncorr_four->SetLineColor(kBlack);
   th1d_uncorr_four->SetMarkerColor(kOrange-5);
   th1d_uncorr_four->SetMarkerStyle(kFullSquare);
-  ymax = 6.0e-4;
+  ymax = 1.0e-5;
   delete empty;
   empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
-  //empty->GetXaxis()->SetTitle("N^{1<|#eta|<3}_{trk}");
   empty->GetXaxis()->SetTitle("Centrality (%)");
   empty->GetYaxis()->SetTitle("components");
   th1d_uncorr_222->Draw("ex0p same");
@@ -332,7 +391,7 @@ void do_process(const char* type, int rebin)
   leg = new TLegend(0.62,0.68,0.88,0.88);
   leg->SetHeader(type);
   leg->SetTextSize(0.045);
-  //leg->SetFillStyle(0);
+  leg->SetFillStyle(0);
   leg->AddEntry(th1d_uncorr_222,"2#LT#LT2#GT#GT^{2}","p");
   leg->AddEntry(th1d_uncorr_four,"#LT#LT4#GT#GT","p");
   leg->Draw();
@@ -341,7 +400,7 @@ void do_process(const char* type, int rebin)
 
   // ---
 
-
+  // --- these might be useful at some point...?
   TH1D* th1d_cos1 = tp1f_cos1->ProjectionX("th1d_cos1");
   TH1D* th1d_sin1 = tp1f_sin1->ProjectionX("th1d_sin1");
   TH1D* th1d_cossum2 = tp1f_cossum2->ProjectionX("th1d_cossum2");
@@ -353,7 +412,7 @@ void do_process(const char* type, int rebin)
   TH1D* th1d_cos1_south = tp1f_cos1_south->ProjectionX("th1d_cos1_south");
   TH1D* th1d_sin1_south = tp1f_sin1_south->ProjectionX("th1d_sin1_south");
 
-
+  delete c1;
 
 }
 
