@@ -6,9 +6,7 @@ void do_process(const char*,int); // get it? :)
 
 void do_v3_analytical()
 {
-  fout = TFile::Open("all_cumulants_cent.root","recreate");
   do_process("Run14AuAu200",1);
-  fout->Close();
 }
 
 void do_process(const char* type, int rebin)
@@ -243,160 +241,6 @@ void do_process(const char* type, int rebin)
   leg->Draw();
   c1->Print(Form("FigsFour/simpleR%d_v32andv34andgap_%s.png",rebin,type));
   c1->Print(Form("FigsFour/simpleR%d_v32andv34andgap_%s.pdf",rebin,type));
-  // -----------------------------------------------------------------------------
-  // --- STAR data ---------------------------------------------------------------
-  // J. Adams et al, Phys. Rev. C72 (2005) 014904
-  // arXiv:nucl-ex/0409033
-  // https://drupal.star.bnl.gov/STAR/files/starpublications/48/Figure_29a.html
-  // v_{2}{2}
-  // 1(70-80%) 6.88 0.052
-  // 2(60-70%) 7.25 0.029
-  // 3(50-60%) 7.59 0.018
-  // 4(40-50%) 7.64 0.013
-  // 5(30-40%) 7.29 0.0094
-  // 6(20-30%) 6.42 0.0075
-  // 7(10-20%) 4.97 0.0066
-  // 8(5-10%)  3.55 0.0088
-  // 9(0-5%)   2.41 0.0096
-  // v_{2}{4}
-  // 2(60-70%) 5.68 0.35
-  // 3(50-60%) 6.18 0.1
-  // 4(40-50%) 6.43 0.045
-  // 5(30-40%) 6.33 0.026
-  // 6(20-30%) 5.66 0.02
-  // 7(10-20%) 4.27 0.022
-  // 8(5-10%)  2.53 0.066
-  // Figure30
-  // v3{6}
-  // 2(60-70%) 5.65 1.54
-  // 3(50-60%) 6.01 0.27
-  // 4(40-50%) 6.24 0.08
-  // 5(30-40%) 6.14 0.03
-  // 6(20-30%) 5.45 0.02
-  // 7(10-20%) 4.01 0.03
-  // 8(5-10%)  2.48 0.13
-  // 9(0-5%)   2.08 0.2
-  // -----------------------------------------------------------------------------
-  // B. Abelev et al, Phys.Rev. C77 (2008) 054901
-  // arXiv:0801.3466
-  // https://drupal.star.bnl.gov/STAR/files/starpublications/108/data.html (fig 5)
-  //Collision Cross Sectionv3{LYZ_Sum}
-  //45 0.0581909  0.00115924
-  //35 0.059935   0.000298429
-  //25 0.0541134  0.000171784
-  //15 0.0411426  0.0002367
-  //Collision Cross Sectionv3{LYZ_Prod}(%)
-  //55  0.063  0.0037
-  //45  0.0627 0.0017
-  //35  0.0612 0.0003
-  //25  0.0541 0.00024
-  //15  0.0404 0.00032
-  //7.5 0.0292 0.0023
-  // -----------------------------------------------------------------------------
-  double cent[9] = {75,65,55,45,35,25,15,7.5,2.5};
-  double star_v32[9]={0};
-  double star_v34[9]={0};
-  double star_v36[9]={0};
-  double star_v3LYZS[9]={0};
-  double star_v3LYZP[9]={0};
-  double star_ev32[9]={0};
-  double star_ev34[9]={0};
-  double star_ev36[9]={0};
-  double star_ev3LYZS[9]={0};
-  double star_ev3LYZP[9]={0};
-  star_v32[0] = 6.88;  star_v34[0] = -9.0;   star_v36[0] = -9.0;   // 75
-  star_v32[1] = 7.25;  star_v34[1] = 5.68;   star_v36[1] = 5.65;   // 65
-  star_v32[2] = 7.59;  star_v34[2] = 6.18;   star_v36[2] = 6.01;   // 55
-  star_v32[3] = 7.64;  star_v34[3] = 6.43;   star_v36[3] = 6.24;   // 45
-  star_v32[4] = 7.29;  star_v34[4] = 6.33;   star_v36[4] = 6.14;   // 35
-  star_v32[5] = 6.42;  star_v34[5] = 5.66;   star_v36[5] = 5.45;   // 25
-  star_v32[6] = 4.97;  star_v34[6] = 4.27;   star_v36[6] = 4.01;   // 15
-  star_v32[7] = 3.55;  star_v34[7] = 2.53;   star_v36[7] = 2.48;   // 7.5
-  star_v32[8] = 2.41;  star_v34[8] = -9.0;   star_v36[8] = 2.08;   // 2.5
-  star_ev32[0] = 0.052 ;  star_ev34[0] = 0    ;  star_ev36[0] = 0   ; // 75
-  star_ev32[1] = 0.029 ;  star_ev34[1] = 0.35 ;  star_ev36[1] = 1.54; // 65
-  star_ev32[2] = 0.018 ;  star_ev34[2] = 0.1  ;  star_ev36[2] = 0.27; // 55
-  star_ev32[3] = 0.013 ;  star_ev34[3] = 0.045;  star_ev36[3] = 0.08; // 45
-  star_ev32[4] = 0.0094;  star_ev34[4] = 0.026;  star_ev36[4] = 0.03; // 35
-  star_ev32[5] = 0.0075;  star_ev34[5] = 0.02 ;  star_ev36[5] = 0.02; // 25
-  star_ev32[6] = 0.0066;  star_ev34[6] = 0.022;  star_ev36[6] = 0.03; // 15
-  star_ev32[7] = 0.0088;  star_ev34[7] = 0.066;  star_ev36[7] = 0.13; // 7.5
-  star_ev32[8] = 0.0096;  star_ev34[8] = 0    ;  star_ev36[8] = 0.2 ; // 2.5
-  star_v3LYZS[0] = -9.0  ;   star_v3LYZP[0] = -9.0  ;   star_ev3LYZS[0] = 0          ;   star_ev3LYZP[0] = 0      ;   // 75
-  star_v3LYZS[1] = -9.0  ;   star_v3LYZP[1] = -9.0  ;   star_ev3LYZS[1] = 0          ;   star_ev3LYZP[1] = 0      ;   // 65
-  star_v3LYZS[2] = -9.0  ;   star_v3LYZP[2] = 0.063 ;   star_ev3LYZS[2] = 0          ;   star_ev3LYZP[2] = 0.0037 ;   // 55
-  star_v3LYZS[3] = 0.0581;   star_v3LYZP[3] = 0.0627;   star_ev3LYZS[3] = 0.00115924 ;   star_ev3LYZP[3] = 0.0017 ;   // 45
-  star_v3LYZS[4] = 0.0599;   star_v3LYZP[4] = 0.0612;   star_ev3LYZS[4] = 0.000298429;   star_ev3LYZP[4] = 0.0003 ;   // 35
-  star_v3LYZS[5] = 0.0541;   star_v3LYZP[5] = 0.0541;   star_ev3LYZS[5] = 0.000171784;   star_ev3LYZP[5] = 0.00024;   // 25
-  star_v3LYZS[6] = 0.0411;   star_v3LYZP[6] = 0.0404;   star_ev3LYZS[6] = 0.0002367  ;   star_ev3LYZP[6] = 0.00032;   // 15
-  star_v3LYZS[7] = -9.0  ;   star_v3LYZP[7] = 0.0292;   star_ev3LYZS[7] = 0          ;   star_ev3LYZP[7] = 0.0023 ;   // 7.5
-  star_v3LYZS[8] = -9.0  ;   star_v3LYZP[8] = -9.0  ;   star_ev3LYZS[8] = 0          ;   star_ev3LYZP[8] = 0      ;   // 2.5
-  for ( int i = 0; i < 9; ++i )
-    {
-      star_v32[i] /= 100.0;
-      star_v34[i] /= 100.0;
-      star_v36[i] /= 100.0;
-      star_ev32[i] /= 100.0;
-      star_ev34[i] /= 100.0;
-      star_ev36[i] /= 100.0;
-    }
-  TGraphErrors* tge_star_v32 = new TGraphErrors(9,cent,star_v32,0,star_ev32);
-  TGraphErrors* tge_star_v34 = new TGraphErrors(9,cent,star_v34,0,star_ev34);
-  TGraphErrors* tge_star_v36 = new TGraphErrors(9,cent,star_v36,0,star_ev36);
-  tge_star_v32->SetMarkerStyle(kFullStar);
-  tge_star_v32->SetMarkerColor(kRed);
-  tge_star_v32->SetLineColor(kRed);
-  tge_star_v34->SetMarkerStyle(kFullStar);
-  tge_star_v34->SetMarkerColor(kBlue);
-  tge_star_v34->SetLineColor(kBlue);
-  tge_star_v36->SetMarkerStyle(kFullStar);
-  tge_star_v36->SetMarkerColor(kBlack);
-  tge_star_v36->SetLineColor(kBlack);
-  tge_star_v32->SetMarkerSize(2.9);
-  tge_star_v34->SetMarkerSize(2.9);
-  tge_star_v36->SetMarkerSize(2.9);
-  // ---
-  TGraphErrors* tge_star_v3LYZS = new TGraphErrors(9,cent,star_v3LYZS,0,star_ev3LYZS);
-  TGraphErrors* tge_star_v3LYZP = new TGraphErrors(9,cent,star_v3LYZP,0,star_ev3LYZP);
-  tge_star_v3LYZS->SetMarkerStyle(kOpenStar);
-  tge_star_v3LYZS->SetMarkerColor(kRed);
-  tge_star_v3LYZS->SetLineColor(kRed);
-  tge_star_v3LYZP->SetMarkerStyle(kOpenStar);
-  tge_star_v3LYZP->SetMarkerColor(kBlack);
-  tge_star_v3LYZP->SetLineColor(kBlack);
-  tge_star_v3LYZS->SetMarkerSize(2.9);
-  tge_star_v3LYZP->SetMarkerSize(2.9);
-  // ---
-  ymax = 0.12;
-  delete empty;
-  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
-  empty->Draw();
-  empty->GetXaxis()->SetTitle("Centrality (%)");
-  empty->GetYaxis()->SetTitle("v_{2}");
-  // th1d_uncorr_v32->Draw("ex0p same");
-  // th1d_uncorr_v34->Draw("ex0p same");
-  // th1d_uncorr_v3G->Draw("ex0p same");
-  th1d_corr_v32->Draw("ex0p same");
-  th1d_corr_v34->Draw("ex0p same");
-  th1d_corr_v3G->Draw("ex0p same");
-  tge_star_v32->Draw("p");
-  tge_star_v34->Draw("p");
-  // tge_star_v36->Draw("p");
-  // tge_star_v3LYZS->Draw("p");
-  // tge_star_v3LYZP->Draw("p");
-  leg->Draw();
-  //TLegend* leg2 = new TLegend(0.18,0.78,0.38,0.93);
-  TLegend* leg2 = new TLegend(0.48,0.16,0.68,0.31);
-  leg2->SetHeader("STAR, PRC 72 014904 (2005)");
-  leg2->AddEntry(tge_star_v32,"v_{2}{2} |#eta|<1","p");
-  leg2->AddEntry(tge_star_v34,"v_{2}{4} |#eta|<1","p");
-  // leg2->AddEntry(tge_star_v36,"v_{2}{6} |#eta|<1","p");
-  // leg2->AddEntry(tge_star_v3LYZS,"v_{2}{LYZ} Sum |#eta|<1","p");
-  // leg2->AddEntry(tge_star_v3LYZP,"v_{2}{LYZ} Product |#eta|<1","p");
-  leg2->SetTextSize(0.045);
-  leg2->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgapandSTAR_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgapandSTAR_%s.pdf",rebin,type));
   // ---
   th1d_corr_v32->SetLineColor(kBlack);
   th1d_corr_v32->SetMarkerColor(kRed);
@@ -407,19 +251,7 @@ void do_process(const char* type, int rebin)
   th1d_corr_v34->SetLineColor(kBlack);
   th1d_corr_v34->SetMarkerColor(kBlue);
   th1d_corr_v34->SetMarkerStyle(kOpenSquare);
-  empty->Draw();
-  // th1d_corr_v32->Scale(1.35);
-  // th1d_corr_v34->Scale(1.35);
-  // th1d_corr_v3G->Scale(1.35);
-  // th1d_corr_v32->Scale(1.1);
-  // th1d_corr_v34->Scale(1.1);
-  // th1d_corr_v3G->Scale(1.1);
-  // th1d_corr_v32->Scale(1.2);
-  // th1d_corr_v34->Scale(1.2);
-  // th1d_corr_v3G->Scale(1.2);
-  th1d_corr_v32->Scale(1.25);
-  th1d_corr_v34->Scale(1.25);
-  th1d_corr_v3G->Scale(1.25);
+
   // --- get the systmatics histos
   TH1D* gv32_sys = (TH1D*) th1d_corr_v32->Clone("gv32_sys");
   gv32_sys->SetMarkerStyle(0);
@@ -454,50 +286,6 @@ void do_process(const char* type, int rebin)
     if ( err < 0.005*1.25 ) err = 0.005*1.25;
     if ( y > 0 ) gv34_sys->SetBinError(i, err);
   } // i
-  // ---
-  gv32_sys->GetXaxis()->SetRangeUser(1,90);
-  gv34_sys->GetXaxis()->SetRangeUser(7,65);
-  gv32ab_sys->GetXaxis()->SetRangeUser(1,90);
-  th1d_corr_v32->GetXaxis()->SetRangeUser(1,90);
-  th1d_corr_v34->GetXaxis()->SetRangeUser(7,65);
-  th1d_corr_v3G->GetXaxis()->SetRangeUser(1,90);
-  gv32_sys->Draw("same E5");
-  gv32ab_sys->Draw("same E5");
-  gv34_sys->Draw("same E5");
-  th1d_corr_v32->Draw("ex0p same");
-  th1d_corr_v34->Draw("ex0p same");
-  th1d_corr_v3G->Draw("ex0p same");
-  tge_star_v32->Draw("p");
-  tge_star_v34->Draw("p");
-  // tge_star_v36->Draw("p");
-  // tge_star_v3LYZS->Draw("p");
-  // tge_star_v3LYZP->Draw("p");
-  delete leg;
-  leg = new TLegend(0.195,0.605,0.455,0.805);
-  //leg->SetHeader("Scaled by 1.35");
-  //leg->SetHeader("Scaled by 1.1");
-  //leg->SetHeader("Scaled by 1.2");
-  leg->SetHeader("1<|#eta|<3 Scaled by 1.25");
-  leg->SetTextSize(0.05);
-  leg->SetFillStyle(0);
-  leg->AddEntry(th1d_corr_v3G,"v_{2}{2,|#Delta#eta|>2}","p");
-  leg->AddEntry(th1d_corr_v32,"v_{2}{2}","p");
-  leg->AddEntry(th1d_corr_v34,"v_{2}{4}","p");
-  leg->Draw();
-  leg->Draw();
-  leg2->Draw();
-  // ---
-  TLatex* tex_phenix = new TLatex(0.2,0.882,"PHENIX");
-  tex_phenix->SetTextSize(0.05);
-  tex_phenix->SetNDC();
-  tex_phenix->Draw();
-  TLatex* tex_system = new TLatex(0.2,0.83,"Au+Au #sqrt{s_{NN}} = 200 GeV");
-  tex_system->SetTextSize(0.05);
-  tex_system->SetNDC();
-  tex_system->Draw();
-  // ---
-  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgapandSTARSCALE_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_v32andv34andgapandSTARSCALE_%s.pdf",rebin,type));
 
   th1d_corr_222->SetLineColor(kBlack);
   th1d_corr_222->SetMarkerColor(kGreen+2);
@@ -522,8 +310,8 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_corr_222,"2#LT#LT2#GT#GT^{2}","p");
   leg->AddEntry(th1d_corr_four,"#LT#LT4#GT#GT","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_222and4_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_3h_222and4_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_3h_222and4_%s.pdf",rebin,type));
 
   th1d_uncorr_222->SetLineColor(kBlack);
   th1d_uncorr_222->SetMarkerColor(kGreen+2);
@@ -548,21 +336,11 @@ void do_process(const char* type, int rebin)
   leg->AddEntry(th1d_uncorr_222,"2#LT#LT2#GT#GT^{2}","p");
   leg->AddEntry(th1d_uncorr_four,"#LT#LT4#GT#GT","p");
   leg->Draw();
-  c1->Print(Form("FigsFour/simpleR%d_uncorr_222and4_%s.png",rebin,type));
-  c1->Print(Form("FigsFour/simpleR%d_uncorr_222and4_%s.pdf",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_3h_uncorr_222and4_%s.png",rebin,type));
+  c1->Print(Form("FigsFour/simpleR%d_3h_uncorr_222and4_%s.pdf",rebin,type));
 
   // ---
 
-  // tp1f_cos1->Rebin(rebin);
-  // tp1f_sin1->Rebin(rebin);
-  // tp1f_cossum2->Rebin(rebin);
-  // tp1f_sinsum2->Rebin(rebin);
-  // tp1f_cos3->Rebin(rebin);
-  // tp1f_sin3->Rebin(rebin);
-  // tp1f_cos1_north->Rebin(rebin);
-  // tp1f_sin1_north->Rebin(rebin);
-  // tp1f_cos1_south->Rebin(rebin);
-  // tp1f_sin1_south->Rebin(rebin);
 
   TH1D* th1d_cos1 = tp1f_cos1->ProjectionX("th1d_cos1");
   TH1D* th1d_sin1 = tp1f_sin1->ProjectionX("th1d_sin1");
@@ -576,51 +354,6 @@ void do_process(const char* type, int rebin)
   TH1D* th1d_sin1_south = tp1f_sin1_south->ProjectionX("th1d_sin1_south");
 
 
-  // --- back out the scaling when writing to file
-
-  th1d_corr_v32->GetXaxis()->SetRangeUser(0,100);
-  th1d_corr_v34->GetXaxis()->SetRangeUser(0,100);
-  th1d_corr_v3G->GetXaxis()->SetRangeUser(0,100);
-
-  th1d_corr_v32->Scale(1.0/1.35);
-  th1d_corr_v34->Scale(1.0/1.35);
-  th1d_corr_v3G->Scale(1.0/1.35);
-
-  fout->cd();
-  tge_star_v32->SetName("tgrapherrors_v32_STAR");
-  tge_star_v34->SetName("tgrapherrors_v34_STAR");
-  tge_star_v32->Write();
-  tge_star_v34->Write();
-  th1d_corr_v32->SetName(Form("th1dR%d_v32_%s",rebin,type));
-  th1d_corr_v3G->SetName(Form("th1dR%d_v32gap_%s",rebin,type));
-  th1d_corr_v34->SetName(Form("th1dR%d_v34_%s",rebin,type));
-  th1d_corr_222->SetName(Form("th1dR%d_222_%s",rebin,type));
-  th1d_corr_four->SetName(Form("th1dR%d_four_%s",rebin,type));
-  th1d_corr_v32->Write();
-  th1d_corr_v3G->Write();
-  th1d_corr_v34->Write();
-  th1d_corr_222->Write();
-  th1d_corr_four->Write();
-  th1d_uncorr_v32->SetName(Form("th1dR%dU_v32_%s",rebin,type));
-  th1d_uncorr_v3G->SetName(Form("th1dR%dU_v32gap_%s",rebin,type));
-  th1d_uncorr_v34->SetName(Form("th1dR%dU_v34_%s",rebin,type));
-  th1d_uncorr_222->SetName(Form("th1dR%dU_222_%s",rebin,type));
-  th1d_uncorr_four->SetName(Form("th1dR%dU_four_%s",rebin,type));
-  th1d_uncorr_v32->Write();
-  th1d_uncorr_v3G->Write();
-  th1d_uncorr_v34->Write();
-  th1d_uncorr_222->Write();
-  th1d_uncorr_four->Write();
-  th1d_cos1->Write();
-  th1d_sin1->Write();
-  th1d_cossum2->Write();
-  th1d_sinsum2->Write();
-  th1d_cos3->Write();
-  th1d_sin3->Write();
-  th1d_cos1_north->Write();
-  th1d_sin1_north->Write();
-  th1d_cos1_south->Write();
-  th1d_sin1_south->Write();
 
 }
 
