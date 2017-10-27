@@ -30,6 +30,7 @@ void Run_BoulderCumulantsRun14(const char *outFile = "test_train_output.root")
   sflow->set_zvtxcut(10.0); // z-vertex cut in cm (default is 10)
   sflow->set_chi2cut(5.0);  // chi2/ndf cut on tracks (default is 5)
   sflow->set_nhitcut(3);    // number of hits in tracks (default is 3)
+  sflow->set_dcacut(2.0);   // dca cut on tracks in cm (default is 2)
   sflow->Verbosity(0);
   se->registerSubsystem(sflow);
 

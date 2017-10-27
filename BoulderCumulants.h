@@ -41,6 +41,7 @@ class BoulderCumulants: public SubsysReco
   void set_do_double_track_cut(bool b){do_double_track_cut = b;}
   void set_zvtxcut(double z){_cut_zvtx = z;}
   void set_chi2cut(double c){_cut_chi2 = c;}
+  void set_dcacut(double d){_cut_dca = d;}
   void set_nhitcut(int n){_cut_nhit = n;}
 
  protected:
@@ -102,6 +103,7 @@ class BoulderCumulants: public SubsysReco
 
   double _cut_zvtx;
   double _cut_chi2;
+  double _cut_dca;
   int _cut_nhit;
 
   //run list stuff

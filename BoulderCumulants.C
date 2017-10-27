@@ -61,6 +61,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   _cut_zvtx = 10.0;
   _cut_chi2 = 5.0;
   _cut_nhit = 3;
+  _cut_dca = 2.0;
   _runlist_filename = "NULL";
   _utils = NULL;
   _collsys = "NULL";
@@ -1514,7 +1515,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
       if ( !use_utils )
         {
-          if ( fabs(DCA_x) > 2.0 || fabs(DCA_y) > 2.0 ) continue;
+          if ( fabs(DCA_x) > _cut_dca || fabs(DCA_y) > _cut_dca ) continue;
           if ( nhits < _cut_nhit ) continue;
           if ( chisq > _cut_chi2 ) continue;
         }
