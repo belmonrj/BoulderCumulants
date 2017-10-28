@@ -31,4 +31,5 @@ the 117* series have incomplete statistics due to serious taxi problems
 11972 added recursion histograms for v3, v4, SC(2,3), SC(2,4)
 11976 fixed typo for resursion v4
 12097 added some histograms for analytical acceptance calculations for v3
+12185 same as previous but 0.5 cm DCA cut
 
