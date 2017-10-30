@@ -1,4 +1,4 @@
-TFile* fout;
+
 
 double calc_corr_four(double,double,double,double,double,double,double,double);
 
@@ -399,6 +399,18 @@ void do_process(const char* type, int rebin)
   c1->Print(Form("FigsFour/simpleR%d_3h_uncorr_222and4_%s.pdf",rebin,type));
 
   // ---
+
+  TFile* fout = TFile::Open("input/histos_99999.root","recreate");
+  fout->cd();
+  th1d_corr_c32->Write();
+  th1d_corr_four->Write();
+  th1d_uncorr_c32->Write();
+  th1d_uncorr_four->Write();
+  th1d_corr_c32->SetName("centrality_recursion_0_1");
+  th1d_corr_four->SetName("centrality_recursion_0_3");
+  th1d_corr_c32->Write();
+  th1d_corr_four->Write();
+  fout->Close();
 
   // --- these might be useful at some point...?
   TH1D* th1d_cos1 = tp1f_cos1->ProjectionX("th1d_cos1");
