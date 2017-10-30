@@ -53,6 +53,9 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
   int harmonic = 3;
   int rebin = 2;
 
+  bool isacce = false;
+  if ( strcmp(systype,"acce") == 0 ) isacce = true;
+
   // --- make sure both files are not null
   if ( !fbase || !feval )
     {
@@ -68,9 +71,11 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
 
   for_base->Rebin(rebin);
   two_base->Rebin(rebin);
+  if ( !isacce )
+  {
   for_eval->Rebin(rebin);
   two_eval->Rebin(rebin);
-
+  }
 
   // --- use a random number generator to prevent over-writing histograms (a funny ROOT feature)
   double rand = gRandom->Rndm();
