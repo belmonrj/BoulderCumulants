@@ -2,6 +2,7 @@
 #include "calc_subevents.C"
 
 void takefiles(TFile*, TFile*, const char*);
+void takefiles(TFile*, TFile*, const char*, int);
 
 void crunch(TProfile*, TProfile*, const char*, const char*);
 
@@ -11,6 +12,8 @@ void crunch(TH1D*, TH1D*, const char*, const char*, double, double, double, doub
 
 void help_v3_csys()
 {
+
+  cout << "Starting..." << endl;
 
   TFile* fbase = NULL;
   TFile* feval = NULL;
@@ -45,12 +48,22 @@ void help_v3_csys()
   fbase->Close();
   feval->Close();
 
+  cout << "All done.  Have a nice day!" << endl;
+
 }
 
 void takefiles(TFile* fbase, TFile* feval, const char* systype)
 {
 
-  int harmonic = 3;
+  takefiles(fbase,feval,systype,3);
+  takefiles(fbase,feval,systype,4);
+
+}
+
+void takefiles(TFile* fbase, TFile* feval, const char* systype, int harmonic)
+{
+
+  //int harmonic = 3;
   int rebin = 2;
 
   bool isacce = false;
@@ -64,18 +77,45 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
     }
 
   // --- get the <<2>> and <<4>> (3rd harmonic)
-  TProfile* for_base = (TProfile*)fbase->Get("centrality_recursion_0_3");
-  TProfile* two_base = (TProfile*)fbase->Get("centrality_recursion_0_1");
-  TProfile* for_eval = (TProfile*)feval->Get("centrality_recursion_0_3");
-  TProfile* two_eval = (TProfile*)feval->Get("centrality_recursion_0_1");
+  TProfile* for_base = NULL;
+  TProfile* two_base = NULL;
+  TProfile* for_eval = NULL;
+  TProfile* two_eval = NULL;
+  if ( harmonic == 3 )
+    {
+      for_base = (TProfile*)fbase->Get("centrality_recursion_0_3");
+      two_base = (TProfile*)fbase->Get("centrality_recursion_0_1");
+      for_eval = (TProfile*)feval->Get("centrality_recursion_0_3");
+      two_eval = (TProfile*)feval->Get("centrality_recursion_0_1");
+    }
+  if ( harmonic == 4 )
+    {
+      for_base = (TProfile*)fbase->Get("centrality_recursion_0_9");
+      two_base = (TProfile*)fbase->Get("centrality_recursion_0_7");
+      for_eval = (TProfile*)feval->Get("centrality_recursion_0_9");
+      two_eval = (TProfile*)feval->Get("centrality_recursion_0_7");
+    }
+
+  // --- check for existence of histograms, exit if missing
+  if ( for_base == NULL ||  two_base == NULL ||  for_eval == NULL ||  two_eval == NULL )
+    {
+      cout << "One or more histograms missing: ";
+      cout << "for_base " << for_base << " ";
+      cout << "two_base " << two_base << " ";
+      cout << "for_eval " << for_eval << " ";
+      cout << "two_eval " << two_eval << " ";
+      cout << endl;
+      return;
+    }
+
 
   for_base->Rebin(rebin);
   two_base->Rebin(rebin);
   if ( !isacce )
-  {
-  for_eval->Rebin(rebin);
-  two_eval->Rebin(rebin);
-  }
+    {
+      for_eval->Rebin(rebin);
+      two_eval->Rebin(rebin);
+    }
 
   // --- use a random number generator to prevent over-writing histograms (a funny ROOT feature)
   double rand = gRandom->Rndm();
@@ -154,6 +194,8 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
     {
       ymin = -1e-6;
       ymax = 1e-5;
+      ymin = -5e-7;
+      ymax = 6e-6; // to get the hash mark
     }
   TH2D* empty_comp4 = new TH2D("empty_comp4","",1,xmin,xmax,1,ymin,ymax);
   empty_comp4->Draw();
@@ -210,6 +252,8 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
     {
       ymin = -1.4999e-6;
       ymax = 1.4999e-6;
+      ymin = -0.3999e-6;
+      ymax = 0.3999e-6;
     }
   TH2D* empty_cumu4 = new TH2D("empty_cumu4","",1,xmin,xmax,1,ymin,ymax);
   empty_cumu4->Draw();
@@ -402,4 +446,3 @@ void crunch(TH1D* hbase, TH1D* heval, const char* systype, const char* quantity,
   delete leg_comp;
 
 }
-
