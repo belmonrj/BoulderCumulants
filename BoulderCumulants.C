@@ -1711,6 +1711,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       if ( eta > 0 ) ++nfvtxt_north;
 
     } // end third for loop over tracks
+  nfvtxt = nfvtxt_south + nfvtxt_north; // just noticed sometimes nfvtxt is higher, need to revisit track selections
+
 
   // -------------------------------------------------------------------------------------------------------------------------------
   for(int h=1;h<maxHarmonic;h++) // ABSOLUTELY MUST START AT 1!!!  RECURSION ALGORITHM USES ZEROTH COMPONENT TO GET COMBINATORICS!!!
