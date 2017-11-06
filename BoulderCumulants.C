@@ -1523,7 +1523,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       fphi.push_back(phi);
       feta.push_back(eta);
       ++nfvtxt;
-    } // end for loop over tracks
+    } // end first for loop over tracks
 
   if ( nfvtxt > maxTracks ) return EVENT_OK;
 
@@ -1710,7 +1710,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       if ( eta < 0 ) ++nfvtxt_south;
       if ( eta > 0 ) ++nfvtxt_north;
 
-    } // end for loop over tracks
+    } // end third for loop over tracks
 
   // -------------------------------------------------------------------------------------------------------------------------------
   for(int h=1;h<maxHarmonic;h++) // ABSOLUTELY MUST START AT 1!!!  RECURSION ALGORITHM USES ZEROTH COMPONENT TO GET COMBINATORICS!!!

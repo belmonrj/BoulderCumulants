@@ -153,6 +153,8 @@ void do_process(const char* type, int rebin)
       if ( uncorr_c3G > 0 ) euncorr_v3G = sqrt(1.0/uncorr_v3G)*euncorr_c3G;
       if ( uncorr_c32 > 0 ) euncorr_v32 = sqrt(1.0/uncorr_v32)*euncorr_c32;
       if ( uncorr_c34 < 0 ) euncorr_v34 = (1.0/pow(-uncorr_c34,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
+      //cout << uncorr_four << " " << uncorr_222 << " " << uncorr_c34 << " " << uncorr_v34 << endl;
+      printf("%.20e %.20e %.20e %.20e \n",uncorr_four,uncorr_222,uncorr_c34,uncorr_v34);
       // --- now set the histogram values
       th1d_corr_four->SetBinContent(i+1,corr_four);
       th1d_corr_222->SetBinContent(i+1,corr_222);
