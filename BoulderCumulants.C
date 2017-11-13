@@ -1454,6 +1454,10 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
   vector<double> fphi;
   vector<double> feta;
+  vector<double> fdcax;
+  vector<double> fdcay;
+  vector<double> fchi2ndf;
+  vector<int> fnhitspc;
 
   if ( _verbosity > 1 ) cout << "entering fvtx track loop" << endl;
   TFvtxCompactTrkMap::const_iterator trk_iter = trkfvtx_map->range();
@@ -1495,7 +1499,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       // cout << "nhits " << nhits << endl;
       // cout << "----------------------------------------------------" << endl;
 
-      if ( nhits_special < _cut_nhit ) continue; // need at least 3 hits in FVTX, excluding VTX
+      if ( nhits_special < default_cut_nhit ) continue; // need at least 3 hits in FVTX, excluding VTX
 
       // fix total momentum to 1.0 (for rotating due to beamtilt)
       double px = 1.0 * sin(the) * cos(phi);
@@ -1521,13 +1525,17 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
       if ( !use_utils )
         {
-          if ( fabs(DCA_x) > _cut_dca || fabs(DCA_y) > _cut_dca ) continue;
-          if ( nhits < _cut_nhit ) continue;
-          if ( chisq > _cut_chi2 ) continue;
+          if ( fabs(DCA_x) > default_cut_dca || fabs(DCA_y) > default_cut_dca ) continue;
+          if ( nhits < default_cut_nhit ) continue;
+          if ( chisq > default_cut_chi2 ) continue;
         }
       // --- done with first loop, so push the eta and phi and count total number of good tracks
       fphi.push_back(phi);
       feta.push_back(eta);
+      fdcax.push_back(DCA_x);
+      fdcay.push_back(DCA_y);
+      fchi2ndf.push_back(chisq);
+      fnhitspc.push_back(nhits_special);
       ++nfvtxt;
       if ( eta < 0 ) ++nfvtxt_south;
       if ( eta > 0 ) ++nfvtxt_north;
@@ -1575,9 +1583,19 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // --- third fvtxt track loop to calculate Q-vectors
   for ( int i = 0; i < nfvtxt; ++i )
     {
+      // --- double track cut
       if ( do_double_track_cut && !fvtx_track_passes[i] ) continue;
       double eta = feta[i];
       double phi = fphi[i];
+      double DCA_x = fdcax[i];
+      double DCA_y = fdcay[i];
+      double chisq = fchi2ndf[i];
+      int nhists_special = fnhitspc[i];
+      // --- need to do different cuts here
+      if ( nhits_special < _cut_nhit ) continue; // need at least 3 hits in FVTX, excluding VTX
+      if ( fabs(DCA_x) > _cut_dca || fabs(DCA_y) > _cut_dca ) continue;
+      //if ( nhits < _cut_nhit ) continue;
+      if ( chisq > _cut_chi2 ) continue;
       // --- from generic formulas ----------------------------------------------------------------------
       double dPhi = 0.0; // particle angle
       //double wPhi = 1.0; // particle weight

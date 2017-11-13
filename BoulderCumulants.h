@@ -88,6 +88,11 @@ class BoulderCumulants: public SubsysReco
   // ---------------------------------------------------------------------
   static const int maxTracks = 650; // accept no more FVTX tracks than this
 
+  static const double default_cut_zvtx = 10.0;
+  static const double default_cut_chi2 = 5.0;
+  static const double default_cut_dca = 2.0;
+  static const int default_cut_nhit = 3;
+
   /// current event
   unsigned long _ievent;
 
