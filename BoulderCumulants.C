@@ -1590,7 +1590,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       double DCA_x = fdcax[i];
       double DCA_y = fdcay[i];
       double chisq = fchi2ndf[i];
-      int nhists_special = fnhitspc[i];
+      int nhits_special = fnhitspc[i];
       // --- need to do different cuts here
       if ( nhits_special < _cut_nhit ) continue; // need at least 3 hits in FVTX, excluding VTX
       if ( fabs(DCA_x) > _cut_dca || fabs(DCA_y) > _cut_dca ) continue;
