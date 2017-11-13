@@ -1,6 +1,6 @@
 
 
-double calc_corr_four(double,double,double,double,double,double,double,double);
+long double calc_corr_four(long double,long double,long double,long double,long double,long double,long double,long double);
 
 void do_process(const char*,int); // get it? :)
 
@@ -88,73 +88,77 @@ void do_process(const char* type, int rebin)
   for ( int i = 0; i < nbins; ++i )
     {
       // --- get the components
-      double four    = tp1f_four->GetBinContent(i+1);
-      double two     = tp1f_two->GetBinContent(i+1);
-      double efour   = tp1f_four->GetBinError(i+1);
-      double etwo    = tp1f_two->GetBinError(i+1);
-      double cos1    = tp1f_cos1->GetBinContent(i+1);
-      double sin1    = tp1f_sin1->GetBinContent(i+1);
-      double cossum2 = tp1f_cossum2->GetBinContent(i+1);
-      double sinsum2 = tp1f_sinsum2->GetBinContent(i+1);
-      double cos3    = tp1f_cos3->GetBinContent(i+1);
-      double sin3    = tp1f_sin3->GetBinContent(i+1);
+      long double four    = tp1f_four->GetBinContent(i+1);
+      long double two     = tp1f_two->GetBinContent(i+1);
+      long double efour   = tp1f_four->GetBinError(i+1);
+      long double etwo    = tp1f_two->GetBinError(i+1);
+      long double cos1    = tp1f_cos1->GetBinContent(i+1);
+      long double sin1    = tp1f_sin1->GetBinContent(i+1);
+      long double cossum2 = tp1f_cossum2->GetBinContent(i+1);
+      long double sinsum2 = tp1f_sinsum2->GetBinContent(i+1);
+      long double cos3    = tp1f_cos3->GetBinContent(i+1);
+      long double sin3    = tp1f_sin3->GetBinContent(i+1);
       // --- calculate corrected terms
-      double corr_c32 = two - cos1*cos1 - sin1*sin1;
-      double corr_c34 = calc_corr_four(four,two,cos1,sin1,cossum2,sinsum2,cos3,sin3);
-      double corr_222 = 2*corr_c32*corr_c32;
-      double corr_four = corr_c34 + corr_222;
+      long double corr_c32 = two - cos1*cos1 - sin1*sin1;
+      long double corr_c34 = calc_corr_four(four,two,cos1,sin1,cossum2,sinsum2,cos3,sin3);
+      long double corr_222 = 2*corr_c32*corr_c32;
+      long double corr_four = corr_c34 + corr_222;
       // --- also useful to look at some things without the corrections
-      double uncorr_four = four;
-      double uncorr_222 = 2*two*two;
-      double uncorr_c34 = four - 2*two*two;
-      double uncorr_c32 = two;
+      long double uncorr_four = four;
+      long double uncorr_222 = 2*two*two;
+      long double uncorr_c34 = four - 2*two*two;
+      long double uncorr_c32 = two;
       // --- now look at G
-      double cos1_north = tp1f_cos1_north->GetBinContent(i+1);
-      double sin1_north = tp1f_sin1_north->GetBinContent(i+1);
-      double cos1_south = tp1f_cos1_south->GetBinContent(i+1);
-      double sin1_south = tp1f_sin1_south->GetBinContent(i+1);
-      double two_G      = tp1f_G_two->GetBinContent(i+1);
-      double etwo_G     = tp1f_G_two->GetBinError(i+1);
-      double corr_c3G   = two_G - cos1_north*cos1_south - sin1_north*sin1_south;
-      double uncorr_c3G = two_G;
+      long double cos1_north = tp1f_cos1_north->GetBinContent(i+1);
+      long double sin1_north = tp1f_sin1_north->GetBinContent(i+1);
+      long double cos1_south = tp1f_cos1_south->GetBinContent(i+1);
+      long double sin1_south = tp1f_sin1_south->GetBinContent(i+1);
+      long double two_G      = tp1f_G_two->GetBinContent(i+1);
+      long double etwo_G     = tp1f_G_two->GetBinError(i+1);
+      long double corr_c3G   = two_G - cos1_north*cos1_south - sin1_north*sin1_south;
+      long double uncorr_c3G = two_G;
       // --- calculate the harmonics
-      double corr_v34 = -9;
-      double corr_v32 = -9;
-      double corr_v3G = -9;
+      long double corr_v34 = -9;
+      long double corr_v32 = -9;
+      long double corr_v3G = -9;
       if ( corr_c32 > 0 ) corr_v32 = sqrt(corr_c32);
       if ( corr_c3G > 0 ) corr_v3G = sqrt(corr_c3G);
       if ( corr_c34 < 0 ) corr_v34 = sqrt(sqrt(-corr_c34));
-      double uncorr_v34 = -9;
-      double uncorr_v32 = -9;
-      double uncorr_v3G = -9;
+      long double uncorr_v34 = -9;
+      long double uncorr_v32 = -9;
+      long double uncorr_v3G = -9;
       if ( uncorr_c32 > 0 ) uncorr_v32 = sqrt(uncorr_c32);
       if ( uncorr_c3G > 0 ) uncorr_v3G = sqrt(uncorr_c3G);
       if ( uncorr_c34 < 0 ) uncorr_v34 = sqrt(sqrt(-uncorr_c34));
       // --- calculate statistical uncertainties
-      double ecorr_four = efour;
-      double ecorr_222 = 4*two*etwo;
-      double ecorr_c3G = etwo_G;
-      double ecorr_c32 = etwo;
-      double ecorr_c34 = (efour/four)*corr_c34;
-      double ecorr_v3G = 0;
-      double ecorr_v32 = 0;
-      double ecorr_v34 = 0;
+      long double ecorr_four = efour;
+      long double ecorr_222 = 4*two*etwo;
+      long double ecorr_c3G = etwo_G;
+      long double ecorr_c32 = etwo;
+      long double ecorr_c34 = (efour/four)*corr_c34;
+      long double ecorr_v3G = 0;
+      long double ecorr_v32 = 0;
+      long double ecorr_v34 = 0;
       if ( corr_c3G > 0 ) ecorr_v3G = sqrt(1.0/corr_v3G)*ecorr_c3G;
       if ( corr_c32 > 0 ) ecorr_v32 = sqrt(1.0/corr_v32)*ecorr_c32;
       if ( corr_c34 < 0 ) ecorr_v34 = (1.0/pow(-corr_c34,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
-      double euncorr_four = efour;
-      double euncorr_222 = 4*two*etwo;
-      double euncorr_c3G = etwo_G;
-      double euncorr_c32 = etwo;
-      double euncorr_c34 = (efour/four)*uncorr_c34;
-      double euncorr_v3G = 0;
-      double euncorr_v32 = 0;
-      double euncorr_v34 = 0;
+      long double euncorr_four = efour;
+      long double euncorr_222 = 4*two*etwo;
+      long double euncorr_c3G = etwo_G;
+      long double euncorr_c32 = etwo;
+      long double euncorr_c34 = (efour/four)*uncorr_c34;
+      long double euncorr_v3G = 0;
+      long double euncorr_v32 = 0;
+      long double euncorr_v34 = 0;
       if ( uncorr_c3G > 0 ) euncorr_v3G = sqrt(1.0/uncorr_v3G)*euncorr_c3G;
       if ( uncorr_c32 > 0 ) euncorr_v32 = sqrt(1.0/uncorr_v32)*euncorr_c32;
       if ( uncorr_c34 < 0 ) euncorr_v34 = (1.0/pow(-uncorr_c34,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
       //cout << uncorr_four << " " << uncorr_222 << " " << uncorr_c34 << " " << uncorr_v34 << endl;
-      printf("%.20e %.20e %.20e %.20e \n",uncorr_four,uncorr_222,uncorr_c34,uncorr_v34);
+      //printf("%.20e %.20e %.20e %.20e \n",uncorr_four,uncorr_222,uncorr_c34,uncorr_v34);
+      //printf(" %.50e \n %.50e \n %.50e \n\n %.50e \n\n",uncorr_four,uncorr_222,uncorr_c34,uncorr_v34);
+      //printf("<4>    = %.50e \n2<2>^2 = %.50e \n\nc3{4}  = %.50e \n",uncorr_four,uncorr_222,uncorr_c34); // double
+      printf("<4>    = %.50Le \n2<2>^2 = %.50Le \n\nc3{4}  = %.50Le \n",uncorr_four,uncorr_222,uncorr_c34);
+      cout << "--------------------------------------------------------------------------------------" << endl;
       // --- now set the histogram values
       th1d_corr_four->SetBinContent(i+1,corr_four);
       th1d_corr_222->SetBinContent(i+1,corr_222);
@@ -239,8 +243,8 @@ void do_process(const char* type, int rebin)
   gv32_sys->SetFillColorAlpha(kRed, 0.35);
   for ( int i = 0; i < gv32_sys->GetNbinsX(); ++i )
   {
-    double y = gv32_sys->GetBinContent(i);
-    double err = y * 0.09;
+    long double y = gv32_sys->GetBinContent(i);
+    long double err = y * 0.09;
     if ( err < 0.005*1.25 ) err = 0.005*1.25;
     if ( y > 0 ) gv32_sys->SetBinError(i, err);
   } // i
@@ -250,8 +254,8 @@ void do_process(const char* type, int rebin)
   gv32ab_sys->SetFillColorAlpha(kMagenta+2, 0.35);
   for ( int i = 0; i < gv32ab_sys->GetNbinsX(); ++i )
   {
-    double y = gv32ab_sys->GetBinContent(i);
-    double err = y * 0.1;
+    long double y = gv32ab_sys->GetBinContent(i);
+    long double err = y * 0.1;
     if ( err < 0.005*1.25 ) err = 0.005*1.25;
     if ( y > 0 ) gv32ab_sys->SetBinError(i, err);
   } // i
@@ -261,8 +265,8 @@ void do_process(const char* type, int rebin)
   gv34_sys->SetFillColorAlpha(kBlue, 0.35);
   for ( int i = 0; i < gv34_sys->GetNbinsX(); ++i )
   {
-    double y = gv34_sys->GetBinContent(i);
-    double err = y * 0.06;
+    long double y = gv34_sys->GetBinContent(i);
+    long double err = y * 0.06;
     if ( err < 0.005*1.25 ) err = 0.005*1.25;
     if ( y > 0 ) gv34_sys->SetBinError(i, err);
   } // i
@@ -271,10 +275,10 @@ void do_process(const char* type, int rebin)
   // --- now do the plotting
   // -----------------------
 
-  double xmin = 0.0;
-  double xmax = 100.0;
-  double ymin = 0.0;
-  double ymax = 0.1;
+  long double xmin = 0.0;
+  long double xmax = 100.0;
+  long double ymin = 0.0;
+  long double ymax = 0.1;
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   empty->GetXaxis()->SetTitle("Centrality (%)");
@@ -432,18 +436,18 @@ void do_process(const char* type, int rebin)
 
 
 
-double calc_corr_four(double four, double two, double cos1, double sin1, double cossum2, double sinsum2, double cos3, double sin3)
+long double calc_corr_four(long double four, long double two, long double cos1, long double sin1, long double cossum2, long double sinsum2, long double cos3, long double sin3)
 {
-  double uncorr = four - 2*two*two;
-  double corr_term1 = 4*cos1*cos3;
-  double corr_term2 = 4*sin1*sin3;
-  double corr_term3 = cossum2*cossum2;
-  double corr_term4 = sinsum2*sinsum2;
-  double corr_term5 = 4*cossum2*(cos1*cos1 - sin1*sin1);
-  double corr_term6 = 8*sinsum2*sin1*cos1;
-  double corr_term7 = 8*two*(cos1*cos1 + sin1*sin1);
-  double corr_term8 = 6*(cos1*cos1 + sin1*sin1)*(cos1*cos1 + sin1*sin1);
-  double result = uncorr - corr_term1 + corr_term2 - corr_term3 - corr_term4 + corr_term5 + corr_term6 + corr_term7 - corr_term8;
+  long double uncorr = four - 2*two*two;
+  long double corr_term1 = 4*cos1*cos3;
+  long double corr_term2 = 4*sin1*sin3;
+  long double corr_term3 = cossum2*cossum2;
+  long double corr_term4 = sinsum2*sinsum2;
+  long double corr_term5 = 4*cossum2*(cos1*cos1 - sin1*sin1);
+  long double corr_term6 = 8*sinsum2*sin1*cos1;
+  long double corr_term7 = 8*two*(cos1*cos1 + sin1*sin1);
+  long double corr_term8 = 6*(cos1*cos1 + sin1*sin1)*(cos1*cos1 + sin1*sin1);
+  long double result = uncorr - corr_term1 + corr_term2 - corr_term3 - corr_term4 + corr_term5 + corr_term6 + corr_term7 - corr_term8;
   return result;
 }
 
