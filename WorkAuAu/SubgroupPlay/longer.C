@@ -97,6 +97,15 @@ void longer()
   histR->Draw("same ex0p");
   c1->Print("sixtyfig_part3.png");
 
+  ymin = -1e-7;
+  ymax = 1e-7;
+  delete hdummy;
+  hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
+  hdummy->Draw();
+  tge_mean->Draw("pz");
+  histR->Draw("same ex0p");
+  c1->Print("sixtyfig_part4.png");
+
 }
 
 
