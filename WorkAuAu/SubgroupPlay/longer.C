@@ -50,16 +50,30 @@ void longer()
           sumw2[i] += weight*weight;
         }
       // --- now do the normalization
+      if ( i == 2 || i == 26 || i == 29 )
+        {
+          cout << "PROBLEMATIC BIN " << i << endl;
+          cout << "mean " << mean[i] << endl;
+          cout << "width " << width[i] << endl;
+          cout << "sumw " << sumw[i] << endl;
+          cout << "sumw2 " << sumw2[i] << endl;
+        }
       mean[i] /= sumw[i];
       width[i] /= sumw2[i];
+      if ( i == 2 || i == 26 || i == 29 )
+        {
+          cout << "PROBLEMATIC BIN " << i << endl;
+          cout << "normed mean " << mean[i] << endl;
+          cout << "normed width " << width[i] << endl;
+        }
       if ( i == 2 ) width[i] = width[1];
       rms[i] = sqrt(width[i]);
       // --- now calculate the subgroup method uncertainty
       emean[i] = width[i] - mean[i]*mean[i];
       emean[i] = sqrt(fabs(emean[i]/nhistos));
       // --- diagnostics...
-      //cout << i << " " << width[i] << " " << mean[i]*mean[i] << " " << mean[i] << " " << rms[i] << " " << emean[i] << endl;
       mean[i] = histR->GetBinContent(i+1); // reassign
+      cout << i << " " << width[i] << " " << mean[i]*mean[i] << " " << mean[i] << " " << rms[i] << " " << emean[i] << " " << emean[i]/mean[i] << endl;
       if ( mean[i] == 0 ) mean[i] = -999;
     }
 
