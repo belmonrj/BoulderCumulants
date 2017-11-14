@@ -52,11 +52,10 @@ void longer()
       // --- now do the normalization
       mean[i] /= sumw[i];
       width[i] /= sumw2[i];
+      if ( i == 2 ) width[i] = width[1];
       rms[i] = sqrt(width[i]);
       // --- now calculate the subgroup method uncertainty
       emean[i] = width[i] - mean[i]*mean[i];
-      // if ( emean[i] > 0 ) emean[i] = sqrt(emean[i]/nhistos);
-      // else emean[i] = 0;
       emean[i] = sqrt(fabs(emean[i]/nhistos));
       // --- diagnostics...
       //cout << i << " " << width[i] << " " << mean[i]*mean[i] << " " << mean[i] << " " << rms[i] << " " << emean[i] << endl;
