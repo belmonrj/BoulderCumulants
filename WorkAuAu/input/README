@@ -36,3 +36,6 @@ the 117* series have incomplete statistics due to serious taxi problems
 12195 same as 12097 but 5.0 zvtx cut
 12203 same as 12097 but 4 nhits cut
 
+12289 same as 12203 but with different nfvtxt counting (to match baseline)
+12290 same as 12185 but with different nfvtxt counting (to match baseline)
+
