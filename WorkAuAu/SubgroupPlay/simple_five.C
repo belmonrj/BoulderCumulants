@@ -49,8 +49,16 @@ void simple_five()
       widt[i] = sqrt(fabs(widt[i])/5);
       // --- reassign
       mean[i] = histR->GetBinContent(i+1);
-      if ( mean[i] == 0 ) mean[i] = -999;
+      if ( mean[i] == 0 )
+        {
+          mean[i] = -999;
+          histR->SetBinContent(i+1,-999); // doesn't work
+        }
     }
+  // --- these don't work either
+  histR->SetBinContent(48,-999);
+  histR->SetBinContent(49,-999);
+  histR->SetBinContent(50,-999);
 
   // --- do some drawing
 
@@ -81,11 +89,11 @@ void simple_five()
   hdummy->GetYaxis()->SetTitle(Form("cumulant"));
   hdummy->GetYaxis()->SetTitleOffset(1.25);
   hdummy->GetXaxis()->SetTitle("Centrality (%)");
-  hist1->Draw("same ex0p");
-  hist2->Draw("same ex0p");
-  hist3->Draw("same ex0p");
-  hist4->Draw("same ex0p");
-  hist5->Draw("same ex0p");
+  hist1->Draw("same hist p");
+  hist2->Draw("same hist p");
+  hist3->Draw("same hist p");
+  hist4->Draw("same hist p");
+  hist5->Draw("same hist p");
 
   c1->Print("fig_part1.png");
 
