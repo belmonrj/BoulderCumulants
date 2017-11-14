@@ -55,22 +55,26 @@ void longer()
       rms[i] = sqrt(width[i]);
       // --- now calculate the subgroup method uncertainty
       emean[i] = width[i] - mean[i]*mean[i];
-      if ( emean[i] > 0 ) emean[i] = sqrt(emean[i]/nhistos);
-      else emean[i] = 0;
+      // if ( emean[i] > 0 ) emean[i] = sqrt(emean[i]/nhistos);
+      // else emean[i] = 0;
+      emean[i] = sqrt(fabs(emean[i]/nhistos));
       // --- diagnostics...
-      cout << i << " " << mean[i] << " " << width[i] << " " << rms[i] << " " << emean[i] << endl;
+      //cout << i << " " << width[i] << " " << mean[i]*mean[i] << " " << mean[i] << " " << rms[i] << " " << emean[i] << endl;
+      mean[i] = histR->GetBinContent(i+1); // reassign
+      if ( mean[i] == 0 ) mean[i] = -999;
     }
 
   TCanvas* c1 = new TCanvas("c1","");
 
   double xmin = 0;
   double xmax = 100;
-  double ymin = -1e-6;
-  double ymax = 1e-6;
+  double ymin = -1e-5;
+  double ymax = 1e-5;
   TH2D* hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->Draw();
 
-  TGraphErrors* tge_mean = new TGraphErrors(nbins,cent,mean,0,width);
+  //TGraphErrors* tge_mean = new TGraphErrors(nbins,cent,mean,0,width);
+  TGraphErrors* tge_mean = new TGraphErrors(nbins,cent,mean,0,emean);
   tge_mean->SetLineColor(kGray+1);
   tge_mean->SetLineWidth(10);
   tge_mean->SetMarkerColor(kBlack);

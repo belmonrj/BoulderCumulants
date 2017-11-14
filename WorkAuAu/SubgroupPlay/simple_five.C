@@ -49,9 +49,14 @@ void simple_five()
       if ( widt[i] > 0 ) widt[i] = sqrt(widt[i]/5);
       else widt[i] = 0;
       // --- calculate the uncertainties...
-      emean[i] = widt[i]*widt[i] - mean[i]*mean[i];
-      if ( emean[i] > 0 ) emean[i] = sqrt(emean[i]);
-      else emean[i] = 0;
+      //emean[i] = widt[i]*widt[i] - mean[i]*mean[i];
+      // if ( emean[i] > 0 ) emean[i] = sqrt(emean[i]);
+      // else emean[i] = 0;
+      //emean[i] = sqrt(fabs(emean[i]/nhistos));
+      // --- diagnostics...
+      //cout << i << " " << width[i] << " " << mean[i]*mean[i] << " " << mean[i] << " " << rms[i] << " " << emean[i] << endl;
+      mean[i] = histR->GetBinContent(i+1); // reassign
+      if ( mean[i] == 0 ) mean[i] = -999;
     }
 
   // --- do some drawing
