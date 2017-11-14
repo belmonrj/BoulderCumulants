@@ -46,16 +46,9 @@ void simple_five()
               / ( weit1 + weit2 + weit3 + weit4 + weit5 );
       widt[i] = ( weit1*cumu1*weit1*cumu1 + weit2*cumu2*weit2*cumu2 + weit3*cumu3*weit3*cumu3 + weit4*cumu4*weit4*cumu4 + weit5*cumu5*weit5*cumu5 )
               / ( weit1*weit1 + weit2*weit2 + weit3*weit3 + weit4*weit4 + weit5*weit5 );
-      if ( widt[i] > 0 ) widt[i] = sqrt(widt[i]/5);
-      else widt[i] = 0;
-      // --- calculate the uncertainties...
-      //emean[i] = widt[i]*widt[i] - mean[i]*mean[i];
-      // if ( emean[i] > 0 ) emean[i] = sqrt(emean[i]);
-      // else emean[i] = 0;
-      //emean[i] = sqrt(fabs(emean[i]/nhistos));
-      // --- diagnostics...
-      //cout << i << " " << width[i] << " " << mean[i]*mean[i] << " " << mean[i] << " " << rms[i] << " " << emean[i] << endl;
-      mean[i] = histR->GetBinContent(i+1); // reassign
+      widt[i] = sqrt(fabs(widt[i])/5);
+      // --- reassign
+      mean[i] = histR->GetBinContent(i+1);
       if ( mean[i] == 0 ) mean[i] = -999;
     }
 
@@ -85,6 +78,9 @@ void simple_five()
   double ymax = 1e-5;
   TH2D* hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->Draw();
+  hdummy->GetYaxis()->SetTitle(Form("cumulant"));
+  hdummy->GetYaxis()->SetTitleOffset(1.25);
+  hdummy->GetXaxis()->SetTitle("Centrality (%)");
   hist1->Draw("same ex0p");
   hist2->Draw("same ex0p");
   hist3->Draw("same ex0p");
@@ -105,6 +101,13 @@ void simple_five()
   hdummy->Draw();
   tge_mean->Draw("pz");
   histR->Draw("same ex0p");
+  TLegend *leg = new TLegend(0.18,0.15,0.38,0.35);
+  leg->SetFillStyle(0);
+  leg->SetHeader("Stat. Uncertainties");
+  leg->AddEntry(histR,"Standard","l");
+  leg->AddEntry(tge_mean,"Subgroup estimate","l");
+  leg->SetTextSize(0.05);
+  leg->Draw();
   c1->Print("fig_part2.png");
 
   ymin = -1e-6;
@@ -112,8 +115,12 @@ void simple_five()
   delete hdummy;
   hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->Draw();
+  hdummy->GetYaxis()->SetTitle(Form("cumulant"));
+  hdummy->GetYaxis()->SetTitleOffset(1.25);
+  hdummy->GetXaxis()->SetTitle("Centrality (%)");
   tge_mean->Draw("pz");
   histR->Draw("same ex0p");
+  leg->Draw();
   c1->Print("fig_part3.png");
 
   ymin = -1e-7;
@@ -121,8 +128,12 @@ void simple_five()
   delete hdummy;
   hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->Draw();
+  hdummy->GetYaxis()->SetTitle(Form("cumulant"));
+  hdummy->GetYaxis()->SetTitleOffset(1.25);
+  hdummy->GetXaxis()->SetTitle("Centrality (%)");
   tge_mean->Draw("pz");
   histR->Draw("same ex0p");
+  leg->Draw();
   c1->Print("fig_part4.png");
 
 
