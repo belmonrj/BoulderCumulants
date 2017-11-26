@@ -12,12 +12,12 @@ static  int      myDarkRed     = TColor::GetColor(128,0,0);
 static  int      myDarkGreen   = TColor::GetColor(0,128,0);
 static  int      myDarkBlue    = TColor::GetColor(0,0,128);
 
-Bool_t bRebin = kTRUE;  
+Bool_t bRebin = kTRUE;
 
-void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
+void refFlowVsCentRebinned(Int_t rWrite = 1, Int_t rPerformance = 0)
 {
  myOptions();
- gROOT->ForceStyle();   
+ gROOT->ForceStyle();
  TDatime now;
  int iDate = now.GetDate();
  int iYear=iDate/10000;
@@ -27,18 +27,18 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
  char cStamp1[25],cStamp2[25];
  //sprintf(cStamp1,"%i %s %i",iDay,cMonth[iMonth-1],iYear);
  //sprintf(cStamp2,"%i/%.2d/%i",iDay,iMonth,iYear);
- 
+
  const Int_t nCentralities = 50;
- 
+
  // Centrality bins:
- Double_t xCent[50] = {0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5, 
+ Double_t xCent[50] = {0.5,1.5,2.5,3.5,4.5,5.5,6.5,7.5,8.5,9.5,
                        10.5,11.5,12.5,13.5,14.5,15.5,16.5,17.5,18.5,19.5,
                        21.,23.,25.,27.,29.,31.,33.,35.,37.,39.,
                        41.,43.,45.,47.,49.,51.,53.,55.,57.,59.,
-                       61.,63.,65.,67.,69.,71.,73.,75.,77.,79.};   
+                       61.,63.,65.,67.,69.,71.,73.,75.,77.,79.};
  Double_t exCent[50] = {0.};
- 
- // v2{2}: 
+
+ // v2{2}:
  Double_t V22[] = {2.420509e-02,2.703078e-02,3.055149e-02,3.430685e-02,3.770646e-02,
 4.131605e-02,4.468220e-02,4.807997e-02,5.099198e-02,5.400401e-02,
 5.715461e-02,5.995449e-02,6.269015e-02,6.494528e-02,6.762260e-02,
@@ -48,7 +48,7 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 1.039796e-01,1.048970e-01,1.054321e-01,1.058401e-01,1.060114e-01,
 1.057795e-01,1.055975e-01,1.058080e-01,1.048094e-01,1.044558e-01,
 1.037345e-01,1.037953e-01,1.022192e-01,1.028387e-01,1.019666e-01,
-1.021492e-01,1.023577e-01,1.037432e-01,1.045945e-01,1.077903e-01}; 
+1.021492e-01,1.023577e-01,1.037432e-01,1.045945e-01,1.077903e-01};
  Double_t V22StatErr[] = {8.785866e-05,9.318537e-05,9.663614e-05,1.005954e-04,1.038919e-04,
 1.076056e-04,1.102792e-04,1.140431e-04,1.156746e-04,1.197676e-04,
 1.228546e-04,1.250799e-04,1.280185e-04,1.303905e-04,1.346376e-04,
@@ -60,7 +60,7 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 2.656227e-04,2.862179e-04,3.123013e-04,3.421262e-04,3.792595e-04,
 4.282321e-04,4.807014e-04,5.516782e-04,6.398266e-04,7.360318e-04};
 
- // v2{SP} (eta gap > 1.0):      
+ // v2{SP} (eta gap > 1.0):
  Double_t V2SP[] = {2.130106e-02,2.435402e-02,2.816321e-02,3.188956e-02,3.566601e-02,
 3.951162e-02,4.266304e-02,4.626173e-02,4.926470e-02,5.236111e-02,
 5.540893e-02,5.805371e-02,6.074272e-02,6.307792e-02,6.607283e-02,
@@ -70,7 +70,7 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 1.002708e-01,1.008174e-01,1.010020e-01,1.010988e-01,1.011032e-01,
 1.000526e-01,9.881608e-02,9.847418e-02,9.672397e-02,9.667305e-02,
 9.428757e-02,9.120677e-02,8.797762e-02,8.610253e-02,8.394230e-02,
-8.041070e-02,7.855092e-02,8.014652e-02,7.073039e-02,7.357049e-02};  
+8.041070e-02,7.855092e-02,8.014652e-02,7.073039e-02,7.357049e-02};
  Double_t V2SPStatErr[] = {2.074075e-04,2.034157e-04,1.957703e-04,1.908029e-04,1.849294e-04,
 1.837545e-04,1.837396e-04,1.838488e-04,1.841454e-04,1.869431e-04,
 1.878235e-04,1.912247e-04,1.942054e-04,1.953657e-04,2.007491e-04,
@@ -91,14 +91,14 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 3.747410e-04,4.153306e-04,4.591145e-04,5.163486e-04,5.747955e-04,
 6.562508e-04,7.653615e-04,9.051987e-04,1.065931e-03,1.276695e-03,
 1.574969e-03,1.895965e-03,2.250115e-03,3.090780e-03,3.615933e-03};
- // Calculate combined in quadrature sys. and stat. error: 
+ // Calculate combined in quadrature sys. and stat. error:
  Double_t V2SPSysStatErr[nCentralities] = {0.};
- for (Int_t c=0;c<nCentralities;c++) 
+ for (Int_t c=0;c<nCentralities;c++)
  {
   V2SPSysStatErr[c] = TMath::Sqrt(pow(V2SPSysErr[c],2.)+pow(V2SPStatErr[c],2.)+pow(0.03*4.626173e-02,2.));
- }    
-    
- // v2{SP} (eta gap > 0.0):  
+ }
+
+ // v2{SP} (eta gap > 0.0):
  Double_t QaQb_V0_EtaGap00[] = {2.325894e-02,2.593694e-02,2.945582e-02,3.319414e-02,3.686913e-02,
 4.038470e-02,4.386371e-02,4.727677e-02,5.034370e-02,5.331245e-02,
 5.640731e-02,5.908393e-02,6.194821e-02,6.414316e-02,6.676192e-02,
@@ -118,13 +118,13 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 1.778520e-04,1.865271e-04,1.956036e-04,2.054643e-04,2.153007e-04,
 2.286678e-04,2.436574e-04,2.596969e-04,2.803926e-04,3.047220e-04,
 3.331270e-04,3.664833e-04,4.118274e-04,4.636268e-04,5.330842e-04,
-6.200796e-04,7.151101e-04,8.479890e-04,1.026079e-03,1.202475e-03};    
+6.200796e-04,7.151101e-04,8.479890e-04,1.026079e-03,1.202475e-03};
  //  QaQb_V0_EtaGap00:
- Int_t nPointsQaQb_V0_EtaGap00 = sizeof(xCent)/sizeof(Double_t);         
+ Int_t nPointsQaQb_V0_EtaGap00 = sizeof(xCent)/sizeof(Double_t);
  TGraphErrors *GrQaQb_V0_EtaGap00 = new TGraphErrors(nPointsQaQb_V0_EtaGap00,xCent,QaQb_V0_EtaGap00,exCent,errQaQb_V0_EtaGap00);
- myGraphSetUp(GrQaQb_V0_EtaGap00,0.75,kOpenSquare,kBlue,1,kBlue); 
-         
- // v2{4}:       
+ myGraphSetUp(GrQaQb_V0_EtaGap00,0.75,kOpenSquare,kBlue,1,kBlue);
+
+ // v2{4}:
  Double_t V24[] = {-44.,8.929991e-03,1.538249e-02,2.039141e-02,2.444779e-02,
 2.867028e-02,3.269281e-02,3.626870e-02,3.995447e-02,4.271208e-02,
 4.568345e-02,4.897344e-02,5.168858e-02,5.399919e-02,5.625026e-02,
@@ -134,7 +134,7 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 8.556932e-02,8.528535e-02,8.518180e-02,8.433332e-02,8.361274e-02,
 8.186050e-02,8.063176e-02,8.030987e-02,7.746470e-02,7.428505e-02,
 7.084685e-02,7.060003e-02,6.580577e-02,6.447035e-02,5.785129e-02,
-5.203995e-02,4.525665e-02}; 
+5.203995e-02,4.525665e-02};
  Double_t V24StatErr[] = {0.000000e+00,4.469321e-03,1.159167e-03,6.698696e-04,5.048081e-04,
 3.857036e-04,3.341104e-04,2.930141e-04,2.507839e-04,2.514691e-04,
 2.425488e-04,2.298936e-04,2.277990e-04,2.188226e-04,2.299204e-04,
@@ -155,14 +155,14 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 1.293827e-03,1.108257e-03,1.199848e-03,1.516349e-03,1.726092e-03,
 1.965289e-03,2.652755e-03,3.700403e-03,5.581634e-03,6.498875e-03,
 1.504874e-02,2.253123e-02};
- // Calculate combined in quadrature sys. and stat. error: 
+ // Calculate combined in quadrature sys. and stat. error:
  Double_t V24SysStatErr[47] = {0.};
- for (Int_t c=0;c<47;c++) 
+ for (Int_t c=0;c<47;c++)
  {
   V24SysStatErr[c] = TMath::Sqrt(pow(V24SysErr[c],2.)+pow(V24StatErr[c],2.)+pow(0.03*3.626870e-02,2.));
- }    
-    
- // v2{6}        
+ }
+
+ // v2{6}
  Double_t V26[] = {-44.,1.423321e-02,1.581362e-02,1.955221e-02,2.407217e-02,
 2.844712e-02,3.298782e-02,3.606370e-02,3.968852e-02,4.241349e-02,
 4.566376e-02,4.872943e-02,5.159599e-02,5.387742e-02,5.604346e-02,
@@ -190,14 +190,14 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 8.727773e-04,8.779028e-04,8.806129e-04,8.780106e-04,1.031314e-03,
 1.185046e-03,1.416777e-03,1.566047e-03,2.464537e-03,3.083691e-03,
 3.303263e-03,6.005737e-03,1.635278e-02};
- // Calculate combined in quadrature sys. and stat. error: 
+ // Calculate combined in quadrature sys. and stat. error:
  Double_t V26SysStatErr[43] = {0.};
- for (Int_t c=0;c<43;c++) 
+ for (Int_t c=0;c<43;c++)
  {
   V26SysStatErr[c] = TMath::Sqrt(pow(V26SysErr[c],2.)+pow(V26StatErr[c],2.)+pow(0.03*3.606370e-02,2.));
- }  
- 
- // v2{8}   
+ }
+
+ // v2{8}
  Double_t V28[] = {-44.,-44.,-44.,1.952045e-02,2.369390e-02,
 2.869303e-02,3.290640e-02,3.610693e-02,3.978246e-02,4.247332e-02,
 4.564340e-02,4.874435e-02,5.154138e-02,5.391612e-02,5.607667e-02,
@@ -206,7 +206,7 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 8.095195e-02,8.248186e-02,8.315447e-02,8.457125e-02,8.444266e-02,
 8.497288e-02,8.456070e-02,8.423191e-02,8.370223e-02,8.236691e-02,
 8.180608e-02,7.934417e-02,7.885544e-02,7.573350e-02,7.295072e-02,
-7.390308e-02,7.211272e-02};    
+7.390308e-02,7.211272e-02};
  Double_t V28StatErr[] = {0.000000e+00,0.000000e+00,0.000000e+00,7.539352e-03,3.944978e-03,
 1.253248e-03,1.012002e-03,6.329283e-04,4.360791e-04,4.540433e-04,
 2.661828e-04,3.742175e-04,2.540728e-04,2.606597e-04,3.761737e-04,
@@ -215,7 +215,7 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 1.340796e-04,2.758074e-04,2.044411e-04,3.053968e-04,2.722431e-04,
 5.035700e-04,3.473569e-04,4.105337e-04,7.913418e-04,8.548541e-04,
 1.280096e-03,2.068432e-03,2.493141e-03,3.719605e-03,6.724999e-03,
-5.409935e-03,1.401215e-02};   
+5.409935e-03,1.401215e-02};
  Double_t V28SysErr[] = {0.000000e+00,0.000000e+00,0.000000e+00,7.648222e-03,4.104772e-03,
 1.774499e-03,1.654488e-03,1.294061e-03,1.439358e-03,1.283565e-03,
 1.159846e-03,1.243841e-03,1.154979e-03,1.170810e-03,1.185215e-03,
@@ -224,87 +224,87 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
 8.423581e-04,8.470558e-04,8.233524e-04,8.424173e-04,8.390612e-04,
 9.668898e-04,9.219895e-04,9.348268e-04,1.128628e-03,1.320010e-03,
 1.636625e-03,2.292508e-03,2.660111e-03,3.960988e-03,6.857876e-03,
-5.601397e-03,1.413204e-02};    
- // Calculate combined in quadrature sys. and stat. error: 
+5.601397e-03,1.413204e-02};
+ // Calculate combined in quadrature sys. and stat. error:
  Double_t V28SysStatErr[42] = {0.};
- for (Int_t c=0;c<42;c++) 
+ for (Int_t c=0;c<42;c++)
  {
   V28SysStatErr[c] = TMath::Sqrt(pow(V28SysErr[c],2.)+pow(V28StatErr[c],2.)+pow(0.03*3.610693e-02,2.));
- }  
-      
+ }
+
  // TGraphErrors:
  // v2{2}:
- Int_t nPointsV22 = 50;         
+ Int_t nPointsV22 = 50;
  TGraphErrors *GrV22 = new TGraphErrors(nPointsV22,xCent,V22,exCent,V22StatErr);
  myGraphSetUp(GrV22,0.75,kOpenSquare,kBlue,kSolid,kBlack);
-  
+
  // SP:
  //  Data points:
- Int_t nPointsSP = 50;         
+ Int_t nPointsSP = 50;
  TGraphErrors *GrSP = new TGraphErrors(nPointsSP,xCent,V2SP,exCent,V2SPStatErr);
  myGraphSetUp(GrSP,0.75,kFullSquare,kBlue,kSolid,kBlack,kBlue-10,1001);
- //  Error mesh (combined in quadrature sys. and stat. error):   
- Int_t nPointsSP_ErrorMesh = sizeof(xCent)/sizeof(Double_t);         
+ //  Error mesh (combined in quadrature sys. and stat. error):
+ Int_t nPointsSP_ErrorMesh = sizeof(xCent)/sizeof(Double_t);
  TGraphErrors *GrSP_ErrorMesh = new TGraphErrors(nPointsSP_ErrorMesh,xCent,V2SP,exCent,V2SPSysStatErr);
  myGraphSetUp(GrSP_ErrorMesh,0.75,kFullCircle,kBlue,kSolid,kBlack,kBlue-10,1001);
  // v2{4}:
  //  Data points:
- //Int_t nPointsV24 = sizeof(xCent)/sizeof(Double_t);         
- Int_t nPointsV24 = 47;         
+ //Int_t nPointsV24 = sizeof(xCent)/sizeof(Double_t);
+ Int_t nPointsV24 = 47;
  TGraphErrors *GrV24 = new TGraphErrors(nPointsV24,xCent,V24,exCent,V24StatErr);
  myGraphSetUp(GrV24,0.75,kFullSquare,kRed,kSolid,kBlack,kRed-10,1001);
- //  Error mesh (combined in quadrature sys. and stat. error):   
- //Int_t nPointsV24_ErrorMesh = sizeof(xCent)/sizeof(Double_t);         
- Int_t nPointsV24_ErrorMesh = 47;         
+ //  Error mesh (combined in quadrature sys. and stat. error):
+ //Int_t nPointsV24_ErrorMesh = sizeof(xCent)/sizeof(Double_t);
+ Int_t nPointsV24_ErrorMesh = 47;
  TGraphErrors *GrV24_ErrorMesh = new TGraphErrors(nPointsV24_ErrorMesh,xCent,V24,exCent,V24SysStatErr);
  myGraphSetUp(GrV24_ErrorMesh,0.75,kFullSquare,kRed,kSolid,kBlack,kRed-10,1001);
  // v2{6}:
  //  Data points:
- //Int_t nPointsV26 = sizeof(xCent)/sizeof(Double_t);         
- Int_t nPointsV26 = 43;         
+ //Int_t nPointsV26 = sizeof(xCent)/sizeof(Double_t);
+ Int_t nPointsV26 = 43;
  TGraphErrors *GrV26 = new TGraphErrors(nPointsV26,xCent,V26,exCent,V26StatErr);
  myGraphSetUp(GrV26,0.75,kFullSquare,kGreen+2,kSolid,kBlack,kGreen-10,1001);
- //  Error mesh (combined in quadrature sys. and stat. error):   
- //Int_t nPointsV26_ErrorMesh = sizeof(xCent)/sizeof(Double_t);         
- Int_t nPointsV26_ErrorMesh = 43;         
+ //  Error mesh (combined in quadrature sys. and stat. error):
+ //Int_t nPointsV26_ErrorMesh = sizeof(xCent)/sizeof(Double_t);
+ Int_t nPointsV26_ErrorMesh = 43;
  TGraphErrors *GrV26_ErrorMesh = new TGraphErrors(nPointsV26_ErrorMesh,xCent,V26,exCent,V26SysStatErr);
  myGraphSetUp(GrV26_ErrorMesh,0.75,kFullSquare,kGreen+2,kSolid,kBlack,kGreen-10,1001);
  // v2{8}:
  //  Data points:
- //Int_t nPointsV28 = sizeof(xCent)/sizeof(Double_t);         
- Int_t nPointsV28 = 42;         
+ //Int_t nPointsV28 = sizeof(xCent)/sizeof(Double_t);
+ Int_t nPointsV28 = 42;
  TGraphErrors *GrV28 = new TGraphErrors(nPointsV28,xCent,V28,exCent,V28StatErr);
  myGraphSetUp(GrV28,0.75,kFullSquare,kBlack,kSolid,kBlack,kGray,1001);
- //  Error mesh (combined in quadrature sys. and stat. error):   
- //Int_t nPointsV28_ErrorMesh = sizeof(xCent)/sizeof(Double_t);         
- Int_t nPointsV28_ErrorMesh = 42;         
+ //  Error mesh (combined in quadrature sys. and stat. error):
+ //Int_t nPointsV28_ErrorMesh = sizeof(xCent)/sizeof(Double_t);
+ Int_t nPointsV28_ErrorMesh = 42;
  TGraphErrors *GrV28_ErrorMesh = new TGraphErrors(nPointsV28_ErrorMesh,xCent,V28,exCent,V28SysStatErr);
  myGraphSetUp(GrV28_ErrorMesh,0.75,kFullSquare,kBlack,kSolid,kBlack,kGray,1001);
-    
- // Final plotting:   
+
+ // Final plotting:
  TCanvas *myCan = new TCanvas("myCan",cStamp1);
  myCan->Draw();
  myCan->cd();
-    
+
  TPad *myPad = new TPad("myPad", "The pad",0,0,1,1);
  myPadSetUp(myPad,0.15,0.04,0.04,0.15);
  myPad->Draw();
  myPad->cd();
-    
+
  TH1F *myBlankHisto = new TH1F("myBlankHisto","Blank Histogram",80,0,80);
  myBlankHisto->SetMaximum(0.12);
  myBlankHisto->SetYTitle("v_{2}");
  myBlankHisto->SetXTitle("centrality percentile");
  myBlankHisto->SetNdivisions(505,"y");
  myBlankHisto->Draw();
-    
+
  TLatex *system = new TLatex(0.18,0.91,"ALICE Preliminary, Pb-Pb events at  #sqrt{s_{NN}} = 2.76 TeV");
  system->SetNDC();
  // system->SetTextFont(42);
  system->SetTextSize(0.04);
  system->SetTextColor(myDarkRed);
  system->Draw();
-     
+
  TLegend *myLegend = new TLegend(0.4,0.2,0.7,0.45,"v_{2} (charged hadrons)");
  myLegendSetUp(myLegend,0.04);
  //myLegend->AddEntry(GrV22,"v_{2}{2}","p");
@@ -314,7 +314,7 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
  myLegend->AddEntry(GrV26,"v_{2}{6}","fp");
  myLegend->AddEntry(GrV28,"v_{2}{8}","fp");
  myLegend->Draw();
- 
+
  GrV28_ErrorMesh->Draw("same3");
  GrV26_ErrorMesh->Draw("same3");
  GrV24_ErrorMesh->Draw("same3");
@@ -332,10 +332,10 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
  myPadLogo->Draw();
  myPadLogo->cd();
  TASImage *myAliceLogo = new TASImage("alice_logo_transparent.png");
- myAliceLogo->Draw();  
- 
- 
- 
+ myAliceLogo->Draw();
+
+
+
     /*
     TPad *myPadLogo = new TPad("myPadLogo", "Pad for ALICE Logo",0.47,0.37,0.62,0.60);
     //myPadLogo->SetFillColor(2); // color to first figure out where is the pad then comment !
@@ -343,10 +343,10 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
     myPadLogo->Draw();
     myPadLogo->cd();
     TASImage *myAliceLogo = new TASImage("alice_logo_transparent.png");
-    //.TASImage *myAliceLogo = new TASImage("alice_logo.pdf");     
+    //.TASImage *myAliceLogo = new TASImage("alice_logo.pdf");
     myAliceLogo->Draw();
     */
-    
+
     if (rPerformance){
         TLatex *alice = new TLatex(0.75,0.34,"Performance");
         alice->SetNDC();
@@ -355,13 +355,13 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
         alice->SetTextSize(0.05);
         alice->SetLineWidth(2);
         alice->Draw();
-        
+
         TText *date = new TText(0.78,0.28,cStamp2);
         date->SetNDC();
         date->SetTextFont(42);
         date->SetTextSize(0.04);
         date->Draw();
-        
+
         TPad *myPadLogo = new TPad("myPadLogo", "Pad for ALICE Logo",0.77,0.37,0.92,0.60);
         myPadLogo->SetFillColor(2); // color to first figure out where is the pad then comment !
         myPadSetUp(myPadLogo,0,0,0,0);
@@ -369,7 +369,7 @@ void refFlowVsCentRebinned(Int_t rWrite = 0, Int_t rPerformance = 0)
         myPadLogo->cd();
         TASImage *myAliceLogo = new TASImage("alice_logo_transparent.png");
         //.TASImage *myAliceLogo = new TASImage("alice_logo.pdf");
-        
+
         myAliceLogo->Draw();
     }
     if (rWrite == 1)  myCan->SaveAs("fig_template.pdf");
@@ -437,13 +437,13 @@ void myOptions(Int_t lStat=0){
     gStyle->SetTickLength(0.02,"y");
     gStyle->SetEndErrorSize(3);
     gStyle->SetLabelSize(0.05,"xyz");
-    gStyle->SetLabelFont(font,"xyz"); 
+    gStyle->SetLabelFont(font,"xyz");
     gStyle->SetLabelOffset(0.01,"xyz");
-    gStyle->SetTitleFont(font,"xyz");  
-    gStyle->SetTitleOffset(1.0,"xyz");  
-    gStyle->SetTitleSize(0.06,"xyz");  
-    gStyle->SetMarkerSize(1); 
-    gStyle->SetPalette(1,0); 
+    gStyle->SetTitleFont(font,"xyz");
+    gStyle->SetTitleOffset(1.0,"xyz");
+    gStyle->SetTitleSize(0.06,"xyz");
+    gStyle->SetMarkerSize(1);
+    gStyle->SetPalette(1,0);
     if (lStat){
         gStyle->SetOptTitle(1);
         gStyle->SetOptStat(1111);
@@ -461,7 +461,7 @@ void myOptions(Int_t lStat=0){
 
 // OUTPUT FILES:
 
-// Remarks: LHC10h period (pass 1) 
+// Remarks: LHC10h period (pass 1)
 // Merged output file with results for V0 centrality estimator is (achieved stat. is ~ 56.7 K per central;ity bin width of 1%):
 //  /data/alice2/ab/grid/21-20_patch_light/minBiasV0/cent01_7980/v2/merged/outputCentrality.root
 
