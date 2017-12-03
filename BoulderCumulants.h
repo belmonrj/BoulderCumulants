@@ -146,11 +146,12 @@ class BoulderCumulants: public SubsysReco
   float FVTX_Y;
   float FVTX_Z;
 
-  float d_SouthQX[9];
-  float d_SouthQY[9];
+  static const int nharm = 5;
+  float d_SouthQX[nharm];
+  float d_SouthQY[nharm];
   float d_SouthQW;
-  float d_NorthQX[9];
-  float d_NorthQY[9];
+  float d_NorthQX[nharm];
+  float d_NorthQY[nharm];
   float d_NorthQW;
 
   // --- Q-vector offset variables

@@ -94,7 +94,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   nfvtxt_south = 0;
   nfvtxt_north = 0;
   nfvtxt_raw = 0;
-  for ( int i = 0; i < 9; ++i )
+  for ( int i = 0; i < nharm; ++i )
     {
       d_SouthQX[i] = 0;
       d_SouthQY[i] = 0;
@@ -555,16 +555,16 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
     shorttree = new TTree("shorttree", "Event-wise TTree");
     shorttree->SetAutoFlush(1000);
     shorttree->SetMaxTreeSize(100000000000LL);
-    shorttree -> Branch("event", &event, "event/F");
+    //shorttree -> Branch("event", &event, "event/F");
     shorttree -> Branch("bbc_z", &bbc_z, "bbc_z/F");
     shorttree -> Branch("centrality", &centrality, "centrality/F");
-    shorttree -> Branch("npc1", &npc1, "npc1/I");
+    //shorttree -> Branch("npc1", &npc1, "npc1/I");
     shorttree -> Branch("nfvtxt", &nfvtxt, "nfvtxt/I");
     shorttree -> Branch("nfvtxt_south", &nfvtxt_south, "nfvtxt_south/I");
     shorttree -> Branch("nfvtxt_north", &nfvtxt_north, "nfvtxt_north/I");
     shorttree -> Branch("nfvtxt_raw", &nfvtxt_raw, "nfvtxt_raw/I");
-    shorttree -> Branch("trigger_scaled", &trigger_scaled, "trigger_scaled/i");
-    shorttree -> Branch("trigger_live", &trigger_live, "trigger_live/i");
+    //shorttree -> Branch("trigger_scaled", &trigger_scaled, "trigger_scaled/i");
+    //shorttree -> Branch("trigger_live", &trigger_live, "trigger_live/i");
     // shorttree -> Branch("d_Qx", &d_Qx, "d_Qx[9]/F");
     // shorttree -> Branch("d_Qy", &d_Qy, "d_Qy[9]/F");
     // shorttree -> Branch("d_Qw", &d_Qw, "d_Qw[9]/F");
@@ -574,12 +574,12 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
     shorttree -> Branch("d_NorthQX", &d_NorthQX, "d_NorthQX[9]/F");
     shorttree -> Branch("d_NorthQY", &d_NorthQY, "d_NorthQY[9]/F");
     shorttree -> Branch("d_NorthQW", &d_NorthQW, "d_NorthQW/F");
-    shorttree -> Branch("bc_x", &bc_x, "bc_x/F");
-    shorttree -> Branch("bc_y", &bc_y, "bc_y/F");
-    shorttree -> Branch("vtx_z", &vtx_z, "vtx_z/F");
-    shorttree -> Branch("fvtx_x", &FVTX_X, "fvtx_x/F");
-    shorttree -> Branch("fvtx_y", &FVTX_Y, "fvtx_y/F");
-    shorttree -> Branch("fvtx_z", &FVTX_Z, "fvtx_z/F");
+    // shorttree -> Branch("bc_x", &bc_x, "bc_x/F");
+    // shorttree -> Branch("bc_y", &bc_y, "bc_y/F");
+    // shorttree -> Branch("vtx_z", &vtx_z, "vtx_z/F");
+    // shorttree -> Branch("fvtx_x", &FVTX_X, "fvtx_x/F");
+    // shorttree -> Branch("fvtx_y", &FVTX_Y, "fvtx_y/F");
+    // shorttree -> Branch("fvtx_z", &FVTX_Z, "fvtx_z/F");
     // shorttree -> Branch("frac", &frac, "frac/F");
     shorttree -> Branch("bbc_qn", &bbc_qn, "bbc_qn/F");
     shorttree -> Branch("bbc_qs", &bbc_qs, "bbc_qs/F");
@@ -1435,7 +1435,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
 
   // --- initialize Q-vectors for tree
-  for ( int i = 0; i < 9; ++i )
+  for ( int i = 0; i < nharm; ++i )
     {
       d_NorthQX[i] = 0;
       d_NorthQY[i] = 0;
@@ -1615,7 +1615,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       // --- Q-vectors for tree
       if ( eta > 0 )
         {
-          for ( int i = 0; i < 9; ++i )
+          for ( int i = 0; i < nharm; ++i )
             {
               d_NorthQX[i] += cos(i*phi);
               d_NorthQY[i] += sin(i*phi);
@@ -1624,7 +1624,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
         }
       if ( eta < 0 )
         {
-          for ( int i = 0; i < 9; ++i )
+          for ( int i = 0; i < nharm; ++i )
             {
               d_SouthQX[i] += cos(i*phi);
               d_SouthQY[i] += sin(i*phi);
