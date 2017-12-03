@@ -149,7 +149,7 @@ void star_v34()
   tge_swap->Draw("pz");
   TLegend *leg = new TLegend(0.18,0.18,0.38,0.38);
   leg->SetFillStyle(0);
-  leg->SetHeader("10^{6} v_{3}^{4}{4}");
+  //leg->SetHeader("10^{6} v_{3}^{4}{4}");
   leg->AddEntry(tge_swap,"PHENIX","p");
   leg->AddEntry(tge_norm,"STAR, Phys. Rev. C 88 (2013) 14904","p");
   leg->SetTextSize(0.05);
@@ -158,7 +158,8 @@ void star_v34()
   line->SetLineStyle(2);
   line->SetLineWidth(2);
   line->Draw();
-  c1->Print("v34_star.png");
+  c1->Print("STAR/v34_star.png");
+  c1->Print("STAR/v34_star.pdf");
 
 
   ymin = -0.2;
@@ -184,7 +185,8 @@ void star_v34()
   line->SetLineStyle(2);
   line->SetLineWidth(2);
   line->Draw();
-  c1->Print("v342_star.png");
+  c1->Print("STAR/v342_star.png");
+  c1->Print("STAR/v342_star.pdf");
 
 
   ymin = 0.0;
@@ -210,7 +212,8 @@ void star_v34()
   line->SetLineStyle(2);
   line->SetLineWidth(2);
   line->Draw();
-  c1->Print("v342_ratio_star.png");
+  c1->Print("STAR/v342_ratio_star.png");
+  c1->Print("STAR/v342_ratio_star.pdf");
 
 
 }
