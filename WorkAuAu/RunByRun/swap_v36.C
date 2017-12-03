@@ -158,6 +158,7 @@ void swap_v36()
   leg->SetTextSize(0.05);
   leg->Draw();
   c1->Print("v36_phase2.png");
+  c1->Print("v36_phase2.pdf");
 
   hdummy->Draw();
   tge_norm->Draw("p");
@@ -178,6 +179,7 @@ void swap_v36()
   leg->SetTextSize(0.05);
   leg->Draw();
   c1->Print("v36_phase1.png");
+  c1->Print("v36_phase1.pdf");
 
 }
 
