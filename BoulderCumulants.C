@@ -563,7 +563,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
     shorttree -> Branch("nfvtxt_south", &nfvtxt_south, "nfvtxt_south/I");
     shorttree -> Branch("nfvtxt_north", &nfvtxt_north, "nfvtxt_north/I");
     shorttree -> Branch("nfvtxt_raw", &nfvtxt_raw, "nfvtxt_raw/I");
-    //shorttree -> Branch("trigger_scaled", &trigger_scaled, "trigger_scaled/i");
+    shorttree -> Branch("trigger_scaled", &trigger_scaled, "trigger_scaled/i");
     //shorttree -> Branch("trigger_live", &trigger_live, "trigger_live/i");
     // shorttree -> Branch("d_Qx", &d_Qx, "d_Qx[9]/F");
     // shorttree -> Branch("d_Qy", &d_Qy, "d_Qy[9]/F");
