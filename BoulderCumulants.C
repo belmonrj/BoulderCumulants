@@ -1116,6 +1116,7 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
     }
   // --- then set again
   SetQvectorOffsets(runnumber);
+  SetQvectorOffsetsRBR(runnumber);
 
 
 
