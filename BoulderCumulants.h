@@ -37,6 +37,7 @@ class BoulderCumulants: public SubsysReco
   void set_runlist_file(std::string filename) { _runlist_filename = filename; } // name of file for above
   bool is_run_in_list(int runnumber);
   void SetQvectorOffsets(int runnumber);
+  void SetQvectorOffsetsRBR(int runnumber);
   void set_create_ttree(bool b){_create_ttree = b;} // ??
   void set_do_double_track_cut(bool b){do_double_track_cut = b;}
   void set_zvtxcut(double z){_cut_zvtx = z;}
