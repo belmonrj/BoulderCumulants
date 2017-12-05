@@ -76,7 +76,7 @@ void get_offsets_RBR()
               sprintf(name,"qvoff_cent_north[%d][%d][%d]",i,cs,c);
               char offset[10];
               sprintf(offset,"%.6f",qvoff[cs][c]);
-              fout << name << " -= " << offset << ";";
+              fout << name << " += " << offset << ";";
               fout << "\t";
             }
         } // end
@@ -93,7 +93,7 @@ void get_offsets_RBR()
               sprintf(name,"qvoff_cent_south[%d][%d][%d]",i,cs,c);
               char offset[10];
               sprintf(offset,"%.6f",qvoff[cs][c]);
-              fout << name << " -= " << offset << ";";
+              fout << name << " += " << offset << ";";
               fout << "\t";
             }
         } // end
