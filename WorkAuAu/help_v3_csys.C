@@ -48,6 +48,12 @@ void help_v3_csys()
   fbase->Close();
   feval->Close();
 
+  fbase = TFile::Open("input/histos_12420.root");
+  feval = TFile::Open("input/histos_12432.root");
+  takefiles(fbase,feval,"qrbr");
+  fbase->Close();
+  feval->Close();
+
   cout << "All done.  Have a nice day!" << endl;
 
 }
@@ -99,11 +105,11 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype, int harmonic)
   // --- check for existence of histograms, exit if missing
   if ( for_base == NULL ||  two_base == NULL ||  for_eval == NULL ||  two_eval == NULL )
     {
-      cout << "One or more histograms missing: ";
-      cout << "for_base " << for_base << " ";
-      cout << "two_base " << two_base << " ";
-      cout << "for_eval " << for_eval << " ";
-      cout << "two_eval " << two_eval << " ";
+      cout << "One or more histograms missing: \n";
+      cout << "for_base " << for_base << " \n";
+      cout << "two_base " << two_base << " \n";
+      cout << "for_eval " << for_eval << " \n";
+      cout << "two_eval " << two_eval << " \n";
       cout << endl;
       return;
     }
