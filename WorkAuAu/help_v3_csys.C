@@ -302,38 +302,50 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype, int harmonic)
   TProfile* gap_base = NULL;
   TProfile* reg_eval = NULL;
   TProfile* gap_eval = NULL;
-  //nfvtxt_ac_fvtxc_tracks_c32
-  //nfvtxt_ac_fvtxsfvtxn_tracks_c32
+  TH1D* vn2_base = NULL;
+  TH1D* vn2_eval = NULL;
+  TH1D* vn2gap_base = NULL;
+  TH1D* vn2gap_eval = NULL;
   if ( harmonic == 3 )
     {
+      cout << "doing more for third harmonic..." << endl;
       reg_base = (TProfile*)fbase->Get("centrality_ac_fvtxc_tracks_c32");
       reg_eval = (TProfile*)feval->Get("centrality_ac_fvtxc_tracks_c32");
       gap_base = (TProfile*)fbase->Get("centrality_ac_fvtxsfvtxn_tracks_c32");
       gap_eval = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c32");
+      vn2_base = hsqrt(reg_base);
+      vn2_eval = hsqrt(reg_eval);
+      vn2gap_base = hsqrt(gap_base);
+      vn2gap_eval = hsqrt(gap_eval);
+      crunch(vn2_base,vn2_eval,systype,"v32ac",0,100,1,70);
+      crunch(vn2gap_base,vn2gap_eval,systype,"v32acgap",0,100,1,70);
+      reg_base = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c32");
+      reg_eval = (TProfile*)feval->Get("centrality_os_fvtxc_tracks_c32");
+      gap_base = (TProfile*)fbase->Get("centrality_os_fvtxsfvtxn_tracks_c32");
+      gap_eval = (TProfile*)feval->Get("centrality_os_fvtxsfvtxn_tracks_c32");
+      vn2_base = hsqrt(reg_base);
+      vn2_eval = hsqrt(reg_eval);
+      vn2gap_base = hsqrt(gap_base);
+      vn2gap_eval = hsqrt(gap_eval);
+      crunch(vn2_base,vn2_eval,systype,"v32os",0,100,1,70);
+      crunch(vn2gap_base,vn2gap_eval,systype,"v32osgap",0,100,1,70);
     }
   if ( harmonic == 4 )
     {
-      reg_base = (TProfile*)fbase->Get("centrality_ac_fvtxc_tracks_c42");
-      reg_eval = (TProfile*)feval->Get("centrality_ac_fvtxc_tracks_c42");
-      gap_base = (TProfile*)fbase->Get("centrality_ac_fvtxsfvtxn_tracks_c42");
-      gap_eval = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c42");
+      cout << "not doing more for fourth harmonic, no histograms available.." << endl;
+      // reg_base = (TProfile*)fbase->Get("centrality_ac_fvtxc_tracks_c42");
+      // reg_eval = (TProfile*)feval->Get("centrality_ac_fvtxc_tracks_c42");
+      // gap_base = (TProfile*)fbase->Get("centrality_ac_fvtxsfvtxn_tracks_c42");
+      // gap_eval = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c42");
+      // vn2_base = hsqrt(reg_base);
+      // vn2_eval = hsqrt(reg_eval);
+      // vn2gap_base = hsqrt(gap_base);
+      // vn2gap_eval = hsqrt(gap_eval);
+      // crunch(vn2_base,vn2_eval,systype,"v42ac",0,100,1,70);
+      // crunch(vn2gap_base,vn2gap_eval,systype,"v42acgap",0,100,1,70);
     }
 
-  TH1D* vn2_base = hsqrt(reg_base);
-  TH1D* vn2_eval = hsqrt(reg_eval);
-  TH1D* vn2gap_base = hsqrt(gap_base);
-  TH1D* vn2gap_eval = hsqrt(gap_eval);
 
-  if ( harmonic == 3 )
-    {
-      crunch(vn2_base,vn2_eval,systype,"v32",0,100,20,50);
-      crunch(vn2gap_base,vn2gap_eval,systype,"v32gap",0,100,20,50);
-    }
-  if ( harmonic == 4 )
-    {
-      crunch(vn2_base,vn2_eval,systype,"v42",0,100,20,50);
-      crunch(vn2gap_base,vn2gap_eval,systype,"v42gap",0,100,20,50);
-    }
 
 }
 
