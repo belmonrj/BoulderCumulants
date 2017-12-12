@@ -358,7 +358,7 @@ TH1D* hsqrt(TH1D* h)
       hr->SetBinContent(i+1,set_content);
       double get_error = h->GetBinError(i+1);
       double set_error = 0;
-      if ( get_error > 0 ) set_error = (1.0/(2.0*get_content))*get_error;
+      if ( get_error > 0 ) set_error = (1.0/(2.0*set_content))*get_error;
       hr->SetBinError(i+1,set_error);
     }
   return hr;
