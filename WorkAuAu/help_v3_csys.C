@@ -8,7 +8,8 @@ void crunch(TProfile*, TProfile*, const char*, const char*);
 
 void crunch(TH1D*, TH1D*, const char*, const char*, double, double, double, double);
 
-
+TH1D* hsqrt(TProfile*);
+TH1D* hsqrt(TH1D*);
 
 void help_v3_csys()
 {
@@ -78,7 +79,7 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype, int harmonic)
   // --- make sure both files are not null
   if ( !fbase || !feval )
     {
-      cout << "One or more files missing " << fbase << " " << feval << endl;
+      cout << "One or more files missing for " << systype << ": " << fbase << " " << feval << endl;
       return;
     }
 
@@ -105,7 +106,7 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype, int harmonic)
   // --- check for existence of histograms, exit if missing
   if ( for_base == NULL ||  two_base == NULL ||  for_eval == NULL ||  two_eval == NULL )
     {
-      cout << "One or more histograms missing: \n";
+      cout << "One or more histograms missing for " << systype << ": \n";
       cout << "for_base " << for_base << " \n";
       cout << "two_base " << two_base << " \n";
       cout << "for_eval " << for_eval << " \n";
@@ -297,11 +298,71 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype, int harmonic)
   delete leg_cumu4;
   delete leg_comp4;
 
+  TProfile* reg_base = NULL;
+  TProfile* gap_base = NULL;
+  TProfile* reg_eval = NULL;
+  TProfile* gap_eval = NULL;
+  //nfvtxt_ac_fvtxc_tracks_c32
+  //nfvtxt_ac_fvtxsfvtxn_tracks_c32
+  if ( harmonic == 3 )
+    {
+      reg_base = (TProfile*)fbase->Get("centrality_ac_fvtxc_tracks_c32");
+      reg_eval = (TProfile*)feval->Get("centrality_ac_fvtxc_tracks_c32");
+      gap_base = (TProfile*)fbase->Get("centrality_ac_fvtxsfvtxn_tracks_c32");
+      gap_eval = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c32");
+    }
+  if ( harmonic == 4 )
+    {
+      reg_base = (TProfile*)fbase->Get("centrality_ac_fvtxc_tracks_c42");
+      reg_eval = (TProfile*)feval->Get("centrality_ac_fvtxc_tracks_c42");
+      gap_base = (TProfile*)fbase->Get("centrality_ac_fvtxsfvtxn_tracks_c42");
+      gap_eval = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c42");
+    }
 
+  TH1D* vn2_base = hsqrt(reg_base);
+  TH1D* vn2_eval = hsqrt(reg_eval);
+  TH1D* vn2gap_base = hsqrt(gap_base);
+  TH1D* vn2gap_eval = hsqrt(gap_eval);
+
+  if ( harmonic == 3 )
+    {
+      crunch(vn2_base,vn2_eval,systype,"v32",0,100,20,50);
+      crunch(vn2gap_base,vn2gap_eval,systype,"v32gap",0,100,20,50);
+    }
+  if ( harmonic == 4 )
+    {
+      crunch(vn2_base,vn2_eval,systype,"v42",0,100,20,50);
+      crunch(vn2gap_base,vn2gap_eval,systype,"v42gap",0,100,20,50);
+    }
 
 }
 
+TH1D* hsqrt(TProfile* hp)
+{
+  if ( hp == NULL ) return NULL;
+  TH1D* h1 = hp->ProjectionX();
+  return hsqrt(h1);
+}
 
+TH1D* hsqrt(TH1D* h)
+{
+  if ( h == NULL ) return NULL;
+  TH1D* hr = (TH1D*)h->Clone(Form("sqrt_%s",h->GetName()));
+  int nbins = h->GetNbinsX();
+  for ( int i = 0; i < nbins; ++i )
+    {
+      double get_content = h->GetBinContent(i+1);
+      double set_content = 0;
+      if ( get_content > 0 ) set_content = sqrt(get_content);
+      else set_content = -sqrt(-get_content);
+      hr->SetBinContent(i+1,set_content);
+      double get_error = h->GetBinError(i+1);
+      double set_error = 0;
+      if ( get_error > 0 ) set_error = (1.0/(2.0*get_content))*get_error;
+      hr->SetBinError(i+1,set_error);
+    }
+  return hr;
+}
 
 void crunch(TProfile* tpbase, TProfile* tpeval, const char* systype, const char* quantity)
 {
