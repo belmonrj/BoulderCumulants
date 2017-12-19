@@ -160,54 +160,6 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   tp1f_special_fvtx_tracks_aa = NULL;
   tp1f_special_fvtx_tracks_aa_cos = NULL;
   tp1f_special_fvtx_tracks_aa_sin = NULL;
-  centrality_tracks_south_qx2 = NULL;
-  centrality_tracks_south_qx3 = NULL;
-  centrality_tracks_south_qx4 = NULL;
-  centrality_tracks_south_qx6 = NULL;
-  centrality_tracks_south_qy2 = NULL;
-  centrality_tracks_south_qy3 = NULL;
-  centrality_tracks_south_qy4 = NULL;
-  centrality_tracks_south_qy6 = NULL;
-  centrality_tracks_south_inner_qx2 = NULL;
-  centrality_tracks_south_inner_qx3 = NULL;
-  centrality_tracks_south_inner_qx4 = NULL;
-  centrality_tracks_south_inner_qx6 = NULL;
-  centrality_tracks_south_inner_qy2 = NULL;
-  centrality_tracks_south_inner_qy3 = NULL;
-  centrality_tracks_south_inner_qy4 = NULL;
-  centrality_tracks_south_inner_qy6 = NULL;
-  centrality_tracks_south_outer_qx2 = NULL;
-  centrality_tracks_south_outer_qx3 = NULL;
-  centrality_tracks_south_outer_qx4 = NULL;
-  centrality_tracks_south_outer_qx6 = NULL;
-  centrality_tracks_south_outer_qy2 = NULL;
-  centrality_tracks_south_outer_qy3 = NULL;
-  centrality_tracks_south_outer_qy4 = NULL;
-  centrality_tracks_south_outer_qy6 = NULL;
-  centrality_tracks_north_qx2 = NULL;
-  centrality_tracks_north_qx3 = NULL;
-  centrality_tracks_north_qx4 = NULL;
-  centrality_tracks_north_qx6 = NULL;
-  centrality_tracks_north_qy2 = NULL;
-  centrality_tracks_north_qy3 = NULL;
-  centrality_tracks_north_qy4 = NULL;
-  centrality_tracks_north_qy6 = NULL;
-  centrality_tracks_north_inner_qx2 = NULL;
-  centrality_tracks_north_inner_qx3 = NULL;
-  centrality_tracks_north_inner_qx4 = NULL;
-  centrality_tracks_north_inner_qx6 = NULL;
-  centrality_tracks_north_inner_qy2 = NULL;
-  centrality_tracks_north_inner_qy3 = NULL;
-  centrality_tracks_north_inner_qy4 = NULL;
-  centrality_tracks_north_inner_qy6 = NULL;
-  centrality_tracks_north_outer_qx2 = NULL;
-  centrality_tracks_north_outer_qx3 = NULL;
-  centrality_tracks_north_outer_qx4 = NULL;
-  centrality_tracks_north_outer_qx6 = NULL;
-  centrality_tracks_north_outer_qy2 = NULL;
-  centrality_tracks_north_outer_qy3 = NULL;
-  centrality_tracks_north_outer_qy4 = NULL;
-  centrality_tracks_north_outer_qy6 = NULL;
 
   for ( int cs = 0; cs < 2; ++cs )
     {
@@ -489,59 +441,11 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
 
 
 
-  centrality_tracks_south_qx2 = new TProfile("centrality_tracks_south_qx2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_qx3 = new TProfile("centrality_tracks_south_qx3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_qx4 = new TProfile("centrality_tracks_south_qx4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_qx6 = new TProfile("centrality_tracks_south_qx6","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_qy2 = new TProfile("centrality_tracks_south_qy2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_qy3 = new TProfile("centrality_tracks_south_qy3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_qy4 = new TProfile("centrality_tracks_south_qy4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_qy6 = new TProfile("centrality_tracks_south_qy6","",100, -0.5, 99.5, -1.1, 1.1);
 
-  centrality_tracks_south_inner_qx2 = new TProfile("centrality_tracks_south_inner_qx2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_inner_qx3 = new TProfile("centrality_tracks_south_inner_qx3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_inner_qx4 = new TProfile("centrality_tracks_south_inner_qx4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_inner_qx6 = new TProfile("centrality_tracks_south_inner_qx6","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_inner_qy2 = new TProfile("centrality_tracks_south_inner_qy2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_inner_qy3 = new TProfile("centrality_tracks_south_inner_qy3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_inner_qy4 = new TProfile("centrality_tracks_south_inner_qy4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_inner_qy6 = new TProfile("centrality_tracks_south_inner_qy6","",100, -0.5, 99.5, -1.1, 1.1);
 
-  centrality_tracks_south_outer_qx2 = new TProfile("centrality_tracks_south_outer_qx2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_outer_qx3 = new TProfile("centrality_tracks_south_outer_qx3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_outer_qx4 = new TProfile("centrality_tracks_south_outer_qx4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_outer_qx6 = new TProfile("centrality_tracks_south_outer_qx6","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_outer_qy2 = new TProfile("centrality_tracks_south_outer_qy2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_outer_qy3 = new TProfile("centrality_tracks_south_outer_qy3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_outer_qy4 = new TProfile("centrality_tracks_south_outer_qy4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_south_outer_qy6 = new TProfile("centrality_tracks_south_outer_qy6","",100, -0.5, 99.5, -1.1, 1.1);
 
-  centrality_tracks_north_qx2 = new TProfile("centrality_tracks_north_qx2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_qx3 = new TProfile("centrality_tracks_north_qx3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_qx4 = new TProfile("centrality_tracks_north_qx4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_qx6 = new TProfile("centrality_tracks_north_qx6","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_qy2 = new TProfile("centrality_tracks_north_qy2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_qy3 = new TProfile("centrality_tracks_north_qy3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_qy4 = new TProfile("centrality_tracks_north_qy4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_qy6 = new TProfile("centrality_tracks_north_qy6","",100, -0.5, 99.5, -1.1, 1.1);
 
-  centrality_tracks_north_inner_qx2 = new TProfile("centrality_tracks_north_inner_qx2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_inner_qx3 = new TProfile("centrality_tracks_north_inner_qx3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_inner_qx4 = new TProfile("centrality_tracks_north_inner_qx4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_inner_qx6 = new TProfile("centrality_tracks_north_inner_qx6","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_inner_qy2 = new TProfile("centrality_tracks_north_inner_qy2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_inner_qy3 = new TProfile("centrality_tracks_north_inner_qy3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_inner_qy4 = new TProfile("centrality_tracks_north_inner_qy4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_inner_qy6 = new TProfile("centrality_tracks_north_inner_qy6","",100, -0.5, 99.5, -1.1, 1.1);
 
-  centrality_tracks_north_outer_qx2 = new TProfile("centrality_tracks_north_outer_qx2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_outer_qx3 = new TProfile("centrality_tracks_north_outer_qx3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_outer_qx4 = new TProfile("centrality_tracks_north_outer_qx4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_outer_qx6 = new TProfile("centrality_tracks_north_outer_qx6","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_outer_qy2 = new TProfile("centrality_tracks_north_outer_qy2","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_outer_qy3 = new TProfile("centrality_tracks_north_outer_qy3","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_outer_qy4 = new TProfile("centrality_tracks_north_outer_qy4","",100, -0.5, 99.5, -1.1, 1.1);
-  centrality_tracks_north_outer_qy6 = new TProfile("centrality_tracks_north_outer_qy6","",100, -0.5, 99.5, -1.1, 1.1);
 
 
   for ( int cs = 0; cs < 2; ++cs )
@@ -1569,59 +1473,11 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
   // --- now centrality
 
-  centrality_tracks_south_qx2->Fill(centrality,fvtxs_tracks_qx2[0]/fvtxs_tracks_qw[0]);
-  centrality_tracks_south_qx3->Fill(centrality,fvtxs_tracks_qx3[0]/fvtxs_tracks_qw[0]);
-  centrality_tracks_south_qx4->Fill(centrality,fvtxs_tracks_qx4[0]/fvtxs_tracks_qw[0]);
-  centrality_tracks_south_qx6->Fill(centrality,fvtxs_tracks_qx6[0]/fvtxs_tracks_qw[0]);
-  centrality_tracks_south_qy2->Fill(centrality,fvtxs_tracks_qy2[0]/fvtxs_tracks_qw[0]);
-  centrality_tracks_south_qy3->Fill(centrality,fvtxs_tracks_qy3[0]/fvtxs_tracks_qw[0]);
-  centrality_tracks_south_qy4->Fill(centrality,fvtxs_tracks_qy4[0]/fvtxs_tracks_qw[0]);
-  centrality_tracks_south_qy6->Fill(centrality,fvtxs_tracks_qy6[0]/fvtxs_tracks_qw[0]);
 
-  centrality_tracks_south_inner_qx2->Fill(centrality,fvtxs_tracks_qx2[1]/fvtxs_tracks_qw[1]);
-  centrality_tracks_south_inner_qx3->Fill(centrality,fvtxs_tracks_qx3[1]/fvtxs_tracks_qw[1]);
-  centrality_tracks_south_inner_qx4->Fill(centrality,fvtxs_tracks_qx4[1]/fvtxs_tracks_qw[1]);
-  centrality_tracks_south_inner_qx6->Fill(centrality,fvtxs_tracks_qx6[1]/fvtxs_tracks_qw[1]);
-  centrality_tracks_south_inner_qy2->Fill(centrality,fvtxs_tracks_qy2[1]/fvtxs_tracks_qw[1]);
-  centrality_tracks_south_inner_qy3->Fill(centrality,fvtxs_tracks_qy3[1]/fvtxs_tracks_qw[1]);
-  centrality_tracks_south_inner_qy4->Fill(centrality,fvtxs_tracks_qy4[1]/fvtxs_tracks_qw[1]);
-  centrality_tracks_south_inner_qy6->Fill(centrality,fvtxs_tracks_qy6[1]/fvtxs_tracks_qw[1]);
 
-  centrality_tracks_south_outer_qx2->Fill(centrality,fvtxs_tracks_qx2[2]/fvtxs_tracks_qw[2]);
-  centrality_tracks_south_outer_qx3->Fill(centrality,fvtxs_tracks_qx3[2]/fvtxs_tracks_qw[2]);
-  centrality_tracks_south_outer_qx4->Fill(centrality,fvtxs_tracks_qx4[2]/fvtxs_tracks_qw[2]);
-  centrality_tracks_south_outer_qx6->Fill(centrality,fvtxs_tracks_qx6[2]/fvtxs_tracks_qw[2]);
-  centrality_tracks_south_outer_qy2->Fill(centrality,fvtxs_tracks_qy2[2]/fvtxs_tracks_qw[2]);
-  centrality_tracks_south_outer_qy3->Fill(centrality,fvtxs_tracks_qy3[2]/fvtxs_tracks_qw[2]);
-  centrality_tracks_south_outer_qy4->Fill(centrality,fvtxs_tracks_qy4[2]/fvtxs_tracks_qw[2]);
-  centrality_tracks_south_outer_qy6->Fill(centrality,fvtxs_tracks_qy6[2]/fvtxs_tracks_qw[2]);
 
-  centrality_tracks_north_qx2->Fill(centrality,fvtxn_tracks_qx2[0]/fvtxn_tracks_qw[0]);
-  centrality_tracks_north_qx3->Fill(centrality,fvtxn_tracks_qx3[0]/fvtxn_tracks_qw[0]);
-  centrality_tracks_north_qx4->Fill(centrality,fvtxn_tracks_qx4[0]/fvtxn_tracks_qw[0]);
-  centrality_tracks_north_qx6->Fill(centrality,fvtxn_tracks_qx6[0]/fvtxn_tracks_qw[0]);
-  centrality_tracks_north_qy2->Fill(centrality,fvtxn_tracks_qy2[0]/fvtxn_tracks_qw[0]);
-  centrality_tracks_north_qy3->Fill(centrality,fvtxn_tracks_qy3[0]/fvtxn_tracks_qw[0]);
-  centrality_tracks_north_qy4->Fill(centrality,fvtxn_tracks_qy4[0]/fvtxn_tracks_qw[0]);
-  centrality_tracks_north_qy6->Fill(centrality,fvtxn_tracks_qy6[0]/fvtxn_tracks_qw[0]);
 
-  centrality_tracks_north_inner_qx2->Fill(centrality,fvtxn_tracks_qx2[1]/fvtxn_tracks_qw[1]);
-  centrality_tracks_north_inner_qx3->Fill(centrality,fvtxn_tracks_qx3[1]/fvtxn_tracks_qw[1]);
-  centrality_tracks_north_inner_qx4->Fill(centrality,fvtxn_tracks_qx4[1]/fvtxn_tracks_qw[1]);
-  centrality_tracks_north_inner_qx6->Fill(centrality,fvtxn_tracks_qx6[1]/fvtxn_tracks_qw[1]);
-  centrality_tracks_north_inner_qy2->Fill(centrality,fvtxn_tracks_qy2[1]/fvtxn_tracks_qw[1]);
-  centrality_tracks_north_inner_qy3->Fill(centrality,fvtxn_tracks_qy3[1]/fvtxn_tracks_qw[1]);
-  centrality_tracks_north_inner_qy4->Fill(centrality,fvtxn_tracks_qy4[1]/fvtxn_tracks_qw[1]);
-  centrality_tracks_north_inner_qy6->Fill(centrality,fvtxn_tracks_qy6[1]/fvtxn_tracks_qw[1]);
 
-  centrality_tracks_north_outer_qx2->Fill(centrality,fvtxn_tracks_qx2[2]/fvtxn_tracks_qw[2]);
-  centrality_tracks_north_outer_qx3->Fill(centrality,fvtxn_tracks_qx3[2]/fvtxn_tracks_qw[2]);
-  centrality_tracks_north_outer_qx4->Fill(centrality,fvtxn_tracks_qx4[2]/fvtxn_tracks_qw[2]);
-  centrality_tracks_north_outer_qx6->Fill(centrality,fvtxn_tracks_qx6[2]/fvtxn_tracks_qw[2]);
-  centrality_tracks_north_outer_qy2->Fill(centrality,fvtxn_tracks_qy2[2]/fvtxn_tracks_qw[2]);
-  centrality_tracks_north_outer_qy3->Fill(centrality,fvtxn_tracks_qy3[2]/fvtxn_tracks_qw[2]);
-  centrality_tracks_north_outer_qy4->Fill(centrality,fvtxn_tracks_qy4[2]/fvtxn_tracks_qw[2]);
-  centrality_tracks_north_outer_qy6->Fill(centrality,fvtxn_tracks_qy6[2]/fvtxn_tracks_qw[2]);
 
 
   // ---
