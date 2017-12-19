@@ -162,18 +162,6 @@ class BoulderCumulants: public SubsysReco
   double qvoff_cent[100][2][maxHarmonic];
   double qvoff_cent_north[100][2][maxHarmonic];
   double qvoff_cent_south[100][2][maxHarmonic];
-  double offset_centrality_qx2_south[100];
-  double offset_centrality_qx4_south[100];
-  double offset_centrality_qx6_south[100];
-  double offset_centrality_qy2_south[100];
-  double offset_centrality_qy4_south[100];
-  double offset_centrality_qy6_south[100];
-  double offset_centrality_qx2_north[100];
-  double offset_centrality_qx4_north[100];
-  double offset_centrality_qx6_north[100];
-  double offset_centrality_qy2_north[100];
-  double offset_centrality_qy4_north[100];
-  double offset_centrality_qy6_north[100];
 
 
 
