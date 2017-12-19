@@ -284,26 +284,6 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   tp1f_track_detacutpass = new TProfile("tp1f_track_detacutpass","",100,-0.5,99.5,-0.1,1.1);
 
 
-  // --- correction histograms
-
-  // --- <<cos(n(phi1))>>
-  // --- <<sin(n(phi1))>>
-  // --- <<cos(n(phi1+phi2))>>
-  // --- <<sin(n(phi1+phi2))>>
-  // --- <<cos(n(phi1-phi2-phi3))>>
-  // --- <<sin(n(phi1-phi2-phi3))>>
-
-  // ---------------------------------------------------------------------------------------------------------
-
-
-  // --- correction histograms
-
-  // --- <<cos(n(phi1))>>
-  // --- <<sin(n(phi1))>>
-  // --- <<cos(n(phi1+phi2))>>
-  // --- <<sin(n(phi1+phi2))>>
-  // --- <<cos(n(phi1-phi2-phi3))>>
-  // --- <<sin(n(phi1-phi2-phi3))>>
 
 
   // ---------------------------------------------------------------------------------------------------------
@@ -347,30 +327,6 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   // --- <<sin(n(phi1-phi2-phi3))>>
   centrality_ac_fvtxc_tracks_sin33 = new TProfile(Form("centrality_ac_fvtxc_tracks_sin33"),"",100, -0.5, 99.5, -1.1, 1.1);
 
-  // -----------------------------------------------------------------------------------------------------------
-  // --- now offsets
-  // -----------------------------------------------------------------------------------------------------------
-
-
-  // --- correction histograms
-
-  // --- <<cos(n(phi1))>>
-  // --- <<sin(n(phi1))>>
-  // --- <<cos(n(phi1+phi2))>>
-  // --- <<sin(n(phi1+phi2))>>
-  // --- <<cos(n(phi1-phi2-phi3))>>
-  // --- <<sin(n(phi1-phi2-phi3))>>
-
-  // ---------------------------------------------------------------------------------------------------------
-
-  // --- correction histograms
-
-  // --- <<cos(n(phi1))>>
-  // --- <<sin(n(phi1))>>
-  // --- <<cos(n(phi1+phi2))>>
-  // --- <<sin(n(phi1+phi2))>>
-  // --- <<cos(n(phi1-phi2-phi3))>>
-  // --- <<sin(n(phi1-phi2-phi3))>>
 
 
 
@@ -415,21 +371,6 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
 
   // ---
   // ---
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   for ( int cs = 0; cs < 2; ++cs )
@@ -525,30 +466,6 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
 
   return EVENT_OK;
 }
-
-
-// --- ResetEvent, part of Fun4All inheritance, called after every event by Fun4All
-// int BoulderCumulants::ResetEvent(PHCompositeNode *topNode)
-// {
-//   if (_verbosity > 1) cout << PHWHERE << "::ResetEvent() - entered." << endl;
-
-//   event         = -9999;
-//   centrality    = -9999;
-//   npc1          = -9999;
-//   trigger_scaled = -9999;
-//   trigger_live   = -9999;
-//   // bbc_qn        = -9999;
-//   // bbc_qs        = -9999;
-//   bbc_z         = -9999;
-//   vtx_z         = -9999;
-//   bc_x          = -9999;
-//   bc_y          = -9999;
-//   //  ntracklets    = -9999;
-
-
-//   return EVENT_OK;
-
-// }
 
 
 
@@ -1432,21 +1349,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // ------------------------------------------------------------------------------------- //
   // --- calculations and histograms designed to be used with/for q-vector recentering --- //
   // ------------------------------------------------------------------------------------- //
-
-
-
-
-
-
-
-  // --- now centrality
-
-
-
-
-
-
-
 
   // ---
   // --- FVTX south
