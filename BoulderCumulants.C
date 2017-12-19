@@ -1594,7 +1594,71 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   centrality_os_fvtxc_tracks_c26->Fill(centrality,os_fvtxc_tracks_six);
   centrality_os_fvtxc_tracks_c28->Fill(centrality,eightRecursion.Re());
 
-
+  if ( _verbosity > 1000 )
+    {
+      cout << ac_fvtxs_tracks_qq2 << endl;
+      cout << ac_fvtxs_tracks_qq3 << endl;
+      cout << ac_fvtxs_tracks_cossum22 << endl;
+      cout << ac_fvtxs_tracks_sinsum22 << endl;
+      cout << ac_fvtxs_tracks_cossum32 << endl;
+      cout << ac_fvtxs_tracks_sinsum32 << endl;
+      cout << ac_fvtxs_tracks_cos23 << endl;
+      cout << ac_fvtxs_tracks_sin23 << endl;
+      cout << ac_fvtxs_tracks_cos33 << endl;
+      cout << ac_fvtxs_tracks_sin33 << endl;
+      cout << ac_fvtxn_tracks_qq2 << endl;
+      cout << ac_fvtxn_tracks_qq3 << endl;
+      cout << ac_fvtxn_tracks_cossum22 << endl;
+      cout << ac_fvtxn_tracks_sinsum22 << endl;
+      cout << ac_fvtxn_tracks_cossum32 << endl;
+      cout << ac_fvtxn_tracks_sinsum32 << endl;
+      cout << ac_fvtxn_tracks_cos23 << endl;
+      cout << ac_fvtxn_tracks_sin23 << endl;
+      cout << ac_fvtxn_tracks_cos33 << endl;
+      cout << ac_fvtxn_tracks_sin33 << endl;
+      cout << ac_fvtxsfvtxn_tracks_qq2 << endl;
+      cout << ac_fvtxsfvtxn_tracks_qq3 << endl;
+      cout << ac_fvtxs_tracks_qqqq24 << endl;
+      cout << ac_fvtxn_tracks_qqqq24 << endl;
+      cout << ac_fvtxs_tracks_qqqq34 << endl;
+      cout << ac_fvtxn_tracks_qqqq34 << endl;
+      cout << ac_fvtxs_tracks_six << endl;
+      cout << ac_fvtxn_tracks_six << endl;
+      cout << os_fvtxs_tracks_qq2 << endl;
+      cout << os_fvtxs_tracks_qq3 << endl;
+      cout << os_fvtxs_tracks_cossum22 << endl;
+      cout << os_fvtxs_tracks_sinsum22 << endl;
+      cout << os_fvtxs_tracks_cossum32 << endl;
+      cout << os_fvtxs_tracks_sinsum32 << endl;
+      cout << os_fvtxs_tracks_cos23 << endl;
+      cout << os_fvtxs_tracks_sin23 << endl;
+      cout << os_fvtxs_tracks_cos33 << endl;
+      cout << os_fvtxs_tracks_sin33 << endl;
+      cout << os_fvtxn_tracks_qq2 << endl;
+      cout << os_fvtxn_tracks_qq3 << endl;
+      cout << os_fvtxn_tracks_cossum22 << endl;
+      cout << os_fvtxn_tracks_sinsum22 << endl;
+      cout << os_fvtxn_tracks_cossum32 << endl;
+      cout << os_fvtxn_tracks_sinsum32 << endl;
+      cout << os_fvtxn_tracks_cos23 << endl;
+      cout << os_fvtxn_tracks_sin23 << endl;
+      cout << os_fvtxn_tracks_cos33 << endl;
+      cout << os_fvtxn_tracks_sin33 << endl;
+      cout << os_fvtxc_tracks_cossum32 << endl;
+      cout << os_fvtxc_tracks_sinsum32 << endl;
+      cout << os_fvtxc_tracks_cos33 << endl;
+      cout << os_fvtxc_tracks_sin33 << endl;
+      cout << os_fvtxsfvtxn_tracks_qq2 << endl;
+      cout << os_fvtxsfvtxn_tracks_qq3 << endl;
+      cout << os_fvtxsfvtxn_tracks_qq4 << endl;
+      cout << os_fvtxs_tracks_qqqq24 << endl;
+      cout << os_fvtxn_tracks_qqqq24 << endl;
+      cout << os_fvtxs_tracks_qqqq34 << endl;
+      cout << os_fvtxn_tracks_qqqq34 << endl;
+      cout << os_fvtxc_tracks_qqqq34 << endl;
+      cout << os_fvtxs_tracks_six << endl;
+      cout << os_fvtxn_tracks_six << endl;
+    }
 
   if ( _verbosity > 0 ) cout << "sucessfully processed this event, number of fvtx tracks is " << nfvtxt_raw << ", number of fvtx tracks passing cuts is " << nfvtxt << endl;
 
