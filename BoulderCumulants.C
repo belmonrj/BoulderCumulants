@@ -1,16 +1,11 @@
-#include "BoulderCumulants.h"
+#include <BoulderCumulants.h>
 
-#include <cmath>
-#include <algorithm>
-#include <stdlib.h>
 #include <iostream>
-#include <fcntl.h>
 #include <fstream>
 
 
 
-#include "TOAD.h"
-
+#include <TOAD.h>
 #include <TMath.h>
 #include <TFile.h>
 #include <TTree.h>
@@ -23,10 +18,8 @@
 #include <Fun4AllReturnCodes.h>
 #include <Fun4AllServer.h>
 #include <PHCompositeNode.h>
-#include <PHIODataNode.h>
-#include <phool.h>
 #include <getClass.h>
-#include <PHGlobalv9.h>
+#include <PHGlobal.h>
 #include <EventHeader.h>
 #include <TrigLvl1.h>
 #include <VtxOut.h>
@@ -34,13 +27,8 @@
 #include <RunHeader.h>
 #include <TFvtxCompactTrkMap.h>
 #include <TFvtxCompactCoordMap.h>
-#include <PreviousEvent.h>
-#include "dAuBES_utils.h"
+#include <dAuBES_utils.h>
 
-
-// ------------------------
-#include "PHCentralTrack.h"
-#include "PHSnglCentralTrack.h"
 
 
 

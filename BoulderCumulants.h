@@ -7,14 +7,13 @@
 #include "TComplex.h"
 
 
-class Fun4AllHistoManager;
 class dAuBES_utils;
 class TFile;
 class TTree;
 class TH1D;
 class TH2D;
 class TProfile;
-class TComplex;
+
 
 class BoulderCumulants: public SubsysReco
 {
