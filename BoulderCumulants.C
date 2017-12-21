@@ -44,13 +44,11 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   _verbosity = 0;
   _output_filename = "NULL";
   _output_file = NULL;
-  _use_runlist = false;
   do_double_track_cut = false;
   _cut_zvtx = 10.0;
   _cut_chi2 = 5.0;
   _cut_nhit = 3;
   _cut_dca = 2.0;
-  _runlist_filename = "NULL";
   _utils = NULL;
   _collsys = "NULL";
 
@@ -203,18 +201,5 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
 BoulderCumulants::~BoulderCumulants()
 {
   //if ( _utils ) delete _utils;
-}
-
-
-
-bool BoulderCumulants::is_run_in_list(int runnumber)
-{
-  ifstream runlist;
-  runlist.open(_runlist_filename.c_str());
-  int run_num;
-  while ( runlist >> run_num )
-    if ( run_num == runnumber )
-      return true;
-  return false;
 }
 

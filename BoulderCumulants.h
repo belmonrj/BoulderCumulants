@@ -32,9 +32,6 @@ class BoulderCumulants: public SubsysReco
 
   /// Single particle ntuple output...
   void set_output_filename(std::string filename) { _output_filename = filename; } // select output file name externally
-  void set_use_runlist(bool b){ _use_runlist = b;} // text file for runs to analyze
-  void set_runlist_file(std::string filename) { _runlist_filename = filename; } // name of file for above
-  bool is_run_in_list(int runnumber);
   void SetQvectorOffsets(int runnumber);
   void SetQvectorOffsetsRBR(int runnumber);
   void set_create_ttree(bool b){_create_ttree = b;} // ??
@@ -111,9 +108,7 @@ class BoulderCumulants: public SubsysReco
   double _cut_dca;
   int _cut_nhit;
 
-  //run list stuff
-  bool _use_runlist;
-  std::string _runlist_filename;
+
 
   dAuBES_utils* _utils;            ///< Utilities class
   bool use_utils;

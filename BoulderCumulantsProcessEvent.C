@@ -62,16 +62,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     runnumber = rh->get_RunNumber();
   }
 
-  if (_use_runlist)
-  {
-    if (is_run_in_list(runnumber) == false)
-    {
-      if (_verbosity > 1) {
-        cout << endl << "ABORTING RUN, Run number: " << runnumber << " is not in the run list" << endl << endl;
-      }
-      return ABORTEVENT;
-    }
-  }
+  if ( _verbosity > 1 ) cout << "run number is " << runnumber << endl;
 
 
   //-------------------------------
