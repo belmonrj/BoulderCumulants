@@ -1,0 +1,272 @@
+#include <BoulderCumulants.h>
+
+#include <iostream>
+
+#include <TFile.h>
+#include <TTree.h>
+#include <TH1D.h>
+#include <TH2D.h>
+#include <TProfile.h>
+
+#include <Fun4AllReturnCodes.h>
+#include <Fun4AllServer.h>
+#include <PHCompositeNode.h>
+#include <getClass.h>
+#include <RunHeader.h>
+#include <dAuBES_utils.h>
+
+
+
+
+using namespace std;
+
+
+// --- Init method, part of Fun4All inheriance
+int BoulderCumulants::Init(PHCompositeNode *topNode)
+{
+
+  //  ResetEvent(topNode); // is this needed?
+
+  if (_verbosity > 1) cout << PHWHERE << "::Init() - entered." << endl;
+
+  _output_file = new TFile(_output_filename.c_str(), "RECREATE");
+
+  if (_create_ttree)
+  {
+    shorttree = new TTree("shorttree", "Event-wise TTree");
+    shorttree->SetAutoFlush(1000);
+    shorttree->SetMaxTreeSize(100000000000LL);
+    //shorttree -> Branch("event", &event, "event/F");
+    shorttree -> Branch("bbc_z", &bbc_z, "bbc_z/F");
+    shorttree -> Branch("centrality", &centrality, "centrality/F");
+    //shorttree -> Branch("npc1", &npc1, "npc1/I");
+    shorttree -> Branch("nfvtxt", &nfvtxt, "nfvtxt/I");
+    shorttree -> Branch("nfvtxt_south", &nfvtxt_south, "nfvtxt_south/I");
+    shorttree -> Branch("nfvtxt_north", &nfvtxt_north, "nfvtxt_north/I");
+    shorttree -> Branch("nfvtxt_raw", &nfvtxt_raw, "nfvtxt_raw/I");
+    shorttree -> Branch("trigger_scaled", &trigger_scaled, "trigger_scaled/i");
+    //shorttree -> Branch("trigger_live", &trigger_live, "trigger_live/i");
+    // shorttree -> Branch("d_Qx", &d_Qx, "d_Qx[9]/F");
+    // shorttree -> Branch("d_Qy", &d_Qy, "d_Qy[9]/F");
+    // shorttree -> Branch("d_Qw", &d_Qw, "d_Qw[9]/F");
+    shorttree -> Branch("d_SouthQX", &d_SouthQX, "d_SouthQX[9]/F");
+    shorttree -> Branch("d_SouthQY", &d_SouthQY, "d_SouthQY[9]/F");
+    shorttree -> Branch("d_SouthQW", &d_SouthQW, "d_SouthQW/F");
+    shorttree -> Branch("d_NorthQX", &d_NorthQX, "d_NorthQX[9]/F");
+    shorttree -> Branch("d_NorthQY", &d_NorthQY, "d_NorthQY[9]/F");
+    shorttree -> Branch("d_NorthQW", &d_NorthQW, "d_NorthQW/F");
+    // shorttree -> Branch("bc_x", &bc_x, "bc_x/F");
+    // shorttree -> Branch("bc_y", &bc_y, "bc_y/F");
+    // shorttree -> Branch("vtx_z", &vtx_z, "vtx_z/F");
+    // shorttree -> Branch("fvtx_x", &FVTX_X, "fvtx_x/F");
+    // shorttree -> Branch("fvtx_y", &FVTX_Y, "fvtx_y/F");
+    // shorttree -> Branch("fvtx_z", &FVTX_Z, "fvtx_z/F");
+    // shorttree -> Branch("frac", &frac, "frac/F");
+    shorttree -> Branch("bbc_qn", &bbc_qn, "bbc_qn/F");
+    shorttree -> Branch("bbc_qs", &bbc_qs, "bbc_qs/F");
+    // shorttree -> Branch("d_BBC_charge", &d_BBC_charge, "d_BBC_charge[128]/F");
+  }
+
+  // ---
+  // --- initialize histograms
+  // ---
+
+  th1d_nfvtxt_combinedER = new TH1D("th1d_nfvtxt_combinedER","",5000, -0.5, 4999.5);
+  th1d_nfvtxt_combined = new TH1D("th1d_nfvtxt_combined","",2000, -0.5, 1999.5);
+  th1d_centrality = new TH1D("th1d_centrality","",100, -0.5, 99.5);
+  th1d_centralityA = new TH1D("th1d_centralityA","",100, -0.5, 99.5);
+  th2d_nfvtxt_bbcsum = new TH2D("th2d_nfvtxt_bbcsum","",2000, -0.5, 1999.5, 1000, 0, 4000);
+  th2d_nfvtxt_centrality = new TH2D("th2d_nfvtxt_centrality","",2000, -0.5, 1999.5, 100, -0.5, 99.5);
+  th2d_nfvtxt_centralityA = new TH2D("th2d_nfvtxt_centralityA","",2000, -0.5, 1999.5, 100, -0.5, 99.5);
+  th2d_nfvtxt_bbcsumratio = new TH2D("th2d_nfvtxt_bbcsumratio","",2000, -0.5, 1999.5, 1000, 0, 5);
+  th1d_nfvtxt_north = new TH1D("th1d_nfvtxt_north","",2000, -0.5, 1999.5);
+  th1d_nfvtxt_south = new TH1D("th1d_nfvtxt_south","",2000, -0.5, 1999.5);
+  th2d_nfvtxt_northsouth = new TH2D("th2d_nfvtxt_northsouth","",1000, -0.5, 999.5, 1000, -0.5, 999.5);
+  th1d_track_deta = new TH1D("th1d_track_deta","",2000, -0.1, 0.1);
+  th1d_track_dphi = new TH1D("th1d_track_dphi","",2000, -0.1, 0.1);
+  tp1f_track_detacutpass = new TProfile("tp1f_track_detacutpass","",100,-0.5,99.5,-0.1,1.1);
+
+
+
+
+  // ---------------------------------------------------------------------------------------------------------
+  // --- centrality
+  // ---------------------------------------------------------------------------------------------------------
+
+  centrality_ac_fvtxc_tracks_c22 = new TProfile(Form("centrality_ac_fvtxc_tracks_c22"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_c24 = new TProfile(Form("centrality_ac_fvtxc_tracks_c24"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_c26 = new TProfile(Form("centrality_ac_fvtxc_tracks_c26"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_c28 = new TProfile(Form("centrality_ac_fvtxc_tracks_c28"),"",100, -0.5, 99.5, -1.1, 1.1);
+
+  // --- correction histograms
+
+  // --- <<cos(n(phi1))>>
+  centrality_ac_fvtxc_tracks_cos21 = new TProfile(Form("centrality_ac_fvtxc_tracks_cos21"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1))>>
+  centrality_ac_fvtxc_tracks_sin21 = new TProfile(Form("centrality_ac_fvtxc_tracks_sin21"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<cos(n(phi1+phi2))>>
+  centrality_ac_fvtxc_tracks_cossum22 = new TProfile(Form("centrality_ac_fvtxc_tracks_cossum22"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1+phi2))>>
+  centrality_ac_fvtxc_tracks_sinsum22 = new TProfile(Form("centrality_ac_fvtxc_tracks_sinsum22"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<cos(n(phi1-phi2-phi3))>>
+  centrality_ac_fvtxc_tracks_cos23 = new TProfile(Form("centrality_ac_fvtxc_tracks_cos23"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1-phi2-phi3))>>
+  centrality_ac_fvtxc_tracks_sin23 = new TProfile(Form("centrality_ac_fvtxc_tracks_sin23"),"",100, -0.5, 99.5, -1.1, 1.1);
+
+  // ---------------------------------------------------------------------------------------------------------
+  centrality_ac_fvtxc_tracks_c32 = new TProfile(Form("centrality_ac_fvtxc_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_ac_fvtxc_tracks_c34 = new TProfile(Form("centrality_ac_fvtxc_tracks_c34"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- ns sp
+  // --- <<cos(n(phi1))>>
+  centrality_ac_fvtxc_tracks_cos31 = new TProfile(Form("centrality_ac_fvtxc_tracks_cos31"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1))>>
+  centrality_ac_fvtxc_tracks_sin31 = new TProfile(Form("centrality_ac_fvtxc_tracks_sin31"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<cos(n(phi1+phi2))>>
+  centrality_ac_fvtxc_tracks_cossum32 = new TProfile(Form("centrality_ac_fvtxc_tracks_cossum32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1+phi2))>>
+  centrality_ac_fvtxc_tracks_sinsum32 = new TProfile(Form("centrality_ac_fvtxc_tracks_sinsum32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<cos(n(phi1-phi2-phi3))>>
+  centrality_ac_fvtxc_tracks_cos33 = new TProfile(Form("centrality_ac_fvtxc_tracks_cos33"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1-phi2-phi3))>>
+  centrality_ac_fvtxc_tracks_sin33 = new TProfile(Form("centrality_ac_fvtxc_tracks_sin33"),"",100, -0.5, 99.5, -1.1, 1.1);
+
+
+
+
+  // ---------------------------------------------------------------------------------------------------------
+  // --- centrality
+  // ---------------------------------------------------------------------------------------------------------
+
+  centrality_os_fvtxc_tracks_c22 = new TProfile(Form("centrality_os_fvtxc_tracks_c22"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_os_fvtxc_tracks_c24 = new TProfile(Form("centrality_os_fvtxc_tracks_c24"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_os_fvtxc_tracks_c26 = new TProfile(Form("centrality_os_fvtxc_tracks_c26"),"",100, -0.5, 99.5, -1.1, 1.1);
+  centrality_os_fvtxc_tracks_c28 = new TProfile(Form("centrality_os_fvtxc_tracks_c28"),"",100, -0.5, 99.5, -1.1, 1.1);
+
+  // --- correction histograms
+
+  // --- <<cos(n(phi1))>>
+  centrality_os_fvtxc_tracks_cos21 = new TProfile(Form("centrality_os_fvtxc_tracks_cos21"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1))>>
+  centrality_os_fvtxc_tracks_sin21 = new TProfile(Form("centrality_os_fvtxc_tracks_sin21"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<cos(n(phi1+phi2))>>
+  centrality_os_fvtxc_tracks_cossum22 = new TProfile(Form("centrality_os_fvtxc_tracks_cossum22"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1+phi2))>>
+  centrality_os_fvtxc_tracks_sinsum22 = new TProfile(Form("centrality_os_fvtxc_tracks_sinsum22"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<cos(n(phi1-phi2-phi3))>>
+  centrality_os_fvtxc_tracks_cos23 = new TProfile(Form("centrality_os_fvtxc_tracks_cos23"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1-phi2-phi3))>>
+  centrality_os_fvtxc_tracks_sin23 = new TProfile(Form("centrality_os_fvtxc_tracks_sin23"),"",100, -0.5, 99.5, -1.1, 1.1);
+
+  // ---------------------------------------------------------------------------------------------------------
+  centrality_os_fvtxc_tracks_c32 = new TProfile(Form("centrality_os_fvtxc_tracks_c32"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<cos(n(phi1))>>
+  centrality_os_fvtxc_tracks_cos31 = new TProfile(Form("centrality_os_fvtxc_tracks_cos31"),"",100, -0.5, 99.5, -1.1, 1.1);
+  // --- <<sin(n(phi1))>>
+  centrality_os_fvtxc_tracks_sin31 = new TProfile(Form("centrality_os_fvtxc_tracks_sin31"),"",100, -0.5, 99.5, -1.1, 1.1);
+
+
+
+  // ---------------------------------------------------------------------------------------------------------
+  for ( int i = 0; i < 8; ++i ) tp1f_special_fvtx_tracks_ab[i] = new TProfile(Form("tp1f_special_fvtx_tracks_ab%d",i),"",12,-3,3,-1.1,1.1,"");
+  tp1f_special_fvtx_tracks_aa = new TProfile("tp1f_special_fvtx_tracks_aa","",12,-3,3,-1.1,1.1,"");
+  tp1f_special_fvtx_tracks_aa_cos = new TProfile("tp1f_special_fvtx_tracks_aa_cos","",12,-3,3,-1.1,1.1,"");
+  tp1f_special_fvtx_tracks_aa_sin = new TProfile("tp1f_special_fvtx_tracks_aa_sin","",12,-3,3,-1.1,1.1,"");
+
+  // ---
+  // ---
+
+
+  for ( int cs = 0; cs < 2; ++cs )
+    {
+      for(int c = 0; c < maxCorrelator; ++c )
+        {
+          nfvtxt_recursion[cs][c] = new TProfile(Form("nfvtxt_recursion_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          centrality_recursion[cs][c] = new TProfile(Form("centrality_recursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+        }
+    }
+  for ( int cs = 0; cs < 2; ++cs )
+    {
+      for ( int c = 0; c < maxHarmonic; ++c )
+        {
+          nfvtxt_recoffsets[cs][c] = new TProfile(Form("nfvtxt_recoffsets_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          nfvtxt_recoffsets_north[cs][c] = new TProfile(Form("nfvtxt_recoffsets_north_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          nfvtxt_recoffsets_south[cs][c] = new TProfile(Form("nfvtxt_recoffsets_south_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          centrality_recoffsets[cs][c] = new TProfile(Form("centrality_recoffsets_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+          centrality_recoffsets_north[cs][c] = new TProfile(Form("centrality_recoffsets_north_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+          centrality_recoffsets_south[cs][c] = new TProfile(Form("centrality_recoffsets_south_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+        }
+    }
+
+  return EVENT_OK;
+
+}
+
+
+// --- InitRun, part of Fun4All inheritance
+int BoulderCumulants::InitRun(PHCompositeNode *topNode)
+{
+
+  int runnumber = 0;
+
+  RunHeader *rh = findNode::getClass<RunHeader>(topNode, "RunHeader");
+  if ( !rh )
+  {
+    cout << PHWHERE << " ERROR::RunHeader not found" << endl;
+    return ABORTEVENT;
+  }
+  runnumber = rh->get_RunNumber();
+
+  // --- set Q-vector offsets
+  SetQvectorOffsets(runnumber);
+  SetQvectorOffsetsRBR(runnumber);
+
+
+
+  // Setup the utility class
+  // This is done in init run so that the collision system can be
+  // determined from the run number
+  _collsys = "Run16dAu200"; // default to 200 GeV
+  use_utils = true;
+  // --- Run14AuAu200
+  if ( runnumber >= 405839 && runnumber <= 414988 )
+    {
+      _collsys = "Run14AuAu200";
+      use_utils = false;
+    }
+  if ( runnumber >= 415370 && runnumber <= 416893 )
+    {
+      _collsys = "Run14HeAu200";
+      use_utils = false;
+    }
+  // --- Run15pAu200
+  if ( runnumber >= 432637 && runnumber <= 436647 )
+    _collsys = "Run15pAu200";
+  // --- Run15pAl200
+  if ( runnumber >= 436759 && runnumber <= 438422 )
+    _collsys = "Run15pAl200";
+  // --- Run16dAu200
+  if ( runnumber >= 454774 && runnumber <= 455639 )
+    _collsys = "Run16dAu200";
+  // --- Run16dAu62
+  if ( runnumber >= 455792 && runnumber <= 456283 )
+    _collsys = "Run16dAu62";
+  // --- Run16dAu20
+  if ( runnumber >= 456652 && runnumber <= 457298 )
+    _collsys = "Run16dAu20";
+  // --- Run16dAu39
+  if ( runnumber >= 457634 && runnumber <= 458167 )
+    _collsys = "Run16dAu39";
+
+  // --- delete this pointer in EndRun
+  if ( use_utils )
+    {
+      cout << "initializing uitls..." << _utils << endl;
+      _utils = new dAuBES_utils(_collsys, true);
+      cout << "done initializing utils? " << _utils << endl;
+    }
+  // _utils->is_sim(_is_sim);
+
+
+  return EVENT_OK;
+}
+

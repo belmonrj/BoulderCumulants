@@ -14,6 +14,7 @@ noinst_HEADERS = \
 
 libBoulderCumulants_la_SOURCES = \
   BoulderCumulants.C \
+  BoulderCumulantsInitializations.C \
   BoulderCumulantsFunctions.C \
   BoulderCumulantsOffsets.C \
   BoulderCumulantsOffsetsRBR.C \
