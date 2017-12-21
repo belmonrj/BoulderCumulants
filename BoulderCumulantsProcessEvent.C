@@ -43,14 +43,15 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
 
 
-  //---------------------------------
-  // Run Number Selection Capability
-  //---------------------------------
+  //--------------------------------
+  // --- get info from the node tree
+  //--------------------------------
 
+  if ( _verbosity > 1 ) cout << "getting the info from the node tree" << endl;
+
+  // --- get the run number
   if ( _verbosity > 1 ) cout << "getting the run information" << endl;
-
   int runnumber = 0;
-
   RunHeader *rh = findNode::getClass<RunHeader>(topNode, "RunHeader");
   if (!rh)
   {
@@ -61,15 +62,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   {
     runnumber = rh->get_RunNumber();
   }
-
   if ( _verbosity > 1 ) cout << "run number is " << runnumber << endl;
-
-
-  //-------------------------------
-  // Grab info off of the node tree
-  //-------------------------------
-
-  if ( _verbosity > 1 ) cout << "getting the info from the node tree" << endl;
 
   // --- trigger object
   TrigLvl1 *triggers = findNode::getClass<TrigLvl1>(topNode, "TrigLvl1");
