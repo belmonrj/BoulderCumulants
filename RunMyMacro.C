@@ -1109,94 +1109,6 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
       mwgfile = "MWG_ERT_run11pp_Muon_500GeV_pro86-0000338145-9000.root";
       pwg_included = true; // disable warning about missing CNT/PWG/CWG
     }
-  else if (strcmp(system, "Run12pp200ERT") == 0)
-    {
-      gSystem->Load("libmutoo_subsysreco.so");
-      gSystem->Load("libfun4all.so");
-      gSystem->Load("libmutoo_subsysreco.so");
-      gSystem->Load("libCNT.so");
-      gSystem->Load("librecal.so");
-      gSystem->Load("libMWG_interface.so");
-      gSystem->Load("libspin.so");
-      gSystem->Load("libmutrg.so");
-      gSystem->Load("libBbcMultipleVtx.so");
-      gSystem->Load("libsvx.so");
-      gSystem->Load("libSvxDstQA.so");
-
-      cntfile = "CNT_ERT_run12pp_200GeV_pro91-0000360934-9000.root";
-      mwgfile = "MWG_ERT_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_evefile = "DST_EVE_ERT_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_mpcfile = "DST_MPC_ERT_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_svxfile = "DST_SVX_ERT_run12pp_200GeV_pro91-0000360934-9000.root";
-    }
-  else if (strcmp(system, "Run12pp200MinBias") == 0)
-    {
-      gSystem->Load("libfun4all.so");
-      gSystem->Load("libmutoo_subsysreco.so");
-      gSystem->Load("libCNT.so");
-      gSystem->Load("librecal.so");
-      gSystem->Load("libMWG_interface.so");
-      gSystem->Load("libspin.so");
-      gSystem->Load("libmutrg.so");
-      gSystem->Load("libBbcMultipleVtx.so");
-      gSystem->Load("libSvxDstQA.so");
-
-      cntfile = "CNT_MB_run12pp_200GeV_pro91-0000360934-9000.root";
-      mwgfile = "MWG_MB_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_evefile = "DST_EVE_MB_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_mpcfile = "DST_MPC_MB_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_svxfile = "DST_SVX_MB_run12pp_200GeV_pro91-0000360934-9000.root";
-    }
-  else if (strcmp(system, "Run12pp200MPC") == 0)
-    {
-      gSystem->Load("libfun4all.so");
-      gSystem->Load("libmutoo_subsysreco.so");
-      gSystem->Load("librecal.so");
-      gSystem->Load("libCNT.so");
-      gSystem->Load("libMWG_interface.so");
-      gSystem->Load("libspin.so");
-      gSystem->Load("libmutrg.so");
-      gSystem->Load("libBbcMultipleVtx.so");
-
-      cntfile = "CNT_MPC_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_mpcfile = "DST_MPC_MPC_run12pp_200GeV_pro91-0000360934-9000.root";
-     }
-  else if (strcmp(system, "Run12pp200Muon") == 0)
-    {
-      gSystem->Load("libfun4all.so");
-      gSystem->Load("libmutoo_subsysreco.so");
-      gSystem->Load("libCNT.so");
-      gSystem->Load("librecal.so");
-      gSystem->Load("libMWG_interface.so");
-      gSystem->Load("libspin.so");
-      gSystem->Load("libmutrg.so");
-      gSystem->Load("libBbcMultipleVtx.so");
-      gSystem->Load("libSvxDstQA.so");
-
-      cntfile = "CNT_MU_run12pp_200GeV_pro91-0000360934-9000.root";
-      mwgfile = "MWG_MU_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_evefile = "DST_EVE_MU_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_mpcfile = "DST_MPC_MU_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_svxfile = "DST_SVX_MU_run12pp_200GeV_pro91-0000360934-9000.root";
-    }
-  else if (strcmp(system, "Run12pp200OT") == 0)
-    {
-      gSystem->Load("libfun4all.so");
-      gSystem->Load("libmutoo_subsysreco.so");
-      gSystem->Load("libCNT.so");
-      gSystem->Load("librecal.so");
-      gSystem->Load("libMWG_interface.so");
-      gSystem->Load("libspin.so");
-      gSystem->Load("libmutrg.so");
-      gSystem->Load("libBbcMultipleVtx.so");
-      gSystem->Load("libSvxDstQA.so");
-
-      cntfile = "CNT_OT_run12pp_200GeV_pro91-0000360934-9000.root";
-      mwgfile = "MWG_OT_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_evefile = "DST_EVE_OT_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_mpcfile = "DST_MPC_OT_run12pp_200GeV_pro91-0000360934-9000.root";
-      dst_svxfile = "DST_SVX_OT_run12pp_200GeV_pro91-0000360934-9000.root";
-     }
   else if (strcmp(system, "Run12pp200ERTPro101") == 0)
     {
       gSystem->Load("libmutoo_subsysreco.so");
@@ -4335,6 +4247,7 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
       gSystem->Load("librecal");
       gSystem->Load("libert");
 
+      cntfile     = "CNT_ERT_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       dst_evefile = "DST_EVE_ERT_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       dst_svxfile = "DST_SVX_ERT_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       mwgfile = "MWG_ERT_run14AuAu_200GeV_Muons_pro109-0000405863-9000.root";
@@ -4349,6 +4262,7 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
       gSystem->Load("librecal");
       gSystem->Load("libert");
 
+      cntfile     = "CNT_MB_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       dst_evefile = "DST_EVE_MB_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       dst_svxfile = "DST_SVX_MB_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       mwgfile = "MWG_MB_run14AuAu_200GeV_Muons_pro109-0000405863-9000.root";
@@ -4363,6 +4277,7 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
       gSystem->Load("librecal");
       gSystem->Load("libert");
 
+      cntfile     = "CNT_OT_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       dst_evefile = "DST_EVE_OT_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       dst_svxfile = "DST_SVX_OT_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       mwgfile = "MWG_OT_run14AuAu_200GeV_Muons_pro109-0000405863-9000.root";
@@ -4377,6 +4292,7 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
       gSystem->Load("librecal");
       gSystem->Load("libert");
 
+      cntfile     = "CNT_UP_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       dst_evefile = "DST_EVE_UP_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       dst_svxfile = "DST_SVX_UP_run14AuAu_200GeV_CA_pro109-0000405863-9000.root";
       mwgfile = "MWG_UP_run14AuAu_200GeV_Muons_pro109-0000405863-9000.root";
