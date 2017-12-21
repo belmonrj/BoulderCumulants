@@ -176,35 +176,6 @@ class BoulderCumulants: public SubsysReco
   TProfile* tp1f_track_detacutpass;
 
 
-  // --- correlation histograms
-  // --- <<cos(n(phi1-phi2))>>
-  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
-  // --- 2-particle scalr product
-  // --- experimental 4-particle correlations
-
-  // --- acceptance correction histograms
-  // --- <<cos(n(phi1))>>
-  // --- <<sin(n(phi1))>>
-  // --- <<cos(n(phi1+phi2))>>
-  // --- <<sin(n(phi1+phi2))>>
-  // --- <<cos(n(phi1-phi2-phi3))>>
-  // --- <<sin(n(phi1-phi2-phi3))>>
-
-  // --- 3rd harmonic stuff
-  // --- correlation histograms
-  // --- <<cos(n(phi1-phi2))>>
-  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
-  // --- 2-particle scalr product
-  // --- experimental 4-particle correlations
-
-  // --- acceptance correction histograms
-  // --- <<cos(n(phi1))>>
-  // --- <<sin(n(phi1))>>
-  // --- <<cos(n(phi1+phi2))>>
-  // --- <<sin(n(phi1+phi2))>>
-  // --- <<cos(n(phi1-phi2-phi3))>>
-  // --- <<sin(n(phi1-phi2-phi3))>>
-
   // --- centrality stuff
 
   // --- correlation histograms
@@ -234,38 +205,6 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_ac_fvtxc_tracks_c32;
   TProfile* centrality_ac_fvtxc_tracks_cos31;
   TProfile* centrality_ac_fvtxc_tracks_sin31;
-
-  // --- come back here
-
-  // --- correlation histograms
-  // --- <<cos(n(phi1-phi2))>>
-  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
-  // --- 2-particle scalr product
-  // --- experimental 4-particle correlations
-
-  // --- acceptance correction histograms
-  // --- <<cos(n(phi1))>>
-  // --- <<sin(n(phi1))>>
-  // --- <<cos(n(phi1+phi2))>>
-  // --- <<sin(n(phi1+phi2))>>
-  // --- <<cos(n(phi1-phi2-phi3))>>
-  // --- <<sin(n(phi1-phi2-phi3))>>
-
-  // --- 3rd harmonic stuff
-  // --- 3rd harmonic stuff
-  // --- correlation histograms
-  // --- <<cos(n(phi1-phi2))>>
-  // --- <<cos(n(phi1+phi2-phi3-phi4))>>
-  // --- 2-particle scalr product
-  // --- experimental 4-particle correlations
-
-  // --- acceptance correction histograms
-  // --- <<cos(n(phi1))>>
-  // --- <<sin(n(phi1))>>
-  // --- <<cos(n(phi1+phi2))>>
-  // --- <<sin(n(phi1+phi2))>>
-  // --- <<cos(n(phi1-phi2-phi3))>>
-  // --- <<sin(n(phi1-phi2-phi3))>>
 
   // --- centrality stuff
 
@@ -309,20 +248,6 @@ class BoulderCumulants: public SubsysReco
   TProfile* tp1f_special_fvtx_tracks_aa;
   TProfile* tp1f_special_fvtx_tracks_aa_cos;
   TProfile* tp1f_special_fvtx_tracks_aa_sin;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   TProfile* nfvtxt_recursion[2][maxCorrelator];
