@@ -270,3 +270,23 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
   return EVENT_OK;
 }
 
+
+
+int BoulderCumulants::EndRun(PHCompositeNode *topNode)
+{
+  if ( _utils ) delete _utils;
+  return EVENT_OK;
+}
+
+
+
+int BoulderCumulants::End(PHCompositeNode *topNode)
+{
+  if (_verbosity > 1) cout << PHWHERE << "::End() - entered." << endl;
+  cout << "total events: " << _ievent << " fraction passing vtx cut: " << tmp_evt * 1.0 / _ievent << endl;
+  _output_file->Write();
+  _output_file->Close();
+  delete _output_file;
+  return EVENT_OK;
+}
+
