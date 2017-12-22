@@ -5,6 +5,21 @@ void calc_subevents(const TProfile* tp1f_for, const TProfile* tp1f_4aabb, const 
                     int rebin)
 {
 
+  if ( !tp1f_two || !tp1f_2aa || !tp1f_2bb || !tp1f_2ab  ||
+       !tp1f_for || !tp1f_4aabb || !tp1f_4abab )
+    {
+      cout << "ERROR: one or more missing histograms in subevents:" << endl;
+      cout << "tp1f_two address is " << tp1f_two << endl;
+      cout << "tp1f_2aa address is " << tp1f_2aa << endl;
+      cout << "tp1f_2bb address is " << tp1f_2bb << endl;
+      cout << "tp1f_2ab address is " << tp1f_2ab << endl;
+      cout << "tp1f_for address is " << tp1f_for << endl;
+      cout << "tp1f_4aabb address is " << tp1f_4aabb << endl;
+      cout << "tp1f_4abab address is " << tp1f_4abab << endl;
+      cout << "Doing nothing, exiting function" << endl;
+      return;
+    }
+
   double rand = gRandom->Rndm();
   int helper = rand*10000;
 
