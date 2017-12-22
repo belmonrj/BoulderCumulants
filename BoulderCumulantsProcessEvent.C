@@ -179,91 +179,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
 
 
-  // --- for the generic formulas ---------
-  for(int h=0;h<maxHarmonic;h++)
-    {
-      for(int p=0;p<maxPower;p++)
-        {
-          Qvector[h][p] = TComplex(0.,0.);
-          Qvector_north[h][p] = TComplex(0.,0.);
-          Qvector_south[h][p] = TComplex(0.,0.);
-          Qoffset[h][p] = TComplex(0.,0.);
-          Qoffset_north[h][p] = TComplex(0.,0.);
-          Qoffset_south[h][p] = TComplex(0.,0.);
-        } //  for(int p=0;p<maxPower;p++)
-    } // for(int h=0;h<maxHarmonic;h++)
-  // --------------------------------------
-
-
-
-  // --- fvtx tracks
-  float fvtxs_tracks_qx2[3]; // both, inner, outer
-  float fvtxs_tracks_qy2[3];
-  float fvtxs_tracks_qx3[3];
-  float fvtxs_tracks_qy3[3];
-  float fvtxs_tracks_qx4[3];
-  float fvtxs_tracks_qy4[3];
-  float fvtxs_tracks_qx6[3];
-  float fvtxs_tracks_qy6[3];
-  float fvtxs_tracks_qw[3];
-  float fvtxn_tracks_qx2[3]; // both, inner, outer
-  float fvtxn_tracks_qy2[3];
-  float fvtxn_tracks_qx3[3];
-  float fvtxn_tracks_qy3[3];
-  float fvtxn_tracks_qx4[3];
-  float fvtxn_tracks_qy4[3];
-  float fvtxn_tracks_qx6[3];
-  float fvtxn_tracks_qy6[3];
-  float fvtxn_tracks_qw[3];
-
-  for ( int i = 0; i < 3; ++i )
-  {
-    fvtxs_tracks_qx2[i] = 0.0;
-    fvtxs_tracks_qy2[i] = 0.0;
-    fvtxs_tracks_qx3[i] = 0.0;
-    fvtxs_tracks_qy3[i] = 0.0;
-    fvtxs_tracks_qx4[i] = 0.0;
-    fvtxs_tracks_qy4[i] = 0.0;
-    fvtxs_tracks_qx6[i] = 0.0;
-    fvtxs_tracks_qy6[i] = 0.0;
-    fvtxs_tracks_qw[i] = 0.0;
-    fvtxn_tracks_qx2[i] = 0.0;
-    fvtxn_tracks_qy2[i] = 0.0;
-    fvtxn_tracks_qx3[i] = 0.0;
-    fvtxn_tracks_qy3[i] = 0.0;
-    fvtxn_tracks_qx4[i] = 0.0;
-    fvtxn_tracks_qy4[i] = 0.0;
-    fvtxn_tracks_qx6[i] = 0.0;
-    fvtxn_tracks_qy6[i] = 0.0;
-    fvtxn_tracks_qw[i] = 0.0;
-  } // loop over layers
-
-  int ntrack_south_inner = 0;
-  int ntrack_north_inner = 0;
-  int ntrack_south_outer = 0;
-  int ntrack_north_outer = 0;
-
-  float special_fvtx_tracks_qx2[8];
-  float special_fvtx_tracks_qy2[8];
-  float special_fvtx_tracks_qw[8];
-  for ( int i = 0; i < 8; ++i )
-  {
-    special_fvtx_tracks_qx2[i] = 0;
-    special_fvtx_tracks_qy2[i] = 0;
-    special_fvtx_tracks_qw[i] = 0;
-  }
-
-
-  // --- initialize Q-vectors for tree
-  for ( int i = 0; i < nharm; ++i )
-    {
-      d_NorthQX[i] = 0;
-      d_NorthQY[i] = 0;
-      d_SouthQX[i] = 0;
-      d_SouthQY[i] = 0;
-    }
-  d_NorthQW = 0;
-  d_SouthQW = 0;
 
   //int ntr = -1;
   //int ntr = 0;
@@ -435,6 +350,96 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
            << " total number of tracks " << nfvtxt
            << " ratio " << passratio << endl;
     }
+
+
+
+  // ------------------------------------
+  // --- initialize the Q-vectors to zero
+  // ------------------------------------
+
+  // --- for the generic formulas ---------
+  for(int h=0;h<maxHarmonic;h++)
+    {
+      for(int p=0;p<maxPower;p++)
+        {
+          Qvector[h][p] = TComplex(0.,0.);
+          Qvector_north[h][p] = TComplex(0.,0.);
+          Qvector_south[h][p] = TComplex(0.,0.);
+          Qoffset[h][p] = TComplex(0.,0.);
+          Qoffset_north[h][p] = TComplex(0.,0.);
+          Qoffset_south[h][p] = TComplex(0.,0.);
+        } //  for(int p=0;p<maxPower;p++)
+    } // for(int h=0;h<maxHarmonic;h++)
+  // --------------------------------------
+
+  // --- fvtx tracks
+  float fvtxs_tracks_qx2[3]; // both, inner, outer
+  float fvtxs_tracks_qy2[3];
+  float fvtxs_tracks_qx3[3];
+  float fvtxs_tracks_qy3[3];
+  float fvtxs_tracks_qx4[3];
+  float fvtxs_tracks_qy4[3];
+  float fvtxs_tracks_qx6[3];
+  float fvtxs_tracks_qy6[3];
+  float fvtxs_tracks_qw[3];
+  float fvtxn_tracks_qx2[3]; // both, inner, outer
+  float fvtxn_tracks_qy2[3];
+  float fvtxn_tracks_qx3[3];
+  float fvtxn_tracks_qy3[3];
+  float fvtxn_tracks_qx4[3];
+  float fvtxn_tracks_qy4[3];
+  float fvtxn_tracks_qx6[3];
+  float fvtxn_tracks_qy6[3];
+  float fvtxn_tracks_qw[3];
+
+  for ( int i = 0; i < 3; ++i )
+  {
+    fvtxs_tracks_qx2[i] = 0.0;
+    fvtxs_tracks_qy2[i] = 0.0;
+    fvtxs_tracks_qx3[i] = 0.0;
+    fvtxs_tracks_qy3[i] = 0.0;
+    fvtxs_tracks_qx4[i] = 0.0;
+    fvtxs_tracks_qy4[i] = 0.0;
+    fvtxs_tracks_qx6[i] = 0.0;
+    fvtxs_tracks_qy6[i] = 0.0;
+    fvtxs_tracks_qw[i] = 0.0;
+    fvtxn_tracks_qx2[i] = 0.0;
+    fvtxn_tracks_qy2[i] = 0.0;
+    fvtxn_tracks_qx3[i] = 0.0;
+    fvtxn_tracks_qy3[i] = 0.0;
+    fvtxn_tracks_qx4[i] = 0.0;
+    fvtxn_tracks_qy4[i] = 0.0;
+    fvtxn_tracks_qx6[i] = 0.0;
+    fvtxn_tracks_qy6[i] = 0.0;
+    fvtxn_tracks_qw[i] = 0.0;
+  } // loop over layers
+
+  int ntrack_south_inner = 0;
+  int ntrack_north_inner = 0;
+  int ntrack_south_outer = 0;
+  int ntrack_north_outer = 0;
+
+  float special_fvtx_tracks_qx2[8];
+  float special_fvtx_tracks_qy2[8];
+  float special_fvtx_tracks_qw[8];
+  for ( int i = 0; i < 8; ++i )
+  {
+    special_fvtx_tracks_qx2[i] = 0;
+    special_fvtx_tracks_qy2[i] = 0;
+    special_fvtx_tracks_qw[i] = 0;
+  }
+
+
+  // --- initialize Q-vectors for tree
+  for ( int i = 0; i < nharm; ++i )
+    {
+      d_NorthQX[i] = 0;
+      d_NorthQY[i] = 0;
+      d_SouthQX[i] = 0;
+      d_SouthQY[i] = 0;
+    }
+  d_NorthQW = 0;
+  d_SouthQW = 0;
 
   // --- third fvtxt track loop to calculate Q-vectors
   for ( int i = 0; i < nfvtxt; ++i )
