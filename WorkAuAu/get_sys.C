@@ -45,6 +45,12 @@ void get_sys()
   fbase->Close();
   feval->Close();
 
+  fbase = TFile::Open("input/histos_12420.root");
+  feval = TFile::Open("input/histos_12555.root");
+  takefiles(fbase,feval,"code");
+  fbase->Close();
+  feval->Close();
+
 }
 
 void takefiles(TFile* fbase, TFile* feval, const char* systype)
