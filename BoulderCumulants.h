@@ -44,6 +44,9 @@ class BoulderCumulants: public SubsysReco
 
  protected:
 
+  // --- do the analysis
+  int EventStuff();
+
   // --- special event cuts
   bool PassesTracksChargeRatio(int, double);
 
@@ -97,6 +100,8 @@ class BoulderCumulants: public SubsysReco
   std::vector<double> fdcay;
   std::vector<double> fchi2ndf;
   std::vector<int> fnhitspc;
+
+  bool fvtx_track_passes[maxTracks];
 
   /// current event
   unsigned long _ievent;

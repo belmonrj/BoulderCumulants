@@ -315,12 +315,13 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   // -------------------------------------------------
 
   // --- second fvtx track loop to get the double track cut
-  bool fvtx_track_passes[nfvtxt];
+  //bool fvtx_track_passes[nfvtxt];
   int number_of_tracks_that_pass = 0;
   if ( do_double_track_cut )
     {
       for ( int i = 0; i < nfvtxt; ++i )
         {
+          // --- initialize to true
           fvtx_track_passes[i] = true;
         }
       for ( int i = 0; i < nfvtxt; ++i )
@@ -351,7 +352,17 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
            << " ratio " << passratio << endl;
     }
 
+  // --- do the analysis
+  EventStuff();
 
+  return EVENT_OK;
+
+} // end process_event
+
+
+
+int BoulderCumulants::EventStuff()
+{
 
   // ------------------------------------
   // --- initialize the Q-vectors to zero
