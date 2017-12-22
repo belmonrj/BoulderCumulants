@@ -371,6 +371,34 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
   if ( nfvtxt > maxTracks ) return EVENT_OK;
 
+  // ----------------------------------------
+  // --- event categorization and special cut
+  // ----------------------------------------
+
+  th1d_nfvtxt_combinedER->Fill(nfvtxt);
+  th1d_nfvtxt_combined->Fill(nfvtxt);
+  th1d_nfvtxt_north->Fill(nfvtxt_north);
+  th1d_nfvtxt_south->Fill(nfvtxt_south);
+  th2d_nfvtxt_northsouth->Fill(nfvtxt_north,nfvtxt_south);
+
+  th1d_centrality->Fill(centrality);
+  th2d_nfvtxt_bbcsum->Fill(nfvtxt,bbc_charge_sum);
+  th2d_nfvtxt_centrality->Fill(nfvtxt,centrality);
+  th2d_nfvtxt_bbcsumratio->Fill(nfvtxt,bbc_charge_sum/(float)nfvtxt);
+
+  bool passes = PassesTracksChargeRatio(nfvtxt,bbc_charge_sum);
+  if ( _collsys == "Run14AuAu200" && !passes )
+    {
+      if ( _verbosity > 1 ) cout << "Making special event cut for " << _collsys << endl;
+      return EVENT_OK; // now testing revised cut...
+    }
+  th2d_nfvtxt_centralityA->Fill(nfvtxt,centrality);
+  th1d_centralityA->Fill(centrality);
+
+  // -------------------------------------------------
+  // --- now move on to do more stuff with fvtx tracks
+  // -------------------------------------------------
+
   // --- second fvtx track loop to get the double track cut
   bool fvtx_track_passes[nfvtxt];
   int number_of_tracks_that_pass = 0;
@@ -583,26 +611,6 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
         } // for(int p=0;p<maxPower;p++)
     } // for(int h=0;h<maxHarmonic;h++)
   // -------------------------------------------------------------------------------------------------------------------------------
-
-  th1d_nfvtxt_combinedER->Fill(nfvtxt);
-  th1d_nfvtxt_combined->Fill(nfvtxt);
-  th1d_nfvtxt_north->Fill(nfvtxt_north);
-  th1d_nfvtxt_south->Fill(nfvtxt_south);
-  th2d_nfvtxt_northsouth->Fill(nfvtxt_north,nfvtxt_south);
-
-  th1d_centrality->Fill(centrality);
-  th2d_nfvtxt_bbcsum->Fill(nfvtxt,bbc_charge_sum);
-  th2d_nfvtxt_centrality->Fill(nfvtxt,centrality);
-  th2d_nfvtxt_bbcsumratio->Fill(nfvtxt,bbc_charge_sum/(float)nfvtxt);
-
-  bool passes = PassesTracksChargeRatio(nfvtxt,bbc_charge_sum);
-  if ( _collsys == "Run14AuAu200" && !passes )
-    {
-      if ( _verbosity > 1 ) cout << "Making special event cut for " << _collsys << endl;
-      return EVENT_OK; // now testing revised cut...
-    }
-  th2d_nfvtxt_centralityA->Fill(nfvtxt,centrality);
-  th1d_centralityA->Fill(centrality);
 
   //---------------------------------------------------------//
   //                 finished Get FVTX Tracks
