@@ -3,6 +3,7 @@
 
 // standard includes
 #include <string>
+#include <vector>
 #include <SubsysReco.h>
 #include "TComplex.h"
 
@@ -89,6 +90,13 @@ class BoulderCumulants: public SubsysReco
   static const double default_cut_chi2 = 5.0;
   static const double default_cut_dca = 2.0;
   static const int default_cut_nhit = 3;
+
+  std::vector<double> fphi;
+  std::vector<double> feta;
+  std::vector<double> fdcax;
+  std::vector<double> fdcay;
+  std::vector<double> fchi2ndf;
+  std::vector<int> fnhitspc;
 
   /// current event
   unsigned long _ievent;

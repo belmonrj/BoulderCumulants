@@ -272,12 +272,20 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   nfvtxt_north = 0;
   nfvtxt_raw = 0;
 
-  vector<double> fphi;
-  vector<double> feta;
-  vector<double> fdcax;
-  vector<double> fdcay;
-  vector<double> fchi2ndf;
-  vector<int> fnhitspc;
+  // --- now global variables in header file
+  // vector<double> fphi;
+  // vector<double> feta;
+  // vector<double> fdcax;
+  // vector<double> fdcay;
+  // vector<double> fchi2ndf;
+  // vector<int> fnhitspc;
+  // --- reset these for each event
+  fphi.clear();
+  feta.clear();
+  fdcax.clear();
+  fdcay.clear();
+  fchi2ndf.clear();
+  fnhitspc.clear();
 
   if ( _verbosity > 1 ) cout << "entering fvtx track loop" << endl;
   TFvtxCompactTrkMap::const_iterator trk_iter = trkfvtx_map->range();
