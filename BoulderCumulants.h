@@ -45,6 +45,7 @@ class BoulderCumulants: public SubsysReco
  protected:
 
   // --- do the analysis
+  int EventRecursion();
   int EventStuff();
 
   // --- special event cuts

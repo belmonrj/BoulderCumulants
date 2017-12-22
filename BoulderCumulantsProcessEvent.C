@@ -353,7 +353,14 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
     }
 
   // --- do the analysis
+  EventRecursion();
   EventStuff();
+
+  if ( _verbosity > 0 ) cout << "sucessfully processed this event, number of fvtx tracks is " << nfvtxt_raw << ", number of fvtx tracks passing cuts is " << nfvtxt << endl;
+
+  if ( _create_ttree ) shorttree->Fill();
+
+  ++tmp_evt;//to keep track of how many events pass event cuts
 
   return EVENT_OK;
 
@@ -361,7 +368,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
 
 
-int BoulderCumulants::EventStuff()
+int BoulderCumulants::EventRecursion()
 {
 
   // ------------------------------------
@@ -382,6 +389,211 @@ int BoulderCumulants::EventStuff()
         } //  for(int p=0;p<maxPower;p++)
     } // for(int h=0;h<maxHarmonic;h++)
   // --------------------------------------
+
+  // --- third fvtxt track loop to calculate Q-vectors
+  for ( int i = 0; i < nfvtxt; ++i )
+    {
+      // --- double track cut
+      if ( do_double_track_cut && !fvtx_track_passes[i] ) continue;
+      double eta = feta[i];
+      double phi = fphi[i];
+      double DCA_x = fdcax[i];
+      double DCA_y = fdcay[i];
+      double chisq = fchi2ndf[i];
+      int nhits_special = fnhitspc[i];
+      // --- need to do different cuts here
+      if ( nhits_special < _cut_nhit ) continue; // need at least 3 hits in FVTX, excluding VTX
+      if ( fabs(DCA_x) > _cut_dca || fabs(DCA_y) > _cut_dca ) continue;
+      //if ( nhits < _cut_nhit ) continue;
+      if ( chisq > _cut_chi2 ) continue;
+      // --- from generic formulas ----------------------------------------------------------------------
+      double dPhi = 0.0; // particle angle
+      //double wPhi = 1.0; // particle weight
+      double wPhiToPowerP = 1.0; // particle weight raised to power p
+      dPhi = phi; // minimal change from me to match the generic forumlas code
+      for(int h=0;h<maxHarmonic;h++)
+        {
+          for(int p=0;p<maxPower;p++)
+            {
+              //if(bUseWeights){wPhiToPowerP = pow(wPhi,p);} // no weights for us...
+              Qvector[h][p] += TComplex(wPhiToPowerP*TMath::Cos(h*dPhi),wPhiToPowerP*TMath::Sin(h*dPhi));
+              if ( eta > 0 ) Qvector_north[h][p] += TComplex(wPhiToPowerP*TMath::Cos(h*dPhi),wPhiToPowerP*TMath::Sin(h*dPhi));
+              if ( eta < 0 ) Qvector_south[h][p] += TComplex(wPhiToPowerP*TMath::Cos(h*dPhi),wPhiToPowerP*TMath::Sin(h*dPhi));
+            } //  for(int p=0;p<maxPower;p++)
+        } // for(int h=0;h<maxHarmonic;h++)
+      // ------------------------------------------------------------------------------------------------
+    } // loop over tracks
+
+  // -------------------------------------------------------------------------------------------------------------------------------
+  for(int h=1;h<maxHarmonic;h++) // ABSOLUTELY MUST START AT 1!!!  RECURSION ALGORITHM USES ZEROTH COMPONENT TO GET COMBINATORICS!!!
+    {
+      for(int p=0;p<maxPower;p++)
+        {
+          // --- combined subtraction does not work well...
+          // Qoffset[h][p] = TComplex( Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][0][h], Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][1][h] );
+          // Qvector[h][p] -= Qoffset[h][p];
+          // --- north
+          Qoffset_north[h][p] = TComplex( Qvector_north[0][1].Re()*qvoff_cent_north[icent][0][h], Qvector_north[0][1].Re()*qvoff_cent_north[icent][1][h] );
+          Qvector_north[h][p] -= Qoffset_north[h][p];
+          // --- south
+          Qoffset_south[h][p] = TComplex( Qvector_south[0][1].Re()*qvoff_cent_south[icent][0][h], Qvector_south[0][1].Re()*qvoff_cent_south[icent][1][h] );
+          Qvector_south[h][p] -= Qoffset_south[h][p];
+          // --- add up north and south to get combined that's been recentered arm-by-arm
+          Qvector[h][p] = Qvector_north[h][p] + Qvector_south[h][p];
+        } // for(int p=0;p<maxPower;p++)
+    } // for(int h=0;h<maxHarmonic;h++)
+  // -------------------------------------------------------------------------------------------------------------------------------
+
+  // --- from generic formulas ----------------------------------------------------------------------------
+  // --- need to add these here, initialization in header file doesn't seem to work...
+  //  2-p correlations:
+  //cout<<" => Calculating 2-p correlations (using recursion)...       \r"<<flush;
+  int harmonics_Two_Num[2] = {2,-2}; // 2, -2
+  int harmonics_Two_Den[2] = {0,0}; // recursion gives right combinatorics
+  TComplex twoRecursion = Recursion(2,harmonics_Two_Num)/Recursion(2,harmonics_Two_Den).Re();
+  //double wTwoRecursion = Recursion(2,harmonics_Two_Den).Re();
+  double wTwoRecursion = 1.0;
+  nfvtxt_recursion[0][0]->Fill(nfvtxt,twoRecursion.Re(),wTwoRecursion); // <<cos(h1*phi1+h2*phi2)>>
+  nfvtxt_recursion[1][0]->Fill(nfvtxt,twoRecursion.Im(),wTwoRecursion); // <<sin(h1*phi1+h2*phi2)>>
+  //  4-p correlations:
+  //cout<<" => Calculating 4-p correlations (using recursion)...       \r"<<flush;
+  int harmonics_Four_Num[4] = {2,2,-2,-2};
+  int harmonics_Four_Den[4] = {0,0,0,0}; // recursion gives right combinatorics
+  TComplex fourRecursion = Recursion(4,harmonics_Four_Num)/Recursion(4,harmonics_Four_Den).Re();
+  //double wFourRecursion = Recursion(4,harmonics_Four_Den).Re();
+  double wFourRecursion = 1.0;
+  nfvtxt_recursion[0][2]->Fill(nfvtxt,fourRecursion.Re(),wFourRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4)>>
+  nfvtxt_recursion[1][2]->Fill(nfvtxt,fourRecursion.Im(),wFourRecursion); // <<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4)>>
+  //  6-p correlations:
+  //cout<<" => Calculating 6-p correlations (using recursion)...       \r"<<flush;
+  int harmonics_Six_Num[6] = {2,2,2,-2,-2,-2};
+  int harmonics_Six_Den[6] = {0,0,0,0,0,0};
+  TComplex sixRecursion = Recursion(6,harmonics_Six_Num)/Recursion(6,harmonics_Six_Den).Re();
+  //double wSixRecursion = Recursion(6,harmonics_Six_Den).Re();
+  double wSixRecursion = 1.0;
+  nfvtxt_recursion[0][4]->Fill(nfvtxt,sixRecursion.Re(),wSixRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
+  nfvtxt_recursion[1][4]->Fill(nfvtxt,sixRecursion.Im(),wSixRecursion); // <<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
+  //  8-p correlations:
+  //cout<<" => Calculating 8-p correlations (using recursion)...       \r"<<flush;
+  int harmonics_Eight_Num[8] = {2,2,2,2,-2,-2,-2,-2};
+  int harmonics_Eight_Den[8] = {0,0,0,0,0,0,0,0};
+  TComplex eightRecursion = Recursion(8,harmonics_Eight_Num)/Recursion(8,harmonics_Eight_Den).Re();
+  //double wEightRecursion = Recursion(8,harmonics_Eight_Den).Re();
+  double wEightRecursion = 1.0;
+  nfvtxt_recursion[0][6]->Fill(nfvtxt,eightRecursion.Re(),wEightRecursion);
+  nfvtxt_recursion[1][6]->Fill(nfvtxt,eightRecursion.Im(),wEightRecursion);
+  // --- now some stuff for the third harmonic
+  // --- v3{2}
+  int harmonics_Twov3_Num[2] = {3,-3};
+  int harmonics_Twov3_Den[2] = {0,0};
+  TComplex twov3Recursion = Recursion(2,harmonics_Twov3_Num)/Recursion(2,harmonics_Twov3_Den).Re();
+  double wTwov3Recursion = 1.0;
+  nfvtxt_recursion[0][1]->Fill(nfvtxt,twov3Recursion.Re(),wTwov3Recursion);
+  nfvtxt_recursion[1][1]->Fill(nfvtxt,twov3Recursion.Im(),wTwov3Recursion);
+  // --- v3{4}
+  int harmonics_Fourv3_Num[4] = {3,3,-3,-3};
+  int harmonics_Fourv3_Den[4] = {0,0,0,0};
+  TComplex fourv3Recursion = Recursion(4,harmonics_Fourv3_Num)/Recursion(4,harmonics_Fourv3_Den).Re();
+  double wFourv3Recursion = 1.0;
+  nfvtxt_recursion[0][3]->Fill(nfvtxt,fourv3Recursion.Re(),wFourv3Recursion);
+  nfvtxt_recursion[1][3]->Fill(nfvtxt,fourv3Recursion.Im(),wFourv3Recursion);
+  // --- v3{6}
+  int harmonics_Sixv3_Num[6] = {3,3,3,-3,-3,-3};
+  int harmonics_Sixv3_Den[6] = {0,0,0,0,0,0};
+  TComplex sixv3Recursion = Recursion(6,harmonics_Sixv3_Num)/Recursion(6,harmonics_Sixv3_Den).Re();
+  double wSixv3Recursion = 1.0;
+  nfvtxt_recursion[0][5]->Fill(nfvtxt,sixv3Recursion.Re(),wSixv3Recursion);
+  nfvtxt_recursion[1][5]->Fill(nfvtxt,sixv3Recursion.Im(),wSixv3Recursion);
+  // --- now some stuff for the fourth harmonic
+  // --- v4{2}
+  int harmonics_Twov4_Num[2] = {4,-4};
+  int harmonics_Twov4_Den[2] = {0,0};
+  TComplex twov4Recursion = Recursion(2,harmonics_Twov4_Num)/Recursion(2,harmonics_Twov4_Den).Re();
+  double wTwov4Recursion = 1.0;
+  nfvtxt_recursion[0][7]->Fill(nfvtxt,twov4Recursion.Re(),wTwov4Recursion);
+  nfvtxt_recursion[1][7]->Fill(nfvtxt,twov4Recursion.Im(),wTwov4Recursion);
+  // --- v4{4}
+  int harmonics_Fourv4_Num[4] = {4,4,-4,-4};
+  int harmonics_Fourv4_Den[4] = {0,0,0,0};
+  TComplex fourv4Recursion = Recursion(4,harmonics_Fourv4_Num)/Recursion(4,harmonics_Fourv4_Den).Re();
+  double wFourv4Recursion = 1.0;
+  nfvtxt_recursion[0][9]->Fill(nfvtxt,fourv4Recursion.Re(),wFourv4Recursion);
+  nfvtxt_recursion[1][9]->Fill(nfvtxt,fourv4Recursion.Im(),wFourv4Recursion);
+  // --- now some symmetric cumulants
+  // --- SC(2,3)
+  int harmonics_FourSC23_Num[4] = {2,3,-2,-3};
+  int harmonics_FourSC23_Den[4] = {0,0,0,0};
+  TComplex fourSC23Recursion = Recursion(4,harmonics_FourSC23_Num)/Recursion(4,harmonics_FourSC23_Den).Re();
+  double wFourSC23Recursion = 1.0;
+  nfvtxt_recursion[0][10]->Fill(nfvtxt,fourSC23Recursion.Re(),wFourSC23Recursion);
+  nfvtxt_recursion[1][10]->Fill(nfvtxt,fourSC23Recursion.Im(),wFourSC23Recursion);
+  // --- SC(2,4)
+  int harmonics_FourSC24_Num[4] = {2,4,-2,-4};
+  int harmonics_FourSC24_Den[4] = {0,0,0,0};
+  TComplex fourSC24Recursion = Recursion(4,harmonics_FourSC24_Num)/Recursion(4,harmonics_FourSC24_Den).Re();
+  double wFourSC24Recursion = 1.0;
+  nfvtxt_recursion[0][11]->Fill(nfvtxt,fourSC24Recursion.Re(),wFourSC24Recursion);
+  nfvtxt_recursion[1][11]->Fill(nfvtxt,fourSC24Recursion.Im(),wFourSC24Recursion);
+  // ------------------------------------------------------------------------------------------------------
+  for ( int cs = 0; cs < maxHarmonic; ++cs )
+    {
+      nfvtxt_recoffsets[0][cs]->Fill(nfvtxt,Qvector[cs][1].Re()/Qvector[0][1].Re());
+      nfvtxt_recoffsets[1][cs]->Fill(nfvtxt,Qvector[cs][1].Im()/Qvector[0][1].Re());
+      nfvtxt_recoffsets_north[0][cs]->Fill(nfvtxt,Qvector_north[cs][1].Re()/Qvector_north[0][1].Re());
+      nfvtxt_recoffsets_north[1][cs]->Fill(nfvtxt,Qvector_north[cs][1].Im()/Qvector_north[0][1].Re());
+      nfvtxt_recoffsets_south[0][cs]->Fill(nfvtxt,Qvector_south[cs][1].Re()/Qvector_south[0][1].Re());
+      nfvtxt_recoffsets_south[1][cs]->Fill(nfvtxt,Qvector_south[cs][1].Im()/Qvector_south[0][1].Re());
+    }
+  // ------------------------------------------------------------------------------------------------------
+
+  // --- v2
+  centrality_recursion[0][0]->Fill(centrality,twoRecursion.Re(),wTwoRecursion);
+  centrality_recursion[1][0]->Fill(centrality,twoRecursion.Im(),wTwoRecursion);
+  centrality_recursion[0][2]->Fill(centrality,fourRecursion.Re(),wFourRecursion);
+  centrality_recursion[1][2]->Fill(centrality,fourRecursion.Im(),wFourRecursion);
+  centrality_recursion[0][4]->Fill(centrality,sixRecursion.Re(),wSixRecursion);
+  centrality_recursion[1][4]->Fill(centrality,sixRecursion.Im(),wSixRecursion);
+  centrality_recursion[0][6]->Fill(centrality,eightRecursion.Re(),wEightRecursion);
+  centrality_recursion[1][6]->Fill(centrality,eightRecursion.Im(),wEightRecursion);
+  // --- v3
+  centrality_recursion[0][1]->Fill(centrality,twov3Recursion.Re(),wTwov3Recursion);
+  centrality_recursion[1][1]->Fill(centrality,twov3Recursion.Im(),wTwov3Recursion);
+  centrality_recursion[0][3]->Fill(centrality,fourv3Recursion.Re(),wFourv3Recursion);
+  centrality_recursion[1][3]->Fill(centrality,fourv3Recursion.Im(),wFourv3Recursion);
+  centrality_recursion[0][5]->Fill(centrality,sixv3Recursion.Re(),wSixv3Recursion);
+  centrality_recursion[1][5]->Fill(centrality,sixv3Recursion.Im(),wSixv3Recursion);
+  // --- v4
+  centrality_recursion[0][7]->Fill(centrality,twov4Recursion.Re(),wTwov4Recursion);
+  centrality_recursion[1][7]->Fill(centrality,twov4Recursion.Im(),wTwov4Recursion);
+  centrality_recursion[0][9]->Fill(centrality,fourv4Recursion.Re(),wFourv4Recursion);
+  centrality_recursion[1][9]->Fill(centrality,fourv4Recursion.Im(),wFourv4Recursion);
+  // --- symmetric cumulants
+  centrality_recursion[0][10]->Fill(centrality,fourSC23Recursion.Re(),wFourSC23Recursion);
+  centrality_recursion[1][10]->Fill(centrality,fourSC23Recursion.Im(),wFourSC23Recursion);
+  centrality_recursion[0][11]->Fill(centrality,fourSC24Recursion.Re(),wFourSC24Recursion);
+  centrality_recursion[1][11]->Fill(centrality,fourSC24Recursion.Im(),wFourSC24Recursion);
+  for ( int cs = 0; cs < maxHarmonic; ++cs )
+    {
+      centrality_recoffsets[0][cs]->Fill(centrality,Qvector[cs][1].Re()/Qvector[0][1].Re());
+      centrality_recoffsets[1][cs]->Fill(centrality,Qvector[cs][1].Im()/Qvector[0][1].Re());
+      centrality_recoffsets_north[0][cs]->Fill(centrality,Qvector_north[cs][1].Re()/Qvector_north[0][1].Re());
+      centrality_recoffsets_north[1][cs]->Fill(centrality,Qvector_north[cs][1].Im()/Qvector_north[0][1].Re());
+      centrality_recoffsets_south[0][cs]->Fill(centrality,Qvector_south[cs][1].Re()/Qvector_south[0][1].Re());
+      centrality_recoffsets_south[1][cs]->Fill(centrality,Qvector_south[cs][1].Im()/Qvector_south[0][1].Re());
+    }
+
+  return EVENT_OK;
+
+} // EventRecursion
+
+
+
+int BoulderCumulants::EventStuff()
+{
+
+  // ------------------------------------
+  // --- initialize the Q-vectors to zero
+  // ------------------------------------
 
   // --- fvtx tracks
   float fvtxs_tracks_qx2[3]; // both, inner, outer
@@ -468,22 +680,6 @@ int BoulderCumulants::EventStuff()
       if ( fabs(DCA_x) > _cut_dca || fabs(DCA_y) > _cut_dca ) continue;
       //if ( nhits < _cut_nhit ) continue;
       if ( chisq > _cut_chi2 ) continue;
-      // --- from generic formulas ----------------------------------------------------------------------
-      double dPhi = 0.0; // particle angle
-      //double wPhi = 1.0; // particle weight
-      double wPhiToPowerP = 1.0; // particle weight raised to power p
-      dPhi = phi; // minimal change from me to match the generic forumlas code
-      for(int h=0;h<maxHarmonic;h++)
-        {
-          for(int p=0;p<maxPower;p++)
-            {
-              //if(bUseWeights){wPhiToPowerP = pow(wPhi,p);} // no weights for us...
-              Qvector[h][p] += TComplex(wPhiToPowerP*TMath::Cos(h*dPhi),wPhiToPowerP*TMath::Sin(h*dPhi));
-              if ( eta > 0 ) Qvector_north[h][p] += TComplex(wPhiToPowerP*TMath::Cos(h*dPhi),wPhiToPowerP*TMath::Sin(h*dPhi));
-              if ( eta < 0 ) Qvector_south[h][p] += TComplex(wPhiToPowerP*TMath::Cos(h*dPhi),wPhiToPowerP*TMath::Sin(h*dPhi));
-            } //  for(int p=0;p<maxPower;p++)
-        } // for(int h=0;h<maxHarmonic;h++)
-      // ------------------------------------------------------------------------------------------------
       // --- Q-vectors for tree
       if ( eta > 0 )
         {
@@ -608,26 +804,6 @@ int BoulderCumulants::EventStuff()
 
 
 
-  // -------------------------------------------------------------------------------------------------------------------------------
-  for(int h=1;h<maxHarmonic;h++) // ABSOLUTELY MUST START AT 1!!!  RECURSION ALGORITHM USES ZEROTH COMPONENT TO GET COMBINATORICS!!!
-    {
-      for(int p=0;p<maxPower;p++)
-        {
-          // --- combined subtraction does not work well...
-          // Qoffset[h][p] = TComplex( Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][0][h], Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][1][h] );
-          // Qvector[h][p] -= Qoffset[h][p];
-          // --- north
-          Qoffset_north[h][p] = TComplex( Qvector_north[0][1].Re()*qvoff_cent_north[icent][0][h], Qvector_north[0][1].Re()*qvoff_cent_north[icent][1][h] );
-          Qvector_north[h][p] -= Qoffset_north[h][p];
-          // --- south
-          Qoffset_south[h][p] = TComplex( Qvector_south[0][1].Re()*qvoff_cent_south[icent][0][h], Qvector_south[0][1].Re()*qvoff_cent_south[icent][1][h] );
-          Qvector_south[h][p] -= Qoffset_south[h][p];
-          // --- add up north and south to get combined that's been recentered arm-by-arm
-          Qvector[h][p] = Qvector_north[h][p] + Qvector_south[h][p];
-        } // for(int p=0;p<maxPower;p++)
-    } // for(int h=0;h<maxHarmonic;h++)
-  // -------------------------------------------------------------------------------------------------------------------------------
-
   //---------------------------------------------------------//
   //                 finished Get FVTX Tracks
   //---------------------------------------------------------//
@@ -744,107 +920,7 @@ int BoulderCumulants::EventStuff()
   float ac_fvtxn_tracks_six = calc6_event(tc_ac_fvtxn_tracks_Q2,tc_ac_fvtxn_tracks_Q4,tc_ac_fvtxn_tracks_Q6,ac_fvtxn_tracks_qw);
   float ac_fvtxc_tracks_six = calc6_event(tc_ac_fvtxc_tracks_Q2,tc_ac_fvtxc_tracks_Q4,tc_ac_fvtxc_tracks_Q6,ac_fvtxc_tracks_qw);
 
-  // --- from generic formulas ----------------------------------------------------------------------------
-  // --- need to add these here, initialization in header file doesn't seem to work...
-  //  2-p correlations:
-  //cout<<" => Calculating 2-p correlations (using recursion)...       \r"<<flush;
-  int harmonics_Two_Num[2] = {2,-2}; // 2, -2
-  int harmonics_Two_Den[2] = {0,0}; // recursion gives right combinatorics
-  TComplex twoRecursion = Recursion(2,harmonics_Two_Num)/Recursion(2,harmonics_Two_Den).Re();
-  //double wTwoRecursion = Recursion(2,harmonics_Two_Den).Re();
-  double wTwoRecursion = 1.0;
-  nfvtxt_recursion[0][0]->Fill(nfvtxt,twoRecursion.Re(),wTwoRecursion); // <<cos(h1*phi1+h2*phi2)>>
-  nfvtxt_recursion[1][0]->Fill(nfvtxt,twoRecursion.Im(),wTwoRecursion); // <<sin(h1*phi1+h2*phi2)>>
-  //  4-p correlations:
-  //cout<<" => Calculating 4-p correlations (using recursion)...       \r"<<flush;
-  int harmonics_Four_Num[4] = {2,2,-2,-2};
-  int harmonics_Four_Den[4] = {0,0,0,0}; // recursion gives right combinatorics
-  TComplex fourRecursion = Recursion(4,harmonics_Four_Num)/Recursion(4,harmonics_Four_Den).Re();
-  //double wFourRecursion = Recursion(4,harmonics_Four_Den).Re();
-  double wFourRecursion = 1.0;
-  nfvtxt_recursion[0][2]->Fill(nfvtxt,fourRecursion.Re(),wFourRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4)>>
-  nfvtxt_recursion[1][2]->Fill(nfvtxt,fourRecursion.Im(),wFourRecursion); // <<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4)>>
-  //  6-p correlations:
-  //cout<<" => Calculating 6-p correlations (using recursion)...       \r"<<flush;
-  int harmonics_Six_Num[6] = {2,2,2,-2,-2,-2};
-  int harmonics_Six_Den[6] = {0,0,0,0,0,0};
-  TComplex sixRecursion = Recursion(6,harmonics_Six_Num)/Recursion(6,harmonics_Six_Den).Re();
-  //double wSixRecursion = Recursion(6,harmonics_Six_Den).Re();
-  double wSixRecursion = 1.0;
-  nfvtxt_recursion[0][4]->Fill(nfvtxt,sixRecursion.Re(),wSixRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
-  nfvtxt_recursion[1][4]->Fill(nfvtxt,sixRecursion.Im(),wSixRecursion); // <<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
-  //  8-p correlations:
-  //cout<<" => Calculating 8-p correlations (using recursion)...       \r"<<flush;
-  int harmonics_Eight_Num[8] = {2,2,2,2,-2,-2,-2,-2};
-  int harmonics_Eight_Den[8] = {0,0,0,0,0,0,0,0};
-  TComplex eightRecursion = Recursion(8,harmonics_Eight_Num)/Recursion(8,harmonics_Eight_Den).Re();
-  //double wEightRecursion = Recursion(8,harmonics_Eight_Den).Re();
-  double wEightRecursion = 1.0;
-  nfvtxt_recursion[0][6]->Fill(nfvtxt,eightRecursion.Re(),wEightRecursion);
-  nfvtxt_recursion[1][6]->Fill(nfvtxt,eightRecursion.Im(),wEightRecursion);
-  // --- now some stuff for the third harmonic
-  // --- v3{2}
-  int harmonics_Twov3_Num[2] = {3,-3};
-  int harmonics_Twov3_Den[2] = {0,0};
-  TComplex twov3Recursion = Recursion(2,harmonics_Twov3_Num)/Recursion(2,harmonics_Twov3_Den).Re();
-  double wTwov3Recursion = 1.0;
-  nfvtxt_recursion[0][1]->Fill(nfvtxt,twov3Recursion.Re(),wTwov3Recursion);
-  nfvtxt_recursion[1][1]->Fill(nfvtxt,twov3Recursion.Im(),wTwov3Recursion);
-  // --- v3{4}
-  int harmonics_Fourv3_Num[4] = {3,3,-3,-3};
-  int harmonics_Fourv3_Den[4] = {0,0,0,0};
-  TComplex fourv3Recursion = Recursion(4,harmonics_Fourv3_Num)/Recursion(4,harmonics_Fourv3_Den).Re();
-  double wFourv3Recursion = 1.0;
-  nfvtxt_recursion[0][3]->Fill(nfvtxt,fourv3Recursion.Re(),wFourv3Recursion);
-  nfvtxt_recursion[1][3]->Fill(nfvtxt,fourv3Recursion.Im(),wFourv3Recursion);
-  // --- v3{6}
-  int harmonics_Sixv3_Num[6] = {3,3,3,-3,-3,-3};
-  int harmonics_Sixv3_Den[6] = {0,0,0,0,0,0};
-  TComplex sixv3Recursion = Recursion(6,harmonics_Sixv3_Num)/Recursion(6,harmonics_Sixv3_Den).Re();
-  double wSixv3Recursion = 1.0;
-  nfvtxt_recursion[0][5]->Fill(nfvtxt,sixv3Recursion.Re(),wSixv3Recursion);
-  nfvtxt_recursion[1][5]->Fill(nfvtxt,sixv3Recursion.Im(),wSixv3Recursion);
-  // --- now some stuff for the fourth harmonic
-  // --- v4{2}
-  int harmonics_Twov4_Num[2] = {4,-4};
-  int harmonics_Twov4_Den[2] = {0,0};
-  TComplex twov4Recursion = Recursion(2,harmonics_Twov4_Num)/Recursion(2,harmonics_Twov4_Den).Re();
-  double wTwov4Recursion = 1.0;
-  nfvtxt_recursion[0][7]->Fill(nfvtxt,twov4Recursion.Re(),wTwov4Recursion);
-  nfvtxt_recursion[1][7]->Fill(nfvtxt,twov4Recursion.Im(),wTwov4Recursion);
-  // --- v4{4}
-  int harmonics_Fourv4_Num[4] = {4,4,-4,-4};
-  int harmonics_Fourv4_Den[4] = {0,0,0,0};
-  TComplex fourv4Recursion = Recursion(4,harmonics_Fourv4_Num)/Recursion(4,harmonics_Fourv4_Den).Re();
-  double wFourv4Recursion = 1.0;
-  nfvtxt_recursion[0][9]->Fill(nfvtxt,fourv4Recursion.Re(),wFourv4Recursion);
-  nfvtxt_recursion[1][9]->Fill(nfvtxt,fourv4Recursion.Im(),wFourv4Recursion);
-  // --- now some symmetric cumulants
-  // --- SC(2,3)
-  int harmonics_FourSC23_Num[4] = {2,3,-2,-3};
-  int harmonics_FourSC23_Den[4] = {0,0,0,0};
-  TComplex fourSC23Recursion = Recursion(4,harmonics_FourSC23_Num)/Recursion(4,harmonics_FourSC23_Den).Re();
-  double wFourSC23Recursion = 1.0;
-  nfvtxt_recursion[0][10]->Fill(nfvtxt,fourSC23Recursion.Re(),wFourSC23Recursion);
-  nfvtxt_recursion[1][10]->Fill(nfvtxt,fourSC23Recursion.Im(),wFourSC23Recursion);
-  // --- SC(2,4)
-  int harmonics_FourSC24_Num[4] = {2,4,-2,-4};
-  int harmonics_FourSC24_Den[4] = {0,0,0,0};
-  TComplex fourSC24Recursion = Recursion(4,harmonics_FourSC24_Num)/Recursion(4,harmonics_FourSC24_Den).Re();
-  double wFourSC24Recursion = 1.0;
-  nfvtxt_recursion[0][11]->Fill(nfvtxt,fourSC24Recursion.Re(),wFourSC24Recursion);
-  nfvtxt_recursion[1][11]->Fill(nfvtxt,fourSC24Recursion.Im(),wFourSC24Recursion);
-  // ------------------------------------------------------------------------------------------------------
-  for ( int cs = 0; cs < maxHarmonic; ++cs )
-    {
-      nfvtxt_recoffsets[0][cs]->Fill(nfvtxt,Qvector[cs][1].Re()/Qvector[0][1].Re());
-      nfvtxt_recoffsets[1][cs]->Fill(nfvtxt,Qvector[cs][1].Im()/Qvector[0][1].Re());
-      nfvtxt_recoffsets_north[0][cs]->Fill(nfvtxt,Qvector_north[cs][1].Re()/Qvector_north[0][1].Re());
-      nfvtxt_recoffsets_north[1][cs]->Fill(nfvtxt,Qvector_north[cs][1].Im()/Qvector_north[0][1].Re());
-      nfvtxt_recoffsets_south[0][cs]->Fill(nfvtxt,Qvector_south[cs][1].Re()/Qvector_south[0][1].Re());
-      nfvtxt_recoffsets_south[1][cs]->Fill(nfvtxt,Qvector_south[cs][1].Im()/Qvector_south[0][1].Re());
-    }
-  // ------------------------------------------------------------------------------------------------------
+
 
   // --------------------------------------------------------- //
   // --- centrality
@@ -875,51 +951,16 @@ int BoulderCumulants::EventStuff()
   // --- four particle 2sub
   // --- six particle
   centrality_ac_fvtxc_tracks_c26->Fill(centrality,ac_fvtxc_tracks_six);
-  centrality_ac_fvtxc_tracks_c28->Fill(centrality,eightRecursion.Re());
+  //centrality_ac_fvtxc_tracks_c28->Fill(centrality,eightRecursion.Re());
 
   if ( _verbosity > 2 )
     {
       cout << "Mcos2phi " << ac_fvtxc_tracks_qx2 << " " << Qvector[2][1].Re()  << endl;
       cout << "Msin2phi " << ac_fvtxc_tracks_qy2 << " " << Qvector[2][1].Im()  << endl;
       cout << "M        " << ac_fvtxc_tracks_qw  << " " << Qvector[0][1].Re() << endl;
-      cout << "2 " << ac_fvtxc_tracks_qq2    << " " <<  twoRecursion.Re() << endl;
-      cout << "4 " << ac_fvtxc_tracks_qqqq24 << " " << fourRecursion.Re() << endl;
-      cout << "6 " << ac_fvtxc_tracks_six    << " " <<  sixRecursion.Re() << endl;
-    }
-  // --- v2
-  centrality_recursion[0][0]->Fill(centrality,twoRecursion.Re(),wTwoRecursion);
-  centrality_recursion[1][0]->Fill(centrality,twoRecursion.Im(),wTwoRecursion);
-  centrality_recursion[0][2]->Fill(centrality,fourRecursion.Re(),wFourRecursion);
-  centrality_recursion[1][2]->Fill(centrality,fourRecursion.Im(),wFourRecursion);
-  centrality_recursion[0][4]->Fill(centrality,sixRecursion.Re(),wSixRecursion);
-  centrality_recursion[1][4]->Fill(centrality,sixRecursion.Im(),wSixRecursion);
-  centrality_recursion[0][6]->Fill(centrality,eightRecursion.Re(),wEightRecursion);
-  centrality_recursion[1][6]->Fill(centrality,eightRecursion.Im(),wEightRecursion);
-  // --- v3
-  centrality_recursion[0][1]->Fill(centrality,twov3Recursion.Re(),wTwov3Recursion);
-  centrality_recursion[1][1]->Fill(centrality,twov3Recursion.Im(),wTwov3Recursion);
-  centrality_recursion[0][3]->Fill(centrality,fourv3Recursion.Re(),wFourv3Recursion);
-  centrality_recursion[1][3]->Fill(centrality,fourv3Recursion.Im(),wFourv3Recursion);
-  centrality_recursion[0][5]->Fill(centrality,sixv3Recursion.Re(),wSixv3Recursion);
-  centrality_recursion[1][5]->Fill(centrality,sixv3Recursion.Im(),wSixv3Recursion);
-  // --- v4
-  centrality_recursion[0][7]->Fill(centrality,twov4Recursion.Re(),wTwov4Recursion);
-  centrality_recursion[1][7]->Fill(centrality,twov4Recursion.Im(),wTwov4Recursion);
-  centrality_recursion[0][9]->Fill(centrality,fourv4Recursion.Re(),wFourv4Recursion);
-  centrality_recursion[1][9]->Fill(centrality,fourv4Recursion.Im(),wFourv4Recursion);
-  // --- symmetric cumulants
-  centrality_recursion[0][10]->Fill(centrality,fourSC23Recursion.Re(),wFourSC23Recursion);
-  centrality_recursion[1][10]->Fill(centrality,fourSC23Recursion.Im(),wFourSC23Recursion);
-  centrality_recursion[0][11]->Fill(centrality,fourSC24Recursion.Re(),wFourSC24Recursion);
-  centrality_recursion[1][11]->Fill(centrality,fourSC24Recursion.Im(),wFourSC24Recursion);
-  for ( int cs = 0; cs < maxHarmonic; ++cs )
-    {
-      centrality_recoffsets[0][cs]->Fill(centrality,Qvector[cs][1].Re()/Qvector[0][1].Re());
-      centrality_recoffsets[1][cs]->Fill(centrality,Qvector[cs][1].Im()/Qvector[0][1].Re());
-      centrality_recoffsets_north[0][cs]->Fill(centrality,Qvector_north[cs][1].Re()/Qvector_north[0][1].Re());
-      centrality_recoffsets_north[1][cs]->Fill(centrality,Qvector_north[cs][1].Im()/Qvector_north[0][1].Re());
-      centrality_recoffsets_south[0][cs]->Fill(centrality,Qvector_south[cs][1].Re()/Qvector_south[0][1].Re());
-      centrality_recoffsets_south[1][cs]->Fill(centrality,Qvector_south[cs][1].Im()/Qvector_south[0][1].Re());
+      // cout << "2 " << ac_fvtxc_tracks_qq2    << " " <<  twoRecursion.Re() << endl;
+      // cout << "4 " << ac_fvtxc_tracks_qqqq24 << " " << fourRecursion.Re() << endl;
+      // cout << "6 " << ac_fvtxc_tracks_six    << " " <<  sixRecursion.Re() << endl;
     }
 
   // ------------------------------------------------------------------------------------- //
@@ -1038,9 +1079,9 @@ int BoulderCumulants::EventStuff()
       cout << "Mcos2phi " << os_fvtxc_tracks_qx2 << " " << Qvector[2][1].Re()  << endl;
       cout << "Msin2phi " << os_fvtxc_tracks_qy2 << " " << Qvector[2][1].Im()  << endl;
       cout << "M        " << os_fvtxc_tracks_qw  << " " << Qvector[0][1].Re() << endl;
-      cout << "2 " << os_fvtxc_tracks_qq2    << " " <<  twoRecursion.Re() << endl;
-      cout << "4 " << os_fvtxc_tracks_qqqq24 << " " << fourRecursion.Re() << endl;
-      cout << "6 " << os_fvtxc_tracks_six    << " " <<  sixRecursion.Re() << endl;
+      // cout << "2 " << os_fvtxc_tracks_qq2    << " " <<  twoRecursion.Re() << endl;
+      // cout << "4 " << os_fvtxc_tracks_qqqq24 << " " << fourRecursion.Re() << endl;
+      // cout << "6 " << os_fvtxc_tracks_six    << " " <<  sixRecursion.Re() << endl;
       cout << "offset south 2x " << " " << Qoffset_south[2][1].Re()/Qvector_south[0][1].Re() << " " << qvoff_cent_south[icent][0][2] << endl;
       cout << "offset north 2x " << " " << Qoffset_north[2][1].Re()/Qvector_north[0][1].Re() << " " << qvoff_cent_north[icent][0][2] << endl;
       cout << "offset south 2y " << " " << Qoffset_south[2][1].Im()/Qvector_south[0][1].Re() << " " << qvoff_cent_south[icent][1][2] << endl;
@@ -1070,7 +1111,7 @@ int BoulderCumulants::EventStuff()
   // --- four particle 2sub
   // --- six particle
   centrality_os_fvtxc_tracks_c26->Fill(centrality,os_fvtxc_tracks_six);
-  centrality_os_fvtxc_tracks_c28->Fill(centrality,eightRecursion.Re());
+  // centrality_os_fvtxc_tracks_c28->Fill(centrality,eightRecursion.Re());
 
   if ( _verbosity > 1000 )
     {
@@ -1136,14 +1177,9 @@ int BoulderCumulants::EventStuff()
       cout << os_fvtxc_tracks_qqqq34 << endl;
       cout << os_fvtxs_tracks_six << endl;
       cout << os_fvtxn_tracks_six << endl;
-    }
+    } // verbosity
 
-  if ( _verbosity > 0 ) cout << "sucessfully processed this event, number of fvtx tracks is " << nfvtxt_raw << ", number of fvtx tracks passing cuts is " << nfvtxt << endl;
-
-  if ( _create_ttree ) shorttree->Fill();
-
-  ++tmp_evt;//to keep track of how many events pass event cuts
   return EVENT_OK;
 
-} // end of process_event
+} // end of EventStuff
 
