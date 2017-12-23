@@ -1115,6 +1115,7 @@ int BoulderCumulants::EventStuff()
 
   if ( _verbosity > 1000 )
     {
+      cout << answer_c24a << endl;
       cout << ac_fvtxs_tracks_qq2 << endl;
       cout << ac_fvtxs_tracks_qq3 << endl;
       cout << ac_fvtxs_tracks_cossum22 << endl;
