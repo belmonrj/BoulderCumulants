@@ -173,7 +173,10 @@ class BoulderCumulants: public SubsysReco
 
 
 
-  //-- Other variables
+  // ------------------------------------------
+  // --- Histograms
+  // ------------------------------------------
+
   TH1D* th1d_nfvtxt_combinedER;
   TH1D* th1d_nfvtxt_combined;
   TH1D* th1d_nfvtxt_north;
@@ -187,6 +190,8 @@ class BoulderCumulants: public SubsysReco
   TH1D* th1d_centralityA;
   TH1D* th1d_track_deta;
   TH1D* th1d_track_dphi;
+  TH2D* th2d_cent_dcax;
+  TH2D* th2d_cent_dcay;
   TProfile* tp1f_track_detacutpass;
 
 

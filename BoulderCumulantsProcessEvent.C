@@ -266,6 +266,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       float DCA_x      = fvtx_x + tan(the) * cos(phi) * (vertex_z - fvtx_z);
       float DCA_y      = fvtx_y + tan(the) * sin(phi) * (vertex_z - fvtx_z);
 
+      th2d_cent_dcax->Fill(centrality,DCA_x);
+      th2d_cent_dcay->Fill(centrality,DCA_y);
+
       if ( !use_utils )
         {
           if ( fabs(DCA_x) > default_cut_dca || fabs(DCA_y) > default_cut_dca ) continue;
