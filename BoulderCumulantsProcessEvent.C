@@ -355,7 +355,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
                   fvtx_track_passes[j] = false;
                 } // check on narrow eta
             } // inner loop
-          if ( fvtx_track_passes[i] == true ) ++number_of_tracks_that_pass;
+          if ( fvtx_track_passes[i] == true )
+            {
+              ++number_of_tracks_that_pass;
+              th1d_track_aafter_eta->Fill(eta);
+              th1d_track_aafter_phi->Fill(phi);
+            }
         } // outer loop
     } // check on do_double_track_cut
   double passratio = (double)number_of_tracks_that_pass/(double)nfvtxt;

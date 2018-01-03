@@ -194,6 +194,8 @@ class BoulderCumulants: public SubsysReco
   TH1D* th1d_track_before_phi;
   TH1D* th1d_track_after_eta;
   TH1D* th1d_track_after_phi;
+  TH1D* th1d_track_aafter_eta;
+  TH1D* th1d_track_aafter_phi;
   TH2D* th2d_cent_dcax;
   TH2D* th2d_cent_dcay;
   TH2D* th2d_cent_nhitr;

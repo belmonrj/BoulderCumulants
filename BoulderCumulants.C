@@ -108,6 +108,8 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   th1d_track_before_phi = NULL;
   th1d_track_after_eta = NULL;
   th1d_track_after_phi = NULL;
+  th1d_track_aafter_eta = NULL;
+  th1d_track_aafter_phi = NULL;
   th2d_cent_dcax = NULL;
   th2d_cent_dcay = NULL;
   th2d_cent_nhitr = NULL;
