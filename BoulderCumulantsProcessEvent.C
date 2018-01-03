@@ -471,7 +471,7 @@ int BoulderCumulants::EventRecursion()
   int harmonics_Two_Num[2] = {2,-2}; // 2, -2
   int harmonics_Two_Den[2] = {0,0}; // recursion gives right combinatorics
   TComplex twoRecursion = Recursion(2,harmonics_Two_Num)/Recursion(2,harmonics_Two_Den).Re();
-  //double wTwoRecursion = Recursion(2,harmonics_Two_Den).Re();
+  double spwTwoRecursion = Recursion(2,harmonics_Two_Den).Re();
   double wTwoRecursion = 1.0;
   nfvtxt_recursion[0][0]->Fill(nfvtxt,twoRecursion.Re(),wTwoRecursion); // <<cos(h1*phi1+h2*phi2)>>
   nfvtxt_recursion[1][0]->Fill(nfvtxt,twoRecursion.Im(),wTwoRecursion); // <<sin(h1*phi1+h2*phi2)>>
@@ -480,7 +480,7 @@ int BoulderCumulants::EventRecursion()
   int harmonics_Four_Num[4] = {2,2,-2,-2};
   int harmonics_Four_Den[4] = {0,0,0,0}; // recursion gives right combinatorics
   TComplex fourRecursion = Recursion(4,harmonics_Four_Num)/Recursion(4,harmonics_Four_Den).Re();
-  //double wFourRecursion = Recursion(4,harmonics_Four_Den).Re();
+  double spwFourRecursion = Recursion(4,harmonics_Four_Den).Re();
   double wFourRecursion = 1.0;
   nfvtxt_recursion[0][2]->Fill(nfvtxt,fourRecursion.Re(),wFourRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4)>>
   nfvtxt_recursion[1][2]->Fill(nfvtxt,fourRecursion.Im(),wFourRecursion); // <<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4)>>
@@ -489,7 +489,7 @@ int BoulderCumulants::EventRecursion()
   int harmonics_Six_Num[6] = {2,2,2,-2,-2,-2};
   int harmonics_Six_Den[6] = {0,0,0,0,0,0};
   TComplex sixRecursion = Recursion(6,harmonics_Six_Num)/Recursion(6,harmonics_Six_Den).Re();
-  //double wSixRecursion = Recursion(6,harmonics_Six_Den).Re();
+  double spwSixRecursion = Recursion(6,harmonics_Six_Den).Re();
   double wSixRecursion = 1.0;
   nfvtxt_recursion[0][4]->Fill(nfvtxt,sixRecursion.Re(),wSixRecursion); // <<cos(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
   nfvtxt_recursion[1][4]->Fill(nfvtxt,sixRecursion.Im(),wSixRecursion); // <<sin(h1*phi1+h2*phi2+h3*phi3+h4*phi4+h5*phi5+h6*phi6)>>
@@ -498,62 +498,48 @@ int BoulderCumulants::EventRecursion()
   int harmonics_Eight_Num[8] = {2,2,2,2,-2,-2,-2,-2};
   int harmonics_Eight_Den[8] = {0,0,0,0,0,0,0,0};
   TComplex eightRecursion = Recursion(8,harmonics_Eight_Num)/Recursion(8,harmonics_Eight_Den).Re();
-  //double wEightRecursion = Recursion(8,harmonics_Eight_Den).Re();
+  double spwEightRecursion = Recursion(8,harmonics_Eight_Den).Re();
   double wEightRecursion = 1.0;
   nfvtxt_recursion[0][6]->Fill(nfvtxt,eightRecursion.Re(),wEightRecursion);
   nfvtxt_recursion[1][6]->Fill(nfvtxt,eightRecursion.Im(),wEightRecursion);
   // --- now some stuff for the third harmonic
   // --- v3{2}
   int harmonics_Twov3_Num[2] = {3,-3};
-  int harmonics_Twov3_Den[2] = {0,0};
-  TComplex twov3Recursion = Recursion(2,harmonics_Twov3_Num)/Recursion(2,harmonics_Twov3_Den).Re();
-  double wTwov3Recursion = 1.0;
-  nfvtxt_recursion[0][1]->Fill(nfvtxt,twov3Recursion.Re(),wTwov3Recursion);
-  nfvtxt_recursion[1][1]->Fill(nfvtxt,twov3Recursion.Im(),wTwov3Recursion);
+  TComplex twov3Recursion = Recursion(2,harmonics_Twov3_Num)/Recursion(2,harmonics_Two_Den).Re();
+  nfvtxt_recursion[0][1]->Fill(nfvtxt,twov3Recursion.Re(),wTwoRecursion);
+  nfvtxt_recursion[1][1]->Fill(nfvtxt,twov3Recursion.Im(),wTwoRecursion);
   // --- v3{4}
   int harmonics_Fourv3_Num[4] = {3,3,-3,-3};
-  int harmonics_Fourv3_Den[4] = {0,0,0,0};
-  TComplex fourv3Recursion = Recursion(4,harmonics_Fourv3_Num)/Recursion(4,harmonics_Fourv3_Den).Re();
-  double wFourv3Recursion = 1.0;
-  nfvtxt_recursion[0][3]->Fill(nfvtxt,fourv3Recursion.Re(),wFourv3Recursion);
-  nfvtxt_recursion[1][3]->Fill(nfvtxt,fourv3Recursion.Im(),wFourv3Recursion);
+  TComplex fourv3Recursion = Recursion(4,harmonics_Fourv3_Num)/Recursion(4,harmonics_Four_Den).Re();
+  nfvtxt_recursion[0][3]->Fill(nfvtxt,fourv3Recursion.Re(),wFourRecursion);
+  nfvtxt_recursion[1][3]->Fill(nfvtxt,fourv3Recursion.Im(),wFourRecursion);
   // --- v3{6}
   int harmonics_Sixv3_Num[6] = {3,3,3,-3,-3,-3};
-  int harmonics_Sixv3_Den[6] = {0,0,0,0,0,0};
-  TComplex sixv3Recursion = Recursion(6,harmonics_Sixv3_Num)/Recursion(6,harmonics_Sixv3_Den).Re();
-  double wSixv3Recursion = 1.0;
-  nfvtxt_recursion[0][5]->Fill(nfvtxt,sixv3Recursion.Re(),wSixv3Recursion);
-  nfvtxt_recursion[1][5]->Fill(nfvtxt,sixv3Recursion.Im(),wSixv3Recursion);
+  TComplex sixv3Recursion = Recursion(6,harmonics_Sixv3_Num)/Recursion(6,harmonics_Six_Den).Re();
+  nfvtxt_recursion[0][5]->Fill(nfvtxt,sixv3Recursion.Re(),wSixRecursion);
+  nfvtxt_recursion[1][5]->Fill(nfvtxt,sixv3Recursion.Im(),wSixRecursion);
   // --- now some stuff for the fourth harmonic
   // --- v4{2}
   int harmonics_Twov4_Num[2] = {4,-4};
-  int harmonics_Twov4_Den[2] = {0,0};
-  TComplex twov4Recursion = Recursion(2,harmonics_Twov4_Num)/Recursion(2,harmonics_Twov4_Den).Re();
-  double wTwov4Recursion = 1.0;
-  nfvtxt_recursion[0][7]->Fill(nfvtxt,twov4Recursion.Re(),wTwov4Recursion);
-  nfvtxt_recursion[1][7]->Fill(nfvtxt,twov4Recursion.Im(),wTwov4Recursion);
+  TComplex twov4Recursion = Recursion(2,harmonics_Twov4_Num)/Recursion(2,harmonics_Two_Den).Re();
+  nfvtxt_recursion[0][7]->Fill(nfvtxt,twov4Recursion.Re(),wTwoRecursion);
+  nfvtxt_recursion[1][7]->Fill(nfvtxt,twov4Recursion.Im(),wTwoRecursion);
   // --- v4{4}
   int harmonics_Fourv4_Num[4] = {4,4,-4,-4};
-  int harmonics_Fourv4_Den[4] = {0,0,0,0};
-  TComplex fourv4Recursion = Recursion(4,harmonics_Fourv4_Num)/Recursion(4,harmonics_Fourv4_Den).Re();
-  double wFourv4Recursion = 1.0;
-  nfvtxt_recursion[0][9]->Fill(nfvtxt,fourv4Recursion.Re(),wFourv4Recursion);
-  nfvtxt_recursion[1][9]->Fill(nfvtxt,fourv4Recursion.Im(),wFourv4Recursion);
+  TComplex fourv4Recursion = Recursion(4,harmonics_Fourv4_Num)/Recursion(4,harmonics_Four_Den).Re();
+  nfvtxt_recursion[0][9]->Fill(nfvtxt,fourv4Recursion.Re(),wFourRecursion);
+  nfvtxt_recursion[1][9]->Fill(nfvtxt,fourv4Recursion.Im(),wFourRecursion);
   // --- now some symmetric cumulants
   // --- SC(2,3)
   int harmonics_FourSC23_Num[4] = {2,3,-2,-3};
-  int harmonics_FourSC23_Den[4] = {0,0,0,0};
-  TComplex fourSC23Recursion = Recursion(4,harmonics_FourSC23_Num)/Recursion(4,harmonics_FourSC23_Den).Re();
-  double wFourSC23Recursion = 1.0;
-  nfvtxt_recursion[0][10]->Fill(nfvtxt,fourSC23Recursion.Re(),wFourSC23Recursion);
-  nfvtxt_recursion[1][10]->Fill(nfvtxt,fourSC23Recursion.Im(),wFourSC23Recursion);
+  TComplex fourSC23Recursion = Recursion(4,harmonics_FourSC23_Num)/Recursion(4,harmonics_Four_Den).Re();
+  nfvtxt_recursion[0][10]->Fill(nfvtxt,fourSC23Recursion.Re(),wFourRecursion);
+  nfvtxt_recursion[1][10]->Fill(nfvtxt,fourSC23Recursion.Im(),wFourRecursion);
   // --- SC(2,4)
   int harmonics_FourSC24_Num[4] = {2,4,-2,-4};
-  int harmonics_FourSC24_Den[4] = {0,0,0,0};
-  TComplex fourSC24Recursion = Recursion(4,harmonics_FourSC24_Num)/Recursion(4,harmonics_FourSC24_Den).Re();
-  double wFourSC24Recursion = 1.0;
-  nfvtxt_recursion[0][11]->Fill(nfvtxt,fourSC24Recursion.Re(),wFourSC24Recursion);
-  nfvtxt_recursion[1][11]->Fill(nfvtxt,fourSC24Recursion.Im(),wFourSC24Recursion);
+  TComplex fourSC24Recursion = Recursion(4,harmonics_FourSC24_Num)/Recursion(4,harmonics_Four_Den).Re();
+  nfvtxt_recursion[0][11]->Fill(nfvtxt,fourSC24Recursion.Re(),wFourRecursion);
+  nfvtxt_recursion[1][11]->Fill(nfvtxt,fourSC24Recursion.Im(),wFourRecursion);
   // ------------------------------------------------------------------------------------------------------
   for ( int cs = 0; cs < maxHarmonic; ++cs )
     {
@@ -576,22 +562,22 @@ int BoulderCumulants::EventRecursion()
   centrality_recursion[0][6]->Fill(centrality,eightRecursion.Re(),wEightRecursion);
   centrality_recursion[1][6]->Fill(centrality,eightRecursion.Im(),wEightRecursion);
   // --- v3
-  centrality_recursion[0][1]->Fill(centrality,twov3Recursion.Re(),wTwov3Recursion);
-  centrality_recursion[1][1]->Fill(centrality,twov3Recursion.Im(),wTwov3Recursion);
-  centrality_recursion[0][3]->Fill(centrality,fourv3Recursion.Re(),wFourv3Recursion);
-  centrality_recursion[1][3]->Fill(centrality,fourv3Recursion.Im(),wFourv3Recursion);
-  centrality_recursion[0][5]->Fill(centrality,sixv3Recursion.Re(),wSixv3Recursion);
-  centrality_recursion[1][5]->Fill(centrality,sixv3Recursion.Im(),wSixv3Recursion);
+  centrality_recursion[0][1]->Fill(centrality,twov3Recursion.Re(),wTwoRecursion);
+  centrality_recursion[1][1]->Fill(centrality,twov3Recursion.Im(),wTwoRecursion);
+  centrality_recursion[0][3]->Fill(centrality,fourv3Recursion.Re(),wFourRecursion);
+  centrality_recursion[1][3]->Fill(centrality,fourv3Recursion.Im(),wFourRecursion);
+  centrality_recursion[0][5]->Fill(centrality,sixv3Recursion.Re(),wSixRecursion);
+  centrality_recursion[1][5]->Fill(centrality,sixv3Recursion.Im(),wSixRecursion);
   // --- v4
-  centrality_recursion[0][7]->Fill(centrality,twov4Recursion.Re(),wTwov4Recursion);
-  centrality_recursion[1][7]->Fill(centrality,twov4Recursion.Im(),wTwov4Recursion);
-  centrality_recursion[0][9]->Fill(centrality,fourv4Recursion.Re(),wFourv4Recursion);
-  centrality_recursion[1][9]->Fill(centrality,fourv4Recursion.Im(),wFourv4Recursion);
+  centrality_recursion[0][7]->Fill(centrality,twov4Recursion.Re(),wTwoRecursion);
+  centrality_recursion[1][7]->Fill(centrality,twov4Recursion.Im(),wTwoRecursion);
+  centrality_recursion[0][9]->Fill(centrality,fourv4Recursion.Re(),wFourRecursion);
+  centrality_recursion[1][9]->Fill(centrality,fourv4Recursion.Im(),wFourRecursion);
   // --- symmetric cumulants
-  centrality_recursion[0][10]->Fill(centrality,fourSC23Recursion.Re(),wFourSC23Recursion);
-  centrality_recursion[1][10]->Fill(centrality,fourSC23Recursion.Im(),wFourSC23Recursion);
-  centrality_recursion[0][11]->Fill(centrality,fourSC24Recursion.Re(),wFourSC24Recursion);
-  centrality_recursion[1][11]->Fill(centrality,fourSC24Recursion.Im(),wFourSC24Recursion);
+  centrality_recursion[0][10]->Fill(centrality,fourSC23Recursion.Re(),wFourRecursion);
+  centrality_recursion[1][10]->Fill(centrality,fourSC23Recursion.Im(),wFourRecursion);
+  centrality_recursion[0][11]->Fill(centrality,fourSC24Recursion.Re(),wFourRecursion);
+  centrality_recursion[1][11]->Fill(centrality,fourSC24Recursion.Im(),wFourRecursion);
   for ( int cs = 0; cs < maxHarmonic; ++cs )
     {
       centrality_recoffsets[0][cs]->Fill(centrality,Qvector[cs][1].Re()/Qvector[0][1].Re());
@@ -601,6 +587,28 @@ int BoulderCumulants::EventRecursion()
       centrality_recoffsets_south[0][cs]->Fill(centrality,Qvector_south[cs][1].Re()/Qvector_south[0][1].Re());
       centrality_recoffsets_south[1][cs]->Fill(centrality,Qvector_south[cs][1].Im()/Qvector_south[0][1].Re());
     }
+  // --- now trying special weights...
+  // --- v2
+  centrality_spw_recursion[0][0]->Fill(centrality,twoRecursion.Re(),spwTwoRecursion);
+  centrality_spw_recursion[1][0]->Fill(centrality,twoRecursion.Im(),spwTwoRecursion);
+  centrality_spw_recursion[0][2]->Fill(centrality,fourRecursion.Re(),spwFourRecursion);
+  centrality_spw_recursion[1][2]->Fill(centrality,fourRecursion.Im(),spwFourRecursion);
+  centrality_spw_recursion[0][4]->Fill(centrality,sixRecursion.Re(),spwSixRecursion);
+  centrality_spw_recursion[1][4]->Fill(centrality,sixRecursion.Im(),spwSixRecursion);
+  centrality_spw_recursion[0][6]->Fill(centrality,eightRecursion.Re(),spwEightRecursion);
+  centrality_spw_recursion[1][6]->Fill(centrality,eightRecursion.Im(),spwEightRecursion);
+  // --- v3
+  centrality_spw_recursion[0][1]->Fill(centrality,twov3Recursion.Re(),spwTwoRecursion);
+  centrality_spw_recursion[1][1]->Fill(centrality,twov3Recursion.Im(),spwTwoRecursion);
+  centrality_spw_recursion[0][3]->Fill(centrality,fourv3Recursion.Re(),spwFourRecursion);
+  centrality_spw_recursion[1][3]->Fill(centrality,fourv3Recursion.Im(),spwFourRecursion);
+  centrality_spw_recursion[0][5]->Fill(centrality,sixv3Recursion.Re(),spwSixRecursion);
+  centrality_spw_recursion[1][5]->Fill(centrality,sixv3Recursion.Im(),spwSixRecursion);
+  // --- v4
+  centrality_spw_recursion[0][7]->Fill(centrality,twov4Recursion.Re(),spwTwoRecursion);
+  centrality_spw_recursion[1][7]->Fill(centrality,twov4Recursion.Im(),spwTwoRecursion);
+  centrality_spw_recursion[0][9]->Fill(centrality,fourv4Recursion.Re(),spwFourRecursion);
+  centrality_spw_recursion[1][9]->Fill(centrality,fourv4Recursion.Im(),spwFourRecursion);
 
   return EVENT_OK;
 

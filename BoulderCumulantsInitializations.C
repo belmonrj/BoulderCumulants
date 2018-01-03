@@ -193,6 +193,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
         {
           nfvtxt_recursion[cs][c] = new TProfile(Form("nfvtxt_recursion_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
           centrality_recursion[cs][c] = new TProfile(Form("centrality_recursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
+          centrality_spw_recursion[cs][c] = new TProfile(Form("centrality_spw_recursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
         }
     }
   for ( int cs = 0; cs < 2; ++cs )
