@@ -86,8 +86,8 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   th1d_track_dphi = new TH1D("th1d_track_dphi","",2000, -0.1, 0.1);
   th1d_track_before_eta = new TH1D("th1d_track_before_eta","",700, -3.5, 3.5);
   th1d_track_before_phi = new TH1D("th1d_track_before_phi","",640, -3.2, 3.2);
-  th1d_track_after_eta = new TH1D("th1d_track_after_eta","",700, -3.5, 3.5));
-  th1d_track_after_phi = new TH1D("th1d_track_after_phi","",640, -3.2, 3.2));
+  th1d_track_after_eta = new TH1D("th1d_track_after_eta","",700, -3.5, 3.5);
+  th1d_track_after_phi = new TH1D("th1d_track_after_phi","",640, -3.2, 3.2);
   th2d_cent_dcax = new TH2D("th2d_cent_dcax","",100,-0.5,99.5, 600,-3.0,3.0);
   th2d_cent_dcay = new TH2D("th2d_cent_dcay","",100,-0.5,99.5, 600,-3.0,3.0);
   th2d_cent_nhitr = new TH2D("th2d_cent_nhitr","",100,-0.5,99.5, 7,-0.5,6.5);
