@@ -88,6 +88,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   th2d_cent_dcay = new TH2D("th2d_cent_dcay","",100,-0.5,99.5, 600,-3.0,3.0);
   th2d_cent_nhitr = new TH2D("th2d_cent_nhitr","",100,-0.5,99.5, 7,-0.5,6.0);
   th2d_cent_nhits = new TH2D("th2d_cent_nhits","",100,-0.5,99.5, 7,-0.5,6.0);
+  th2d_cent_chisq = new TH2D("th2d_cent_chisq","",100,-0.5,99.5, 7,-0.5,6.0);
   tp1f_track_detacutpass = new TProfile("tp1f_track_detacutpass","",100,-0.5,99.5,-0.1,1.1);
 
 

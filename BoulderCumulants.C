@@ -108,6 +108,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   th2d_cent_dcay = NULL;
   th2d_cent_nhitr = NULL;
   th2d_cent_nhits = NULL;
+  th2d_cent_chisq = NULL;
   tp1f_track_detacutpass = NULL;
   // --- now third harmonic
   // --- end third harmonic

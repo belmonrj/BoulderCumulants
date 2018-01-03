@@ -267,6 +267,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       th2d_cent_dcay->Fill(centrality,DCA_y);
       th2d_cent_nhitr->Fill(centrality,nhits);
       th2d_cent_nhits->Fill(centrality,nhits_special);
+      th2d_cent_chisq->Fill(centrality,chisq);
 
       // --- if it exists, use the utility class to make the track selections
       if ( use_utils )

@@ -194,6 +194,7 @@ class BoulderCumulants: public SubsysReco
   TH2D* th2d_cent_dcay;
   TH2D* th2d_cent_nhitr;
   TH2D* th2d_cent_nhits;
+  TH2D* th2d_cent_chisq;
   TProfile* tp1f_track_detacutpass;
 
   // --- centrality stuff
