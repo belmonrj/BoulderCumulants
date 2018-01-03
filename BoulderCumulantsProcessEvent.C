@@ -358,8 +358,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
           if ( fvtx_track_passes[i] == true )
             {
               ++number_of_tracks_that_pass;
-              th1d_track_aafter_eta->Fill(eta);
-              th1d_track_aafter_phi->Fill(phi);
+              th1d_track_aafter_eta->Fill(feta[i]);
+              th1d_track_aafter_phi->Fill(fphi[i]);
             }
         } // outer loop
     } // check on do_double_track_cut
