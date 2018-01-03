@@ -171,6 +171,10 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
     {
       for ( int c = 0; c < maxHarmonic; ++c )
         {
+          eta_recoffsets[cs][c] = NULL;
+          zvtx_recoffsets[cs][c] = NULL;
+          zvtx_recoffsets_north[cs][c] = NULL;
+          zvtx_recoffsets_south[cs][c] = NULL;
           nfvtxt_recoffsets[cs][c] = NULL;
           nfvtxt_recoffsets_north[cs][c] = NULL;
           nfvtxt_recoffsets_south[cs][c] = NULL;

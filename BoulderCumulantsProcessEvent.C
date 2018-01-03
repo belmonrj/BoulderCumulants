@@ -360,7 +360,12 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
               ++number_of_tracks_that_pass;
               th2d_track_aafter_eta->Fill(centrality,feta[i]);
               th2d_track_aafter_phi->Fill(centrality,fphi[i]);
-            }
+              for ( int cs = 0; cs < maxHarmonic; ++cs )
+                {
+                  eta_recoffsets[0][cs]->Fill(feta[i],cos(cs*fphi[i]));
+                  eta_recoffsets[1][cs]->Fill(feta[i],sin(cs*fphi[i]));
+                } // loop over harmonics
+            } // check on pass after nested loop
         } // outer loop
     } // check on do_double_track_cut
   double passratio = (double)number_of_tracks_that_pass/(double)nfvtxt;
@@ -586,6 +591,12 @@ int BoulderCumulants::EventRecursion()
       centrality_recoffsets_north[1][cs]->Fill(centrality,Qvector_north[cs][1].Im()/Qvector_north[0][1].Re());
       centrality_recoffsets_south[0][cs]->Fill(centrality,Qvector_south[cs][1].Re()/Qvector_south[0][1].Re());
       centrality_recoffsets_south[1][cs]->Fill(centrality,Qvector_south[cs][1].Im()/Qvector_south[0][1].Re());
+      zvtx_recoffsets[0][cs]->Fill(zvtx,Qvector[cs][1].Re()/Qvector[0][1].Re());
+      zvtx_recoffsets[1][cs]->Fill(zvtx,Qvector[cs][1].Im()/Qvector[0][1].Re());
+      zvtx_recoffsets_north[0][cs]->Fill(zvtx,Qvector_north[cs][1].Re()/Qvector_north[0][1].Re());
+      zvtx_recoffsets_north[1][cs]->Fill(zvtx,Qvector_north[cs][1].Im()/Qvector_north[0][1].Re());
+      zvtx_recoffsets_south[0][cs]->Fill(zvtx,Qvector_south[cs][1].Re()/Qvector_south[0][1].Re());
+      zvtx_recoffsets_south[1][cs]->Fill(zvtx,Qvector_south[cs][1].Im()/Qvector_south[0][1].Re());
     }
   // --- now trying special weights...
   // --- v2

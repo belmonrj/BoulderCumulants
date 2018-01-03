@@ -280,6 +280,10 @@ class BoulderCumulants: public SubsysReco
   TProfile* nfvtxt_recursion[2][maxCorrelator];
   TProfile* centrality_recursion[2][maxCorrelator];
   TProfile* centrality_spw_recursion[2][maxCorrelator];
+  TProfile* eta_recoffsets[2][maxHarmonic];
+  TProfile* zvtx_recoffsets[2][maxHarmonic];
+  TProfile* zvtx_recoffsets_north[2][maxHarmonic];
+  TProfile* zvtx_recoffsets_south[2][maxHarmonic];
   TProfile* nfvtxt_recoffsets[2][maxHarmonic];
   TProfile* nfvtxt_recoffsets_north[2][maxHarmonic];
   TProfile* nfvtxt_recoffsets_south[2][maxHarmonic];

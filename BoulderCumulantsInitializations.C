@@ -200,6 +200,10 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
     {
       for ( int c = 0; c < maxHarmonic; ++c )
         {
+          eta_recoffsets[cs][c] = new TProfile(Form("zvtx_recoffsets_%d_%d",cs,c),"",700,-3.5,3.5,-1.1,1.1);
+          zvtx_recoffsets[cs][c] = new TProfile(Form("zvtx_recoffsets_%d_%d",cs,c),"",220,-11.0,11.0,-1.1,1.1);
+          zvtx_recoffsets_north[cs][c] = new TProfile(Form("zvtx_recoffsets_north_%d_%d",cs,c),"",220,-11.0,11.0,-1.1,1.1);
+          zvtx_recoffsets_south[cs][c] = new TProfile(Form("zvtx_recoffsets_south_%d_%d",cs,c),"",220,-11.0,11.0,-1.1,1.1);
           nfvtxt_recoffsets[cs][c] = new TProfile(Form("nfvtxt_recoffsets_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
           nfvtxt_recoffsets_north[cs][c] = new TProfile(Form("nfvtxt_recoffsets_north_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
           nfvtxt_recoffsets_south[cs][c] = new TProfile(Form("nfvtxt_recoffsets_south_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
