@@ -150,6 +150,7 @@ class BoulderCumulants: public SubsysReco
   unsigned int trigger_live;
   float bc_x;
   float bc_y;
+  float zvtx;
   float vtx_z;
   float FVTX_X;
   float FVTX_Y;

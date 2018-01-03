@@ -167,7 +167,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
   // cout << endl;
   // cout << "--- starting vertex checking ---" << endl;
-  float zvtx = bbc_z;
+  zvtx = bbc_z;
   if ( use_utils )
     {
       if ( _verbosity > 1 ) cout << "using utils to get vertex " << endl;
