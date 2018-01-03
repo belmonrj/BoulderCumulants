@@ -263,6 +263,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       float DCA_x      = fvtx_x + tan(the) * cos(phi) * (vertex_z - fvtx_z);
       float DCA_y      = fvtx_y + tan(the) * sin(phi) * (vertex_z - fvtx_z);
 
+      th1d_track_before_eta->Fill(eta);
+      th1d_track_before_phi->Fill(phi);
       th2d_cent_dcax->Fill(centrality,DCA_x);
       th2d_cent_dcay->Fill(centrality,DCA_y);
       th2d_cent_nhitr->Fill(centrality,nhits);
@@ -283,7 +285,9 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
           if ( nhits < default_cut_nhit ) continue;
           if ( chisq > default_cut_chi2 ) continue;
         }
-      // --- done with first loop, so push the eta and phi and count total number of good tracks
+      // --- done with first loop, so fill after histos, push variables, and count total number of good tracks
+      th1d_track_after_eta->Fill(eta);
+      th1d_track_after_phi->Fill(phi);
       fphi.push_back(phi);
       feta.push_back(eta);
       fdcax.push_back(DCA_x);
