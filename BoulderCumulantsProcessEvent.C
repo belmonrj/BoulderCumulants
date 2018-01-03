@@ -206,22 +206,19 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   TFvtxCompactTrkMap::const_iterator trk_iter = trkfvtx_map->range();
   while ( TFvtxCompactTrkMap::const_pointer trk_ptr = trk_iter.next() )
     {
+      // --- count the raw number of tracks
+      ++nfvtxt_raw;
+
+      // --- get the track object
       TFvtxCompactTrk* fvtx_trk = trk_ptr->get();
+      // --- get the track patterns
       bool pattern0 = ((fvtx_trk->get_hit_pattern() & 0x3) > 0);
       bool pattern2 = ((fvtx_trk->get_hit_pattern() & (0x3 << 2)) > 0 );
       bool pattern4 = ((fvtx_trk->get_hit_pattern() & (0x3 << 4)) > 0 );
       bool pattern6 = ((fvtx_trk->get_hit_pattern() & (0x3 << 6)) > 0 );
       int nhits_special = pattern0 + pattern2 + pattern4 + pattern6;
 
-      ++nfvtxt_raw;
-      // --- use the utility class to make the track selections
-      if ( use_utils )
-	{
-	  if ( _verbosity > 2 ) cout << "using utils to check if the track is ok " << endl;
-	  if ( !_utils->is_fvtx_track_ok(fvtx_trk, zvtx) ) continue;
-	  if ( _verbosity > 2 ) cout << "track pass utils " << endl;
-	}
-
+      // --- basic track variables
       float the = fvtx_trk->get_fvtx_theta();
       float eta = fvtx_trk->get_fvtx_eta();
       float phi = fvtx_trk->get_fvtx_phi();
@@ -268,8 +265,18 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
 
       th2d_cent_dcax->Fill(centrality,DCA_x);
       th2d_cent_dcay->Fill(centrality,DCA_y);
+      th2d_cent_nhitr->Fill(centrality,nhits);
+      th2d_cent_nhits->Fill(centrality,nhits_special);
 
-      if ( !use_utils )
+      // --- if it exists, use the utility class to make the track selections
+      if ( use_utils )
+        {
+          if ( _verbosity > 2 ) cout << "using utils to check if the track is ok " << endl;
+          if ( !_utils->is_fvtx_track_ok(fvtx_trk, zvtx) ) continue;
+          if ( _verbosity > 2 ) cout << "track pass utils " << endl;
+        }
+      // --- if it doesn't, make the cuts by hand
+      else
         {
           if ( fabs(DCA_x) > default_cut_dca || fabs(DCA_y) > default_cut_dca ) continue;
           if ( nhits < default_cut_nhit ) continue;
