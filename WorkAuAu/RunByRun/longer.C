@@ -110,6 +110,7 @@ void longer()
   leg->SetTextSize(0.05);
   leg->Draw();
   c1->Print("sixtyfig_part2.png");
+  c1->Print("sixtyfig_part2.pdf");
 
   ymin = -1e-6;
   ymax = 1e-6;
@@ -123,6 +124,7 @@ void longer()
   histR->Draw("same ex0p");
   leg->Draw();
   c1->Print("sixtyfig_part3.png");
+  c1->Print("sixtyfig_part3.pdf");
 
   ymin = -1e-7;
   ymax = 1e-7;
@@ -136,6 +138,7 @@ void longer()
   histR->Draw("same ex0p");
   leg->Draw();
   c1->Print("sixtyfig_part4.png");
+  c1->Print("sixtyfig_part4.pdf");
 
 }
 
