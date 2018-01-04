@@ -43,4 +43,5 @@ the 117* series have incomplete statistics due to serious taxi problems
 12432 default cuts but with run by run Q-vector (re)recentering
 
 12555 default cuts, fewer histograms and radically reorganized code
+12579 same as 12555 but with added diagnostics, Q-vector recentering, and weighting test histograms
 
