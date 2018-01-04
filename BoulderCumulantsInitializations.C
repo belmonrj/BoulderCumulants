@@ -72,15 +72,15 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
   // ---
 
   th1d_nfvtxt_combinedER = new TH1D("th1d_nfvtxt_combinedER","",5000, -0.5, 4999.5);
-  th1d_nfvtxt_combined = new TH1D("th1d_nfvtxt_combined","",2000, -0.5, 1999.5);
+  th1d_nfvtxt_combined = new TH1D("th1d_nfvtxt_combined","",700, -0.5, 699.5);
   th1d_centrality = new TH1D("th1d_centrality","",100, -0.5, 99.5);
   th1d_centralityA = new TH1D("th1d_centralityA","",100, -0.5, 99.5);
-  th2d_nfvtxt_bbcsum = new TH2D("th2d_nfvtxt_bbcsum","",2000, -0.5, 1999.5, 1000, 0, 4000);
-  th2d_nfvtxt_centrality = new TH2D("th2d_nfvtxt_centrality","",2000, -0.5, 1999.5, 100, -0.5, 99.5);
-  th2d_nfvtxt_centralityA = new TH2D("th2d_nfvtxt_centralityA","",2000, -0.5, 1999.5, 100, -0.5, 99.5);
-  th2d_nfvtxt_bbcsumratio = new TH2D("th2d_nfvtxt_bbcsumratio","",2000, -0.5, 1999.5, 1000, 0, 5);
-  th1d_nfvtxt_north = new TH1D("th1d_nfvtxt_north","",2000, -0.5, 1999.5);
-  th1d_nfvtxt_south = new TH1D("th1d_nfvtxt_south","",2000, -0.5, 1999.5);
+  th2d_nfvtxt_bbcsum = new TH2D("th2d_nfvtxt_bbcsum","",700, -0.5, 699.5, 1000, 0, 4000);
+  th2d_nfvtxt_centrality = new TH2D("th2d_nfvtxt_centrality","",700, -0.5, 699.5, 100, -0.5, 99.5);
+  th2d_nfvtxt_centralityA = new TH2D("th2d_nfvtxt_centralityA","",700, -0.5, 699.5, 100, -0.5, 99.5);
+  th2d_nfvtxt_bbcsumratio = new TH2D("th2d_nfvtxt_bbcsumratio","",700, -0.5, 699.5, 1000, 0, 5);
+  th1d_nfvtxt_north = new TH1D("th1d_nfvtxt_north","",700, -0.5, 699.5);
+  th1d_nfvtxt_south = new TH1D("th1d_nfvtxt_south","",700, -0.5, 699.5);
   th2d_nfvtxt_northsouth = new TH2D("th2d_nfvtxt_northsouth","",1000, -0.5, 999.5, 1000, -0.5, 999.5);
   th1d_track_deta = new TH1D("th1d_track_deta","",2000, -0.1, 0.1);
   th1d_track_dphi = new TH1D("th1d_track_dphi","",2000, -0.1, 0.1);
@@ -191,7 +191,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
     {
       for(int c = 0; c < maxCorrelator; ++c )
         {
-          nfvtxt_recursion[cs][c] = new TProfile(Form("nfvtxt_recursion_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          nfvtxt_recursion[cs][c] = new TProfile(Form("nfvtxt_recursion_%d_%d",cs,c),"",700,-0.5,699.5,-1.1,1.1);
           centrality_recursion[cs][c] = new TProfile(Form("centrality_recursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
           centrality_spw_recursion[cs][c] = new TProfile(Form("centrality_spw_recursion_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
         }
@@ -204,9 +204,9 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
           zvtx_recoffsets[cs][c] = new TProfile(Form("zvtx_recoffsets_%d_%d",cs,c),"",220,-11.0,11.0,-1.1,1.1);
           zvtx_recoffsets_north[cs][c] = new TProfile(Form("zvtx_recoffsets_north_%d_%d",cs,c),"",220,-11.0,11.0,-1.1,1.1);
           zvtx_recoffsets_south[cs][c] = new TProfile(Form("zvtx_recoffsets_south_%d_%d",cs,c),"",220,-11.0,11.0,-1.1,1.1);
-          nfvtxt_recoffsets[cs][c] = new TProfile(Form("nfvtxt_recoffsets_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
-          nfvtxt_recoffsets_north[cs][c] = new TProfile(Form("nfvtxt_recoffsets_north_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
-          nfvtxt_recoffsets_south[cs][c] = new TProfile(Form("nfvtxt_recoffsets_south_%d_%d",cs,c),"",2000,-0.5,1999.5,-1.1,1.1);
+          nfvtxt_recoffsets[cs][c] = new TProfile(Form("nfvtxt_recoffsets_%d_%d",cs,c),"",700,-0.5,699.5,-1.1,1.1);
+          nfvtxt_recoffsets_north[cs][c] = new TProfile(Form("nfvtxt_recoffsets_north_%d_%d",cs,c),"",700,-0.5,699.5,-1.1,1.1);
+          nfvtxt_recoffsets_south[cs][c] = new TProfile(Form("nfvtxt_recoffsets_south_%d_%d",cs,c),"",700,-0.5,699.5,-1.1,1.1);
           centrality_recoffsets[cs][c] = new TProfile(Form("centrality_recoffsets_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
           centrality_recoffsets_north[cs][c] = new TProfile(Form("centrality_recoffsets_north_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
           centrality_recoffsets_south[cs][c] = new TProfile(Form("centrality_recoffsets_south_%d_%d",cs,c),"",100,-0.5,99.5,-1.1,1.1);
