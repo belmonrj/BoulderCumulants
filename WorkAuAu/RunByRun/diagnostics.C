@@ -40,12 +40,14 @@ void diagnostics()
       c1->SetLogz(1);
       c1->Print(Form("RBR_figs/h2_fns_%s.png",filenames[i].Data()));
       c1->SetLogz(0);
-      continue;
+      //continue;
       // --- get the north qx2
-      TProfile* h1_nqx2 = (TProfile*) fin->Get("centrality_tracks_north_qx2");
+      TProfile* h1_nqx2 = (TProfile*) fin->Get("centrality_recoffsets_north_0_2");
       h1_nqx2->Draw("col");
-      h1_nqx2->SetMinimum(-0.05);
-      h1_nqx2->SetMaximum(0.05);
+      double max = 0.2;
+      double min = -max;
+      h1_nqx2->SetMinimum(min);
+      h1_nqx2->SetMaximum(max);
       h1_nqx2->GetXaxis()->SetTitle("centrality");
       h1_nqx2->GetYaxis()->SetTitle("north #LTcos 2#phi#GT");
       h1_nqx2->GetYaxis()->SetTitleOffset(1.2);
@@ -54,34 +56,34 @@ void diagnostics()
       c1->Print(Form("RBR_figs/h1_nqx2_%s.png",filenames[i].Data()));
       c1->SetLogz(0);
       // --- get the south qx2
-      TProfile* h1_sqx2 = (TProfile*) fin->Get("centrality_tracks_south_qx2");
+      TProfile* h1_sqx2 = (TProfile*) fin->Get("centrality_recoffsets_south_0_2");
       h1_sqx2->Draw("col");
-      h1_sqx2->SetMinimum(-0.05);
-      h1_sqx2->SetMaximum(0.05);
+      h1_sqx2->SetMinimum(min);
+      h1_sqx2->SetMaximum(max);
       h1_sqx2->GetXaxis()->SetTitle("centrality");
-      h1_sqx2->GetYaxis()->SetTitle("south #LTsin 2#phi#GT");
+      h1_sqx2->GetYaxis()->SetTitle("south #LTcos 2#phi#GT");
       h1_sqx2->GetYaxis()->SetTitleOffset(1.2);
       tex.DrawLatex(0.7,0.2,Form("%s",filenames[i].Data()));
       c1->SetLogz(1);
       c1->Print(Form("RBR_figs/h1_sqx2_%s.png",filenames[i].Data()));
       c1->SetLogz(0);
       // --- get the north qy2
-      TProfile* h1_nqy2 = (TProfile*) fin->Get("centrality_tracks_north_qy2");
+      TProfile* h1_nqy2 = (TProfile*) fin->Get("centrality_recoffsets_north_1_2");
       h1_nqy2->Draw("col");
-      h1_nqy2->SetMinimum(-0.05);
-      h1_nqy2->SetMaximum(0.05);
+      h1_nqy2->SetMinimum(min);
+      h1_nqy2->SetMaximum(max);
       h1_nqy2->GetXaxis()->SetTitle("centrality");
-      h1_nqy2->GetYaxis()->SetTitle("north #LTcos 2#phi#GT");
+      h1_nqy2->GetYaxis()->SetTitle("north #LTsin 2#phi#GT");
       h1_nqy2->GetYaxis()->SetTitleOffset(1.2);
       tex.DrawLatex(0.7,0.2,Form("%s",filenames[i].Data()));
       c1->SetLogz(1);
       c1->Print(Form("RBR_figs/h1_nqy2_%s.png",filenames[i].Data()));
       c1->SetLogz(0);
       // --- get the south qy2
-      TProfile* h1_sqy2 = (TProfile*) fin->Get("centrality_tracks_south_qy2");
+      TProfile* h1_sqy2 = (TProfile*) fin->Get("centrality_recoffsets_south_1_2");
       h1_sqy2->Draw("col");
-      h1_sqy2->SetMinimum(-0.05);
-      h1_sqy2->SetMaximum(0.05);
+      h1_sqy2->SetMinimum(min);
+      h1_sqy2->SetMaximum(max);
       h1_sqy2->GetXaxis()->SetTitle("centrality");
       h1_sqy2->GetYaxis()->SetTitle("south #LTsin 2#phi#GT");
       h1_sqy2->GetYaxis()->SetTitleOffset(1.2);
@@ -90,10 +92,10 @@ void diagnostics()
       c1->Print(Form("RBR_figs/h1_sqy2_%s.png",filenames[i].Data()));
       c1->SetLogz(0);
       // --- get the north qx3
-      TProfile* h1_nqx3 = (TProfile*) fin->Get("centrality_tracks_north_qx3");
+      TProfile* h1_nqx3 = (TProfile*) fin->Get("centrality_recoffsets_north_0_3");
       h1_nqx3->Draw("col");
-      h1_nqx3->SetMinimum(-0.05);
-      h1_nqx3->SetMaximum(0.05);
+      h1_nqx3->SetMinimum(min);
+      h1_nqx3->SetMaximum(max);
       h1_nqx3->GetXaxis()->SetTitle("centrality");
       h1_nqx3->GetYaxis()->SetTitle("north #LTcos 3#phi#GT");
       h1_nqx3->GetYaxis()->SetTitleOffset(1.2);
@@ -102,34 +104,34 @@ void diagnostics()
       c1->Print(Form("RBR_figs/h1_nqx3_%s.png",filenames[i].Data()));
       c1->SetLogz(0);
       // --- get the south qx3
-      TProfile* h1_sqx3 = (TProfile*) fin->Get("centrality_tracks_south_qx3");
+      TProfile* h1_sqx3 = (TProfile*) fin->Get("centrality_recoffsets_south_0_3");
       h1_sqx3->Draw("col");
-      h1_sqx3->SetMinimum(-0.05);
-      h1_sqx3->SetMaximum(0.05);
+      h1_sqx3->SetMinimum(min);
+      h1_sqx3->SetMaximum(max);
       h1_sqx3->GetXaxis()->SetTitle("centrality");
-      h1_sqx3->GetYaxis()->SetTitle("south #LTsin 3#phi#GT");
+      h1_sqx3->GetYaxis()->SetTitle("south #LTcos 3#phi#GT");
       h1_sqx3->GetYaxis()->SetTitleOffset(1.2);
       tex.DrawLatex(0.7,0.2,Form("%s",filenames[i].Data()));
       c1->SetLogz(1);
       c1->Print(Form("RBR_figs/h1_sqx3_%s.png",filenames[i].Data()));
       c1->SetLogz(0);
       // --- get the north qy3
-      TProfile* h1_nqy3 = (TProfile*) fin->Get("centrality_tracks_north_qy3");
+      TProfile* h1_nqy3 = (TProfile*) fin->Get("centrality_recoffsets_north_1_3");
       h1_nqy3->Draw("col");
-      h1_nqy3->SetMinimum(-0.05);
-      h1_nqy3->SetMaximum(0.05);
+      h1_nqy3->SetMinimum(min);
+      h1_nqy3->SetMaximum(max);
       h1_nqy3->GetXaxis()->SetTitle("centrality");
-      h1_nqy3->GetYaxis()->SetTitle("north #LTcos 3#phi#GT");
+      h1_nqy3->GetYaxis()->SetTitle("north #LTsin 3#phi#GT");
       h1_nqy3->GetYaxis()->SetTitleOffset(1.2);
       tex.DrawLatex(0.7,0.2,Form("%s",filenames[i].Data()));
       c1->SetLogz(1);
       c1->Print(Form("RBR_figs/h1_nqy3_%s.png",filenames[i].Data()));
       c1->SetLogz(0);
       // --- get the south qy3
-      TProfile* h1_sqy3 = (TProfile*) fin->Get("centrality_tracks_south_qy3");
+      TProfile* h1_sqy3 = (TProfile*) fin->Get("centrality_recoffsets_south_1_3");
       h1_sqy3->Draw("col");
-      h1_sqy3->SetMinimum(-0.05);
-      h1_sqy3->SetMaximum(0.05);
+      h1_sqy3->SetMinimum(min);
+      h1_sqy3->SetMaximum(max);
       h1_sqy3->GetXaxis()->SetTitle("centrality");
       h1_sqy3->GetYaxis()->SetTitle("south #LTsin 3#phi#GT");
       h1_sqy3->GetYaxis()->SetTitleOffset(1.2);
