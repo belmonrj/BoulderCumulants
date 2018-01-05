@@ -97,7 +97,7 @@ void get_offsets()
               qvoff[cs][c] = nfvtxt_recoffsets_north[cs][c]->GetBinContent(i+1);
               sprintf(name,"qvoff_nfvtxt_north[%d][%d][%d]",i,cs,c);
               //fout << setprecision(6);
-              char offset[10];
+              char offset[20];
               sprintf(offset,"%.10f",qvoff[cs][c]);
               fout << name << " = " << offset << ";";
               fout << "\t";
@@ -115,7 +115,7 @@ void get_offsets()
               qvoff[cs][c] = nfvtxt_recoffsets_south[cs][c]->GetBinContent(i+1);
               sprintf(name,"qvoff_nfvtxt_south[%d][%d][%d]",i,cs,c);
               //fout << setprecision(6);
-              char offset[10];
+              char offset[20];
               sprintf(offset,"%.10f",qvoff[cs][c]);
               fout << name << " = " << offset << ";";
               fout << "\t";
