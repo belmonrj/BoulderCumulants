@@ -72,6 +72,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   bc_x = -9999.9;
   bc_y = -9999.9;
   vtx_z = -9999.9;
+  zvtx = -9999.9;
 
   shorttree = NULL;
   bbc_qn = -9999.9;
@@ -80,6 +81,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   nfvtxt_south = 0;
   nfvtxt_north = 0;
   nfvtxt_raw = 0;
+  for ( int i = 0; i < maxTracks; ++i ) fvtx_track_passes[i] = false;
   for ( int i = 0; i < nharm; ++i )
     {
       d_SouthQX[i] = 0;
