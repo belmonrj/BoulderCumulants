@@ -458,10 +458,10 @@ int BoulderCumulants::EventRecursion()
           // Qoffset[h][p] = TComplex( Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][0][h], Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][1][h] );
           // Qvector[h][p] -= Qoffset[h][p];
           // --- north
-          Qoffset_north[h][p] = TComplex( Qvector_north[0][1].Re()*qvoff_cent_north[icent][0][h], Qvector_north[0][1].Re()*qvoff_cent_north[icent][1][h] );
+          Qoffset_north[h][p] = TComplex( Qvector_north[0][1].Re()*qvoff_nfvtxt_north[icent][0][h], Qvector_north[0][1].Re()*qvoff_nfvtxt_north[icent][1][h] );
           Qvector_north[h][p] -= Qoffset_north[h][p];
           // --- south
-          Qoffset_south[h][p] = TComplex( Qvector_south[0][1].Re()*qvoff_cent_south[icent][0][h], Qvector_south[0][1].Re()*qvoff_cent_south[icent][1][h] );
+          Qoffset_south[h][p] = TComplex( Qvector_south[0][1].Re()*qvoff_nfvtxt_south[icent][0][h], Qvector_south[0][1].Re()*qvoff_nfvtxt_south[icent][1][h] );
           Qvector_south[h][p] -= Qoffset_south[h][p];
           // --- add up north and south to get combined that's been recentered arm-by-arm
           Qvector[h][p] = Qvector_north[h][p] + Qvector_south[h][p];
@@ -1009,14 +1009,14 @@ int BoulderCumulants::EventStuff()
   // ---
   // --- FVTX south
   float os_fvtxs_tracks_qw = fvtxs_tracks_qw[0];
-  float os_fvtxs_tracks_qx2 = fvtxs_tracks_qx2[0] - qvoff_cent_south[icent][0][2]*os_fvtxs_tracks_qw;
-  float os_fvtxs_tracks_qy2 = fvtxs_tracks_qy2[0] - qvoff_cent_south[icent][1][2]*os_fvtxs_tracks_qw;
-  float os_fvtxs_tracks_qx3 = fvtxs_tracks_qx3[0] - qvoff_cent_south[icent][0][3]*os_fvtxs_tracks_qw;
-  float os_fvtxs_tracks_qy3 = fvtxs_tracks_qy3[0] - qvoff_cent_south[icent][1][3]*os_fvtxs_tracks_qw;
-  float os_fvtxs_tracks_qx4 = fvtxs_tracks_qx4[0] - qvoff_cent_south[icent][0][4]*os_fvtxs_tracks_qw;
-  float os_fvtxs_tracks_qy4 = fvtxs_tracks_qy4[0] - qvoff_cent_south[icent][1][4]*os_fvtxs_tracks_qw;
-  float os_fvtxs_tracks_qx6 = fvtxs_tracks_qx6[0] - qvoff_cent_south[icent][0][6]*os_fvtxs_tracks_qw;
-  float os_fvtxs_tracks_qy6 = fvtxs_tracks_qy6[0] - qvoff_cent_south[icent][1][6]*os_fvtxs_tracks_qw;
+  float os_fvtxs_tracks_qx2 = fvtxs_tracks_qx2[0] - qvoff_nfvtxt_south[icent][0][2]*os_fvtxs_tracks_qw;
+  float os_fvtxs_tracks_qy2 = fvtxs_tracks_qy2[0] - qvoff_nfvtxt_south[icent][1][2]*os_fvtxs_tracks_qw;
+  float os_fvtxs_tracks_qx3 = fvtxs_tracks_qx3[0] - qvoff_nfvtxt_south[icent][0][3]*os_fvtxs_tracks_qw;
+  float os_fvtxs_tracks_qy3 = fvtxs_tracks_qy3[0] - qvoff_nfvtxt_south[icent][1][3]*os_fvtxs_tracks_qw;
+  float os_fvtxs_tracks_qx4 = fvtxs_tracks_qx4[0] - qvoff_nfvtxt_south[icent][0][4]*os_fvtxs_tracks_qw;
+  float os_fvtxs_tracks_qy4 = fvtxs_tracks_qy4[0] - qvoff_nfvtxt_south[icent][1][4]*os_fvtxs_tracks_qw;
+  float os_fvtxs_tracks_qx6 = fvtxs_tracks_qx6[0] - qvoff_nfvtxt_south[icent][0][6]*os_fvtxs_tracks_qw;
+  float os_fvtxs_tracks_qy6 = fvtxs_tracks_qy6[0] - qvoff_nfvtxt_south[icent][1][6]*os_fvtxs_tracks_qw;
   float os_fvtxs_tracks_qq2 = calc2_event(os_fvtxs_tracks_qx2,os_fvtxs_tracks_qy2,os_fvtxs_tracks_qw);
   float os_fvtxs_tracks_qq3 = calc2_event(os_fvtxs_tracks_qx3,os_fvtxs_tracks_qy3,os_fvtxs_tracks_qw);
   TComplex tc_os_fvtxs_tracks_Q2(os_fvtxs_tracks_qx2,os_fvtxs_tracks_qy2);
@@ -1034,14 +1034,14 @@ int BoulderCumulants::EventStuff()
 
   // --- FVTX north
   float os_fvtxn_tracks_qw = fvtxn_tracks_qw[0];
-  float os_fvtxn_tracks_qx2 = fvtxn_tracks_qx2[0] - qvoff_cent_north[icent][0][2]*os_fvtxn_tracks_qw;
-  float os_fvtxn_tracks_qy2 = fvtxn_tracks_qy2[0] - qvoff_cent_north[icent][1][2]*os_fvtxn_tracks_qw;
-  float os_fvtxn_tracks_qx3 = fvtxn_tracks_qx3[0] - qvoff_cent_north[icent][0][3]*os_fvtxn_tracks_qw;
-  float os_fvtxn_tracks_qy3 = fvtxn_tracks_qy3[0] - qvoff_cent_north[icent][1][3]*os_fvtxn_tracks_qw;
-  float os_fvtxn_tracks_qx4 = fvtxn_tracks_qx4[0] - qvoff_cent_north[icent][0][4]*os_fvtxn_tracks_qw;
-  float os_fvtxn_tracks_qy4 = fvtxn_tracks_qy4[0] - qvoff_cent_north[icent][1][4]*os_fvtxn_tracks_qw;
-  float os_fvtxn_tracks_qx6 = fvtxn_tracks_qx6[0] - qvoff_cent_north[icent][0][6]*os_fvtxn_tracks_qw;
-  float os_fvtxn_tracks_qy6 = fvtxn_tracks_qy6[0] - qvoff_cent_north[icent][1][6]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qx2 = fvtxn_tracks_qx2[0] - qvoff_nfvtxt_north[icent][0][2]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qy2 = fvtxn_tracks_qy2[0] - qvoff_nfvtxt_north[icent][1][2]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qx3 = fvtxn_tracks_qx3[0] - qvoff_nfvtxt_north[icent][0][3]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qy3 = fvtxn_tracks_qy3[0] - qvoff_nfvtxt_north[icent][1][3]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qx4 = fvtxn_tracks_qx4[0] - qvoff_nfvtxt_north[icent][0][4]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qy4 = fvtxn_tracks_qy4[0] - qvoff_nfvtxt_north[icent][1][4]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qx6 = fvtxn_tracks_qx6[0] - qvoff_nfvtxt_north[icent][0][6]*os_fvtxn_tracks_qw;
+  float os_fvtxn_tracks_qy6 = fvtxn_tracks_qy6[0] - qvoff_nfvtxt_north[icent][1][6]*os_fvtxn_tracks_qw;
   float os_fvtxn_tracks_qq2 = calc2_event(os_fvtxn_tracks_qx2,os_fvtxn_tracks_qy2,os_fvtxn_tracks_qw);
   float os_fvtxn_tracks_qq3 = calc2_event(os_fvtxn_tracks_qx3,os_fvtxn_tracks_qy3,os_fvtxn_tracks_qw);
   TComplex tc_os_fvtxn_tracks_Q2(os_fvtxn_tracks_qx2,os_fvtxn_tracks_qy2);
@@ -1121,10 +1121,10 @@ int BoulderCumulants::EventStuff()
       // cout << "2 " << os_fvtxc_tracks_qq2    << " " <<  twoRecursion.Re() << endl;
       // cout << "4 " << os_fvtxc_tracks_qqqq24 << " " << fourRecursion.Re() << endl;
       // cout << "6 " << os_fvtxc_tracks_six    << " " <<  sixRecursion.Re() << endl;
-      cout << "offset south 2x " << " " << Qoffset_south[2][1].Re()/Qvector_south[0][1].Re() << " " << qvoff_cent_south[icent][0][2] << endl;
-      cout << "offset north 2x " << " " << Qoffset_north[2][1].Re()/Qvector_north[0][1].Re() << " " << qvoff_cent_north[icent][0][2] << endl;
-      cout << "offset south 2y " << " " << Qoffset_south[2][1].Im()/Qvector_south[0][1].Re() << " " << qvoff_cent_south[icent][1][2] << endl;
-      cout << "offset north 2y " << " " << Qoffset_north[2][1].Im()/Qvector_north[0][1].Re() << " " << qvoff_cent_north[icent][1][2] << endl;
+      cout << "offset south 2x " << " " << Qoffset_south[2][1].Re()/Qvector_south[0][1].Re() << " " << qvoff_nfvtxt_south[icent][0][2] << endl;
+      cout << "offset north 2x " << " " << Qoffset_north[2][1].Re()/Qvector_north[0][1].Re() << " " << qvoff_nfvtxt_north[icent][0][2] << endl;
+      cout << "offset south 2y " << " " << Qoffset_south[2][1].Im()/Qvector_south[0][1].Re() << " " << qvoff_nfvtxt_south[icent][1][2] << endl;
+      cout << "offset north 2y " << " " << Qoffset_north[2][1].Im()/Qvector_north[0][1].Re() << " " << qvoff_nfvtxt_north[icent][1][2] << endl;
     }
 
   // --------------------------------------------------------- //
