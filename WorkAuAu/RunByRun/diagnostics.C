@@ -139,6 +139,11 @@ void diagnostics()
       c1->SetLogz(0);
       // --- all done
       fin->Close();
+      // --- this extra line doesn't harm anything but doesn't help
+      // --- after a certain number of files i got a system error about too many files open
+      // --- one need only check ulimit -n and then adjust as needed
+      // --- i've added that line to my .bashrc file so that it's never a problem
+      fin->Delete();
     }
 
 }
