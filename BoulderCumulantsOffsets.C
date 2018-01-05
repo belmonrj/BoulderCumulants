@@ -1,4 +1,8 @@
+#include <iostream>
 #include "BoulderCumulants.h"
+
+using std::cout;
+using std::endl;
 
 void BoulderCumulants::SetQvectorOffsets(int run)
 {
