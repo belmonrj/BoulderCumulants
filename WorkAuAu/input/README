@@ -45,3 +45,7 @@ the 117* series have incomplete statistics due to serious taxi problems
 12555 default cuts, fewer histograms and radically reorganized code
 12579 same as 12555 but with added diagnostics, Q-vector recentering, and weighting test histograms
 
+12581 same as 12579 but with Q-vector offsets removed and improved histogram range
+12582 same as 12581 but pro.109 data set (405XXX-408XXX)
+1258A merge of 12581 and 12582
+
