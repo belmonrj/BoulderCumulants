@@ -1,6 +1,7 @@
-#include "filenames.C"
+//#include "filenames.C"
+#include "filenames_more.C"
 
-const int nhistos = 60;
+//const int nhistos = 60;
 
 
 
@@ -10,11 +11,12 @@ void diagnostics()
 
   TCanvas* c1 = new TCanvas("c1","");
 
-  for ( int i = 0; i < nhistos; ++i )
+  //for ( int i = 0; i < nhistos; ++i )
+  for ( int i = 0; i < NMOREFILES; ++i )
     {
       // --- open the file
       //TFile* fin = TFile::Open(filenames[i]);
-      TFile* fin = TFile::Open(Form("SpecialFiles/%s",filenames[i].Data()));
+      TFile* fin = TFile::Open(Form("NewFiles/%s",filenames[i].Data()));
       filenames[i].Remove(6,5);
       cout << "run number " << filenames[i] << endl;
       // --- get the qbbcns/nfvtxt correlation and make nice plot
@@ -38,6 +40,7 @@ void diagnostics()
       c1->SetLogz(1);
       c1->Print(Form("RBR_figs/h2_fns_%s.png",filenames[i].Data()));
       c1->SetLogz(0);
+      continue;
       // --- get the north qx2
       TProfile* h1_nqx2 = (TProfile*) fin->Get("centrality_tracks_north_qx2");
       h1_nqx2->Draw("col");
