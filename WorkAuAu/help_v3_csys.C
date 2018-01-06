@@ -55,6 +55,13 @@ void help_v3_csys()
   fbase->Close();
   feval->Close();
 
+  //fbase = TFile::Open("input/histos_12581.root"); no q-vector recentering
+  fbase = TFile::Open("input/histos_12579.root"); // cent-based
+  feval = TFile::Open("input/histos_12587.root");
+  takefiles(fbase,feval,"nfqr");
+  fbase->Close();
+  feval->Close();
+
   cout << "All done.  Have a nice day!" << endl;
 
 }
