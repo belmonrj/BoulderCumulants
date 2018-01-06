@@ -49,3 +49,5 @@ the 117* series have incomplete statistics due to serious taxi problems
 12582 same as 12581 but pro.109 data set (405XXX-408XXX)
 1258A merge of 12581 and 12582
 
+12587 same as 12581 but with Q-vector recentering as a function of nfvtxt
+
