@@ -7,7 +7,9 @@ void crunch(TH1D*, TH1D*, const char*, const char*, double, double, double, doub
 void compare_weights()
 {
   TFile* file = TFile::Open("input/histos_12579.root"); // centrality based qvrc
+  takefile(file,"wght",2);
   takefile(file,"wght",3);
+  takefile(file,"wght",4);
 }
 
 void takefile(TFile* file, const char* systype, int harmonic)
@@ -30,6 +32,13 @@ void takefile(TFile* file, const char* systype, int harmonic)
   TProfile* two_base = NULL;
   TProfile* for_eval = NULL;
   TProfile* two_eval = NULL;
+  if ( harmonic == 2 )
+    {
+      for_base = (TProfile*)file->Get("centrality_recursion_0_2");
+      two_base = (TProfile*)file->Get("centrality_recursion_0_0");
+      for_eval = (TProfile*)file->Get("centrality_spw_recursion_0_2");
+      two_eval = (TProfile*)file->Get("centrality_spw_recursion_0_0");
+    }
   if ( harmonic == 3 )
     {
       for_base = (TProfile*)file->Get("centrality_recursion_0_3");
@@ -240,27 +249,16 @@ void takefile(TFile* file, const char* systype, int harmonic)
   delete leg_cumu4;
   delete leg_comp4;
 
-  TProfile* reg_base = NULL;
-  TProfile* gap_base = NULL;
-  TProfile* reg_eval = NULL;
-  TProfile* gap_eval = NULL;
   TH1D* vn2_base = NULL;
   TH1D* vn2_eval = NULL;
-  TH1D* vn2gap_base = NULL;
-  TH1D* vn2gap_eval = NULL;
-  if ( harmonic == 3 )
-    {
-      cout << "doing more for third harmonic..." << endl;
-      reg_base = two_base;
-      reg_eval = two_eval;
-      vn2_base = hsqrt(reg_base);
-      vn2_eval = hsqrt(reg_eval);
-      crunch(vn2_base,vn2_eval,systype,"v32spw",0,100,1,70);
-    }
-
-
+  vn2_base = hsqrt(two_base);
+  vn2_eval = hsqrt(two_eval);
+  char varname[5];
+  sprintf(varname,"v%d2",harmonic);
+  crunch(vn2_base,vn2_eval,systype,varname,0,100,1,70);
 
 }
+
 
 
 void crunch(TProfile* tpbase, TProfile* tpeval, const char* systype, const char* quantity)
