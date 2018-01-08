@@ -27,7 +27,8 @@ void crunch(TH1D* hbase, TH1D* heval, const char* systype, const char* quantity,
   for ( int i = 0; i < hratio->GetNbinsX(); ++i )
     {
       double cont = hratio->GetBinContent(i+1);
-      if ( cont <= 0.0 || cont == 1.0 )
+      double err = hratio->GetBinError(i+1);
+      if ( cont <= 0.0 || err >= 1.0 )
         {
           hratio->SetBinContent(i+1,0);
           hratio->SetBinError(i+1,9999); // effectively de-weight during fit
