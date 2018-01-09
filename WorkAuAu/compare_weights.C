@@ -16,9 +16,6 @@ void takefile(TFile* file, const char* systype, int harmonic)
 
   int rebin = 2;
 
-  bool isacce = false;
-  if ( strcmp(systype,"acce") == 0 ) isacce = true;
-
   // --- make sure both files are not null
   if ( !file || !file )
     {
@@ -65,14 +62,18 @@ void takefile(TFile* file, const char* systype, int harmonic)
       return;
     }
 
+  // --- calculate the v22 before rebinning
+  TH1D* vn2_base = hsqrt(two_base);
+  TH1D* vn2_eval = hsqrt(two_eval);
+  char varname[10];
+  sprintf(varname,"cent_v%d2",harmonic);
+  crunch(vn2_base,vn2_eval,systype,varname,0,100,1,70);
 
+  // --- now do the rebinning
   for_base->Rebin(rebin);
   two_base->Rebin(rebin);
-  if ( !isacce )
-    {
-      for_eval->Rebin(rebin);
-      two_eval->Rebin(rebin);
-    }
+  for_eval->Rebin(rebin);
+  two_eval->Rebin(rebin);
 
   // --- use a random number generator to prevent over-writing histograms (a funny ROOT feature)
   double rand = gRandom->Rndm();
@@ -247,14 +248,6 @@ void takefile(TFile* file, const char* systype, int harmonic)
   delete empty_comp4;
   delete leg_cumu4;
   delete leg_comp4;
-
-  TH1D* vn2_base = NULL;
-  TH1D* vn2_eval = NULL;
-  vn2_base = hsqrt(two_base);
-  vn2_eval = hsqrt(two_eval);
-  char varname[5];
-  sprintf(varname,"v%d2",harmonic);
-  crunch(vn2_base,vn2_eval,systype,varname,0,100,1,70);
 
 }
 
