@@ -72,6 +72,10 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
       return;
     }
 
+  // --------------------------------------------------------------------
+  // --- v2 with recurision
+  // --------------------------------------------------------------------
+
   TProfile* eit_base = (TProfile*)fbase->Get("centrality_recursion_0_6");
   TProfile* six_base = (TProfile*)fbase->Get("centrality_recursion_0_4");
   TProfile* for_base = (TProfile*)fbase->Get("centrality_recursion_0_2");
@@ -103,7 +107,9 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
   crunch(v26base,v26eval,systype,"cent_v26",0,100,6,60);
   crunch(v28base,v28eval,systype,"cent_v28",0,100,10,50);
 
-  // ---
+  // --------------------------------------------------------------------------
+  // --- v2 with subevents
+  // --------------------------------------------------------------------------
 
   TProfile* base_for = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c24");
   TProfile* base_4aabb = (TProfile*)fbase->Get("centrality_os_fvtxsfvtxn_tracks_c24a");
@@ -162,6 +168,113 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
   crunch(hbase_v22ab,heval_v22ab,systype,"cent_v22ab",0,100,1,93);
   crunch(hbase_v24aabb,heval_v24aabb,systype,"cent_v24aabb",0,100,6,65);
   crunch(hbase_v24abab,heval_v24abab,systype,"cent_v24abab",0,100,6,65);
+
+  // --------------------------------------------------------------------
+  // --- v3 with recurision
+  // --------------------------------------------------------------------
+
+  TProfile* for3_base = (TProfile*)fbase->Get("centrality_recursion_0_3");
+  TProfile* two3_base = (TProfile*)fbase->Get("centrality_recursion_0_1");
+  TProfile* for3_eval = (TProfile*)feval->Get("centrality_recursion_0_3");
+  TProfile* two3_eval = (TProfile*)feval->Get("centrality_recursion_0_1");
+
+  int rebin = 2;
+  bool isacce = false;
+  if ( strcmp(systype,"acce") == 0 ) isacce = true;
+
+  for_base->Rebin(rebin);
+  two_base->Rebin(rebin);
+  if ( !isacce )
+    {
+      for_eval->Rebin(rebin);
+      two_eval->Rebin(rebin);
+    }
+
+  crunch_cumu4(for_base,two_base,for_eval,two_eval,systype,3);
+
+  TProfile* reg_base = NULL;
+  TProfile* gap_base = NULL;
+  TProfile* reg_eval = NULL;
+  TProfile* gap_eval = NULL;
+  TH1D* vn2_base = NULL;
+  TH1D* vn2_eval = NULL;
+  TH1D* vn2gap_base = NULL;
+  TH1D* vn2gap_eval = NULL;
+
+  reg_base = two3_base;
+  reg_eval = two3_eval;
+  vn2_base = hsqrt(reg_base);
+  vn2_eval = hsqrt(reg_eval);
+  crunch(vn2_base,vn2_eval,systype,"cent_v32",0,100,1,70);
+  reg_base = (TProfile*)fbase->Get("centrality_ac_fvtxc_tracks_c32");
+  reg_eval = (TProfile*)feval->Get("centrality_ac_fvtxc_tracks_c32");
+  gap_base = (TProfile*)fbase->Get("centrality_ac_fvtxsfvtxn_tracks_c32");
+  gap_eval = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c32");
+  vn2_base = hsqrt(reg_base);
+  vn2_eval = hsqrt(reg_eval);
+  vn2gap_base = hsqrt(gap_base);
+  vn2gap_eval = hsqrt(gap_eval);
+  crunch(vn2_base,vn2_eval,systype,"cent_v32ac",0,100,1,70);
+  crunch(vn2gap_base,vn2gap_eval,systype,"cent_v32acgap",0,100,1,70);
+  reg_base = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c32");
+  reg_eval = (TProfile*)feval->Get("centrality_os_fvtxc_tracks_c32");
+  gap_base = (TProfile*)fbase->Get("centrality_os_fvtxsfvtxn_tracks_c32");
+  gap_eval = (TProfile*)feval->Get("centrality_os_fvtxsfvtxn_tracks_c32");
+  vn2_base = hsqrt(reg_base);
+  vn2_eval = hsqrt(reg_eval);
+  vn2gap_base = hsqrt(gap_base);
+  vn2gap_eval = hsqrt(gap_eval);
+  crunch(vn2_base,vn2_eval,systype,"cent_v32os",0,100,1,70);
+  crunch(vn2gap_base,vn2gap_eval,systype,"cent_v32osgap",0,100,1,70);
+
+  // --------------------------------------------------------------------
+  // --- v4 with recurision
+  // --------------------------------------------------------------------
+
+  TProfile* for4_base = (TProfile*)fbase->Get("centrality_recursion_0_9");
+  TProfile* two4_base = (TProfile*)fbase->Get("centrality_recursion_0_7");
+  TProfile* for4_eval = (TProfile*)feval->Get("centrality_recursion_0_9");
+  TProfile* two4_eval = (TProfile*)feval->Get("centrality_recursion_0_7");
+
+  for_base->Rebin(rebin);
+  two_base->Rebin(rebin);
+  if ( !isacce )
+    {
+      for_eval->Rebin(rebin);
+      two_eval->Rebin(rebin);
+    }
+
+  crunch_cumu4(for_base,two_base,for_eval,two_eval,systype,4);
+
+  reg_base = two4_base;
+  reg_eval = two4_eval;
+  vn2_base = hsqrt(reg_base);
+  vn2_eval = hsqrt(reg_eval);
+  crunch(vn2_base,vn2_eval,systype,"cent_v42",0,100,1,70);
+  // --- these histograms are missing in all cases for now
+  // --- will add them to main analysis code at some point soon...
+  /*
+  reg_base = (TProfile*)fbase->Get("centrality_ac_fvtxc_tracks_c42");
+  reg_eval = (TProfile*)feval->Get("centrality_ac_fvtxc_tracks_c42");
+  gap_base = (TProfile*)fbase->Get("centrality_ac_fvtxsfvtxn_tracks_c42");
+  gap_eval = (TProfile*)feval->Get("centrality_ac_fvtxsfvtxn_tracks_c42");
+  vn2_base = hsqrt(reg_base);
+  vn2_eval = hsqrt(reg_eval);
+  vn2gap_base = hsqrt(gap_base);
+  vn2gap_eval = hsqrt(gap_eval);
+  crunch(vn2_base,vn2_eval,systype,"cent_v42ac",0,100,1,70);
+  crunch(vn2gap_base,vn2gap_eval,systype,"cent_v42acgap",0,100,1,70);
+  reg_base = (TProfile*)fbase->Get("centrality_os_fvtxc_tracks_c42");
+  reg_eval = (TProfile*)feval->Get("centrality_os_fvtxc_tracks_c42");
+  gap_base = (TProfile*)fbase->Get("centrality_os_fvtxsfvtxn_tracks_c42");
+  gap_eval = (TProfile*)feval->Get("centrality_os_fvtxsfvtxn_tracks_c42");
+  vn2_base = hsqrt(reg_base);
+  vn2_eval = hsqrt(reg_eval);
+  vn2gap_base = hsqrt(gap_base);
+  vn2gap_eval = hsqrt(gap_eval);
+  crunch(vn2_base,vn2_eval,systype,"cent_v42os",0,100,1,70);
+  crunch(vn2gap_base,vn2gap_eval,systype,"cent_v42osgap",0,100,1,70);
+  */
 
 }
 
