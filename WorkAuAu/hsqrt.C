@@ -4,14 +4,18 @@ TH1D* hsqrt(TH1D*);
 TH1D* hsqrt(TProfile* hp)
 {
   if ( hp == NULL ) return NULL;
-  TH1D* h1 = hp->ProjectionX();
+  double rand = gRandom->Rndm();
+  int helper = rand*10000;
+  TH1D* h1 = hp->ProjectionX(Form("th1d_%s_%d",hp->GetName(),helper));
   return hsqrt(h1);
 }
 
 TH1D* hsqrt(TH1D* h)
 {
   if ( h == NULL ) return NULL;
-  TH1D* hr = (TH1D*)h->Clone(Form("sqrt_%s",h->GetName()));
+  double rand = gRandom->Rndm();
+  int helper = rand*10000;
+  TH1D* hr = (TH1D*)h->Clone(Form("sqrt_%s_%d",h->GetName(),helper));
   int nbins = h->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
     {
