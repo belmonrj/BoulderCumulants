@@ -1,4 +1,13 @@
+void track_parameters();
+void track_coordinates();
+
 void some_diagnostics()
+{
+  //track_parameters();
+  track_coordinates();
+}
+
+void track_parameters()
 {
 
   TCanvas* c1 = new TCanvas("c1","");
@@ -64,6 +73,15 @@ void some_diagnostics()
       th1d_cent_nhits->Draw();
       c1->Print(Form("FigsDiagnostics/Centrality/th1d_cent%02d_nhits.png",i));
     }
+
+} // track_parameters
+
+void track_coordinates()
+{
+
+  TCanvas* c1 = new TCanvas("c1","");
+
+  TFile* file = TFile::Open("input/histos_12587.root");
 
   // --- before_phi (phi distribution before track selection cuts)
   TH2D* th2d_before_phi = (TH2D*)file->Get("th2d_track_before_phi");
@@ -137,5 +155,5 @@ void some_diagnostics()
       c1->Print(Form("FigsDiagnostics/Centrality/th1d_cent%02d_aafter_eta.png",i));
     }
 
-}
+} // track_coordinates
 
