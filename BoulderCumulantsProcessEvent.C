@@ -966,31 +966,62 @@ int BoulderCumulants::EventStuff()
   // --------------
 
   // --- south only
+  centrality_ac_cumu2[1][2]->Fill(centrality,ac_fvtxc_tracks_qq2);
+  centrality_ac_corr_cos1[1][2]->Fill(centrality,ac_fvtxc_tracks_qx2/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_sin1[1][2]->Fill(centrality,ac_fvtxc_tracks_qy2/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_cos2[1][2]->Fill(centrality,ac_fvtxc_tracks_cossum22);
+  centrality_ac_corr_sin2[1][2]->Fill(centrality,ac_fvtxc_tracks_sinsum22);
+  centrality_ac_corr_cos3[1][2]->Fill(centrality,ac_fvtxc_tracks_cos23);
+  centrality_ac_corr_sin3[1][2]->Fill(centrality,ac_fvtxc_tracks_sin23);
+  centrality_ac_cumu2[1][3]->Fill(centrality,ac_fvtxc_tracks_qq3);
+  centrality_ac_corr_cos1[1][3]->Fill(centrality,ac_fvtxc_tracks_qx3/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_sin1[1][3]->Fill(centrality,ac_fvtxc_tracks_qy3/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_cos2[1][3]->Fill(centrality,ac_fvtxc_tracks_cossum32);
+  centrality_ac_corr_sin2[1][3]->Fill(centrality,ac_fvtxc_tracks_sinsum32);
+  centrality_ac_corr_cos3[1][3]->Fill(centrality,ac_fvtxc_tracks_cos33);
+  centrality_ac_corr_sin3[1][3]->Fill(centrality,ac_fvtxc_tracks_sin33);
   // --- north only
+  centrality_ac_cumu2[2][2]->Fill(centrality,ac_fvtxc_tracks_qq2);
+  centrality_ac_corr_cos1[2][2]->Fill(centrality,ac_fvtxc_tracks_qx2/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_sin1[2][2]->Fill(centrality,ac_fvtxc_tracks_qy2/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_cos2[2][2]->Fill(centrality,ac_fvtxc_tracks_cossum22);
+  centrality_ac_corr_sin2[2][2]->Fill(centrality,ac_fvtxc_tracks_sinsum22);
+  centrality_ac_corr_cos3[2][2]->Fill(centrality,ac_fvtxc_tracks_cos23);
+  centrality_ac_corr_sin3[2][2]->Fill(centrality,ac_fvtxc_tracks_sin23);
+  centrality_ac_cumu2[2][3]->Fill(centrality,ac_fvtxc_tracks_qq3);
+  centrality_ac_corr_cos1[2][3]->Fill(centrality,ac_fvtxc_tracks_qx3/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_sin1[2][3]->Fill(centrality,ac_fvtxc_tracks_qy3/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_cos2[2][3]->Fill(centrality,ac_fvtxc_tracks_cossum32);
+  centrality_ac_corr_sin2[2][3]->Fill(centrality,ac_fvtxc_tracks_sinsum32);
+  centrality_ac_corr_cos3[2][3]->Fill(centrality,ac_fvtxc_tracks_cos33);
+  centrality_ac_corr_sin3[2][3]->Fill(centrality,ac_fvtxc_tracks_sin33);
   // --- combined
-  centrality_ac_fvtxc_tracks_c22->Fill(centrality,ac_fvtxc_tracks_qq2);
-  centrality_ac_fvtxc_tracks_cos21->Fill(centrality,ac_fvtxc_tracks_qx2/ac_fvtxc_tracks_qw);
-  centrality_ac_fvtxc_tracks_sin21->Fill(centrality,ac_fvtxc_tracks_qy2/ac_fvtxc_tracks_qw);
-  centrality_ac_fvtxc_tracks_c32->Fill(centrality,ac_fvtxc_tracks_qq3); // come back here
-  centrality_ac_fvtxc_tracks_cos31->Fill(centrality,ac_fvtxc_tracks_qx3/ac_fvtxc_tracks_qw);
-  centrality_ac_fvtxc_tracks_sin31->Fill(centrality,ac_fvtxc_tracks_qy3/ac_fvtxc_tracks_qw);
-  centrality_ac_fvtxc_tracks_cossum22->Fill(centrality,ac_fvtxc_tracks_cossum22);
-  centrality_ac_fvtxc_tracks_sinsum22->Fill(centrality,ac_fvtxc_tracks_sinsum22);
-  centrality_ac_fvtxc_tracks_cos23->Fill(centrality,ac_fvtxc_tracks_cos23);
-  centrality_ac_fvtxc_tracks_sin23->Fill(centrality,ac_fvtxc_tracks_sin23);
-  // --- additional acceptance correction histos
-  centrality_ac_fvtxc_tracks_cossum32->Fill(centrality,ac_fvtxc_tracks_cossum32);
-  centrality_ac_fvtxc_tracks_sinsum32->Fill(centrality,ac_fvtxc_tracks_sinsum32);
-  centrality_ac_fvtxc_tracks_cos33->Fill(centrality,ac_fvtxc_tracks_cos33);
-  centrality_ac_fvtxc_tracks_sin33->Fill(centrality,ac_fvtxc_tracks_sin33);
+  centrality_ac_cumu2[0][2]->Fill(centrality,ac_fvtxc_tracks_qq2);
+  centrality_ac_corr_cos1[0][2]->Fill(centrality,ac_fvtxc_tracks_qx2/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_sin1[0][2]->Fill(centrality,ac_fvtxc_tracks_qy2/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_cos2[0][2]->Fill(centrality,ac_fvtxc_tracks_cossum22);
+  centrality_ac_corr_sin2[0][2]->Fill(centrality,ac_fvtxc_tracks_sinsum22);
+  centrality_ac_corr_cos3[0][2]->Fill(centrality,ac_fvtxc_tracks_cos23);
+  centrality_ac_corr_sin3[0][2]->Fill(centrality,ac_fvtxc_tracks_sin23);
+  centrality_ac_cumu2[0][3]->Fill(centrality,ac_fvtxc_tracks_qq3);
+  centrality_ac_corr_cos1[0][3]->Fill(centrality,ac_fvtxc_tracks_qx3/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_sin1[0][3]->Fill(centrality,ac_fvtxc_tracks_qy3/ac_fvtxc_tracks_qw);
+  centrality_ac_corr_cos2[0][3]->Fill(centrality,ac_fvtxc_tracks_cossum32);
+  centrality_ac_corr_sin2[0][3]->Fill(centrality,ac_fvtxc_tracks_sinsum32);
+  centrality_ac_corr_cos3[0][3]->Fill(centrality,ac_fvtxc_tracks_cos33);
+  centrality_ac_corr_sin3[0][3]->Fill(centrality,ac_fvtxc_tracks_sin33);
   // --- scalar product
+  centrality_ac_sub2[2]->Fill(centrality,ac_fvtxsfvtxn_tracks_qq2);
+  centrality_ac_sub2[3]->Fill(centrality,ac_fvtxsfvtxn_tracks_qq3);
   // --- four particle
-  centrality_ac_fvtxc_tracks_c24->Fill(centrality,ac_fvtxc_tracks_qqqq24);
-  centrality_ac_fvtxc_tracks_c34->Fill(centrality,ac_fvtxc_tracks_qqqq34);
+  centrality_ac_cumu4[0][2]->Fill(centrality,ac_fvtxc_tracks_qqqq24);
+  centrality_ac_cumu4[0][3]->Fill(centrality,ac_fvtxc_tracks_qqqq34);
   // --- four particle 2sub
+  centrality_ac_sub4a[2]->Fill(centrality,answer_c24a);
+  centrality_ac_sub4b[2]->Fill(centrality,ac_fvtxs_tracks_qq2*ac_fvtxn_tracks_qq2);
   // --- six particle
-  centrality_ac_fvtxc_tracks_c26->Fill(centrality,ac_fvtxc_tracks_six);
-  //centrality_ac_fvtxc_tracks_c28->Fill(centrality,eightRecursion.Re());
+  centrality_ac_cumu6[0][2]->Fill(centrality,ac_fvtxc_tracks_six);
+  //centrality_ac_cumu8[0][2]->Fill(centrality,eightRecursion.Re());
 
   if ( _verbosity > 2 )
     {
@@ -1132,25 +1163,38 @@ int BoulderCumulants::EventStuff()
   // --------------
 
   // --- south only
+  centrality_os_cumu2[1][2]->Fill(centrality,os_fvtxc_tracks_qq2);
+  centrality_os_cumu2[1][3]->Fill(centrality,os_fvtxc_tracks_qq3);
   // --- north only
+  centrality_os_cumu2[2][2]->Fill(centrality,os_fvtxc_tracks_qq2);
+  centrality_os_cumu2[2][3]->Fill(centrality,os_fvtxc_tracks_qq3);
   // --- combined
-  centrality_os_fvtxc_tracks_c22->Fill(centrality,os_fvtxc_tracks_qq2);
-  centrality_os_fvtxc_tracks_cos21->Fill(centrality,os_fvtxc_tracks_qx2/os_fvtxc_tracks_qw);
-  centrality_os_fvtxc_tracks_sin21->Fill(centrality,os_fvtxc_tracks_qy2/os_fvtxc_tracks_qw);
-  centrality_os_fvtxc_tracks_c32->Fill(centrality,os_fvtxc_tracks_qq3);
-  centrality_os_fvtxc_tracks_cos31->Fill(centrality,os_fvtxc_tracks_qx3/os_fvtxc_tracks_qw);
-  centrality_os_fvtxc_tracks_sin31->Fill(centrality,os_fvtxc_tracks_qy3/os_fvtxc_tracks_qw);
-  centrality_os_fvtxc_tracks_cossum22->Fill(centrality,os_fvtxc_tracks_cossum22);
-  centrality_os_fvtxc_tracks_sinsum22->Fill(centrality,os_fvtxc_tracks_sinsum22);
-  centrality_os_fvtxc_tracks_cos23->Fill(centrality,os_fvtxc_tracks_cos23);
-  centrality_os_fvtxc_tracks_sin23->Fill(centrality,os_fvtxc_tracks_sin23);
+  centrality_os_cumu2[0][2]->Fill(centrality,os_fvtxc_tracks_qq2);
+  centrality_os_corr_cos1[0][2]->Fill(centrality,os_fvtxc_tracks_qx2/os_fvtxc_tracks_qw);
+  centrality_os_corr_sin1[0][2]->Fill(centrality,os_fvtxc_tracks_qy2/os_fvtxc_tracks_qw);
+  centrality_os_corr_cos2[0][2]->Fill(centrality,os_fvtxc_tracks_cossum22);
+  centrality_os_corr_sin2[0][2]->Fill(centrality,os_fvtxc_tracks_sinsum22);
+  centrality_os_corr_cos3[0][2]->Fill(centrality,os_fvtxc_tracks_cos23);
+  centrality_os_corr_sin3[0][2]->Fill(centrality,os_fvtxc_tracks_sin23);
+  centrality_os_cumu2[0][3]->Fill(centrality,os_fvtxc_tracks_qq3);
+  centrality_os_corr_cos1[0][3]->Fill(centrality,os_fvtxc_tracks_qx3/os_fvtxc_tracks_qw);
+  centrality_os_corr_sin1[0][3]->Fill(centrality,os_fvtxc_tracks_qy3/os_fvtxc_tracks_qw);
+  centrality_os_corr_cos2[0][3]->Fill(centrality,os_fvtxc_tracks_cossum32);
+  centrality_os_corr_sin2[0][3]->Fill(centrality,os_fvtxc_tracks_sinsum32);
+  centrality_os_corr_cos3[0][3]->Fill(centrality,os_fvtxc_tracks_cos33);
+  centrality_os_corr_sin3[0][3]->Fill(centrality,os_fvtxc_tracks_sin33);
   // --- scalar product
+  centrality_os_sub2[2]->Fill(centrality,os_fvtxsfvtxn_tracks_qq2);
+  centrality_os_sub2[3]->Fill(centrality,os_fvtxsfvtxn_tracks_qq3);
   // --- four particle
-  centrality_os_fvtxc_tracks_c24->Fill(centrality,os_fvtxc_tracks_qqqq24);
+  centrality_os_cumu4[0][2]->Fill(centrality,os_fvtxc_tracks_qqqq24);
+  centrality_os_cumu4[0][3]->Fill(centrality,os_fvtxc_tracks_qqqq34);
   // --- four particle 2sub
+  centrality_os_sub4a[2]->Fill(centrality,answer_c24a);
+  centrality_os_sub4b[2]->Fill(centrality,os_fvtxs_tracks_qq2*os_fvtxn_tracks_qq2);
   // --- six particle
-  centrality_os_fvtxc_tracks_c26->Fill(centrality,os_fvtxc_tracks_six);
-  // centrality_os_fvtxc_tracks_c28->Fill(centrality,eightRecursion.Re());
+  centrality_os_cumu6[0][2]->Fill(centrality,os_fvtxc_tracks_six);
+  //centrality_os_cumu8[0][2]->Fill(centrality,eightRecursion.Re());
 
   if ( _verbosity > 1000 )
     {
