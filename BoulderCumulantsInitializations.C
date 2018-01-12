@@ -113,8 +113,8 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
       // --- combined
       centrality_ac_cumu2[0][iharm] = new TProfile(Form("centrality_ac_fvtxc_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
       centrality_ac_cumu4[0][iharm] = new TProfile(Form("centrality_ac_fvtxc_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
-      centrality_ac_cumu6[0][iharm] = new TProfile(Form("centrality_ac_fvtxc_tracks_c%d%d",iharm,6),"",100, -0.5, 99.5, -1.1, 1.1);
-      centrality_ac_cumu8[0][iharm] = new TProfile(Form("centrality_ac_fvtxc_tracks_c%d%d",iharm,8),"",100, -0.5, 99.5, -1.1, 1.1);
+      if ( iharm < 4 ) centrality_ac_cumu6[0][iharm] = new TProfile(Form("centrality_ac_fvtxc_tracks_c%d%d",iharm,6),"",100, -0.5, 99.5, -1.1, 1.1);
+      if ( iharm < 3 ) centrality_ac_cumu8[0][iharm] = new TProfile(Form("centrality_ac_fvtxc_tracks_c%d%d",iharm,8),"",100, -0.5, 99.5, -1.1, 1.1);
       // --- south
       centrality_ac_cumu2[1][iharm] = new TProfile(Form("centrality_ac_fvtxs_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
       centrality_ac_cumu4[1][iharm] = new TProfile(Form("centrality_ac_fvtxs_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
@@ -154,8 +154,8 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
       // --- combined
       centrality_os_cumu2[0][iharm] = new TProfile(Form("centrality_os_fvtxc_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
       centrality_os_cumu4[0][iharm] = new TProfile(Form("centrality_os_fvtxc_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
-      centrality_os_cumu6[0][iharm] = new TProfile(Form("centrality_os_fvtxc_tracks_c%d%d",iharm,6),"",100, -0.5, 99.5, -1.1, 1.1);
-      centrality_os_cumu8[0][iharm] = new TProfile(Form("centrality_os_fvtxc_tracks_c%d%d",iharm,8),"",100, -0.5, 99.5, -1.1, 1.1);
+      if ( iharm < 4 ) centrality_os_cumu6[0][iharm] = new TProfile(Form("centrality_os_fvtxc_tracks_c%d%d",iharm,6),"",100, -0.5, 99.5, -1.1, 1.1);
+      if ( iharm < 3 ) centrality_os_cumu8[0][iharm] = new TProfile(Form("centrality_os_fvtxc_tracks_c%d%d",iharm,8),"",100, -0.5, 99.5, -1.1, 1.1);
       // --- south
       centrality_os_cumu2[1][iharm] = new TProfile(Form("centrality_os_fvtxs_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
       centrality_os_cumu4[1][iharm] = new TProfile(Form("centrality_os_fvtxs_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
