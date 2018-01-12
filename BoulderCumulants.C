@@ -118,42 +118,39 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   th2d_cent_nhits = NULL;
   th2d_cent_chisq = NULL;
   tp1f_track_detacutpass = NULL;
-  // --- now third harmonic
-  // --- end third harmonic
-  centrality_ac_fvtxc_tracks_c22 = NULL;
-  centrality_ac_fvtxc_tracks_c24 = NULL;
-  centrality_ac_fvtxc_tracks_c26 = NULL;
-  centrality_ac_fvtxc_tracks_c28 = NULL;
-  centrality_ac_fvtxc_tracks_cos21 = NULL;
-  centrality_ac_fvtxc_tracks_sin21 = NULL;
-  centrality_ac_fvtxc_tracks_cossum22 = NULL;
-  centrality_ac_fvtxc_tracks_sinsum22 = NULL;
-  centrality_ac_fvtxc_tracks_cos23 = NULL;
-  centrality_ac_fvtxc_tracks_sin23 = NULL;
-  centrality_ac_fvtxc_tracks_c32 = NULL;
-  centrality_ac_fvtxc_tracks_c34 = NULL;
-  centrality_ac_fvtxc_tracks_cos31 = NULL;
-  centrality_ac_fvtxc_tracks_sin31 = NULL;
-  centrality_ac_fvtxc_tracks_cossum32 = NULL;
-  centrality_ac_fvtxc_tracks_sinsum32 = NULL;
-  centrality_ac_fvtxc_tracks_cos33 = NULL;
-  centrality_ac_fvtxc_tracks_sin33 = NULL;
-  // ---
-  // --- now third harmonic
-  // --- end third harmonic
-  centrality_os_fvtxc_tracks_c22 = NULL;
-  centrality_os_fvtxc_tracks_c24 = NULL;
-  centrality_os_fvtxc_tracks_c26 = NULL;
-  centrality_os_fvtxc_tracks_c28 = NULL;
-  centrality_os_fvtxc_tracks_cos21 = NULL;
-  centrality_os_fvtxc_tracks_sin21 = NULL;
-  centrality_os_fvtxc_tracks_cossum22 = NULL;
-  centrality_os_fvtxc_tracks_sinsum22 = NULL;
-  centrality_os_fvtxc_tracks_cos23 = NULL;
-  centrality_os_fvtxc_tracks_sin23 = NULL;
-  centrality_os_fvtxc_tracks_c32 = NULL;
-  centrality_os_fvtxc_tracks_cos31 = NULL;
-  centrality_os_fvtxc_tracks_sin31 = NULL;
+
+  for ( int iharm = 0; iharm < 5; ++iharm )
+    {
+      for ( int iarm = 0; iarm < 3; ++iarm )
+        {
+          centrality_ac_cumu2[iarm][iharm] = NULL;
+          centrality_ac_cumu4[iarm][iharm] = NULL;
+          centrality_ac_cumu6[iarm][iharm] = NULL;
+          centrality_ac_cumu8[iarm][iharm] = NULL;
+          centrality_os_cumu2[iarm][iharm] = NULL;
+          centrality_os_cumu4[iarm][iharm] = NULL;
+          centrality_os_cumu6[iarm][iharm] = NULL;
+          centrality_os_cumu8[iarm][iharm] = NULL;
+          centrality_ac_corr_cos1[iarm][iharm] = NULL;
+          centrality_ac_corr_sin1[iarm][iharm] = NULL;
+          centrality_ac_corr_cos2[iarm][iharm] = NULL;
+          centrality_ac_corr_sin2[iarm][iharm] = NULL;
+          centrality_ac_corr_cos3[iarm][iharm] = NULL;
+          centrality_ac_corr_sin3[iarm][iharm] = NULL;
+          centrality_os_corr_cos1[iarm][iharm] = NULL;
+          centrality_os_corr_sin1[iarm][iharm] = NULL;
+          centrality_os_corr_cos2[iarm][iharm] = NULL;
+          centrality_os_corr_sin2[iarm][iharm] = NULL;
+          centrality_os_corr_cos3[iarm][iharm] = NULL;
+          centrality_os_corr_sin3[iarm][iharm] = NULL;
+        }
+      centrality_ac_sub2[iharm] = NULL;
+      centrality_ac_sub4a[iharm] = NULL;
+      centrality_ac_sub4b[iharm] = NULL;
+      centrality_os_sub2[iharm] = NULL;
+      centrality_os_sub4a[iharm] = NULL;
+      centrality_os_sub4b[iharm] = NULL;
+    }
 
   for ( int i = 0; i < 8; ++i ) tp1f_special_fvtx_tracks_ab[i] = NULL;
   tp1f_special_fvtx_tracks_aa = NULL;
@@ -220,4 +217,3 @@ BoulderCumulants::~BoulderCumulants()
 {
   //if ( _utils ) delete _utils;
 }
-
