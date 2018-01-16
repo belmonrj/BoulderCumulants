@@ -61,6 +61,12 @@ void get_sys()
   fbase->Close();
   feval->Close();
 
+  fbase = TFile::Open("input/histos_12587.root"); // fvtxt-based q-vector recentering, regular cuts
+  feval = TFile::Open("input/histos_12650.root"); // fvtxt-based q-vector recentering, new cuts
+  takefiles(fbase,feval,"newc");
+  fbase->Close();
+  feval->Close();
+
 }
 
 void takefiles(TFile* fbase, TFile* feval, const char* systype)
