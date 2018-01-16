@@ -1,13 +1,24 @@
 #include "hsqrt.C"
 
+void doit(const char*);
+
 void checker_v3()
+{
+  // --- need to build in fault tolerance for missing histograms
+  //doit("12579");
+  //doit("12587");
+  doit("12634");
+  doit("12650");
+}
+
+void doit(const char* handle)
 {
 
   TCanvas* c1 = new TCanvas("c1","");
 
   int rebin = 2;
 
-  TFile* fin = TFile::Open(Form("input/histos_12650.root")); // might want a function here
+  TFile* fin = TFile::Open(Form("input/histos_%s.root",handle));
 
   // --- get the histograms from the file
   TProfile* tp1f_two = (TProfile*)fin->Get("centrality_ac_fvtxc_tracks_c32");
@@ -81,10 +92,12 @@ void checker_v3()
   th1d_corr_v32->Draw("ex0p same");
   th1d_corr_v3G->Draw("ex0p same");
 
-  c1->Print("FigsWork/v32comp_blah.png");
+  c1->Print(Form("FigsWork/v32comp_%s.png",handle));
 
   TProfile* tp1f_two_os = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c32");
   TProfile* tp1f_G_two_os = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32"); // scalar product north*south
+  tp1f_two_os->Rebin(rebin);
+  tp1f_G_two_os->Rebin(rebin);
 
   TH1D* th1d_os_v32 = hsqrt(tp1f_two_os);
   TH1D* th1d_os_v3G = hsqrt(tp1f_G_two_os);
@@ -97,7 +110,9 @@ void checker_v3()
   th1d_os_v32->Draw("ex0p same");
   th1d_os_v3G->Draw("ex0p same");
 
-  c1->Print("FigsWork/v32compmore_blah.png");
+  c1->Print(Form("FigsWork/v32compmore_%s.png",handle));
+
+  delete c1;
 
 }
 
