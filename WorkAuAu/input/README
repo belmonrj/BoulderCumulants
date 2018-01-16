@@ -54,4 +54,5 @@ the 117* series have incomplete statistics due to serious taxi problems
 12634 same as 12587 but with a bunch of histograms added back in
 
 12643 same as 12534 but with dca cut 0.5, chi2 cut 3.0, Q-vector recentering removed
+12650 same as 12643 but with Q-vector recentering put back in (as function of nfvtxt)
 
