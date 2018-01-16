@@ -29,16 +29,6 @@ void checker_v3()
   if ( !tp1f_cos1_south) cout << "tp1f_cos1_south" << endl;
   if ( !tp1f_sin1_south) cout << "tp1f_sin1_south" << endl;
 
-  // --- check existence
-  if ( !tp1f_two) cout << "tp1f_two" << endl;
-  if ( !tp1f_cos1) cout << "tp1f_cos1" << endl;
-  if ( !tp1f_sin1) cout << "tp1f_sin1" << endl;
-  if ( !tp1f_G_two) cout << "tp1f_G_two" << endl;
-  if ( !tp1f_cos1_north) cout << "tp1f_cos1_north" << endl;
-  if ( !tp1f_sin1_north) cout << "tp1f_sin1_north" << endl;
-  if ( !tp1f_cos1_south) cout << "tp1f_cos1_south" << endl;
-  if ( !tp1f_sin1_south) cout << "tp1f_sin1_south" << endl;
-
   // --- rebin as desired, rebinning on TProfile ensure weighted averages and uncertainties are done correctly
   tp1f_two->Rebin(rebin);
   tp1f_cos1->Rebin(rebin);
@@ -92,6 +82,22 @@ void checker_v3()
   th1d_corr_v3G->Draw("ex0p same");
 
   c1->Print("FigsWork/v32comp_blah.png");
+
+  TProfile* tp1f_two_os = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c32");
+  TProfile* tp1f_G_two_os = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32"); // scalar product north*south
+
+  TH1D* th1d_os_v32 = hsqrt(tp1f_two_os);
+  TH1D* th1d_os_v3G = hsqrt(tp1f_G_two_os);
+
+  th1d_os_v32->SetMarkerColor(kRed);
+  th1d_os_v32->SetMarkerStyle(kOpenSquare);
+  th1d_os_v3G->SetMarkerColor(kMagenta+2);
+  th1d_os_v3G->SetMarkerStyle(kOpenDiamond);
+
+  th1d_os_v32->Draw("ex0p same");
+  th1d_os_v3G->Draw("ex0p same");
+
+  c1->Print("FigsWork/v32compmore_blah.png");
 
 }
 
