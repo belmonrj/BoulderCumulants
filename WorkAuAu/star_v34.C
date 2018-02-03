@@ -6,7 +6,8 @@ TH1D* get_histv324(TFile*);
 void star_v34()
 {
 
-  TFile* fileR = TFile::Open("RunByRun/combin.root"); // reference
+  //TFile* fileR = TFile::Open("RunByRun/combin.root"); // reference
+  TFile* fileR = TFile::Open("input/histos_12634.root"); // reference
 
   TH1D* histR = get_cumuhist(fileR); // reference
   TH1D* histS = get_histv324(fileR); // reference
@@ -190,7 +191,7 @@ void star_v34()
 
 
   ymin = 0.0;
-  ymax = 5.0;
+  ymax = 9.0;
   delete hdummy;
   hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->Draw();
@@ -248,7 +249,8 @@ TH1D* get_histv324(TFile* fin)
   double rand = gRandom->Rndm();
   int helper = rand*10000;
   // --- get the tprofiles
-  TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_recursion_0_1");
+  //TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_recursion_0_1");
+  TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
   //ctp1f_two->Rebin(rebin); // maybe already rebinned above? need to add clones to prevent this
   // --- convert to th1ds (to do math operations)
   TH1D* th1d_two = ctp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
