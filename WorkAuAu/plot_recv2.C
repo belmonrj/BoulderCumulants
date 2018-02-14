@@ -131,10 +131,10 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   empty->GetYaxis()->SetTitle(Form("v_{%d}",harmonic));
   empty->GetYaxis()->SetTitleOffset(1.2);
   // ---
-  // TLatex* tex_phenix = new TLatex(0.2,0.882,"PHENIX");
-  // tex_phenix->SetTextSize(0.05);
-  // tex_phenix->SetNDC();
-  // tex_phenix->Draw();
+  TLatex* tex_phenix = new TLatex(0.2,0.778,"PHENIX");
+  tex_phenix->SetTextSize(0.05);
+  tex_phenix->SetNDC();
+  tex_phenix->Draw();
   // TLatex* tex_system = new TLatex(0.2,0.83,"Au+Au #sqrt{s_{NN}} = 200 GeV");
   // tex_system->SetTextSize(0.05);
   // tex_system->SetNDC();
