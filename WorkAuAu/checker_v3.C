@@ -5,6 +5,7 @@ void doit(const char*);
 void checker_v3()
 {
   // --- need to build in fault tolerance for missing histograms
+  doit("12097");
   //doit("12579");
   //doit("12587");
   doit("12634");
@@ -106,6 +107,7 @@ void doit(const char* handle)
   th1d_os_v32->SetMarkerStyle(kOpenSquare);
   th1d_os_v3G->SetMarkerColor(kMagenta+2);
   th1d_os_v3G->SetMarkerStyle(kOpenDiamond);
+  th1d_os_v3G->SetMarkerSize(1.9);
 
   th1d_os_v32->Draw("ex0p same");
   th1d_os_v3G->Draw("ex0p same");
