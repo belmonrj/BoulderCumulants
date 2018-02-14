@@ -16,22 +16,28 @@ BoulderCumulantsSpecialEventCuts.C | class file for the special event cut that m
 
 ## Additional basic PHENIX universe files
 
-Makefile.am
-autogen.sh
-configure.in
+File name | description
+--------- | -----------
+Makefile.am | standard makefile
+autogen.sh | standard autogen file
+configure.in | standard configure file
 
 ## Macros to test the code
 
-RunMyMacro.C
-Run_BoulderCumulants.C
-Run_BoulderCumulantsRun14.C
-Run_BoulderCumulantsRun15.C
-Run_BoulderCumulantsRun16.C
+File name | description
+--------- | -----------
+RunMyMacro.C | from offline/AnalysisTrain/pat/macro
+Run_BoulderCumulants.C | user defined macro to run the code
+Run_BoulderCumulantsRun14.C | specific settings for Run14 AuAu/HeAu
+Run_BoulderCumulantsRun15.C | specific settings for Run15 pAu
+Run_BoulderCumulantsRun16.C | specific settings for Run14 dAu
 
 ## Additional files
 
-.gitattributes
-BCpseudocode.C
+File name | description
+--------- | -----------
+.gitattributes | get the linguistics right
+BCpseudocode.C | pseudocode showing the basic calculations
 
 ## Directories
 
