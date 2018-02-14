@@ -41,10 +41,8 @@ BCpseudocode.C | pseudocode showing the basic calculations
 
 ## Directories
 
-#### WorkAuAu
-Working area for the AuAu analysis
+**WorkAuAu** - Working area for the AuAu analysis
 
-#### work
-Working area for small systems
+**work** - Working area for small systems
 
 
