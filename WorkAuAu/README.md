@@ -1,3 +1,10 @@
+# Quick script
+
+## analysis.sh
+runs the four macros below (important plotting macros)
+
+
+
 # Important plotting macros:
 
 ## do_special.C
