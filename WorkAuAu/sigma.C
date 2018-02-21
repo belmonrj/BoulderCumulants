@@ -295,8 +295,7 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   for ( int i = 0; i < gsys->GetNbinsX(); ++i )
   {
     double y = gsys->GetBinContent(i);
-    double err = y * 0.12;
-    //if ( i < 10 ) err = 0.005;
+    double err = y * 0.11;
     if ( y > 0 ) gsys->SetBinError(i, err);
   } // i
   gsys->GetXaxis()->SetRangeUser(7,65);
