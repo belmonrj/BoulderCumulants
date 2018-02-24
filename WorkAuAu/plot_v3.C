@@ -59,7 +59,7 @@ void doit(const char* handle)
   latt.SetNDC();
   latt.SetTextSize(0.05);
   latt.SetTextAlign(11);
-  latt.DrawLatex(0.60, 0.71, "Sys. Uncert. 6%");
+  latt.DrawLatex(0.60, 0.71, "Sys. Uncert. 8%");
 
   TLegend* leg = new TLegend(0.23,0.68,0.43,0.88);
   leg->SetHeader("Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
