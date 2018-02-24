@@ -25,8 +25,10 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   for ( int i = 0; i < gv22gap_sys->GetNbinsX(); ++i )
   {
     double y = gv22gap_sys->GetBinContent(i);
-    double err = y * 0.1;
-    if ( err < 0.005 ) err = 0.005;
+    double err = y * 0.01;
+    //if ( err < 0.005 ) err = 0.005;
+    //if ( i < 16 ) err = (0.4 - i*0.0267)*y;
+    if ( i < 10 ) err = 0.5*(0.4 - i*0.04)*y;
     if ( y > 0 ) gv22gap_sys->SetBinError(i, err);
   } // i
   TH1D* gv22_sys = (TH1D*) th1d_v22->Clone("gv22_sys");
@@ -36,8 +38,10 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   for ( int i = 0; i < gv22_sys->GetNbinsX(); ++i )
   {
     double y = gv22_sys->GetBinContent(i);
-    double err = y * 0.09;
-    if ( err < 0.005 ) err = 0.005;
+    double err = y * 0.01;
+    //if ( err < 0.005 ) err = 0.005;
+    //if ( i < 16 ) err = (0.4 - i*0.0267)*y;
+    if ( i < 10 ) err = 0.5*(0.4 - i*0.04)*y;
     if ( y > 0 ) gv22_sys->SetBinError(i, err);
   } // i
   TH1D* gv24_sys = (TH1D*) th1d_v24->Clone("gv24_sys");
@@ -47,7 +51,7 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
   {
     double y = gv24_sys->GetBinContent(i);
-    double err = y * 0.06;
+    double err = y * 0.01;
     if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv24_sys->SetBinError(i, err);
   } // i
@@ -58,7 +62,7 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
   {
     double y = gv26_sys->GetBinContent(i);
-    double err = y * 0.06;
+    double err = y * 0.01;
     if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv26_sys->SetBinError(i, err);
   } // i
@@ -69,7 +73,7 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
   {
     double y = gv28_sys->GetBinContent(i);
-    double err = y * 0.06;
+    double err = y * 0.01;
     if ( err < 0.005 ) err = 0.005;
     if ( y > 0 ) gv28_sys->SetBinError(i, err);
   } // i

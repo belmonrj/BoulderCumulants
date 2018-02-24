@@ -44,8 +44,8 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   for ( int i = 0; i < gv22_sys->GetNbinsX(); ++i )
   {
     double y = gv22_sys->GetBinContent(i);
-    double err = y * 0.06;
-    if ( isscent ) err = y * 0.09;
+    double err = y * 0.01;
+    //if ( isscent ) err = y * 0.01;
     if ( err < 0.0035 ) err = 0.0035;
     if ( y > 0 ) gv22_sys->SetBinError(i, err);
   } // i
@@ -56,7 +56,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
   {
     double y = gv24_sys->GetBinContent(i);
-    double err = y * 0.06;
+    double err = y * 0.01;
     if ( err < 0.0035 ) err = 0.0035;
     if ( y > 0 ) gv24_sys->SetBinError(i, err);
   } // i
@@ -67,7 +67,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
   {
     double y = gv26_sys->GetBinContent(i);
-    double err = y * 0.06;
+    double err = y * 0.01;
     if ( err < 0.0035 ) err = 0.0035;
     if ( y > 0 ) gv26_sys->SetBinError(i, err);
   } // i
@@ -78,7 +78,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   for ( int i = 0; i < gv24_sys->GetNbinsX(); ++i )
   {
     double y = gv28_sys->GetBinContent(i);
-    double err = y * 0.06;
+    double err = y * 0.01;
     if ( err < 0.0035 ) err = 0.0035;
     if ( y > 0 ) gv28_sys->SetBinError(i, err);
   } // i
