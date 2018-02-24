@@ -148,7 +148,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   tex_system->SetNDC();
   tex_system->Draw();
   // --- first v22
-  gv22_sys->Draw("E5 same");
+  //gv22_sys->Draw("E5 same");
   th1d_v22->Draw("same ex0p");
   TLegend* leg22 = new TLegend(0.66,0.87,0.92,0.92);
   leg22->SetTextSize(0.05);
@@ -159,7 +159,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   c1->Print(Form("FigsRecursion/recursion_%s_v%d2.png",handle,harmonic));
   c1->Print(Form("FigsRecursion/recursion_%s_v%d2.pdf",handle,harmonic));
   // --- then animate on v24
-  gv24_sys->Draw("E5 same");
+  //gv24_sys->Draw("E5 same");
   th1d_v24->Draw("same ex0p");
   TLegend* leg24 = new TLegend(0.66,0.82,0.92,0.87);
   leg24->SetTextSize(0.05);
@@ -169,7 +169,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   c1->Print(Form("FigsRecursion/recursion_%s_v%d24.png",handle,harmonic));
   c1->Print(Form("FigsRecursion/recursion_%s_v%d24.pdf",handle,harmonic));
   // --- then animate on v26
-  gv26_sys->Draw("E5 same");
+  //gv26_sys->Draw("E5 same");
   th1d_v26->Draw("same ex0p");
   TLegend* leg26 = new TLegend(0.66,0.77,0.92,0.82);
   leg26->SetTextSize(0.05);
@@ -179,7 +179,7 @@ void plot_recv2(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22, 
   c1->Print(Form("FigsRecursion/recursion_%s_v%d246.png",handle,harmonic));
   c1->Print(Form("FigsRecursion/recursion_%s_v%d246.pdf",handle,harmonic));
   // --- then animate on v28
-  gv28_sys->Draw("E5 same");
+  //gv28_sys->Draw("E5 same");
   th1d_v28->Draw("same ex0p");
   TLegend* leg28 = new TLegend(0.66,0.72,0.92,0.77);
   leg28->SetTextSize(0.05);

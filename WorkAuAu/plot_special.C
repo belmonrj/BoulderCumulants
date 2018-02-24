@@ -142,7 +142,7 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   tex_system->SetNDC();
   tex_system->Draw();
   // --- first v22
-  gv22_sys->Draw("E5 same");
+  //gv22_sys->Draw("E5 same");
   th1d_v22->Draw("same ex0p");
   TLegend* leg22 = new TLegend(0.66,0.87,0.92,0.92);
   leg22->SetTextSize(0.05);
@@ -152,7 +152,7 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   c1->Print(Form("FigsSpecial/special_%s_v22.png",handle));
   c1->Print(Form("FigsSpecial/special_%s_v22.pdf",handle));
   // --- next v22gap
-  gv22gap_sys->Draw("E5 same");
+  //gv22gap_sys->Draw("E5 same");
   th1d_v22gap->Draw("same ex0p");
   TLegend* leg22gap = new TLegend(0.66,0.82,0.92,0.87);
   leg22gap->SetTextSize(0.05);
@@ -162,7 +162,7 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   c1->Print(Form("FigsSpecial/special_%s_v222.png",handle));
   c1->Print(Form("FigsSpecial/special_%s_v222.pdf",handle));
   // --- then animate on v24
-  gv24_sys->Draw("E5 same");
+  //gv24_sys->Draw("E5 same");
   th1d_v24->Draw("same ex0p");
   TLegend* leg24 = new TLegend(0.66,0.77,0.92,0.82);
   leg24->SetTextSize(0.05);
@@ -172,7 +172,7 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   c1->Print(Form("FigsSpecial/special_%s_v2224.png",handle));
   c1->Print(Form("FigsSpecial/special_%s_v2224.pdf",handle));
   // --- then animate on v26
-  gv26_sys->Draw("E5 same");
+  //gv26_sys->Draw("E5 same");
   th1d_v26->Draw("same ex0p");
   TLegend* leg26 = new TLegend(0.66,0.72,0.92,0.77);
   leg26->SetTextSize(0.05);
@@ -182,7 +182,7 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   c1->Print(Form("FigsSpecial/special_%s_v22246.png",handle));
   c1->Print(Form("FigsSpecial/special_%s_v22246.pdf",handle));
   // --- then animate on v28
-  gv28_sys->Draw("E5 same");
+  //gv28_sys->Draw("E5 same");
   th1d_v28->Draw("same ex0p");
   TLegend* leg28 = new TLegend(0.66,0.67,0.92,0.72);
   leg28->SetTextSize(0.05);

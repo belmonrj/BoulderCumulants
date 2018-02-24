@@ -52,7 +52,7 @@ void doit(const char* handle)
   hdummy->GetYaxis()->SetTitle("v_{3}");
   hdummy->GetYaxis()->SetTitleOffset(1.2);
   hdummy->GetXaxis()->SetTitle("Centrality (%)");
-  gv3_sys->Draw("E5 same");
+  //gv3_sys->Draw("E5 same");
   th1d_os_v3G->Draw("ex0p same");
 
   // TLatex latt;
