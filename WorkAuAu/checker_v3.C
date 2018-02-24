@@ -93,7 +93,7 @@ void doit(const char* handle)
   th1d_corr_v32->Draw("ex0p same");
   th1d_corr_v3G->Draw("ex0p same");
 
-  c1->Print(Form("FigsWork/v32comp_%s.png",handle));
+  //c1->Print(Form("FigsWork/v32comp_%s.png",handle));
 
   TProfile* tp1f_two_os = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c32");
   TProfile* tp1f_G_two_os = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32"); // scalar product north*south
@@ -111,6 +111,14 @@ void doit(const char* handle)
 
   th1d_os_v32->Draw("ex0p same");
   th1d_os_v3G->Draw("ex0p same");
+
+  TLegend* leg = new TLegend(0.68,0.68,0.88,0.88);
+  leg->AddEntry(th1d_corr_v32,"corr","p");
+  leg->AddEntry(th1d_os_v32,"offs","p");
+  leg->AddEntry(th1d_corr_v3G,"corr","p");
+  leg->AddEntry(th1d_os_v3G,"offs","p");
+  leg->SetTextSize(0.05);
+  leg->Draw();
 
   c1->Print(Form("FigsWork/v32compmore_%s.png",handle));
 

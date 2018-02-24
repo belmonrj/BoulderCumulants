@@ -115,8 +115,6 @@ void star_v34()
   TGraphErrors* tge_ratio = new TGraphErrors(nbins,cent,ratio,0,eratio);
   TGraphErrors* tge_sratio = new TGraphErrors(6,star_cent,star_ratio,0,star_eratio);
 
-
-
   // --- do some drawing
 
   tge_norm->SetLineColor(kBlack);
@@ -150,15 +148,11 @@ void star_v34()
   tge_swap->Draw("pz");
   TLatex latt;
   latt.SetNDC();
-  //latt.SetTextFont(62);
   latt.SetTextSize(0.05);
   latt.SetTextAlign(11);
-  //latt.DrawLatex(0.20, 0.87, "PHENIX");
-  //latt.DrawLatex(0.45, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
   latt.DrawLatex(0.50, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
   TLegend *leg = new TLegend(0.18,0.18,0.38,0.38);
   leg->SetFillStyle(0);
-  //leg->SetHeader("10^{6} v_{3}^{4}{4}");
   leg->AddEntry(tge_swap,"PHENIX 1<|#eta|<3","p");
   leg->AddEntry(tge_norm,"STAR |#eta|<1","p");
   leg->SetTextSize(0.05);
@@ -169,6 +163,58 @@ void star_v34()
   line->Draw();
   c1->Print("STAR/v34_star.png");
   c1->Print("STAR/v34_star.pdf");
+
+
+  float star_c34[6];
+  float star_ec34[6];
+  for ( int i = 0; i < 6; ++i )
+    {
+      star_c34[i] = -star_v34[i]*1e-6;
+      star_ec34[i] = star_ev34[i]*1e-6;
+      cout << star_c34[i] << " " << star_ec34[i] << endl;
+    }
+  TGraphErrors* tge_star = new TGraphErrors(6,star_cent,star_c34,0,star_ec34);
+  TGraphErrors* tge_phen = new TGraphErrors(nbins,cent,norm_c3,0,norm_ec3);
+
+  tge_star->SetLineColor(kBlack);
+  tge_star->SetMarkerColor(kBlack);
+  tge_star->SetMarkerStyle(kFullStar);
+  tge_star->SetMarkerSize(2.5);
+  tge_phen->SetLineColor(kRed);
+  tge_phen->SetMarkerColor(kRed);
+  tge_phen->SetMarkerStyle(kFullCircle);
+
+
+  xmin = 0;
+  xmax = 60;
+  ymin = -1e-7;
+  ymax = 2e-7;
+  hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
+  hdummy->Draw();
+  hdummy->GetYaxis()->SetTitle(Form("c_{3}{4}"));
+  hdummy->GetYaxis()->SetTitleOffset(1.25);
+  hdummy->GetXaxis()->SetTitle("Centrality (%)");
+  tge_star->Draw("pz");
+  tge_phen->Draw("pz");
+  latt.SetNDC();
+  latt.SetTextSize(0.05);
+  latt.SetTextAlign(11);
+  latt.DrawLatex(0.50, 0.25, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+  leg = new TLegend(0.18,0.73,0.38,0.93);
+  leg->SetFillStyle(0);
+  leg->AddEntry(tge_phen,"PHENIX 1<|#eta|<3","p");
+  leg->AddEntry(tge_star,"STAR |#eta|<1","p");
+  leg->SetTextSize(0.05);
+  leg->Draw();
+  line = new TLine(xmin,0,xmax,0);
+  line->SetLineStyle(2);
+  line->SetLineWidth(2);
+  line->Draw();
+  c1->Print("STAR/c34_star.png");
+  c1->Print("STAR/c34_star.pdf");
+
+
+  return;
 
 
   ymin = -0.2;

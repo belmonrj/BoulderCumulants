@@ -1,0 +1,76 @@
+#include "hsqrt.C"
+
+void doit(const char*);
+
+void plot_v3()
+{
+  doit("12634");
+}
+
+void doit(const char* handle)
+{
+
+  TCanvas* c1 = new TCanvas("c1","");
+
+  int rebin = 2;
+
+  TFile* fin = TFile::Open(Form("input/histos_%s.root",handle));
+
+
+
+  TProfile* tp1f_two_os = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c32");
+  TProfile* tp1f_G_two_os = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32"); // scalar product north*south
+  tp1f_two_os->Rebin(rebin);
+  tp1f_G_two_os->Rebin(rebin);
+
+  TH1D* th1d_os_v32 = hsqrt(tp1f_two_os);
+  TH1D* th1d_os_v3G = hsqrt(tp1f_G_two_os);
+
+  // --- get the systmatics histos
+  TH1D* gv3_sys = (TH1D*) th1d_os_v3G->Clone("gv3_sys");
+  gv3_sys->SetMarkerStyle(0);
+  gv3_sys->SetMarkerSize(0);
+  gv3_sys->SetFillColorAlpha(kMagenta+2, 0.35);
+  for ( int i = 0; i < gv3_sys->GetNbinsX(); ++i )
+  {
+    double y = gv3_sys->GetBinContent(i);
+    double err = y * 0.06;
+    if ( err < 0.0012 ) err = 0.0012;
+    if ( y > 0 ) gv3_sys->SetBinError(i, err);
+  } // i
+  gv3_sys->GetXaxis()->SetRangeUser(0,67);
+
+  th1d_os_v32->SetMarkerColor(kRed);
+  th1d_os_v32->SetMarkerStyle(kFullSquare);
+  th1d_os_v3G->SetMarkerColor(kMagenta+2);
+  th1d_os_v3G->SetMarkerStyle(kFullDiamond);
+  th1d_os_v3G->SetMarkerSize(1.9);
+
+  //TH2D* hdummy = new TH2D("hdummy","", 1,0.0,100.0, 1,0.0,0.1);
+  TH2D* hdummy = new TH2D("hdummy","", 1,0.0,70.0, 1,0.0,0.04);
+  hdummy->Draw();
+  hdummy->GetYaxis()->SetTitle("v_{3}");
+  hdummy->GetYaxis()->SetTitleOffset(1.2);
+  hdummy->GetXaxis()->SetTitle("Centrality (%)");
+  gv3_sys->Draw("E5 same");
+  th1d_os_v3G->Draw("ex0p same");
+
+  // TLatex latt;
+  // latt.SetNDC();
+  // latt.SetTextSize(0.05);
+  // latt.SetTextAlign(11);
+  // latt.DrawLatex(0.50, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+
+  TLegend* leg = new TLegend(0.23,0.68,0.43,0.88);
+  leg->SetHeader("Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+  leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
+  leg->SetTextSize(0.05);
+  leg->Draw();
+
+  c1->Print(Form("FigsWork/v32.pdf"));
+  c1->Print(Form("FigsWork/v32.png"));
+
+  delete c1;
+
+}
+
