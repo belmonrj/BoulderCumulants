@@ -189,6 +189,7 @@ void star_v34()
   xmax = 60;
   ymin = -1e-7;
   ymax = 2e-7;
+  if ( hdummy) delete hdummy;
   hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->Draw();
   hdummy->GetYaxis()->SetTitle(Form("c_{3}{4}"));
