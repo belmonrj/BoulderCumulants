@@ -55,11 +55,11 @@ void doit(const char* handle)
   //gv3_sys->Draw("E5 same");
   th1d_os_v3G->Draw("ex0p same");
 
-  // TLatex latt;
-  // latt.SetNDC();
-  // latt.SetTextSize(0.05);
-  // latt.SetTextAlign(11);
-  // latt.DrawLatex(0.50, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+  TLatex latt;
+  latt.SetNDC();
+  latt.SetTextSize(0.05);
+  latt.SetTextAlign(11);
+  latt.DrawLatex(0.60, 0.71, "Sys. Uncert. 6%");
 
   TLegend* leg = new TLegend(0.23,0.68,0.43,0.88);
   leg->SetHeader("Au+Au #sqrt{s_{_{NN}}} = 200 GeV");

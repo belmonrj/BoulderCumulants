@@ -141,6 +141,11 @@ void plot_special(TH1D* th1d_v28, TH1D* th1d_v26, TH1D* th1d_v24, TH1D* th1d_v22
   tex_system->SetTextSize(0.05);
   tex_system->SetNDC();
   tex_system->Draw();
+  TLatex latt;
+  latt.SetNDC();
+  latt.SetTextSize(0.05);
+  //latt.SetTextAlign(11);
+  latt.DrawLatex(0.2, 0.71, "Sys. Uncert. 6%");
   // --- first v22
   //gv22_sys->Draw("E5 same");
   th1d_v22->Draw("same ex0p");
