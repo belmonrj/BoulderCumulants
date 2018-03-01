@@ -1,10 +1,9 @@
-TH1D* do_simple_gap(TProfile*, TProfile*, TProfile*, int, const char*);
+TH1D* get_sigma_histo(TProfile*, TProfile*, TProfile*, int, const char*);
+TH1D* get_sigma_histo(TFile*, int, const char*);
 
 
-TH1D* get_sigma()
+void get_sigma()
 {
-
-  // ------------------------------------------------------------------------
 
   TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
 
@@ -12,24 +11,32 @@ TH1D* get_sigma()
 
   const char* handle = "cent";
 
+  TH1D* hreturn = get_sigma_histo(fin,rebin,handle);
+
+  cout << "return histo is " << hreturn << endl;
+
+  cout << "All done! Have a nice day!" << endl;
+
+}
+
+
+TH1D* get_sigma_histo(TFile* fin, int rebin, const char* handle)
+{
+
   TProfile* tp1f_gap = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c22");
   TProfile* tp1f_for = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c24");
   TProfile* tp1f_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c22");
 
-  TH1D* hreturn = do_simple_gap(tp1f_gap,tp1f_for,tp1f_two,rebin,handle);
+  TH1D* hreturn = get_sigma_histo(tp1f_gap,tp1f_for,tp1f_two,rebin,handle);
 
   cout << "return histo is " << hreturn << endl;
-
-  // ------------------------------------------------------------------------
-
-  cout << "All done. Have a nice day!" << endl;
 
   return hreturn;
 
 }
 
 
-TH1D* do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
+TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
 {
 
   TCanvas* c1 = new TCanvas("c1","");
