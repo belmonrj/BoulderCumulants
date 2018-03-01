@@ -1,7 +1,7 @@
-void do_simple_gap(TProfile*, TProfile*, TProfile*, int, const char*);
+TH1D* do_simple_gap(TProfile*, TProfile*, TProfile*, int, const char*);
 
 
-void get_sigma()
+TH1D* get_sigma()
 {
 
   // ------------------------------------------------------------------------
@@ -16,16 +16,20 @@ void get_sigma()
   TProfile* tp1f_for = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c24");
   TProfile* tp1f_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c22");
 
-  do_simple_gap(tp1f_gap,tp1f_for,tp1f_two,rebin,handle);
+  TH1D* hreturn = do_simple_gap(tp1f_gap,tp1f_for,tp1f_two,rebin,handle);
+
+  cout << "return histo is " << hreturn << endl;
 
   // ------------------------------------------------------------------------
 
   cout << "All done. Have a nice day!" << endl;
 
+  return hreturn;
+
 }
 
 
-void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
+TH1D* do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
 {
 
   TCanvas* c1 = new TCanvas("c1","");
@@ -292,6 +296,10 @@ void do_simple_gap(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, i
   c1->Print(Form("FigsSigma/sigma_%s_x05.png",handle));
   c1->Print(Form("FigsSigma/sigma_%s_x05.pdf",handle));
   } // --- matches if ( iscent )
+
+  TH1D* hreturn = th1d_SVV;
+
+  return hreturn;
 
 }
 
