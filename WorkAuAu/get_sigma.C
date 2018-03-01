@@ -1,4 +1,5 @@
-TH1D* get_sigma_histo(TProfile*, TProfile*, TProfile*, int, const char*);
+TH1D* get_sigma_histo(TProfile*, TProfile*, TProfile*, int, const char*, bool);
+TH1D* get_sigma_histo(TFile*, int, const char*, bool);
 TH1D* get_sigma_histo(TFile*, int, const char*);
 
 
@@ -11,7 +12,7 @@ void get_sigma()
 
   const char* handle = "cent";
 
-  TH1D* hreturn = get_sigma_histo(fin,rebin,handle);
+  TH1D* hreturn = get_sigma_histo(fin,rebin,handle,true);
 
   cout << "return histo is " << hreturn << endl;
 
@@ -22,12 +23,18 @@ void get_sigma()
 
 TH1D* get_sigma_histo(TFile* fin, int rebin, const char* handle)
 {
+  return get_sigma_histo(fin,rebin,handle,false);
+}
+
+
+TH1D* get_sigma_histo(TFile* fin, int rebin, const char* handle, bool doplot)
+{
 
   TProfile* tp1f_gap = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c22");
   TProfile* tp1f_for = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c24");
   TProfile* tp1f_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c22");
 
-  TH1D* hreturn = get_sigma_histo(tp1f_gap,tp1f_for,tp1f_two,rebin,handle);
+  TH1D* hreturn = get_sigma_histo(tp1f_gap,tp1f_for,tp1f_two,rebin,handle,doplot);
 
   cout << "return histo is " << hreturn << endl;
 
@@ -36,7 +43,7 @@ TH1D* get_sigma_histo(TFile* fin, int rebin, const char* handle)
 }
 
 
-TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
+TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle, bool doplot)
 {
 
   if ( !tp1f_gap || !tp1f_two || !tp1f_for )
@@ -309,8 +316,8 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   leg->AddEntry(th1d_SVG,"Data","p");
   leg->SetTextSize(0.05);
   leg->Draw();
-  c1->Print(Form("FigsSigma/sigma_%s_x05.png",handle));
-  c1->Print(Form("FigsSigma/sigma_%s_x05.pdf",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/sigma_%s_x05.png",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/sigma_%s_x05.pdf",handle));
   } // --- matches if ( iscent )
 
   delete c1;
