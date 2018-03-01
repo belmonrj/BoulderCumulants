@@ -39,6 +39,15 @@ TH1D* get_sigma_histo(TFile* fin, int rebin, const char* handle)
 TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two, int rebin, const char* handle)
 {
 
+  if ( !tp1f_gap || !tp1f_two || !tp1f_for )
+    {
+      cout << "get_sigma_histo: one or more empty histograms" << endl;
+      cout << "tp1f_gap: " << tp1f_gap << endl;
+      cout << "tp1f_two: " << tp1f_two << endl;
+      cout << "tp1f_for: " << tp1f_for << endl;
+      return NULL;
+    }
+
   TCanvas* c1 = new TCanvas("c1","");
 
   bool iscent = false;
@@ -303,6 +312,8 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   c1->Print(Form("FigsSigma/sigma_%s_x05.png",handle));
   c1->Print(Form("FigsSigma/sigma_%s_x05.pdf",handle));
   } // --- matches if ( iscent )
+
+  delete c1;
 
   TH1D* hreturn = th1d_SVV;
 
