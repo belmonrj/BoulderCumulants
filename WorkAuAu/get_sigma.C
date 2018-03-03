@@ -283,7 +283,7 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
     if ( y > 0 ) gsys->SetBinError(i, err);
   } // i
   gsys->GetXaxis()->SetRangeUser(7,65);
-  gsys->Draw("same E5");
+  //gsys->Draw("same E5");
   double Rmarg = 0.08;
   TLatex latt;
   latt.SetNDC();
@@ -295,6 +295,7 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   latt.DrawLatex(0.56 - Rmarg, 0.80, "h^{#pm} 1<|#eta|<3");
   // c1->Print(Form("FigsSigma/sigma_%s_x04.png",handle));
   // c1->Print(Form("FigsSigma/sigma_%s_x04.pdf",handle));
+  latt.DrawLatex(0.30 - Rmarg, 0.22, "Sys. Uncert. 2%");
   ifstream fampt("input/temp_ampt.dat");
   double cent[16], ntrk[16], y[16], ey[16];
   for ( int i = 0; i < 16; ++i )
