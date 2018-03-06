@@ -64,11 +64,11 @@ void star_v34()
       //      << ratio[i] << " +- "
       //      << eratio[i]
       //      << endl;
-      cout << cent[i] << " "
-           << swap_ec3[i]/swap_c3[i] << " "
-           << swap_ec2[i]/swap_c2[i] << " "
-           << eratio[i]/ratio[i] << " +- "
-           << endl;
+      // cout << cent[i] << " "
+      //      << swap_ec3[i]/swap_c3[i] << " "
+      //      << swap_ec2[i]/swap_c2[i] << " "
+      //      << eratio[i]/ratio[i] << " +- "
+      //      << endl;
     }
 
 
@@ -171,7 +171,7 @@ void star_v34()
     {
       star_c34[i] = -star_v34[i]*1e-6;
       star_ec34[i] = star_ev34[i]*1e-6;
-      cout << star_c34[i] << " " << star_ec34[i] << endl;
+      //cout << star_c34[i] << " " << star_ec34[i] << endl;
     }
   TGraphErrors* tge_star = new TGraphErrors(6,star_cent,star_c34,0,star_ec34);
   TGraphErrors* tge_phen = new TGraphErrors(nbins,cent,norm_c3,0,norm_ec3);
