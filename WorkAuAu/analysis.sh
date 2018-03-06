@@ -2,7 +2,7 @@
 
 root -b -l -q do_special.C
 root -b -l -q get_subevents.C
-root -b -l -q sigma.C
+root -b -l -q get_sigma.C
 root -b -l -q plot_v3.C
 root -b -l -q star_v34.C
 
