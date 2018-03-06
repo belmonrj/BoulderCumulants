@@ -47,7 +47,8 @@ void doit(const char* handle)
   th1d_os_v3G->SetMarkerSize(1.9);
 
   //TH2D* hdummy = new TH2D("hdummy","", 1,0.0,100.0, 1,0.0,0.1);
-  TH2D* hdummy = new TH2D("hdummy","", 1,0.0,70.0, 1,0.0,0.04);
+  //TH2D* hdummy = new TH2D("hdummy","", 1,0.0,70.0, 1,0.0,0.04);
+  TH2D* hdummy = new TH2D("hdummy","", 1,0.0,70.0, 1,0.0,0.02);
   hdummy->Draw();
   hdummy->GetYaxis()->SetTitle("v_{3}");
   hdummy->GetYaxis()->SetTitleOffset(1.2);
@@ -55,16 +56,33 @@ void doit(const char* handle)
   //gv3_sys->Draw("E5 same");
   th1d_os_v3G->Draw("ex0p same");
 
+  TLatex* tex_phenix = new TLatex(0.2,0.778,"PHENIX");
+  tex_phenix->SetTextSize(0.05);
+  tex_phenix->SetNDC();
+  tex_phenix->Draw();
+  // TLatex* tex_system = new TLatex(0.2,0.83,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  // tex_system->SetTextSize(0.05);
+  // tex_system->SetNDC();
+  // tex_system->Draw();
+  TLatex* tex_tracks = new TLatex(0.2,0.83,"h^{#pm} 1<|#eta|<3");
+  tex_tracks->SetTextSize(0.05);
+  tex_tracks->SetNDC();
+  tex_tracks->Draw();
+  TLatex* tex_system = new TLatex(0.2,0.882,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  tex_system->SetTextSize(0.05);
+  tex_system->SetNDC();
+  tex_system->Draw();
   TLatex latt;
   latt.SetNDC();
   latt.SetTextSize(0.05);
-  latt.SetTextAlign(11);
-  latt.DrawLatex(0.60, 0.71, "Sys. Uncert. 8%");
+  //latt.SetTextAlign(11);
+  //latt.DrawLatex(0.2, 0.71, "Sys. Uncert. 6%");
+  latt.DrawLatex(0.35, 0.21, "Sys. Uncert. 6%");
 
-  TLegend* leg = new TLegend(0.23,0.68,0.43,0.88);
-  leg->SetHeader("Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+  TLegend* leg = new TLegend(0.66,0.87,0.92,0.92);
   leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
   leg->SetTextSize(0.05);
+  leg->SetFillStyle(0);
   leg->Draw();
 
   c1->Print(Form("FigsWork/v32.pdf"));

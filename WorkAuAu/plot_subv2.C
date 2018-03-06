@@ -86,7 +86,8 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   double xmin = 0.0;
   double xmax = 100.0;
   double ymin = 0.0;
-  double ymax = 0.12;
+  //double ymax = 0.12;
+  double ymax = 0.08;
   TH2D* empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
   empty->Draw();
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
@@ -113,7 +114,8 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   latt.SetNDC();
   latt.SetTextSize(0.05);
   //latt.SetTextAlign(11);
-  latt.DrawLatex(0.2, 0.71, "Sys. Uncert. 6%");
+  //latt.DrawLatex(0.2, 0.71, "Sys. Uncert. 6%");
+  latt.DrawLatex(0.35, 0.21, "Sys. Uncert. 6%");
   //gv24_sys->Draw("E5 same");
   th1d_v24->Draw("same ex0p");
   TLegend* leg24 = new TLegend(0.66,0.86,0.92,0.92);
