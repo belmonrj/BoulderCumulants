@@ -88,6 +88,8 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   TH1D* th1d_SVV = (TH1D*)th1d_c24->Clone("th1d_SVV");
   TH1D* th1d_SVG = (TH1D*)th1d_c24->Clone("th1d_SVG");
   TH1D* th1d_SV4 = (TH1D*)th1d_c24->Clone("th1d_SV4");
+  TH1D* th1d_mean = (TH1D*)th1d_c24->Clone("th1d_mean");
+  TH1D* th1d_sigma = (TH1D*)th1d_c24->Clone("th1d_sigma");
 
   int nbins = th1d_gap->GetNbinsX();
   for ( int i = 0; i < nbins; ++i )
@@ -167,6 +169,16 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
           // -----------------------
           esigmavv2 = sigmavv2*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) ); // quick and dirty guess, need to check
         }
+      if ( numerator2 > 0 && denominat2 > 0 )
+        {
+          th1d_mean->SetBinContent(i+1,sqrt(denominat2)/2);
+          th1d_sigma->SetBinContent(i+1,sqrt(numerator2)/2);
+        }
+      else
+        {
+          th1d_mean->SetBinContent(i+1,-9999);
+          th1d_sigma->SetBinContent(i+1,-9999);
+        }
       th1d_SVG->SetBinContent(i+1,sigmavv2);
       th1d_SVG->SetBinError(i+1,esigmavv2);
       // --- sigma_v/v this turns out to be algrebraically identical to the above...
@@ -236,8 +248,6 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   //th1d_SV4->Draw("same ex0p");
   TLegend* leg = new TLegend(0.22,0.72,0.48,0.92);
   leg->SetHeader("Run14AuAu200");
-  leg->SetTextSize(0.05);
-  leg->SetFillStyle(0);
   leg->AddEntry(th1d_SVV,"Using v_{2}{2} no eta gap","p");
   leg->AddEntry(th1d_SVG,"Using v_{2}{2} with eta gap","p");
   leg->Draw();
@@ -268,7 +278,6 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   leg->AddEntry(tg_sig2,"MC Glauber, data style estimate","l");
   leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
   leg->AddEntry(th1d_SVG,"Data","p");
-  leg->SetTextSize(0.05);
   leg->Draw();
   // c1->Print(Form("FigsSigma/sigma_%s_x03.png",handle));
   // c1->Print(Form("FigsSigma/sigma_%s_x03.pdf",handle));
@@ -315,11 +324,24 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
   leg->AddEntry(tge_amptcent,"AMPT","l");
   leg->AddEntry(th1d_SVG,"Data","p");
-  leg->SetTextSize(0.05);
   leg->Draw();
   if ( doplot) c1->Print(Form("FigsSigma/sigma_%s_x05.png",handle));
   if ( doplot) c1->Print(Form("FigsSigma/sigma_%s_x05.pdf",handle));
   } // --- matches if ( iscent )
+
+
+  if ( doplot )
+    {
+      TFile* fout = TFile::Open("sigma_for_jamie.root","recreate");
+      fout->cd();
+      th1d_mean->Write();
+      th1d_sigma->Write();
+      th1d_SVG->SetName("th1d_sigmaovermean");
+      th1d_SVG->Write();
+      fout->Write();
+      fout->Close();
+      delete fout;
+    }
 
   delete c1;
 
