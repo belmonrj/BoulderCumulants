@@ -179,6 +179,7 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
           th1d_mean->SetBinContent(i+1,-9999);
           th1d_sigma->SetBinContent(i+1,-9999);
         }
+      cout << i << " " << th1d_sigma->GetBinContent(i+1) << endl;
       th1d_SVG->SetBinContent(i+1,sigmavv2);
       th1d_SVG->SetBinError(i+1,esigmavv2);
       // --- sigma_v/v this turns out to be algrebraically identical to the above...
@@ -344,12 +345,12 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   // hratio10->Scale(0.1);
   float cent[6] = {2.5,7.5,15,25,35,45};
   float sbin[6] = {  5,  5,10,10,10,10};
-  float mean[6];
-  float emean[6];
-  float sigma[6];
-  float esigma[6];
-  float ratio[6];
-  float eratio[6];
+  float mean[6] = {0,0,0,0,0,0};
+  float emean[6] = {0,0,0,0,0,0};
+  float sigma[6] = {0,0,0,0,0,0};
+  float esigma[6] = {0,0,0,0,0,0};
+  float ratio[6] = {0,0,0,0,0,0};
+  float eratio[6] = {0,0,0,0,0,0};
   for ( int i = 0; i < 5; ++i )
     {
       // --- mean
@@ -367,6 +368,8 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
       eratio[0] += pow(th1d_SVG->GetBinError(i+2),2);
       ratio[1] += th1d_SVG->GetBinContent(i+7);
       eratio[1] += pow(th1d_SVG->GetBinError(i+7),2);
+      // ---
+      //cout << sigma[1] << endl;
     }
   for ( int i = 0; i < 10; ++i )
     {
@@ -397,6 +400,7 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
       eratio[4] += pow(th1d_SVG->GetBinError(i+32),2);
       ratio[5] += th1d_SVG->GetBinContent(i+42);
       eratio[5] += pow(th1d_SVG->GetBinError(i+42),2);
+      cout << sigma[2] << endl;
     }
   for ( int i = 0; i < 6; ++i )
     {
@@ -412,6 +416,7 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
       ratio[i] /= sbin[i];
       eratio[i] = sqrt(eratio[i]);
       eratio[i] /= sbin[i];
+      cout << cent[2] << " " << sigma[2] << endl;
     }
   TGraphErrors* tge_mean = new TGraphErrors(6,cent,mean,0,emean);
   TGraphErrors* tge_sigma = new TGraphErrors(6,cent,sigma,0,esigma);
@@ -420,39 +425,39 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   tge_mean->Draw("ap");
   tge_mean->SetMinimum(0.0);
   tge_mean->SetMaximum(0.06);
-  if ( doplot) c1->Print(Form("FigsSigma/xx_r_mean.png",handle));
-  if ( doplot) c1->Print(Form("FigsSigma/xx_r_mean.pdf",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_mean.png"));
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_mean.pdf"));
   tge_sigma->SetMarkerStyle(kFullCircle);
   tge_sigma->Draw("ap");
   tge_sigma->SetMinimum(0.0);
   tge_sigma->SetMaximum(0.02);
-  if ( doplot) c1->Print(Form("FigsSigma/xx_r_sigma.png",handle));
-  if ( doplot) c1->Print(Form("FigsSigma/xx_r_sigma.pdf",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_sigma.png"));
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_sigma.pdf"));
   tge_ratio->SetMarkerStyle(kFullCircle);
   tge_ratio->Draw("ap");
   tge_ratio->SetMinimum(0.0);
   tge_ratio->SetMaximum(1.0);
-  if ( doplot) c1->Print(Form("FigsSigma/xx_r_ratio.png",handle));
-  if ( doplot) c1->Print(Form("FigsSigma/xx_r_ratio.pdf",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_ratio.png"));
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_ratio.pdf"));
 
   th1d_mean->SetMarkerStyle(kFullCircle);
   th1d_mean->Draw("ex0p");
   th1d_mean->SetMinimum(0.0);
   th1d_mean->SetMaximum(0.06);
-  if ( doplot) c1->Print(Form("FigsSigma/yy_r_mean.png",handle));
-  if ( doplot) c1->Print(Form("FigsSigma/yy_r_mean.pdf",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_mean.png"));
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_mean.pdf"));
   th1d_sigma->SetMarkerStyle(kFullCircle);
   th1d_sigma->Draw("ex0p");
   th1d_sigma->SetMinimum(0.0);
   th1d_sigma->SetMaximum(0.02);
-  if ( doplot) c1->Print(Form("FigsSigma/yy_r_sigma.png",handle));
-  if ( doplot) c1->Print(Form("FigsSigma/yy_r_sigma.pdf",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_sigma.png"));
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_sigma.pdf"));
   th1d_SVG->SetMarkerStyle(kFullCircle);
   th1d_SVG->Draw("ex0p");
   th1d_SVG->SetMinimum(0.0);
   th1d_SVG->SetMaximum(1.0);
-  if ( doplot) c1->Print(Form("FigsSigma/yy_r_ratio.png",handle));
-  if ( doplot) c1->Print(Form("FigsSigma/yy_r_ratio.pdf",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_ratio.png"));
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_ratio.pdf"));
 
   if ( doplot )
     {
