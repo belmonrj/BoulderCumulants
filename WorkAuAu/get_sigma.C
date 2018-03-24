@@ -257,7 +257,7 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   {
   tg_sig1->Draw("l");
   tg_sig2->Draw("l");
-  leg->AddEntry(tg_sig2,"MC Glauber, data style calc","l");
+  leg->AddEntry(tg_sig2,"MC Glauber, cumulant based calc","l");
   leg->AddEntry(tg_sig1,"MC Glauber, direct calc","l");
   leg->Draw();
   // c1->Print(Form("FigsSigma/sigma_%s_x02.png",handle));
@@ -275,7 +275,7 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   tg_sig2->Draw("l");
   delete leg;
   leg = new TLegend(0.22,0.58,0.48,0.78);
-  leg->AddEntry(tg_sig2,"MC Glauber, data style estimate","l");
+  leg->AddEntry(tg_sig2,"MC Glauber, cumulant based estimate","l");
   leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
   leg->AddEntry(th1d_SVG,"Data","p");
   leg->Draw();
@@ -320,7 +320,7 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   tge_amptcent->Draw("L3");
   delete leg;
   leg = new TLegend(0.22,0.515,0.48,0.78);
-  leg->AddEntry(tg_sig2,"MC Glauber, data style estimate","l");
+  leg->AddEntry(tg_sig2,"MC Glauber, cumulant based estimate","l");
   leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
   leg->AddEntry(tge_amptcent,"AMPT","l");
   leg->AddEntry(th1d_SVG,"Data","p");
@@ -330,6 +330,130 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   } // --- matches if ( iscent )
 
 
+  // TH1D* hmean5 = (TH1D*)th1d_mean->Clone("hmean5");
+  // TH1D* hsigma5 = (TH1D*)th1d_sigma->Clone("hsigma5");
+  // TH1D* hratio5 = (TH1D*)th1d_SVG->Clone("hratio5");
+  // hmean5->Scale(0.2);
+  // hsigma5->Scale(0.2);
+  // hratio5->Scale(0.2);
+  // TH1D* hmean10 = (TH1D*)th1d_mean->Clone("hmean10");
+  // TH1D* hsigma10 = (TH1D*)th1d_sigma->Clone("hsigma10");
+  // TH1D* hratio10 = (TH1D*)th1d_SVG->Clone("hratio10");
+  // hmean10->Scale(0.1);
+  // hsigma10->Scale(0.1);
+  // hratio10->Scale(0.1);
+  float cent[6] = {2.5,7.5,15,25,35,45};
+  float sbin[6] = {  5,  5,10,10,10,10};
+  float mean[6];
+  float emean[6];
+  float sigma[6];
+  float esigma[6];
+  float ratio[6];
+  float eratio[6];
+  for ( int i = 0; i < 5; ++i )
+    {
+      // --- mean
+      mean[0] += th1d_mean->GetBinContent(i+2);
+      emean[0] += pow(th1d_mean->GetBinError(i+2),2);
+      mean[1] += th1d_mean->GetBinContent(i+7);
+      emean[1] += pow(th1d_mean->GetBinError(i+7),2);
+      // --- sigma
+      sigma[0] += th1d_sigma->GetBinContent(i+2);
+      esigma[0] += pow(th1d_sigma->GetBinError(i+2),2);
+      sigma[1] += th1d_sigma->GetBinContent(i+7);
+      esigma[1] += pow(th1d_sigma->GetBinError(i+7),2);
+      // --- ratio
+      ratio[0] += th1d_SVG->GetBinContent(i+2);
+      eratio[0] += pow(th1d_SVG->GetBinError(i+2),2);
+      ratio[1] += th1d_SVG->GetBinContent(i+7);
+      eratio[1] += pow(th1d_SVG->GetBinError(i+7),2);
+    }
+  for ( int i = 0; i < 10; ++i )
+    {
+      // --- mean
+      mean[2] += th1d_mean->GetBinContent(i+12);
+      emean[2] += pow(th1d_mean->GetBinError(i+12),2);
+      mean[3] += th1d_mean->GetBinContent(i+22);
+      emean[3] += pow(th1d_mean->GetBinError(i+22),2);
+      mean[4] += th1d_mean->GetBinContent(i+32);
+      emean[4] += pow(th1d_mean->GetBinError(i+32),2);
+      mean[5] += th1d_mean->GetBinContent(i+42);
+      emean[5] += pow(th1d_mean->GetBinError(i+42),2);
+      // --- sigma
+      sigma[2] += th1d_sigma->GetBinContent(i+12);
+      esigma[2] += pow(th1d_sigma->GetBinError(i+12),2);
+      sigma[3] += th1d_sigma->GetBinContent(i+22);
+      esigma[3] += pow(th1d_sigma->GetBinError(i+22),2);
+      sigma[4] += th1d_sigma->GetBinContent(i+32);
+      esigma[4] += pow(th1d_sigma->GetBinError(i+32),2);
+      sigma[5] += th1d_sigma->GetBinContent(i+42);
+      esigma[5] += pow(th1d_sigma->GetBinError(i+42),2);
+      // --- ratio
+      ratio[2] += th1d_SVG->GetBinContent(i+12);
+      eratio[2] += pow(th1d_SVG->GetBinError(i+12),2);
+      ratio[3] += th1d_SVG->GetBinContent(i+22);
+      eratio[3] += pow(th1d_SVG->GetBinError(i+22),2);
+      ratio[4] += th1d_SVG->GetBinContent(i+32);
+      eratio[4] += pow(th1d_SVG->GetBinError(i+32),2);
+      ratio[5] += th1d_SVG->GetBinContent(i+42);
+      eratio[5] += pow(th1d_SVG->GetBinError(i+42),2);
+    }
+  for ( int i = 0; i < 6; ++i )
+    {
+      // --- mean
+      mean[i] /= sbin[i];
+      emean[i] = sqrt(emean[i]);
+      emean[i] /= sbin[i];
+      // --- sigma
+      sigma[i] /= sbin[i];
+      esigma[i] = sqrt(esigma[i]);
+      esigma[i] /= sbin[i];
+      // --- ratio
+      ratio[i] /= sbin[i];
+      eratio[i] = sqrt(eratio[i]);
+      eratio[i] /= sbin[i];
+    }
+  TGraphErrors* tge_mean = new TGraphErrors(6,cent,mean,0,emean);
+  TGraphErrors* tge_sigma = new TGraphErrors(6,cent,sigma,0,esigma);
+  TGraphErrors* tge_ratio = new TGraphErrors(6,cent,ratio,0,eratio);
+  tge_mean->SetMarkerStyle(kFullCircle);
+  tge_mean->Draw("ap");
+  tge_mean->SetMinimum(0.0);
+  tge_mean->SetMaximum(0.06);
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_mean.png",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_mean.pdf",handle));
+  tge_sigma->SetMarkerStyle(kFullCircle);
+  tge_sigma->Draw("ap");
+  tge_sigma->SetMinimum(0.0);
+  tge_sigma->SetMaximum(0.02);
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_sigma.png",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_sigma.pdf",handle));
+  tge_ratio->SetMarkerStyle(kFullCircle);
+  tge_ratio->Draw("ap");
+  tge_ratio->SetMinimum(0.0);
+  tge_ratio->SetMaximum(1.0);
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_ratio.png",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/xx_r_ratio.pdf",handle));
+
+  th1d_mean->SetMarkerStyle(kFullCircle);
+  th1d_mean->Draw("ex0p");
+  th1d_mean->SetMinimum(0.0);
+  th1d_mean->SetMaximum(0.06);
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_mean.png",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_mean.pdf",handle));
+  th1d_sigma->SetMarkerStyle(kFullCircle);
+  th1d_sigma->Draw("ex0p");
+  th1d_sigma->SetMinimum(0.0);
+  th1d_sigma->SetMaximum(0.02);
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_sigma.png",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_sigma.pdf",handle));
+  th1d_SVG->SetMarkerStyle(kFullCircle);
+  th1d_SVG->Draw("ex0p");
+  th1d_SVG->SetMinimum(0.0);
+  th1d_SVG->SetMaximum(1.0);
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_ratio.png",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/yy_r_ratio.pdf",handle));
+
   if ( doplot )
     {
       TFile* fout = TFile::Open("sigma_for_jamie.root","recreate");
@@ -338,6 +462,12 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
       th1d_sigma->Write();
       th1d_SVG->SetName("th1d_sigmaovermean");
       th1d_SVG->Write();
+      tge_mean->SetName("tge_mean");
+      tge_mean->Write();
+      tge_sigma->SetName("tge_sigma");
+      tge_sigma->Write();
+      tge_ratio->SetName("tge_sigmaovermean");
+      tge_ratio->Write();
       fout->Write();
       fout->Close();
       delete fout;
