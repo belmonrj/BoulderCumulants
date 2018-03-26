@@ -167,17 +167,29 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
           if ( sigmavv2 > 0 ) sigmavv2 = sqrt(sigmavv2); else sigmavv2 = -9999;
           //cout << sigmavv2 << endl;
           // -----------------------
-          esigmavv2 = sigmavv2*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) ); // quick and dirty guess, need to check
+          // need to check, some problem for very central
+          esigmavv2 = sigmavv2*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) );
         }
       if ( numerator2 > 0 && denominat2 > 0 )
         {
-          th1d_mean->SetBinContent(i+1,sqrt(denominat2)/2);
-          th1d_sigma->SetBinContent(i+1,sqrt(numerator2)/2);
+          double mean = sqrt(denominat2/2);
+          double sigma = sqrt(numerator2/2);
+          // --- need to check these, some problem for very central
+          double emean = mean*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) );
+          double esigma = sigma*sqrt( pow(ev22/v22,2.0) + pow(ev24/v24,2.0) );
+          // emean = 0;
+          // esigma = 0;
+          th1d_mean->SetBinContent(i+1,mean);
+          th1d_sigma->SetBinContent(i+1,sigma);
+          th1d_mean->SetBinError(i+1,emean);
+          th1d_sigma->SetBinError(i+1,esigma);
         }
       else
         {
           th1d_mean->SetBinContent(i+1,-9999);
           th1d_sigma->SetBinContent(i+1,-9999);
+          th1d_mean->SetBinError(i+1,0);
+          th1d_sigma->SetBinError(i+1,0);
         }
       cout << i << " " << th1d_sigma->GetBinContent(i+1) << endl;
       th1d_SVG->SetBinContent(i+1,sigmavv2);
@@ -418,6 +430,9 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
       eratio[i] /= sbin[i];
       cout << cent[2] << " " << sigma[2] << endl;
     }
+  emean[1] = 0;
+  esigma[1] = 0;
+  eratio[1] = 0;
   TGraphErrors* tge_mean = new TGraphErrors(6,cent,mean,0,emean);
   TGraphErrors* tge_sigma = new TGraphErrors(6,cent,sigma,0,esigma);
   TGraphErrors* tge_ratio = new TGraphErrors(6,cent,ratio,0,eratio);
