@@ -35,7 +35,7 @@ void doit(const char* handle)
   {
     double y = gv3_sys->GetBinContent(i);
     double err = y * 0.06;
-    if ( err < 0.0012 ) err = 0.0012;
+    //if ( err < 0.0012 ) err = 0.0012;
     if ( y > 0 ) gv3_sys->SetBinError(i, err);
   } // i
   gv3_sys->GetXaxis()->SetRangeUser(0,67);
@@ -72,12 +72,10 @@ void doit(const char* handle)
   tex_system->SetTextSize(0.05);
   tex_system->SetNDC();
   tex_system->Draw();
-  TLatex latt;
-  latt.SetNDC();
-  latt.SetTextSize(0.05);
-  //latt.SetTextAlign(11);
-  //latt.DrawLatex(0.2, 0.71, "Sys. Uncert. 6%");
-  latt.DrawLatex(0.35, 0.21, "Sys. Uncert. 6%");
+  TLatex* latt = new TLatex();
+  latt->SetNDC();
+  latt->SetTextSize(0.05);
+  latt->DrawLatex(0.35, 0.21, "Sys. Uncert. 6%");
 
   TLegend* leg = new TLegend(0.66,0.87,0.92,0.92);
   leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
@@ -88,6 +86,12 @@ void doit(const char* handle)
   c1->Print(Form("FigsWork/v32.pdf"));
   c1->Print(Form("FigsWork/v32.png"));
 
+  hdummy->Draw();
+  th1d_os_v3G->Draw("ex0p same");
+  tex_phenix->Draw();
+  tex_tracks->Draw();
+  tex_system->Draw();
+
   if ( leg ) delete leg;
   leg = new TLegend(0.61,0.87,0.81,0.92);
   leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
@@ -95,25 +99,30 @@ void doit(const char* handle)
   leg->SetFillStyle(0);
   leg->Draw();
 
+  gv3_sys->Draw("E5 same");
+
   c1->Print(Form("FigsWork/v32and.pdf"));
   c1->Print(Form("FigsWork/v32and.png"));
 
   // --- get stuff for comparison
 
   TFile* fjamie = TFile::Open("FilesJamie/fout_v3_ron.root");
-  // KEY: TGraphAsymmErrors     v3mean;1
-  // KEY: TGraphAsymmErrors     v3rms;1
-  // KEY: TGraphAsymmErrors     v3quadmeanplusrms;1
   TGraphAsymmErrors* tgae_v3m = (TGraphAsymmErrors*)fjamie->Get("v3mean");
   TGraphAsymmErrors* tgae_v32 = (TGraphAsymmErrors*)fjamie->Get("v3quadmeanplusrms");
+  TFile* fjamiesys = TFile::Open("FilesJamie/fout_v3_sys.root");
+  TGraphAsymmErrors* tgae_sys_v3m = (TGraphAsymmErrors*)fjamiesys->Get("v3mean");
+  TGraphAsymmErrors* tgae_sys_v32 = (TGraphAsymmErrors*)fjamiesys->Get("v3quadmeanplusrms");
 
   tgae_v32->SetMarkerStyle(kFullSquare);
   tgae_v32->Draw("p");
+  tgae_sys_v32->SetFillColorAlpha(kBlack,0.35);
+  tgae_sys_v32->Draw("3");
 
   if ( leg ) delete leg;
-  leg = new TLegend(0.61,0.82,0.81,0.92);
+  //leg = new TLegend(0.61,0.82,0.81,0.92);
+  leg = new TLegend(0.61,0.77,0.81,0.92);
   leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
-  leg->AddEntry(tgae_v32,"v_{3}{RMS,folding}","p");
+  leg->AddEntry(tgae_v32,"#sqrt{v_{3}^{2}} from folding","p");
   leg->SetTextSize(0.05);
   leg->SetFillStyle(0);
   leg->Draw();
@@ -123,18 +132,20 @@ void doit(const char* handle)
 
   tgae_v3m->SetMarkerStyle(kFullCircle);
   tgae_v3m->Draw("p");
+  tgae_sys_v3m->SetFillColorAlpha(kBlack,0.35);
+  tgae_sys_v3m->Draw("3");
 
-  if ( leg ) delete leg;
-  leg = new TLegend(0.61,0.77,0.81,0.92);
-  leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
-  leg->AddEntry(tgae_v32,"v_{3}{RMS,folding}","p");
-  leg->AddEntry(tgae_v3m,"v_{3}{MEAN,folding}","p");
-  leg->SetTextSize(0.05);
-  leg->SetFillStyle(0);
-  leg->Draw();
+  // if ( leg ) delete leg;
+  // leg = new TLegend(0.61,0.77,0.81,0.92);
+  // leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
+  // leg->AddEntry(tgae_v32,"v_{3}{RMS,folding}","p");
+  // leg->AddEntry(tgae_v3m,"v_{3}{MEAN,folding}","p");
+  // leg->SetTextSize(0.05);
+  // leg->SetFillStyle(0);
+  // leg->Draw();
 
-  c1->Print(Form("FigsWork/v32andfoldandmean.pdf"));
-  c1->Print(Form("FigsWork/v32andfoldandmean.png"));
+  // c1->Print(Form("FigsWork/v32andfoldandmean.pdf"));
+  // c1->Print(Form("FigsWork/v32andfoldandmean.png"));
 
   delete c1;
 
