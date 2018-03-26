@@ -88,6 +88,16 @@ void doit(const char* handle)
   c1->Print(Form("FigsWork/v32.pdf"));
   c1->Print(Form("FigsWork/v32.png"));
 
+  if ( leg ) delete leg;
+  leg = new TLegend(0.61,0.87,0.81,0.92);
+  leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
+  leg->SetTextSize(0.05);
+  leg->SetFillStyle(0);
+  leg->Draw();
+
+  c1->Print(Form("FigsWork/v32and.pdf"));
+  c1->Print(Form("FigsWork/v32and.png"));
+
   // --- get stuff for comparison
 
   TFile* fjamie = TFile::Open("FilesJamie/fout_v3_ron.root");
@@ -101,7 +111,7 @@ void doit(const char* handle)
   tgae_v32->Draw("p");
 
   if ( leg ) delete leg;
-  leg = new TLegend(0.66,0.82,0.92,0.92);
+  leg = new TLegend(0.61,0.82,0.81,0.92);
   leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
   leg->AddEntry(tgae_v32,"v_{3}{RMS,folding}","p");
   leg->SetTextSize(0.05);
@@ -115,7 +125,7 @@ void doit(const char* handle)
   tgae_v3m->Draw("p");
 
   if ( leg ) delete leg;
-  leg = new TLegend(0.66,0.77,0.92,0.92);
+  leg = new TLegend(0.61,0.77,0.81,0.92);
   leg->AddEntry(th1d_os_v3G,"v_{3}{2,|#Delta#eta|>2}","p");
   leg->AddEntry(tgae_v32,"v_{3}{RMS,folding}","p");
   leg->AddEntry(tgae_v3m,"v_{3}{MEAN,folding}","p");
