@@ -10,7 +10,7 @@ void clean_histo(TH1D*,double,double);
 
 void get_ratios_histos(TFile*, TH1D**, TH1D**, TH1D**, bool);
 
-void do_ratios()
+void get_ratios()
 {
   // --- get the file; soft link to latest stable analysis with default cuts
   TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
