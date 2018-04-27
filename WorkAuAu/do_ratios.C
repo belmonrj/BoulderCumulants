@@ -8,12 +8,21 @@
 void clean_histo(TH1D*);
 void clean_histo(TH1D*,double,double);
 
+void get_ratios_histos(TFile*, TH1D**, TH1D**, TH1D**, bool);
+
 void do_ratios()
 {
-
   // --- get the file; soft link to latest stable analysis with default cuts
   TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
+  TH1D* hratio42 = NULL;
+  TH1D* hratio64 = NULL;
+  TH1D* hratio84 = NULL;
+  get_ratios_histos(fin,&hratio42,&hratio64,&hratio84,true);
+  cout << "Finished with memory address " << hratio42 << " " << hratio64 << " " << hratio84 << endl;
+}
 
+void get_ratios_histos(TFile* fin, TH1D** return_ratio42, TH1D** return_ratio64, TH1D** return_ratio84, bool doplot)
+{
   // --- get the k-p correlator histograms from the file
   TProfile* eit_cent = (TProfile*)fin->Get("centrality_recursion_0_6");
   TProfile* six_cent = (TProfile*)fin->Get("centrality_recursion_0_4");
@@ -70,6 +79,13 @@ void do_ratios()
   hratio84->Divide(v24);
   clean_histo(hratio84,9.5,50.5);
 
+  // --- set the return addresses
+  *return_ratio42 = hratio42;
+  *return_ratio64 = hratio64;
+  *return_ratio84 = hratio84;
+
+  if ( !doplot ) return;
+
   TCanvas* c1 = new TCanvas("c1","");
 
   double xmin = 0;
@@ -111,8 +127,8 @@ void do_ratios()
   leg42->SetTextSize(0.05);
   leg42->Draw();
 
-  c1->Print("cumu_ratio_24.png");
-  c1->Print("cumu_ratio_24.pdf");
+  c1->Print("FigsRatio/cumu_ratio_24.png");
+  c1->Print("FigsRatio/cumu_ratio_24.pdf");
 
   hratio64->SetMarkerStyle(kOpenCircle);
   hratio64->SetMarkerColor(kBlack);
@@ -123,8 +139,8 @@ void do_ratios()
   leg64->SetTextSize(0.05);
   leg64->Draw();
 
-  c1->Print("cumu_ratio_246.png");
-  c1->Print("cumu_ratio_246.pdf");
+  c1->Print("FigsRatio/cumu_ratio_246.png");
+  c1->Print("FigsRatio/cumu_ratio_246.pdf");
 
   hratio84->SetMarkerStyle(kFullDiamond);
   hratio84->SetMarkerColor(kGreen+2);
@@ -135,8 +151,8 @@ void do_ratios()
   leg84->SetTextSize(0.05);
   leg84->Draw();
 
-  c1->Print("cumu_ratio_2468.png");
-  c1->Print("cumu_ratio_2468.pdf");
+  c1->Print("FigsRatio/cumu_ratio_2468.png");
+  c1->Print("FigsRatio/cumu_ratio_2468.pdf");
 
 }
 
