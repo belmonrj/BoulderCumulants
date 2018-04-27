@@ -111,7 +111,7 @@ void get_ratios_histos(TFile* fin, TH1D** return_ratio42, TH1D** return_ratio64,
   TLatex latt;
   latt.SetNDC();
   latt.SetTextSize(0.05);
-  //latt.DrawLatex(0.35, 0.21, "Sys. Uncert. 6%"); // need to eval sys error...
+  latt.DrawLatex(0.35, 0.21, "Sys. Uncert. 3%");
 
   double legleft = 0.55;
   double legbott = 0.87;
