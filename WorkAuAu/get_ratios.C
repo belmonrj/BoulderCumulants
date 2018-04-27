@@ -1,9 +1,5 @@
 #include "calc_cumulants.C"
-#include "plot_recv2.C"
-#include "plot_recomp.C"
 #include "calc_subevents.C"
-#include "plot_subv2.C"
-#include "plot_special.C"
 
 void clean_histo(TH1D*);
 void clean_histo(TH1D*,double,double);
