@@ -72,7 +72,8 @@ void star_v34()
     }
 
 
-
+  // Phys. Rev. C 88, 014904 (2013)
+  // https://drupal.star.bnl.gov/STAR/files/starpublications/199/data.html
   // 106*v34{4}	2 - (v34{4}/v34{2})
   // cent (%)	STAR	        error	ALICE	error	STAR	error	ALICE	error
   // 2.5	-0.00156	0.004	0.0123	0.0047	2.04	0.096	1.95	0.021
