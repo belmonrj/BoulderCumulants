@@ -284,28 +284,6 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   empty->Draw();
   th1d_SVG->GetXaxis()->SetRangeUser(7,65);
   th1d_SVG->Draw("same ex0p");
-  tg_sig1->Draw("l");
-  tg_sig2->Draw("l");
-  delete leg;
-  leg = new TLegend(0.22,0.58,0.48,0.78);
-  leg->AddEntry(tg_sig2,"MC Glauber, cumulant based estimate","l");
-  leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
-  leg->AddEntry(th1d_SVG,"Data","p");
-  leg->Draw();
-  // c1->Print(Form("FigsSigma/sigma_%s_x03.png",handle));
-  // c1->Print(Form("FigsSigma/sigma_%s_x03.pdf",handle));
-  TH1D* gsys = (TH1D*) th1d_SVG->Clone("gsys");
-  gsys->SetMarkerStyle(0);
-  gsys->SetMarkerSize(0);
-  gsys->SetFillColorAlpha(kBlack, 0.35);
-  for ( int i = 0; i < gsys->GetNbinsX(); ++i )
-  {
-    double y = gsys->GetBinContent(i);
-    double err = y * 0.11;
-    if ( y > 0 ) gsys->SetBinError(i, err);
-  } // i
-  gsys->GetXaxis()->SetRangeUser(7,65);
-  //gsys->Draw("same E5");
   double Rmarg = 0.08;
   TLatex latt;
   latt.SetNDC();
@@ -315,9 +293,23 @@ TH1D* get_sigma_histo(TProfile* tp1f_gap, TProfile* tp1f_for, TProfile* tp1f_two
   latt.DrawLatex(0.30 - Rmarg, 0.87, "PHENIX");
   latt.DrawLatex(0.56 - Rmarg, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
   latt.DrawLatex(0.56 - Rmarg, 0.80, "h^{#pm} 1<|#eta|<3");
-  // c1->Print(Form("FigsSigma/sigma_%s_x04.png",handle));
-  // c1->Print(Form("FigsSigma/sigma_%s_x04.pdf",handle));
   latt.DrawLatex(0.30 - Rmarg, 0.22, "Sys. Uncert. 2%");
+  delete leg;
+  leg = new TLegend(0.22,0.71,0.48,0.78);
+  leg->AddEntry(th1d_SVG,"Data","p");
+  leg->Draw();
+  if ( doplot) c1->Print(Form("FigsSigma/sigma_%s_x03.png",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/sigma_%s_x03.pdf",handle));
+  tg_sig1->Draw("l");
+  tg_sig2->Draw("l");
+  delete leg;
+  leg = new TLegend(0.22,0.58,0.48,0.78);
+  leg->AddEntry(tg_sig2,"MC Glauber, cumulant based estimate","l");
+  leg->AddEntry(tg_sig1,"MC Glauber, direct calculation","l");
+  leg->AddEntry(th1d_SVG,"Data","p");
+  leg->Draw();
+  if ( doplot) c1->Print(Form("FigsSigma/sigma_%s_x04.png",handle));
+  if ( doplot) c1->Print(Form("FigsSigma/sigma_%s_x04.pdf",handle));
   ifstream fampt("input/temp_ampt.dat");
   double cent[16], ntrk[16], y[16], ey[16];
   for ( int i = 0; i < 16; ++i )
