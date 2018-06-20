@@ -252,10 +252,12 @@ void crunch_cumu4(TProfile* for_base, TProfile* two_base, TProfile* for_eval, TP
   th1d_base_for->SetMarkerColor(kBlue);
   th1d_base_for->SetLineColor(kBlack);
   th1d_base_for->Draw("same ex0p");
+  th1d_eval_222->SetMarkerSize(1.75);
   th1d_eval_222->SetMarkerStyle(kOpenCircle);
   th1d_eval_222->SetMarkerColor(kRed);
   th1d_eval_222->SetLineColor(kBlack);
   th1d_eval_222->Draw("same ex0p");
+  th1d_eval_for->SetMarkerSize(1.75);
   th1d_eval_for->SetMarkerStyle(kOpenSquare);
   th1d_eval_for->SetMarkerColor(kBlue);
   th1d_eval_for->SetLineColor(kBlack);
@@ -310,6 +312,7 @@ void crunch_cumu4(TProfile* for_base, TProfile* two_base, TProfile* for_eval, TP
   th1d_base_c24->SetMarkerStyle(kFullCircle);
   th1d_base_c24->SetLineColor(kBlack);
   th1d_base_c24->Draw("same ex0p");
+  th1d_eval_c24->SetMarkerSize(1.75);
   th1d_eval_c24->SetMarkerStyle(kOpenCircle);
   th1d_eval_c24->SetLineColor(kBlack);
   th1d_eval_c24->Draw("same ex0p");

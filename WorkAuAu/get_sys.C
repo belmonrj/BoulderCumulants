@@ -188,15 +188,15 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
   bool isacce = false;
   if ( strcmp(systype,"acce") == 0 ) isacce = true;
 
-  for_base->Rebin(rebin);
-  two_base->Rebin(rebin);
+  for3_base->Rebin(rebin);
+  two3_base->Rebin(rebin);
   if ( !isacce )
     {
-      for_eval->Rebin(rebin);
-      two_eval->Rebin(rebin);
+      for3_eval->Rebin(rebin);
+      two3_eval->Rebin(rebin);
     }
 
-  crunch_cumu4(for_base,two_base,for_eval,two_eval,systype,3);
+  crunch_cumu4(for3_base,two3_base,for3_eval,two3_eval,systype,3);
 
   TProfile* reg_base = NULL;
   TProfile* gap_base = NULL;
@@ -242,15 +242,15 @@ void takefiles(TFile* fbase, TFile* feval, const char* systype)
   TProfile* for4_eval = (TProfile*)feval->Get("centrality_recursion_0_9");
   TProfile* two4_eval = (TProfile*)feval->Get("centrality_recursion_0_7");
 
-  for_base->Rebin(rebin);
-  two_base->Rebin(rebin);
+  for4_base->Rebin(rebin);
+  two4_base->Rebin(rebin);
   if ( !isacce )
     {
-      for_eval->Rebin(rebin);
-      two_eval->Rebin(rebin);
+      for4_eval->Rebin(rebin);
+      two4_eval->Rebin(rebin);
     }
 
-  crunch_cumu4(for_base,two_base,for_eval,two_eval,systype,4);
+  crunch_cumu4(for4_base,two4_base,for4_eval,two4_eval,systype,4);
 
   reg_base = two4_base;
   reg_eval = two4_eval;
