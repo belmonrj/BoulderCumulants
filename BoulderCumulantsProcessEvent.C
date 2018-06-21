@@ -950,6 +950,19 @@ int BoulderCumulants::EventStuff()
   double tcbw = ac_fvtxn_tracks_qw*ac_fvtxn_tracks_qw - ac_fvtxn_tracks_qw;
   double denominator = tcaw*tcbw;
   double answer_c24a = numerator/denominator;
+  // --- four particle 2sub, 3rd harmonic
+  TComplex tca3 = TComplex(ac_fvtxs_tracks_qx3,ac_fvtxs_tracks_qy3);
+  TComplex tcb3 = TComplex(ac_fvtxn_tracks_qx3,ac_fvtxn_tracks_qy3);
+  TComplex tca6 = TComplex(ac_fvtxs_tracks_qx6,ac_fvtxs_tracks_qy6);
+  TComplex tcb6 = TComplex(ac_fvtxn_tracks_qx6,ac_fvtxn_tracks_qy6);
+  TComplex tc_numerator_a = tca3*tca3 - tca6;
+  TComplex tc_numerator_b = TComplex::Conjugate(tcb3*tcb3 - tcb6);
+  TComplex tc_numerator = tc_numerator_a*tc_numerator_b;
+  double numerator = tc_numerator.Re();
+  double tcaw = ac_fvtxs_tracks_qw*ac_fvtxs_tracks_qw - ac_fvtxs_tracks_qw;
+  double tcbw = ac_fvtxn_tracks_qw*ac_fvtxn_tracks_qw - ac_fvtxn_tracks_qw;
+  double denominator = tcaw*tcbw;
+  double answer_c34a = numerator/denominator;
 
   float ac_fvtxs_tracks_qqqq34 = calc4_event(ac_fvtxs_tracks_qx3,ac_fvtxs_tracks_qy3,ac_fvtxs_tracks_qx6,ac_fvtxs_tracks_qy6,ac_fvtxs_tracks_qw);
   float ac_fvtxn_tracks_qqqq34 = calc4_event(ac_fvtxn_tracks_qx3,ac_fvtxn_tracks_qy3,ac_fvtxn_tracks_qx6,ac_fvtxn_tracks_qy6,ac_fvtxn_tracks_qw);
@@ -966,35 +979,35 @@ int BoulderCumulants::EventStuff()
   // --------------
 
   // --- south only
-  centrality_ac_cumu2[1][2]->Fill(centrality,ac_fvtxc_tracks_qq2);
-  centrality_ac_corr_cos1[1][2]->Fill(centrality,ac_fvtxc_tracks_qx2/ac_fvtxc_tracks_qw);
-  centrality_ac_corr_sin1[1][2]->Fill(centrality,ac_fvtxc_tracks_qy2/ac_fvtxc_tracks_qw);
-  centrality_ac_corr_cos2[1][2]->Fill(centrality,ac_fvtxc_tracks_cossum22);
-  centrality_ac_corr_sin2[1][2]->Fill(centrality,ac_fvtxc_tracks_sinsum22);
-  centrality_ac_corr_cos3[1][2]->Fill(centrality,ac_fvtxc_tracks_cos23);
-  centrality_ac_corr_sin3[1][2]->Fill(centrality,ac_fvtxc_tracks_sin23);
-  centrality_ac_cumu2[1][3]->Fill(centrality,ac_fvtxc_tracks_qq3);
-  centrality_ac_corr_cos1[1][3]->Fill(centrality,ac_fvtxc_tracks_qx3/ac_fvtxc_tracks_qw);
-  centrality_ac_corr_sin1[1][3]->Fill(centrality,ac_fvtxc_tracks_qy3/ac_fvtxc_tracks_qw);
-  centrality_ac_corr_cos2[1][3]->Fill(centrality,ac_fvtxc_tracks_cossum32);
-  centrality_ac_corr_sin2[1][3]->Fill(centrality,ac_fvtxc_tracks_sinsum32);
-  centrality_ac_corr_cos3[1][3]->Fill(centrality,ac_fvtxc_tracks_cos33);
-  centrality_ac_corr_sin3[1][3]->Fill(centrality,ac_fvtxc_tracks_sin33);
+  centrality_ac_cumu2[1][2]->Fill(centrality,ac_fvtxs_tracks_qq2);
+  centrality_ac_corr_cos1[1][2]->Fill(centrality,ac_fvtxs_tracks_qx2/ac_fvtxs_tracks_qw);
+  centrality_ac_corr_sin1[1][2]->Fill(centrality,ac_fvtxs_tracks_qy2/ac_fvtxs_tracks_qw);
+  centrality_ac_corr_cos2[1][2]->Fill(centrality,ac_fvtxs_tracks_cossum22);
+  centrality_ac_corr_sin2[1][2]->Fill(centrality,ac_fvtxs_tracks_sinsum22);
+  centrality_ac_corr_cos3[1][2]->Fill(centrality,ac_fvtxs_tracks_cos23);
+  centrality_ac_corr_sin3[1][2]->Fill(centrality,ac_fvtxs_tracks_sin23);
+  centrality_ac_cumu2[1][3]->Fill(centrality,ac_fvtxs_tracks_qq3);
+  centrality_ac_corr_cos1[1][3]->Fill(centrality,ac_fvtxs_tracks_qx3/ac_fvtxs_tracks_qw);
+  centrality_ac_corr_sin1[1][3]->Fill(centrality,ac_fvtxs_tracks_qy3/ac_fvtxs_tracks_qw);
+  centrality_ac_corr_cos2[1][3]->Fill(centrality,ac_fvtxs_tracks_cossum32);
+  centrality_ac_corr_sin2[1][3]->Fill(centrality,ac_fvtxs_tracks_sinsum32);
+  centrality_ac_corr_cos3[1][3]->Fill(centrality,ac_fvtxs_tracks_cos33);
+  centrality_ac_corr_sin3[1][3]->Fill(centrality,ac_fvtxs_tracks_sin33);
   // --- north only
-  centrality_ac_cumu2[2][2]->Fill(centrality,ac_fvtxc_tracks_qq2);
-  centrality_ac_corr_cos1[2][2]->Fill(centrality,ac_fvtxc_tracks_qx2/ac_fvtxc_tracks_qw);
-  centrality_ac_corr_sin1[2][2]->Fill(centrality,ac_fvtxc_tracks_qy2/ac_fvtxc_tracks_qw);
-  centrality_ac_corr_cos2[2][2]->Fill(centrality,ac_fvtxc_tracks_cossum22);
-  centrality_ac_corr_sin2[2][2]->Fill(centrality,ac_fvtxc_tracks_sinsum22);
-  centrality_ac_corr_cos3[2][2]->Fill(centrality,ac_fvtxc_tracks_cos23);
-  centrality_ac_corr_sin3[2][2]->Fill(centrality,ac_fvtxc_tracks_sin23);
-  centrality_ac_cumu2[2][3]->Fill(centrality,ac_fvtxc_tracks_qq3);
-  centrality_ac_corr_cos1[2][3]->Fill(centrality,ac_fvtxc_tracks_qx3/ac_fvtxc_tracks_qw);
-  centrality_ac_corr_sin1[2][3]->Fill(centrality,ac_fvtxc_tracks_qy3/ac_fvtxc_tracks_qw);
-  centrality_ac_corr_cos2[2][3]->Fill(centrality,ac_fvtxc_tracks_cossum32);
-  centrality_ac_corr_sin2[2][3]->Fill(centrality,ac_fvtxc_tracks_sinsum32);
-  centrality_ac_corr_cos3[2][3]->Fill(centrality,ac_fvtxc_tracks_cos33);
-  centrality_ac_corr_sin3[2][3]->Fill(centrality,ac_fvtxc_tracks_sin33);
+  centrality_ac_cumu2[2][2]->Fill(centrality,ac_fvtxn_tracks_qq2);
+  centrality_ac_corr_cos1[2][2]->Fill(centrality,ac_fvtxn_tracks_qx2/ac_fvtxn_tracks_qw);
+  centrality_ac_corr_sin1[2][2]->Fill(centrality,ac_fvtxn_tracks_qy2/ac_fvtxn_tracks_qw);
+  centrality_ac_corr_cos2[2][2]->Fill(centrality,ac_fvtxn_tracks_cossum22);
+  centrality_ac_corr_sin2[2][2]->Fill(centrality,ac_fvtxn_tracks_sinsum22);
+  centrality_ac_corr_cos3[2][2]->Fill(centrality,ac_fvtxn_tracks_cos23);
+  centrality_ac_corr_sin3[2][2]->Fill(centrality,ac_fvtxn_tracks_sin23);
+  centrality_ac_cumu2[2][3]->Fill(centrality,ac_fvtxn_tracks_qq3);
+  centrality_ac_corr_cos1[2][3]->Fill(centrality,ac_fvtxn_tracks_qx3/ac_fvtxn_tracks_qw);
+  centrality_ac_corr_sin1[2][3]->Fill(centrality,ac_fvtxn_tracks_qy3/ac_fvtxn_tracks_qw);
+  centrality_ac_corr_cos2[2][3]->Fill(centrality,ac_fvtxn_tracks_cossum32);
+  centrality_ac_corr_sin2[2][3]->Fill(centrality,ac_fvtxn_tracks_sinsum32);
+  centrality_ac_corr_cos3[2][3]->Fill(centrality,ac_fvtxn_tracks_cos33);
+  centrality_ac_corr_sin3[2][3]->Fill(centrality,ac_fvtxn_tracks_sin33);
   // --- combined
   centrality_ac_cumu2[0][2]->Fill(centrality,ac_fvtxc_tracks_qq2);
   centrality_ac_corr_cos1[0][2]->Fill(centrality,ac_fvtxc_tracks_qx2/ac_fvtxc_tracks_qw);
@@ -1016,9 +1029,15 @@ int BoulderCumulants::EventStuff()
   // --- four particle
   centrality_ac_cumu4[0][2]->Fill(centrality,ac_fvtxc_tracks_qqqq24);
   centrality_ac_cumu4[0][3]->Fill(centrality,ac_fvtxc_tracks_qqqq34);
+  centrality_ac_cumu4[1][2]->Fill(centrality,ac_fvtxs_tracks_qqqq24);
+  centrality_ac_cumu4[1][3]->Fill(centrality,ac_fvtxs_tracks_qqqq34);
+  centrality_ac_cumu4[2][2]->Fill(centrality,ac_fvtxn_tracks_qqqq24);
+  centrality_ac_cumu4[2][3]->Fill(centrality,ac_fvtxn_tracks_qqqq34);
   // --- four particle 2sub
   centrality_ac_sub4a[2]->Fill(centrality,answer_c24a);
   centrality_ac_sub4b[2]->Fill(centrality,ac_fvtxs_tracks_qq2*ac_fvtxn_tracks_qq2);
+  centrality_ac_sub4a[3]->Fill(centrality,answer_c34a);
+  centrality_ac_sub4b[3]->Fill(centrality,ac_fvtxs_tracks_qq3*ac_fvtxn_tracks_qq3);
   // --- six particle
   centrality_ac_cumu6[0][2]->Fill(centrality,ac_fvtxc_tracks_six);
   //centrality_ac_cumu8[0][2]->Fill(centrality,eightRecursion.Re());
@@ -1139,6 +1158,19 @@ int BoulderCumulants::EventStuff()
   tcbw = os_fvtxn_tracks_qw*os_fvtxn_tracks_qw - os_fvtxn_tracks_qw;
   denominator = tcaw*tcbw;
   answer_c24a = numerator/denominator;
+  // --- four particle 2sub, 3rd harmonic
+  tca3 = TComplex(os_fvtxs_tracks_qx3,os_fvtxs_tracks_qy3);
+  tcb3 = TComplex(os_fvtxn_tracks_qx3,os_fvtxn_tracks_qy3);
+  tca6 = TComplex(os_fvtxs_tracks_qx6,os_fvtxs_tracks_qy6);
+  tcb6 = TComplex(os_fvtxn_tracks_qx6,os_fvtxn_tracks_qy6);
+  tc_numerator_a = tca3*tca3 - tca6;
+  tc_numerator_b = TComplex::Conjugate(tcb3*tcb3 - tcb6);
+  tc_numerator = tc_numerator_a*tc_numerator_b;
+  numerator = tc_numerator.Re();
+  tcaw = os_fvtxs_tracks_qw*os_fvtxs_tracks_qw - os_fvtxs_tracks_qw;
+  tcbw = os_fvtxn_tracks_qw*os_fvtxn_tracks_qw - os_fvtxn_tracks_qw;
+  denominator = tcaw*tcbw;
+  answer_c34a = numerator/denominator;
 
   float os_fvtxs_tracks_six = calc6_event(tc_os_fvtxs_tracks_Q2,tc_os_fvtxs_tracks_Q4,tc_os_fvtxs_tracks_Q6,os_fvtxs_tracks_qw);
   float os_fvtxn_tracks_six = calc6_event(tc_os_fvtxn_tracks_Q2,tc_os_fvtxn_tracks_Q4,tc_os_fvtxn_tracks_Q6,os_fvtxn_tracks_qw);
@@ -1163,11 +1195,11 @@ int BoulderCumulants::EventStuff()
   // --------------
 
   // --- south only
-  centrality_os_cumu2[1][2]->Fill(centrality,os_fvtxc_tracks_qq2);
-  centrality_os_cumu2[1][3]->Fill(centrality,os_fvtxc_tracks_qq3);
+  centrality_os_cumu2[1][2]->Fill(centrality,os_fvtxs_tracks_qq2);
+  centrality_os_cumu2[1][3]->Fill(centrality,os_fvtxs_tracks_qq3);
   // --- north only
-  centrality_os_cumu2[2][2]->Fill(centrality,os_fvtxc_tracks_qq2);
-  centrality_os_cumu2[2][3]->Fill(centrality,os_fvtxc_tracks_qq3);
+  centrality_os_cumu2[2][2]->Fill(centrality,os_fvtxn_tracks_qq2);
+  centrality_os_cumu2[2][3]->Fill(centrality,os_fvtxn_tracks_qq3);
   // --- combined
   centrality_os_cumu2[0][2]->Fill(centrality,os_fvtxc_tracks_qq2);
   centrality_os_corr_cos1[0][2]->Fill(centrality,os_fvtxc_tracks_qx2/os_fvtxc_tracks_qw);
@@ -1189,9 +1221,15 @@ int BoulderCumulants::EventStuff()
   // --- four particle
   centrality_os_cumu4[0][2]->Fill(centrality,os_fvtxc_tracks_qqqq24);
   centrality_os_cumu4[0][3]->Fill(centrality,os_fvtxc_tracks_qqqq34);
+  centrality_os_cumu4[1][2]->Fill(centrality,os_fvtxs_tracks_qqqq24);
+  centrality_os_cumu4[1][3]->Fill(centrality,os_fvtxs_tracks_qqqq34);
+  centrality_os_cumu4[2][2]->Fill(centrality,os_fvtxn_tracks_qqqq24);
+  centrality_os_cumu4[2][3]->Fill(centrality,os_fvtxn_tracks_qqqq34);
   // --- four particle 2sub
   centrality_os_sub4a[2]->Fill(centrality,answer_c24a);
   centrality_os_sub4b[2]->Fill(centrality,os_fvtxs_tracks_qq2*os_fvtxn_tracks_qq2);
+  centrality_os_sub4a[3]->Fill(centrality,answer_c34a);
+  centrality_os_sub4b[3]->Fill(centrality,os_fvtxs_tracks_qq3*os_fvtxn_tracks_qq3);
   // --- six particle
   centrality_os_cumu6[0][2]->Fill(centrality,os_fvtxc_tracks_six);
   //centrality_os_cumu8[0][2]->Fill(centrality,eightRecursion.Re());
