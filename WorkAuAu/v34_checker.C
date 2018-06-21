@@ -46,26 +46,12 @@ void do_check(int flag)
 
   double norm_c3[nbins];
   double norm_ec3[nbins];
-  double norm_v3[nbins];
-  double norm_ev3[nbins];
   double cent[nbins];
-  double norm_c2[nbins];
-  double norm_ec2[nbins];
   for ( int i = 0; i < nbins; ++i )
     {
       cent[i] = histR->GetBinCenter(i+1);
-      // --- normal v3
       norm_c3[i] = histR->GetBinContent(i+1);
       norm_ec3[i] = histR->GetBinError(i+1);
-      norm_v3[i] = pow(-norm_c3[i],0.25);
-      norm_ev3[i] = (1/(4*pow(-norm_c3[i],0.75)))*norm_ec3[i];
-      if ( norm_v3[i] != norm_v3[i] ) norm_v3[i] = -999;
-      if ( norm_ev3[i] != norm_ev3[i] ) norm_v3[i] = 998;
-      // --- v3{2}^4
-      if ( histS )
-        {
-        }
-      // --- way too big
     }
 
 
