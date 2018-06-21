@@ -90,70 +90,16 @@ void do_check(int flag)
       swap_ec3[i] *= 1e6;
       swap_c2[i] *= 1e6;
       swap_ec2[i] *= 1e6;
-      // --- ratio
-      // cout << cent[i] << " "
-      //      << swap_c3[i] << " "
-      //      << swap_c2[i] << " "
-      //      << ratio[i] << " +- "
-      //      << eratio[i]
-      //      << endl;
-      // cout << cent[i] << " "
-      //      << swap_ec3[i]/swap_c3[i] << " "
-      //      << swap_ec2[i]/swap_c2[i] << " "
-      //      << eratio[i]/ratio[i] << " +- "
-      //      << endl;
     }
 
 
-  // Phys. Rev. C 88, 014904 (2013)
-  // https://drupal.star.bnl.gov/STAR/files/starpublications/199/data.html
-  // 106*v34{4}	2 - (v34{4}/v34{2})
-  // cent (%)	STAR	        error	ALICE	error	STAR	error	ALICE	error
-  // 2.5	-0.00156	0.004	0.0123	0.0047	2.04	0.096	1.95	0.021
-  // 7.5	0.00549	        0.0058	0.025	0.0092	1.92	0.082	1.94	0.022
-  // 15	        0.000938	0.0069	0.0581	0.01	1.99	0.063	1.91	0.015
-  // 25	        0.00728	        0.012	0.0514	0.02	1.95	0.087	1.95	0.018
-  // 35	        -0.0346	        0.026	0.114	0.037	2.21	0.15	1.92	0.024
-  // 45	        -0.0362	        0.057	0.0983	0.078	2.21	0.34 	1.95	0.04
 
-  float star_cent[6] = {2.5,7.5,15,25,35,45};
-  float star_v34[6] = {-0.00156,
-                       0.00549,
-                       0.000938,
-                       0.00728,
-                       -0.0346,
-                       -0.0362};
-  float star_ev34[6] = {0.004,
-                        0.0058,
-                        0.0069,
-                        0.012,
-                        0.026,
-                        0.057};
-  float star_ratio[6] = {2.04,
-                         1.92,
-                         1.99,
-                         1.95,
-                         2.21,
-                         2.21};
-  float star_eratio[6] = {0.096,
-                          0.082,
-                          0.063,
-                          0.087,
-                          0.15,
-                          0.34};
-
-  //TGraphErrors* tge_norm = new TGraphErrors(nbins,cent,norm_v3,0,norm_ev3);
-  TGraphErrors* tge_norm = new TGraphErrors(6,star_cent,star_v34,0,star_ev34);
   TGraphErrors* tge_swap = new TGraphErrors(nbins,cent,swap_c3,0,swap_ec3);
   TGraphErrors* tge_swap2 = new TGraphErrors(nbins,cent,swap_c2,0,swap_ec2);
   TGraphErrors* tge_ratio = new TGraphErrors(nbins,cent,ratio,0,eratio);
-  TGraphErrors* tge_sratio = new TGraphErrors(6,star_cent,star_ratio,0,star_eratio);
 
   // --- do some drawing
 
-  tge_norm->SetLineColor(kBlack);
-  tge_norm->SetMarkerColor(kBlack);
-  tge_norm->SetMarkerStyle(kFullCircle);
   tge_swap->SetLineColor(kBlack);
   tge_swap->SetMarkerColor(kBlack);
   tge_swap->SetMarkerStyle(kOpenCircle);
@@ -163,9 +109,6 @@ void do_check(int flag)
   tge_ratio->SetLineColor(kBlack);
   tge_ratio->SetMarkerColor(kBlack);
   tge_ratio->SetMarkerStyle(kOpenCircle);
-  tge_sratio->SetLineColor(kBlack);
-  tge_sratio->SetMarkerColor(kBlack);
-  tge_sratio->SetMarkerStyle(kFullCircle);
 
   TCanvas* c1 = new TCanvas("c1","");
 
@@ -178,7 +121,7 @@ void do_check(int flag)
   hdummy->GetYaxis()->SetTitle(Form("10^{6} v_{3}^{4}{4}"));
   hdummy->GetYaxis()->SetTitleOffset(1.25);
   hdummy->GetXaxis()->SetTitle("Centrality (%)");
-  tge_norm->Draw("pz");
+  //tge_norm->Draw("pz");
   tge_swap->Draw("pz");
   TLatex latt;
   latt.SetNDC();
@@ -188,7 +131,6 @@ void do_check(int flag)
   TLegend *leg = new TLegend(0.18,0.18,0.38,0.38);
   leg->SetFillStyle(0);
   leg->AddEntry(tge_swap,"PHENIX 1<|#eta|<3","p");
-  leg->AddEntry(tge_norm,"STAR |#eta|<1","p");
   leg->SetTextSize(0.05);
   leg->Draw();
   TLine* line = new TLine(xmin,0,xmax,0);
@@ -199,21 +141,8 @@ void do_check(int flag)
   // c1->Print("STAR/v34_star.pdf");
 
 
-  float star_c34[6];
-  float star_ec34[6];
-  for ( int i = 0; i < 6; ++i )
-    {
-      star_c34[i] = -star_v34[i]*1e-6;
-      star_ec34[i] = star_ev34[i]*1e-6;
-      //cout << star_c34[i] << " " << star_ec34[i] << endl;
-    }
-  TGraphErrors* tge_star = new TGraphErrors(6,star_cent,star_c34,0,star_ec34);
   TGraphErrors* tge_phen = new TGraphErrors(nbins,cent,norm_c3,0,norm_ec3);
 
-  tge_star->SetLineColor(kBlack);
-  tge_star->SetMarkerColor(kBlack);
-  tge_star->SetMarkerStyle(kFullStar);
-  tge_star->SetMarkerSize(2.5);
   tge_phen->SetLineColor(kRed);
   tge_phen->SetMarkerColor(kRed);
   tge_phen->SetMarkerStyle(kFullCircle);
@@ -229,7 +158,6 @@ void do_check(int flag)
   hdummy->GetYaxis()->SetTitle(Form("c_{3}{4}"));
   hdummy->GetYaxis()->SetTitleOffset(1.25);
   hdummy->GetXaxis()->SetTitle("Centrality (%)");
-  tge_star->Draw("pz");
   tge_phen->Draw("pz");
   latt.SetNDC();
   latt.SetTextSize(0.05);
@@ -238,74 +166,15 @@ void do_check(int flag)
   leg = new TLegend(0.18,0.73,0.38,0.93);
   leg->SetFillStyle(0);
   leg->AddEntry(tge_phen,"PHENIX 1<|#eta|<3","p");
-  leg->AddEntry(tge_star,"STAR |#eta|<1","p");
   leg->SetTextSize(0.05);
   leg->Draw();
   line = new TLine(xmin,0,xmax,0);
   line->SetLineStyle(2);
   line->SetLineWidth(2);
   line->Draw();
-  // c1->Print("STAR/c34_star.png");
-  // c1->Print("STAR/c34_star.pdf");
   c1->Print(Form("STAR/help_%d_c34.png",flag));
   c1->Print(Form("STAR/help_%d_c34.pdf",flag));
 
-
-  return;
-
-
-  ymin = -0.2;
-  ymax = 0.5;
-  delete hdummy;
-  hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
-  hdummy->Draw();
-  hdummy->GetYaxis()->SetTitle(Form("10^{6} v_{3}^{4}"));
-  hdummy->GetYaxis()->SetTitleOffset(1.25);
-  hdummy->GetXaxis()->SetTitle("Centrality (%)");
-  tge_swap->Draw("pz");
-  tge_swap2->Draw("pz");
-  delete leg;
-  leg = new TLegend(0.18,0.68,0.38,0.88);
-  leg->SetFillStyle(0);
-  //leg->SetHeader("10^{6} v_{3}^{4}");
-  leg->AddEntry(tge_swap,"PHENIX v_{3}^{4}{4}","p");
-  leg->AddEntry(tge_swap2,"PHENIX v_{3}^{4}{2}","p");
-  leg->SetTextSize(0.05);
-  leg->Draw();
-  delete line;
-  line = new TLine(xmin,0,xmax,0);
-  line->SetLineStyle(2);
-  line->SetLineWidth(2);
-  line->Draw();
-  c1->Print("STAR/v342_star.png");
-  c1->Print("STAR/v342_star.pdf");
-
-
-  ymin = 0.0;
-  ymax = 9.0;
-  delete hdummy;
-  hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
-  hdummy->Draw();
-  hdummy->GetYaxis()->SetTitle(Form("2 - v_{3}^{4}{4}/v_{3}^{4}{2}"));
-  hdummy->GetYaxis()->SetTitleOffset(1.25);
-  hdummy->GetXaxis()->SetTitle("Centrality (%)");
-  tge_ratio->Draw("pz");
-  tge_sratio->Draw("pz");
-  delete leg;
-  leg = new TLegend(0.18,0.18,0.38,0.38);
-  leg->SetFillStyle(0);
-  //leg->SetHeader("10^{6} v_{3}^{4}");
-  leg->AddEntry(tge_ratio,"PHENIX 1<|#eta|<3","p");
-  leg->AddEntry(tge_sratio,"STAR |#eta|<1","p");
-  leg->SetTextSize(0.05);
-  leg->Draw();
-  delete line;
-  line = new TLine(xmin,2,xmax,2);
-  line->SetLineStyle(2);
-  line->SetLineWidth(2);
-  line->Draw();
-  c1->Print("STAR/v342_ratio_star.png");
-  c1->Print("STAR/v342_ratio_star.pdf");
 
 
 }
