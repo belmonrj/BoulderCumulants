@@ -45,20 +45,12 @@ void do_check(int flag)
   const int nbins = histR->GetNbinsX();
 
   double norm_c3[nbins];
-  double swap_c3[nbins];
   double norm_ec3[nbins];
-  double swap_ec3[nbins];
   double norm_v3[nbins];
-  double swap_v3[nbins];
   double norm_ev3[nbins];
-  double swap_ev3[nbins];
   double cent[nbins];
   double norm_c2[nbins];
-  double swap_c2[nbins];
   double norm_ec2[nbins];
-  double swap_ec2[nbins];
-  double ratio[nbins];
-  double eratio[nbins];
   for ( int i = 0; i < nbins; ++i )
     {
       cent[i] = histR->GetBinCenter(i+1);
@@ -69,46 +61,19 @@ void do_check(int flag)
       norm_ev3[i] = (1/(4*pow(-norm_c3[i],0.75)))*norm_ec3[i];
       if ( norm_v3[i] != norm_v3[i] ) norm_v3[i] = -999;
       if ( norm_ev3[i] != norm_ev3[i] ) norm_v3[i] = 998;
-      // --- swapped v3
-      swap_c3[i] = -1*histR->GetBinContent(i+1);
-      swap_ec3[i] = histR->GetBinError(i+1);
-      swap_v3[i] = pow(-swap_c3[i],0.25);
-      swap_ev3[i] = (1/(4*pow(-swap_c3[i],0.75)))*swap_ec3[i];
-      if ( swap_v3[i] != swap_v3[i] ) swap_v3[i] = -999;
-      if ( swap_ev3[i] != swap_ev3[i] ) swap_v3[i] = 998;
       // --- v3{2}^4
       if ( histS )
         {
-          swap_c2[i] = histS->GetBinContent(i+1);
-          swap_ec2[i] = histS->GetBinError(i+1);
         }
-      ratio[i] = 2 - swap_c3[i]/swap_c2[i];
       // --- way too big
-      eratio[i] = ratio[i]*sqrt( pow( (swap_ec3[i]/swap_c3[i]), 2.0 ) + pow( (swap_ec2[i]/swap_c2[i]), 2.0 ) );
-      eratio[i] = (swap_ec2[i]/swap_c2[i]) * 50;
-      swap_c3[i] *= 1e6;
-      swap_ec3[i] *= 1e6;
-      swap_c2[i] *= 1e6;
-      swap_ec2[i] *= 1e6;
     }
 
 
 
-  TGraphErrors* tge_swap = new TGraphErrors(nbins,cent,swap_c3,0,swap_ec3);
-  TGraphErrors* tge_swap2 = new TGraphErrors(nbins,cent,swap_c2,0,swap_ec2);
-  TGraphErrors* tge_ratio = new TGraphErrors(nbins,cent,ratio,0,eratio);
 
   // --- do some drawing
 
-  tge_swap->SetLineColor(kBlack);
-  tge_swap->SetMarkerColor(kBlack);
-  tge_swap->SetMarkerStyle(kOpenCircle);
-  tge_swap2->SetLineColor(kBlack);
-  tge_swap2->SetMarkerColor(kBlack);
-  tge_swap2->SetMarkerStyle(kFullCircle);
-  tge_ratio->SetLineColor(kBlack);
-  tge_ratio->SetMarkerColor(kBlack);
-  tge_ratio->SetMarkerStyle(kOpenCircle);
+
 
   TCanvas* c1 = new TCanvas("c1","");
 
@@ -122,7 +87,6 @@ void do_check(int flag)
   hdummy->GetYaxis()->SetTitleOffset(1.25);
   hdummy->GetXaxis()->SetTitle("Centrality (%)");
   //tge_norm->Draw("pz");
-  tge_swap->Draw("pz");
   TLatex latt;
   latt.SetNDC();
   latt.SetTextSize(0.05);
@@ -130,7 +94,6 @@ void do_check(int flag)
   latt.DrawLatex(0.50, 0.87, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
   TLegend *leg = new TLegend(0.18,0.18,0.38,0.38);
   leg->SetFillStyle(0);
-  leg->AddEntry(tge_swap,"PHENIX 1<|#eta|<3","p");
   leg->SetTextSize(0.05);
   leg->Draw();
   TLine* line = new TLine(xmin,0,xmax,0);
