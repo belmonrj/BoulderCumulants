@@ -1,7 +1,9 @@
 #include "systematics_helper.C"
 
+int spec_rebin = 70;
 int rebin = 5;
 
+TH1D* get_cumuhist_ntrk(TFile*);
 TH1D* get_cumuhist(TFile*);
 TH1D* get_histv324(TFile*);
 
@@ -126,6 +128,66 @@ void do_check(int flag)
 
 
 
+  TH1D* histRN = get_cumuhist_ntrk(fileR); // reference
+
+  histRN->SetLineColor(kRed);
+  histRN->SetMarkerColor(kRed);
+  histRN->SetMarkerStyle(kFullCircle);
+
+  xmin = 0;
+  xmax = 650;
+  ymin = -1e-7;
+  ymax = 2e-7;
+  if ( hdummy) delete hdummy;
+  hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
+  hdummy->Draw();
+  hdummy->GetYaxis()->SetTitle(Form("c_{3}{4}"));
+  hdummy->GetYaxis()->SetTitleOffset(1.25);
+  hdummy->GetXaxis()->SetTitle("nfvtxt");
+  histRN->Draw("ex0p same");
+  latt.SetNDC();
+  latt.SetTextSize(0.05);
+  latt.SetTextAlign(11);
+  latt.DrawLatex(0.50, 0.25, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+  leg = new TLegend(0.18,0.73,0.38,0.93);
+  leg->SetFillStyle(0);
+  leg->AddEntry(tge_phen,"PHENIX 1<|#eta|<3","p");
+  leg->SetTextSize(0.05);
+  leg->Draw();
+  line = new TLine(xmin,0,xmax,0);
+  line->SetLineStyle(2);
+  line->SetLineWidth(2);
+  line->Draw();
+  c1->Print(Form("STAR/nthelp_%d_c34.png",flag));
+  c1->Print(Form("STAR/nthelp_%d_c34.pdf",flag));
+
+
+}
+
+TH1D* get_cumuhist_ntrk(TFile* fin)
+{
+  // --- random number helper to prevent memory collisions with ROOT named objects...
+  double rand = gRandom->Rndm();
+  int helper = rand*10000;
+  // --- get the tprofiles
+  TProfile* ctp1f_for = (TProfile*)fin->Get("nfvtxt_recursion_0_3");
+  TProfile* ctp1f_two = (TProfile*)fin->Get("nfvtxt_recursion_0_1");
+  if ( ctp1f_for == NULL ) return NULL;
+  if ( ctp1f_two == NULL ) return NULL;
+  ctp1f_for->Rebin(spec_rebin);
+  ctp1f_two->Rebin(spec_rebin);
+  // --- convert to th1ds (to do math operations)
+  TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
+  TH1D* th1d_two = ctp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
+  // --- calc 222
+  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%d",helper)); // 2<2>^2       (for the 4p)
+  th1d_222->Multiply(th1d_two);
+  th1d_222->Scale(2);
+  // --- calc the cumulant
+  TH1D* th1d_cu4 = (TH1D*)th1d_for->Clone(Form("th1d_cu4_%d",helper)); // c{4} = <4> - 2<2>^2
+  th1d_cu4->Add(th1d_222,-1);
+  // --- return the cumulant
+  return th1d_cu4;
 }
 
 TH1D* get_cumuhist(TFile* fin)
