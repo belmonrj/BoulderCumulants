@@ -955,13 +955,13 @@ int BoulderCumulants::EventStuff()
   TComplex tcb3 = TComplex(ac_fvtxn_tracks_qx3,ac_fvtxn_tracks_qy3);
   TComplex tca6 = TComplex(ac_fvtxs_tracks_qx6,ac_fvtxs_tracks_qy6);
   TComplex tcb6 = TComplex(ac_fvtxn_tracks_qx6,ac_fvtxn_tracks_qy6);
-  TComplex tc_numerator_a = tca3*tca3 - tca6;
-  TComplex tc_numerator_b = TComplex::Conjugate(tcb3*tcb3 - tcb6);
-  TComplex tc_numerator = tc_numerator_a*tc_numerator_b;
-  double numerator = tc_numerator.Re();
-  double tcaw = ac_fvtxs_tracks_qw*ac_fvtxs_tracks_qw - ac_fvtxs_tracks_qw;
-  double tcbw = ac_fvtxn_tracks_qw*ac_fvtxn_tracks_qw - ac_fvtxn_tracks_qw;
-  double denominator = tcaw*tcbw;
+  tc_numerator_a = tca3*tca3 - tca6;
+  tc_numerator_b = TComplex::Conjugate(tcb3*tcb3 - tcb6);
+  tc_numerator = tc_numerator_a*tc_numerator_b;
+  numerator = tc_numerator.Re();
+  tcaw = ac_fvtxs_tracks_qw*ac_fvtxs_tracks_qw - ac_fvtxs_tracks_qw;
+  tcbw = ac_fvtxn_tracks_qw*ac_fvtxn_tracks_qw - ac_fvtxn_tracks_qw;
+  denominator = tcaw*tcbw;
   double answer_c34a = numerator/denominator;
 
   float ac_fvtxs_tracks_qqqq34 = calc4_event(ac_fvtxs_tracks_qx3,ac_fvtxs_tracks_qy3,ac_fvtxs_tracks_qx6,ac_fvtxs_tracks_qy6,ac_fvtxs_tracks_qw);
