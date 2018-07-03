@@ -56,6 +56,8 @@ void do_check(int flag)
   double losysnorm_ec3[nbins];
   double cent[nbins];
   double sys = 0.5;
+  double hisys = 0.3;
+  double losys = 0.6;
   double standard[20]={
     2.32027e-08,
     2.75107e-08,
@@ -87,8 +89,10 @@ void do_check(int flag)
       //   }
       norm_ec3[i] = histR->GetBinError(i+1);
       sysnorm_ec3[i] = standard[i]*sys;
-      hisysnorm_ec3[i] = standard[i]+sysnorm_ec3[i];
-      losysnorm_ec3[i] = standard[i]-sysnorm_ec3[i];
+      // hisysnorm_ec3[i] = standard[i]+sysnorm_ec3[i];
+      // losysnorm_ec3[i] = standard[i]-sysnorm_ec3[i];
+      hisysnorm_ec3[i] = standard[i]*(1+hisys);
+      losysnorm_ec3[i] = standard[i]*(1-losys);
     }
 
   TGraph* tge_sys_hi = new TGraph(11,cent,hisysnorm_ec3);
