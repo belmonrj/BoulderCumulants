@@ -46,17 +46,59 @@ void do_check(int flag)
 
   const int nbins = histR->GetNbinsX();
 
+  cout << nbins << endl;
+
+  //double standard[nbins];
   double norm_c3[nbins];
   double norm_ec3[nbins];
+  double sysnorm_ec3[nbins];
+  double hisysnorm_ec3[nbins];
+  double losysnorm_ec3[nbins];
   double cent[nbins];
+  double sys = 0.5;
+  double standard[20]={
+    2.32027e-08,
+    2.75107e-08,
+    3.1886e-08,
+    3.25301e-08,
+    5.93043e-08,
+    4.56757e-08,
+    4.92848e-08,
+    3.41955e-08,
+    7.15555e-08,
+    8.71393e-08,
+    8.19061e-08,
+    2.27846e-07,
+    5.02444e-07,
+    4.453e-07,
+    1.65036e-06,
+    6.22593e-07,
+    -8.944e-06,
+    -9.35808e-05,
+    -0.000348249,
+    0};
   for ( int i = 0; i < nbins; ++i )
     {
       cent[i] = histR->GetBinCenter(i+1);
       norm_c3[i] = histR->GetBinContent(i+1);
+      // if ( flag == 12634 )
+      //   {
+      //     cout << cent[i] << " " << norm_c3[i] << endl;
+      //   }
       norm_ec3[i] = histR->GetBinError(i+1);
+      sysnorm_ec3[i] = standard[i]*sys;
+      hisysnorm_ec3[i] = standard[i]+sysnorm_ec3[i];
+      losysnorm_ec3[i] = standard[i]-sysnorm_ec3[i];
     }
 
-
+  TGraph* tge_sys_hi = new TGraph(11,cent,hisysnorm_ec3);
+  TGraph* tge_sys_lo = new TGraph(11,cent,losysnorm_ec3);
+  tge_sys_hi->SetLineColor(kBlack);
+  tge_sys_hi->SetLineWidth(2);
+  tge_sys_hi->SetLineStyle(1);
+  tge_sys_lo->SetLineColor(kBlack);
+  tge_sys_lo->SetLineWidth(2);
+  tge_sys_lo->SetLineStyle(1);
 
 
   // --- do some drawing
@@ -125,6 +167,10 @@ void do_check(int flag)
   line->Draw();
   c1->Print(Form("STAR/help_%d_c34.png",flag));
   c1->Print(Form("STAR/help_%d_c34.pdf",flag));
+  tge_sys_hi->Draw("l");
+  tge_sys_lo->Draw("l");
+  c1->Print(Form("STAR/syshelp_%d_c34.png",flag));
+  c1->Print(Form("STAR/syshelp_%d_c34.pdf",flag));
 
 
 
