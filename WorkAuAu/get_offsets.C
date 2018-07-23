@@ -87,6 +87,7 @@ void get_offsets()
       fout << endl;
     } // end of loop over number of tracks
   */
+  /*
   for ( int i = 0; i < 650; ++i ) // adjust as needed...
     {
       fout << "  ";
@@ -123,7 +124,7 @@ void get_offsets()
         } // end
       fout << endl;
     } // end of loop over number of tracks
-  /*
+  */
   for ( int i = 0; i < 100; ++i ) // adjust as needed...
     {
       fout << "  ";
@@ -160,7 +161,6 @@ void get_offsets()
         } // end
       fout << endl;
     } // end of loop over number of tracks
-  */
   // --- end of function
   fout << "}" << endl;
 
