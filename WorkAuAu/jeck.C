@@ -74,6 +74,13 @@ void do_jeck(int flag)
   histN->SetMarkerColor(kRed);
   histN->SetMarkerStyle(kFullCircle);
   histN->Draw("ex0p same");
+  TH1D* histNS = (TH1D*)histN->Clone("histNS");
+  histNS->Add(histS);
+  histNS->Scale(0.5);
+  histNS->SetLineColor(kGreen+2);
+  histNS->SetMarkerColor(kGreen+2);
+  histNS->SetMarkerStyle(kFullCircle);
+  histNS->Draw("ex0p same");
   TLatex latt;
   latt.SetNDC();
   latt.SetTextSize(0.05);
@@ -90,6 +97,8 @@ void do_jeck(int flag)
   line->Draw();
   c1->Print(Form("STAR/jeck_%d_c34.png",flag));
   c1->Print(Form("STAR/jeck_%d_c34.pdf",flag));
+
+  delete c1;
 
 }
 
