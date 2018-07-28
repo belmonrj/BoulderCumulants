@@ -1,4 +1,6 @@
 #include <iostream>
+#include "TFile.h"
+#include "TProfile.h"
 #include "BoulderCumulants.h"
 
 using std::cout;
