@@ -26,7 +26,7 @@ void BoulderCumulants::SetQvectorOffsetsRBR(int run)
         {
           TProfile* tp1f_cent_north = (TProfile*)file->Get(Form("run%d_centrality_recoffsets_north_%d_%d",run,cs,c));
           TProfile* tp1f_cent_south = (TProfile*)file->Get(Form("run%d_centrality_recoffsets_south_%d_%d",run,cs,c));
-          if ( tp1f_cent_north || tp1f_cent_south )
+          if ( !tp1f_cent_north || !tp1f_cent_south )
             {
               cout << "Offset histogram(s) not found" << endl;
               cout << tp1f_cent_north << endl;
