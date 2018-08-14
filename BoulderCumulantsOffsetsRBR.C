@@ -9,10 +9,16 @@ using std::endl;
 void BoulderCumulants::SetQvectorOffsetsRBR(int run)
 {
 
-  //cout << "Since the previous version took 20 minutes to compile, let's do nothing until we come up with a better way..." << endl;
-  if ( run < 0 ) return;
-  if ( _verbosity > 1 ) cout << "setting Q-vector offsets..." << endl;
+  cout << "Setting Q-vector offsets..." << endl;
 
+  //cout << "Since the previous version took 20 minutes to compile, let's do nothing until we come up with a better way..." << endl;
+  if ( run < 0 )
+    {
+      cout << "Invalid run number, no offsets can be set" << endl;
+      return;
+    }
+
+  cout << "Now geting offsets file" << endl;
   TFile* file = TFile::Open("rbr_offsets.root");
   if ( file == NULL )
     {
@@ -20,6 +26,7 @@ void BoulderCumulants::SetQvectorOffsetsRBR(int run)
       return; // should modify routine to add return values to check...
     }
 
+  cout << "Now looping to get offset histos and set offsets" << endl;
   for ( int cs = 0; cs < 2; ++cs )
     {
       for ( int c = 0; c < maxHarmonic; ++c )

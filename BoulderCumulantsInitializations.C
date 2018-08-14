@@ -227,6 +227,8 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
 int BoulderCumulants::InitRun(PHCompositeNode *topNode)
 {
 
+  cout << "InitRun called " << endl;
+
   int runnumber = 0;
 
   RunHeader *rh = findNode::getClass<RunHeader>(topNode, "RunHeader");
@@ -238,6 +240,7 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
   runnumber = rh->get_RunNumber();
 
   // --- set Q-vector offsets
+  cout << "setting Q-vector offsets..." << endl;
   SetQvectorOffsets(runnumber);
   SetQvectorOffsetsRBR(runnumber);
 

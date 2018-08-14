@@ -31,8 +31,8 @@ void RunMyMacro(const char *modulemacro = "Run_BoulderCumulantsRun14.C",  // you
                 //const int nevnt         = 10000,               // number of events for test
                 //const char *system      = "Run16dAu200CAnVXMBP107") // system type
                 //const char *system      = "Run15pAu200FvtxMBPro107") // system type
-                //const char *system      = "Run14AuAu200MuonsMBPro104") // system type
-                const char *system      = "Run14AuAu200MuonsMBPro109") // system type
+                const char *system      = "Run14AuAu200MuonsMBPro104") // system type
+                //const char *system      = "Run14AuAu200MuonsMBPro109") // system type
                 //const char *system      = "Run14HeAu200MinBias") // system type
 {
   int starttime = TDatime().GetTime();
