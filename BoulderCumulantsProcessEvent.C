@@ -449,6 +449,8 @@ int BoulderCumulants::EventRecursion()
       // ------------------------------------------------------------------------------------------------
     } // loop over tracks
 
+
+  cout << "before offset " << Qvector_north[2][0] << endl;
   // -------------------------------------------------------------------------------------------------------------------------------
   for(int h=1;h<maxHarmonic;h++) // ABSOLUTELY MUST START AT 1!!!  RECURSION ALGORITHM USES ZEROTH COMPONENT TO GET COMBINATORICS!!!
     {
@@ -470,6 +472,7 @@ int BoulderCumulants::EventRecursion()
         } // for(int p=0;p<maxPower;p++)
     } // for(int h=0;h<maxHarmonic;h++)
   // -------------------------------------------------------------------------------------------------------------------------------
+  cout << "after offset " << Qvector_north[2][0] << endl;
 
   // --- from generic formulas ----------------------------------------------------------------------------
   // --- need to add these here, initialization in header file doesn't seem to work...
