@@ -12,11 +12,13 @@ void do_jeck(int);
 void jeck()
 {
 
-  do_jeck(13617);
-  do_jeck(13712);
-  do_jeck(13720);
-  do_jeck(13726);
-  do_jeck(13737);
+  // do_jeck(13617);
+  // do_jeck(13712);
+  // do_jeck(13720);
+  // do_jeck(13726);
+  // do_jeck(13737);
+  do_jeck(13798);
+  do_jeck(13799);
 
 }
 
@@ -24,9 +26,9 @@ void jeck()
 void do_jeck(int flag)
 {
 
-  //TFile* fileR = TFile::Open(Form("input/histos_%d.root",flag));
+  TFile* fileR = TFile::Open(Form("input/histos_%d.root",flag));
   //TFile* fileR = TFile::Open(Form("input/partial_%d.root",flag));
-  TFile* fileR = TFile::Open(Form("input/full_%d.root",flag));
+  //TFile* fileR = TFile::Open(Form("input/full_%d.root",flag));
 
   TH1D* histR = get_cumuhist(fileR); // recursion for reference
   if ( histR == NULL ) { cout << "RECURSION HISTOGRAM MISSING!!! " << flag << endl; return; }
@@ -55,6 +57,9 @@ void do_jeck(int flag)
   // --- offset problem
   ymin = -2.5e-6;
   ymax = 5e-6;
+  // --- "new" normal
+  ymin = -1e-7;
+  ymax = 5e-7;
   TH2D* hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->Draw();
   hdummy->GetYaxis()->SetTitle(Form("c_{3}{4}"));
@@ -64,7 +69,7 @@ void do_jeck(int flag)
   histR->SetMarkerColor(kBlack);
   histR->SetMarkerStyle(kOpenCircle);
   histR->SetMarkerSize(1.8);
-  histR->Draw("ex0p same");
+  //histR->Draw("ex0p same");
   histC->SetLineColor(kGray);
   histC->SetMarkerColor(kGray);
   histC->SetMarkerStyle(kFullCircle);
@@ -72,7 +77,7 @@ void do_jeck(int flag)
   histS->SetLineColor(kBlue);
   histS->SetMarkerColor(kBlue);
   histS->SetMarkerStyle(kFullCircle);
-  histS->Draw("ex0p same");
+  //histS->Draw("ex0p same");
   histN->SetLineColor(kRed);
   histN->SetMarkerColor(kRed);
   histN->SetMarkerStyle(kFullCircle);
@@ -83,7 +88,7 @@ void do_jeck(int flag)
   histNS->SetLineColor(kGreen+2);
   histNS->SetMarkerColor(kGreen+2);
   histNS->SetMarkerStyle(kFullCircle);
-  histNS->Draw("ex0p same");
+  //histNS->Draw("ex0p same");
   TLatex latt;
   latt.SetNDC();
   latt.SetTextSize(0.05);
@@ -91,15 +96,43 @@ void do_jeck(int flag)
   latt.DrawLatex(0.50, 0.25, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
   TLegend* leg = new TLegend(0.18,0.73,0.38,0.93);
   leg->SetFillStyle(0);
-  leg->AddEntry(histR,"PHENIX 1<|#eta|<3","p");
+  //leg->AddEntry(histR,"Recursion","p");
+  leg->AddEntry(histC,"N+S combined","p");
+  //leg->AddEntry(histNS,"N+S averaged","p");
+  leg->AddEntry(histN,"North only","p");
+  //leg->AddEntry(histS,"South only","p");
   leg->SetTextSize(0.05);
   leg->Draw();
+  // TLegend* leg = new TLegend(0.18,0.73,0.38,0.93);
+  // leg->SetFillStyle(0);
+  // leg->AddEntry(histR,"PHENIX 1<|#eta|<3","p");
+  // leg->SetTextSize(0.05);
+  // leg->Draw();
   TLine* line = new TLine(xmin,0,xmax,0);
   line->SetLineStyle(2);
   line->SetLineWidth(2);
   line->Draw();
   c1->Print(Form("STAR/jeck_%d_c34.png",flag));
   c1->Print(Form("STAR/jeck_%d_c34.pdf",flag));
+
+  histN->Divide(histC);
+  histN->SetMarkerColor(kBlack);
+  histN->SetLineColor(kBlack);
+  histN->Draw();
+  histN->SetMaximum(10.0);
+  histN->SetMinimum(0.0);
+  histN->GetYaxis()->SetTitle(Form("Ratio"));
+  histN->GetYaxis()->SetTitleOffset(1.25);
+  histN->GetXaxis()->SetTitle("Centrality (%)");
+  histN->GetXaxis()->SetRangeUser(xmin,xmax);
+  line = new TLine(xmin,1,xmax,1);
+  line->SetLineStyle(2);
+  line->SetLineWidth(2);
+  line->Draw();
+  c1->Print(Form("STAR/rajeck_%d_c24.png",flag));
+  c1->Print(Form("STAR/rajeck_%d_c24.pdf",flag));
+
+
 
   delete c1;
 

@@ -69,7 +69,7 @@ void do_reck(int flag)
   histR->SetMarkerColor(kBlack);
   histR->SetMarkerStyle(kOpenCircle);
   histR->SetMarkerSize(1.8);
-  histR->Draw("ex0p same");
+  //histR->Draw("ex0p same");
   histC->SetLineColor(kGray);
   histC->SetMarkerColor(kGray);
   histC->SetMarkerStyle(kFullCircle);
@@ -77,11 +77,11 @@ void do_reck(int flag)
   histS->SetLineColor(kBlue);
   histS->SetMarkerColor(kBlue);
   histS->SetMarkerStyle(kFullCircle);
-  histS->Draw("ex0p same");
+  //histS->Draw("ex0p same");
   histN->SetLineColor(kRed);
   histN->SetMarkerColor(kRed);
   histN->SetMarkerStyle(kFullCircle);
-  histN->Draw("ex0p same");
+  //histN->Draw("ex0p same");
   TH1D* histNS = (TH1D*)histN->Clone("histNS");
   histNS->Add(histS);
   histNS->Scale(0.5);
@@ -97,11 +97,11 @@ void do_reck(int flag)
   //TLegend* leg = new TLegend(0.18,0.73,0.38,0.93);
   TLegend* leg = new TLegend(0.18,0.18,0.38,0.48);
   leg->SetFillStyle(0);
-  leg->AddEntry(histR,"Recursion","p");
+  //leg->AddEntry(histR,"Recursion","p");
   leg->AddEntry(histC,"N+S combined","p");
   leg->AddEntry(histNS,"N+S averaged","p");
-  leg->AddEntry(histN,"North only","p");
-  leg->AddEntry(histS,"South only","p");
+  //leg->AddEntry(histN,"North only","p");
+  //leg->AddEntry(histS,"South only","p");
   leg->SetTextSize(0.05);
   leg->Draw();
   TLine* line = new TLine(xmin,0,xmax,0);
@@ -113,6 +113,7 @@ void do_reck(int flag)
 
   histNS->Divide(histC);
   histNS->SetMarkerColor(kBlack);
+  histNS->SetLineColor(kBlack);
   histNS->Draw();
   histNS->SetMaximum(2.0);
   histNS->SetMinimum(0.0);
@@ -120,6 +121,10 @@ void do_reck(int flag)
   histNS->GetYaxis()->SetTitleOffset(1.25);
   histNS->GetXaxis()->SetTitle("Centrality (%)");
   histNS->GetXaxis()->SetRangeUser(xmin,xmax);
+  line = new TLine(xmin,1,xmax,1);
+  line->SetLineStyle(2);
+  line->SetLineWidth(2);
+  line->Draw();
   c1->Print(Form("STAR/rareck_%d_c24.png",flag));
   c1->Print(Form("STAR/rareck_%d_c24.pdf",flag));
 
