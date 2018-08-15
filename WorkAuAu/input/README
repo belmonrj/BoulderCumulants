@@ -60,3 +60,7 @@ the 117* series have incomplete statistics due to serious taxi problems
 
 13617 baseline cuts, no Q-vector recentering, pro109
 
+13792 standard baseline, refresh, pro104
+13795 attempted but failed q-vector recentering (offsets file in CVS but not picked up by taxi), numerically identical to 13792
+13798 same as 13795
+
