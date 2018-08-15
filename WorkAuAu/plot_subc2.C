@@ -19,18 +19,40 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
 
   if ( harm == 3 )
     {
-      th1d_c24->Rebin(5);
-      th1d_c24aabb->Rebin(5);
-      th1d_c24abab->Rebin(5);
-      th1d_c24->Scale(0.2);
-      th1d_c24aabb->Scale(0.2);
-      th1d_c24abab->Scale(0.2);
       // th1d_c24->Rebin(5);
-      // th1d_c24aabb->Rebin(10);
-      // th1d_c24abab->Rebin(10);
+      // th1d_c24aabb->Rebin(5);
+      // th1d_c24abab->Rebin(5);
       // th1d_c24->Scale(0.2);
-      // th1d_c24aabb->Scale(0.1);
-      // th1d_c24abab->Scale(0.1);
+      // th1d_c24aabb->Scale(0.2);
+      // th1d_c24abab->Scale(0.2);
+      th1d_c24->Rebin(5);
+      th1d_c24aabb->Rebin(10);
+      th1d_c24abab->Rebin(10);
+      th1d_c24->Scale(0.2);
+      th1d_c24aabb->Scale(0.1);
+      th1d_c24abab->Scale(0.1);
+      for ( int i = 0; i < th1d_c24aabb->GetNbinsX(); ++i )
+        {
+          double cent = th1d_c24aabb->GetBinCenter(i+1);
+          if ( cent > 50 )
+            {
+              th1d_c24aabb->SetBinContent(i+1,-999);
+              th1d_c24abab->SetBinContent(i+1,-999);
+            }
+        }
+    }
+  if ( harm == 2 )
+    {
+      for ( int i = 0; i < th1d_c24->GetNbinsX(); ++i )
+        {
+          double cent = th1d_c24->GetBinCenter(i+1);
+          if ( cent > 65 )
+            {
+              th1d_c24->SetBinContent(i+1,-999);
+              th1d_c24aabb->SetBinContent(i+1,-999);
+              th1d_c24abab->SetBinContent(i+1,-999);
+            }
+        }
     }
 
   th1d_c24aabb->SetMarkerStyle(kOpenSquare);
