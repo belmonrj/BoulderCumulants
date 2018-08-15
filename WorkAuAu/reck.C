@@ -1,4 +1,4 @@
-int rebin = 5;
+int rebin = 2;
 
 TH1D* get_cumuhist(TFile*);
 TH1D* get_cumuhistC(TFile*);
@@ -58,8 +58,8 @@ void do_reck(int flag)
   ymin = -2.5e-6;
   ymax = 5e-6;
   // --- 2nd harmonic
-  ymin = -5e-5;
-  ymax = 5e-5;
+  ymin = -2e-5;
+  ymax = 2e-6;
   TH2D* hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->Draw();
   hdummy->GetYaxis()->SetTitle(Form("c_{3}{4}"));
@@ -94,9 +94,14 @@ void do_reck(int flag)
   latt.SetTextSize(0.05);
   latt.SetTextAlign(11);
   latt.DrawLatex(0.50, 0.25, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
-  TLegend* leg = new TLegend(0.18,0.73,0.38,0.93);
+  //TLegend* leg = new TLegend(0.18,0.73,0.38,0.93);
+  TLegend* leg = new TLegend(0.18,0.18,0.38,0.48);
   leg->SetFillStyle(0);
-  leg->AddEntry(histR,"PHENIX 1<|#eta|<3","p");
+  leg->AddEntry(histR,"Recursion","p");
+  leg->AddEntry(histC,"N+S combined","p");
+  leg->AddEntry(histNS,"N+S averaged","p");
+  leg->AddEntry(histN,"North only","p");
+  leg->AddEntry(histS,"South only","p");
   leg->SetTextSize(0.05);
   leg->Draw();
   TLine* line = new TLine(xmin,0,xmax,0);
