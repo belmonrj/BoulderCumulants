@@ -15,8 +15,10 @@ void reck()
   // do_reck(13617);
   // do_reck(13712);
   // do_reck(13720);
-  do_reck(13726);
+  // do_reck(13726);
   // do_reck(13737);
+  do_reck(13798);
+  do_reck(13799);
 
 }
 
@@ -24,9 +26,9 @@ void reck()
 void do_reck(int flag)
 {
 
-  //TFile* fileR = TFile::Open(Form("input/histos_%d.root",flag));
+  TFile* fileR = TFile::Open(Form("input/histos_%d.root",flag));
   //TFile* fileR = TFile::Open(Form("input/partial_%d.root",flag));
-  TFile* fileR = TFile::Open(Form("input/full_%d.root",flag));
+  //TFile* fileR = TFile::Open(Form("input/full_%d.root",flag));
 
   TH1D* histR = get_cumuhist(fileR); // recursion for reference
   if ( histR == NULL ) { cout << "RECURSION HISTOGRAM MISSING!!! " << flag << endl; return; }
