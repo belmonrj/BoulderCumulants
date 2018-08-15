@@ -188,5 +188,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   // c1->Print("FigsSubevents/cent_subevents24.png");
   // c1->Print("FigsSubevents/cent_subevents24.pdf");
 
+  delete empty;
+  delete c1;
 
 }
