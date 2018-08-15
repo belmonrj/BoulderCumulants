@@ -1,4 +1,15 @@
+void plot_subv2(TH1D*,TH1D*,TH1D*,TH1D*,TH1D*);
+
+void plot_subv2(TH1D*,TH1D*,TH1D*,TH1D*,TH1D*,int);
+
+
+
 void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th1d_v22, TH1D* th1d_v22ab)
+{
+  plot_subv2(th1d_v24,th1d_v24aabb,th1d_v24abab,th1d_v22,th1d_v22ab,2);
+}
+
+void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th1d_v22, TH1D* th1d_v22ab, int harm)
 {
 
   TCanvas* c1 = new TCanvas("c1","");
@@ -92,7 +103,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   empty->Draw();
   if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
   if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
-  empty->GetYaxis()->SetTitle("v_{2}");
+  empty->GetYaxis()->SetTitle(Form("v_{%d}",harm));
   empty->GetYaxis()->SetTitleOffset(1.2);
   TLatex* tex_phenix = new TLatex(0.2,0.778,"PHENIX");
   tex_phenix->SetTextSize(0.05);
@@ -121,7 +132,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   TLegend* leg24 = new TLegend(0.66,0.86,0.92,0.92);
   leg24->SetTextSize(0.05);
   leg24->SetFillStyle(0);
-  leg24->AddEntry(th1d_v24,"v_{2}{4}","p");
+  leg24->AddEntry(th1d_v24,Form("v_{%d}{4}",harm),"p");
   leg24->Draw();
   c1->Print("FigsSubevents/cent_subevents_v24x01.png");
   c1->Print("FigsSubevents/cent_subevents_v24x01.pdf");
@@ -130,7 +141,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   TLegend* leg24abab = new TLegend(0.66,0.80,0.92,0.86);
   leg24abab->SetTextSize(0.05);
   leg24abab->SetFillStyle(0);
-  leg24abab->AddEntry(th1d_v24abab,"v_{2}{4}_{ab|ab}","p");
+  leg24abab->AddEntry(th1d_v24abab,Form("v_{%d}{4}_{ab|ab}",harm),"p");
   leg24abab->Draw();
   c1->Print("FigsSubevents/cent_subevents_v24x02.png");
   c1->Print("FigsSubevents/cent_subevents_v24x02.pdf");
@@ -139,7 +150,7 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   TLegend* leg24aabb = new TLegend(0.66,0.74,0.92,0.80);
   leg24aabb->SetTextSize(0.05);
   leg24aabb->SetFillStyle(0);
-  leg24aabb->AddEntry(th1d_v24aabb,"v_{2}{4}_{aa|bb}","p");
+  leg24aabb->AddEntry(th1d_v24aabb,Form("v_{%d}{4}_{aa|bb}",harm),"p");
   leg24aabb->Draw();
   c1->Print("FigsSubevents/cent_subevents_v24x03.png");
   c1->Print("FigsSubevents/cent_subevents_v24x03.pdf");
