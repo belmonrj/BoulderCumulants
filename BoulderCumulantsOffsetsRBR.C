@@ -9,6 +9,9 @@ using std::endl;
 void BoulderCumulants::SetQvectorOffsetsRBR(int run)
 {
 
+  cout << "Doing nothing..." << endl;
+  return;
+
   cout << "Setting Q-vector offsets..." << endl;
 
   //cout << "Since the previous version took 20 minutes to compile, let's do nothing until we come up with a better way..." << endl;
@@ -18,6 +21,7 @@ void BoulderCumulants::SetQvectorOffsetsRBR(int run)
       return;
     }
 
+  // --- this doesn't work on the taxi, need to find out why
   cout << "Now geting offsets file" << endl;
   TFile* file = TFile::Open("rbr_offsets.root");
   if ( file == NULL )
@@ -49,5 +53,3 @@ void BoulderCumulants::SetQvectorOffsetsRBR(int run)
     } // loop over cos (0) or sin (1)
 
 } // void BoulderCumulants::SetQvectorOffsetsRBR(int run)
-
-
