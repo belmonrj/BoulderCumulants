@@ -134,8 +134,8 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   leg24->SetFillStyle(0);
   leg24->AddEntry(th1d_v24,Form("v_{%d}{4}",harm),"p");
   leg24->Draw();
-  c1->Print("FigsSubevents/cent_subevents_v24x01.png");
-  c1->Print("FigsSubevents/cent_subevents_v24x01.pdf");
+  c1->Print(Form("FigsSubevents/cent_subevents_v%d4x01.png",harm));
+  c1->Print(Form("FigsSubevents/cent_subevents_v%d4x01.pdf",harm));
   //gv24abab_sys->Draw("E5 same");
   th1d_v24abab->Draw("same ex0p");
   TLegend* leg24abab = new TLegend(0.66,0.80,0.92,0.86);
@@ -143,8 +143,8 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   leg24abab->SetFillStyle(0);
   leg24abab->AddEntry(th1d_v24abab,Form("v_{%d}{4}_{ab|ab}",harm),"p");
   leg24abab->Draw();
-  c1->Print("FigsSubevents/cent_subevents_v24x02.png");
-  c1->Print("FigsSubevents/cent_subevents_v24x02.pdf");
+  c1->Print(Form("FigsSubevents/cent_subevents_v%d4x02.png",harm));
+  c1->Print(Form("FigsSubevents/cent_subevents_v%d4x02.pdf",harm));
   //gv24aabb_sys->Draw("E5 same");
   th1d_v24aabb->Draw("same ex0p");
   TLegend* leg24aabb = new TLegend(0.66,0.74,0.92,0.80);
@@ -152,8 +152,8 @@ void plot_subv2(TH1D* th1d_v24, TH1D* th1d_v24aabb, TH1D* th1d_v24abab, TH1D* th
   leg24aabb->SetFillStyle(0);
   leg24aabb->AddEntry(th1d_v24aabb,Form("v_{%d}{4}_{aa|bb}",harm),"p");
   leg24aabb->Draw();
-  c1->Print("FigsSubevents/cent_subevents_v24x03.png");
-  c1->Print("FigsSubevents/cent_subevents_v24x03.pdf");
+  c1->Print(Form("FigsSubevents/cent_subevents_v%d4x03.png",harm));
+  c1->Print(Form("FigsSubevents/cent_subevents_v%d4x03.pdf",harm));
 
   // leg->AddEntry(th1d_v24aabb,"v_{2}{4}_{aa|bb}","p");
   // leg->AddEntry(th1d_v24abab,"v_{2}{4}_{ab|ab}","p");
