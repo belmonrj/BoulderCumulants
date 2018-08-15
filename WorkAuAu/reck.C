@@ -62,7 +62,7 @@ void do_reck(int flag)
   ymax = 2e-6;
   TH2D* hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
   hdummy->Draw();
-  hdummy->GetYaxis()->SetTitle(Form("c_{3}{4}"));
+  hdummy->GetYaxis()->SetTitle(Form("c_{2}{4}"));
   hdummy->GetYaxis()->SetTitleOffset(1.25);
   hdummy->GetXaxis()->SetTitle("Centrality (%)");
   histR->SetLineColor(kBlack);
@@ -110,6 +110,18 @@ void do_reck(int flag)
   line->Draw();
   c1->Print(Form("STAR/reck_%d_c24.png",flag));
   c1->Print(Form("STAR/reck_%d_c24.pdf",flag));
+
+  histNS->Divide(histC);
+  histNS->SetMarkerColor(kBlack);
+  histNS->Draw();
+  histNS->SetMaximum(2.0);
+  histNS->SetMinimum(0.0);
+  histNS->GetYaxis()->SetTitle(Form("Ratio"));
+  histNS->GetYaxis()->SetTitleOffset(1.25);
+  histNS->GetXaxis()->SetTitle("Centrality (%)");
+  histNS->GetXaxis()->SetRangeUser(xmin,xmax);
+  c1->Print(Form("STAR/rareck_%d_c24.png",flag));
+  c1->Print(Form("STAR/rareck_%d_c24.pdf",flag));
 
   delete c1;
 
