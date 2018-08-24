@@ -81,14 +81,14 @@ void do_reck(int flag)
   histN->SetLineColor(kRed);
   histN->SetMarkerColor(kRed);
   histN->SetMarkerStyle(kFullCircle);
-  //histN->Draw("ex0p same");
+  histN->Draw("ex0p same");
   TH1D* histNS = (TH1D*)histN->Clone("histNS");
   histNS->Add(histS);
   histNS->Scale(0.5);
   histNS->SetLineColor(kGreen+2);
   histNS->SetMarkerColor(kGreen+2);
   histNS->SetMarkerStyle(kFullCircle);
-  histNS->Draw("ex0p same");
+ //histNS->Draw("ex0p same");
   TLatex latt;
   latt.SetNDC();
   latt.SetTextSize(0.05);
@@ -99,8 +99,8 @@ void do_reck(int flag)
   leg->SetFillStyle(0);
   //leg->AddEntry(histR,"Recursion","p");
   leg->AddEntry(histC,"N+S combined","p");
-  leg->AddEntry(histNS,"N+S averaged","p");
-  //leg->AddEntry(histN,"North only","p");
+  //leg->AddEntry(histNS,"N+S averaged","p");
+  leg->AddEntry(histN,"North only","p");
   //leg->AddEntry(histS,"South only","p");
   leg->SetTextSize(0.05);
   leg->Draw();

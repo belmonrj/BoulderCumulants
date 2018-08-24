@@ -89,11 +89,11 @@ void do_jeck(int flag)
   histNS->SetMarkerColor(kGreen+2);
   histNS->SetMarkerStyle(kFullCircle);
   //histNS->Draw("ex0p same");
-  TLatex latt;
-  latt.SetNDC();
-  latt.SetTextSize(0.05);
-  latt.SetTextAlign(11);
-  latt.DrawLatex(0.50, 0.25, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
+  // TLatex latt;
+  // latt.SetNDC();
+  // latt.SetTextSize(0.05);
+  // latt.SetTextAlign(11);
+  // latt.DrawLatex(0.50, 0.25, "Au+Au #sqrt{s_{_{NN}}} = 200 GeV");
   TLegend* leg = new TLegend(0.18,0.73,0.38,0.93);
   leg->SetFillStyle(0);
   //leg->AddEntry(histR,"Recursion","p");
@@ -129,8 +129,8 @@ void do_jeck(int flag)
   line->SetLineStyle(2);
   line->SetLineWidth(2);
   line->Draw();
-  c1->Print(Form("STAR/rajeck_%d_c24.png",flag));
-  c1->Print(Form("STAR/rajeck_%d_c24.pdf",flag));
+  c1->Print(Form("STAR/rajeck_%d_c34.png",flag));
+  c1->Print(Form("STAR/rajeck_%d_c34.pdf",flag));
 
 
 
