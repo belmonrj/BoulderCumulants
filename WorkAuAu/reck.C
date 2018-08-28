@@ -77,11 +77,11 @@ void do_reck(int flag)
   histS->SetLineColor(kBlue);
   histS->SetMarkerColor(kBlue);
   histS->SetMarkerStyle(kFullCircle);
-  //histS->Draw("ex0p same");
+  histS->Draw("ex0p same");
   histN->SetLineColor(kRed);
   histN->SetMarkerColor(kRed);
   histN->SetMarkerStyle(kFullCircle);
-  histN->Draw("ex0p same");
+  //histN->Draw("ex0p same");
   TH1D* histNS = (TH1D*)histN->Clone("histNS");
   histNS->Add(histS);
   histNS->Scale(0.5);
@@ -100,8 +100,8 @@ void do_reck(int flag)
   //leg->AddEntry(histR,"Recursion","p");
   leg->AddEntry(histC,"N+S combined","p");
   //leg->AddEntry(histNS,"N+S averaged","p");
-  leg->AddEntry(histN,"North only","p");
-  //leg->AddEntry(histS,"South only","p");
+  //leg->AddEntry(histN,"North only","p");
+  leg->AddEntry(histS,"South only","p");
   leg->SetTextSize(0.05);
   leg->Draw();
   TLine* line = new TLine(xmin,0,xmax,0);
