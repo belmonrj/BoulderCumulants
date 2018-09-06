@@ -65,5 +65,6 @@ the 117* series have incomplete statistics due to serious taxi problems
 13798 same as 13795
 13799 same as 13798 but with successful q-vector recentering (tried it the old way with numerical constants stored in the code)
 
-
+13841 4-hit tracks, no q-vector recentering
+13847 4-hit tracks, with q-vector recentering
 
