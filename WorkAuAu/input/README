@@ -69,3 +69,4 @@ the 117* series have incomplete statistics due to serious taxi problems
 13847 4-hit tracks, with q-vector recentering
 13864 tighter DCA cut, no q-vector recentering
 13872 tighter DCA cut, with q-vector recentering
+13889 tighter zvtx cut, no q-vector recentering
