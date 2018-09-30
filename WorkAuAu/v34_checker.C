@@ -7,6 +7,7 @@ TH1D* get_cumuhist_ntrk(TFile*);
 TH1D* get_cumuhist(TFile*);
 
 void do_check(int);
+void do_check(int,int);
 
 void try_sys();
 void try_sys_files(TFile*, TFile*, const char*);
@@ -41,11 +42,17 @@ void v34_checker()
 
 void do_check(int flag)
 {
+  do_check(flag,0);
+}
+
+void do_check(int flag, int type)
+{
 
   //TFile* fileR = TFile::Open("RunByRun/combin.root"); // reference
   TFile* fileR = TFile::Open(Form("input/histos_%d.root",flag)); // reference
 
-  TH1D* histR = get_cumuhist(fileR); // reference
+  TH1D* histR = NULL;
+  if ( type == 0 ) histR = get_cumuhist(fileR); // reference
   if ( histR == NULL ) { cout << "RECURSION HISTOGRAM MISSING!!! " << flag << endl; return; }
 
   const int nbins = histR->GetNbinsX();
@@ -177,13 +184,13 @@ void do_check(int flag)
   line->SetLineStyle(2);
   line->SetLineWidth(2);
   line->Draw();
-  c1->Print(Form("STAR/help_%d_c34.png",flag));
-  c1->Print(Form("STAR/help_%d_c34.pdf",flag));
+  c1->Print(Form("STAR/help_%d_c34_%d.png",flag,type));
+  c1->Print(Form("STAR/help_%d_c34_%d.pdf",flag,type));
   tge_sys_hi->Draw("l");
   tge_sys_lo->Draw("l");
   tge_std->Draw("p");
-  c1->Print(Form("STAR/syshelp_%d_c34.png",flag));
-  c1->Print(Form("STAR/syshelp_%d_c34.pdf",flag));
+  c1->Print(Form("STAR/syshelp_%d_c34_%d.png",flag,type));
+  c1->Print(Form("STAR/syshelp_%d_c34_%d.pdf",flag,type));
 
 
 
@@ -217,8 +224,8 @@ void do_check(int flag)
   line->SetLineStyle(2);
   line->SetLineWidth(2);
   line->Draw();
-  c1->Print(Form("STAR/nthelp_%d_c34.png",flag));
-  c1->Print(Form("STAR/nthelp_%d_c34.pdf",flag));
+  c1->Print(Form("STAR/nthelp_%d_c34_%d.png",flag,type));
+  c1->Print(Form("STAR/nthelp_%d_c34_%d.pdf",flag,type));
 
 
 }
