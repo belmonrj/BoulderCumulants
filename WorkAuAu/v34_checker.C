@@ -1,7 +1,7 @@
 #include "systematics_helper.C"
 
 int spec_rebin = 70;
-int rebin = 5;
+int rebin = 1;
 
 TH1D* get_cumuhist_ntrk(TFile*);
 TH1D* get_cumuhist(TFile*);
@@ -44,7 +44,9 @@ void v34_checker()
 
 void do_check(int flag)
 {
+  rebin = 5;
   do_check(flag,0);
+  rebin = 10;
   do_check(flag,1);
   do_check(flag,2);
 }
