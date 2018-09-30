@@ -102,6 +102,10 @@ void do_check(int flag)
       losysnorm_ec3[i] = standard[i]*(1-losys);
     }
 
+  TGraph* tge_std = new TGraph(11,cent,standard);
+  tge_std->SetLineColor(kGray);
+  tge_std->SetMarkerColor(kGray);
+  tge_std->SetMarkerStyle(kOpenCircle);
   TGraph* tge_sys_hi = new TGraph(11,cent,hisysnorm_ec3);
   TGraph* tge_sys_lo = new TGraph(11,cent,losysnorm_ec3);
   tge_sys_hi->SetLineColor(kBlack);
@@ -180,6 +184,7 @@ void do_check(int flag)
   c1->Print(Form("STAR/help_%d_c34.pdf",flag));
   tge_sys_hi->Draw("l");
   tge_sys_lo->Draw("l");
+  tge_std->Draw("p");
   c1->Print(Form("STAR/syshelp_%d_c34.png",flag));
   c1->Print(Form("STAR/syshelp_%d_c34.pdf",flag));
 
