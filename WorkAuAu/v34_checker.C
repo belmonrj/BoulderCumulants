@@ -15,19 +15,26 @@ void try_sys_files(TFile*, TFile*, const char*);
 void v34_checker()
 {
 
-  do_check(12097); // old baseline
-  do_check(12194); // chi2
-  do_check(12195); // zvtx
-  do_check(12289); // nhit
-  do_check(12290); // dcar
-  do_check(12420); // another baseline
-  do_check(12432); // qrbr
-  do_check(12555); // code
-  do_check(12579); // another baseline
-  do_check(12581); // noqr
-  do_check(12587); // nfqr
-  do_check(12634); // version used for paper
-  do_check(12650); // newc
+  //do_check(12097); // old baseline
+  //do_check(12194); // chi2
+  //do_check(12195); // zvtx
+  //do_check(12289); // nhit
+  //do_check(12290); // dcar
+  //do_check(12420); // another baseline
+  //do_check(12432); // qrbr
+  //do_check(12555); // code
+  //do_check(12579); // another baseline
+  //do_check(12581); // noqr
+  //do_check(12587); // nfqr
+  //do_check(12634); // version used for paper
+  //do_check(12650); // newc
+
+  do_check(13799); // base
+  do_check(13847); // nhit
+  do_check(13872); // dcar
+  do_check(13897); // zvtx
+  do_check(13911); // chi2
+  do_check(13926); // dubl
 
   try_sys();
 
@@ -293,57 +300,87 @@ void try_sys()
   TFile* fbase = NULL;
   TFile* feval = NULL;
 
-  fbase = TFile::Open("input/histos_12097.root");
-  feval = TFile::Open("input/histos_12290.root");
-  try_sys_files(fbase,feval,"dcar");
-  fbase->Close();
-  feval->Close();
+  // fbase = TFile::Open("input/histos_12097.root");
+  // feval = TFile::Open("input/histos_12290.root");
+  // try_sys_files(fbase,feval,"dcar");
+  // fbase->Close();
+  // feval->Close();
 
-  fbase = TFile::Open("input/histos_12097.root");
-  feval = TFile::Open("input/histos_12195.root");
-  try_sys_files(fbase,feval,"zvtx");
-  fbase->Close();
-  feval->Close();
+  // fbase = TFile::Open("input/histos_12097.root");
+  // feval = TFile::Open("input/histos_12195.root");
+  // try_sys_files(fbase,feval,"zvtx");
+  // fbase->Close();
+  // feval->Close();
 
-  fbase = TFile::Open("input/histos_12097.root");
-  feval = TFile::Open("input/histos_12194.root");
-  try_sys_files(fbase,feval,"chi2");
-  fbase->Close();
-  feval->Close();
+  // fbase = TFile::Open("input/histos_12097.root");
+  // feval = TFile::Open("input/histos_12194.root");
+  // try_sys_files(fbase,feval,"chi2");
+  // fbase->Close();
+  // feval->Close();
 
-  fbase = TFile::Open("input/histos_12097.root");
-  feval = TFile::Open("input/histos_12289.root");
+  // fbase = TFile::Open("input/histos_12097.root");
+  // feval = TFile::Open("input/histos_12289.root");
+  // try_sys_files(fbase,feval,"nhit");
+  // fbase->Close();
+  // feval->Close();
+
+  // fbase = TFile::Open("input/histos_12420.root");
+  // feval = TFile::Open("input/histos_12432.root");
+  // try_sys_files(fbase,feval,"qrbr");
+  // fbase->Close();
+  // feval->Close();
+
+  // fbase = TFile::Open("input/histos_12420.root");
+  // feval = TFile::Open("input/histos_12555.root");
+  // try_sys_files(fbase,feval,"code");
+  // fbase->Close();
+  // feval->Close();
+
+  // fbase = TFile::Open("input/histos_12579.root"); // cent-based q-vector recentering
+  // feval = TFile::Open("input/histos_12581.root"); // no q-vector recentering
+  // try_sys_files(fbase,feval,"noqr");
+  // fbase->Close();
+  // feval->Close();
+
+  // fbase = TFile::Open("input/histos_12579.root"); // cent-based q-vector recentering
+  // feval = TFile::Open("input/histos_12587.root"); // fvtxt-based q-vector recentering
+  // try_sys_files(fbase,feval,"nfqr");
+  // fbase->Close();
+  // feval->Close();
+
+  // fbase = TFile::Open("input/histos_12587.root"); // fvtxt-based q-vector recentering, regular cuts
+  // feval = TFile::Open("input/histos_12650.root"); // fvtxt-based q-vector recentering, new cuts
+  // try_sys_files(fbase,feval,"newc");
+  // fbase->Close();
+  // feval->Close();
+
+  fbase = TFile::Open("input/histos_13799.root");
+  feval = TFile::Open("input/histos_13847.root");
   try_sys_files(fbase,feval,"nhit");
   fbase->Close();
   feval->Close();
 
-  fbase = TFile::Open("input/histos_12420.root");
-  feval = TFile::Open("input/histos_12432.root");
-  try_sys_files(fbase,feval,"qrbr");
+  fbase = TFile::Open("input/histos_13799.root");
+  feval = TFile::Open("input/histos_13872.root");
+  try_sys_files(fbase,feval,"dcar");
   fbase->Close();
   feval->Close();
 
-  fbase = TFile::Open("input/histos_12420.root");
-  feval = TFile::Open("input/histos_12555.root");
-  try_sys_files(fbase,feval,"code");
+  fbase = TFile::Open("input/histos_13799.root");
+  feval = TFile::Open("input/histos_13897.root");
+  try_sys_files(fbase,feval,"zvtx");
   fbase->Close();
   feval->Close();
 
-  fbase = TFile::Open("input/histos_12579.root"); // cent-based q-vector recentering
-  feval = TFile::Open("input/histos_12581.root"); // no q-vector recentering
-  try_sys_files(fbase,feval,"noqr");
+  fbase = TFile::Open("input/histos_13799.root");
+  feval = TFile::Open("input/histos_13911.root");
+  try_sys_files(fbase,feval,"chi2");
   fbase->Close();
   feval->Close();
 
-  fbase = TFile::Open("input/histos_12579.root"); // cent-based q-vector recentering
-  feval = TFile::Open("input/histos_12587.root"); // fvtxt-based q-vector recentering
-  try_sys_files(fbase,feval,"nfqr");
-  fbase->Close();
-  feval->Close();
-
-  fbase = TFile::Open("input/histos_12587.root"); // fvtxt-based q-vector recentering, regular cuts
-  feval = TFile::Open("input/histos_12650.root"); // fvtxt-based q-vector recentering, new cuts
-  try_sys_files(fbase,feval,"newc");
+  fbase = TFile::Open("input/histos_13799.root");
+  feval = TFile::Open("input/histos_13926.root");
+  try_sys_files(fbase,feval,"dubl");
   fbase->Close();
   feval->Close();
 
