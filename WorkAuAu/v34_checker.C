@@ -5,6 +5,8 @@ int rebin = 5;
 
 TH1D* get_cumuhist_ntrk(TFile*);
 TH1D* get_cumuhist(TFile*);
+TH1D* get_cumuhist_a(TFile*);
+TH1D* get_cumuhist_b(TFile*);
 
 void do_check(int);
 void do_check(int,int);
@@ -43,6 +45,8 @@ void v34_checker()
 void do_check(int flag)
 {
   do_check(flag,0);
+  do_check(flag,1);
+  do_check(flag,2);
 }
 
 void do_check(int flag, int type)
@@ -53,6 +57,8 @@ void do_check(int flag, int type)
 
   TH1D* histR = NULL;
   if ( type == 0 ) histR = get_cumuhist(fileR); // reference
+  if ( type == 1 ) histR = get_cumuhist_a(fileR); // reference
+  if ( type == 2 ) histR = get_cumuhist_b(fileR); // reference
   if ( histR == NULL ) { cout << "RECURSION HISTOGRAM MISSING!!! " << flag << endl; return; }
 
   const int nbins = histR->GetNbinsX();
@@ -193,6 +199,7 @@ void do_check(int flag, int type)
   c1->Print(Form("STAR/syshelp_%d_c34_%d.pdf",flag,type));
 
 
+  if ( type != 0 ) return; // we'll skip this part for now...
 
   TH1D* histRN = get_cumuhist_ntrk(fileR); // reference
 
@@ -264,6 +271,62 @@ TH1D* get_cumuhist(TFile* fin)
   // --- get the tprofiles
   TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_recursion_0_3");
   TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_recursion_0_1");
+  if ( ctp1f_for == NULL ) return NULL;
+  if ( ctp1f_two == NULL ) return NULL;
+  ctp1f_for->Rebin(rebin);
+  ctp1f_two->Rebin(rebin);
+  // --- convert to th1ds (to do math operations)
+  TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
+  TH1D* th1d_two = ctp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
+  // --- calc 222
+  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%d",helper)); // 2<2>^2       (for the 4p)
+  th1d_222->Multiply(th1d_two);
+  th1d_222->Scale(2);
+  // --- calc the cumulant
+  TH1D* th1d_cu4 = (TH1D*)th1d_for->Clone(Form("th1d_cu4_%d",helper)); // c{4} = <4> - 2<2>^2
+  th1d_cu4->Add(th1d_222,-1);
+  // --- return the cumulant
+  return th1d_cu4;
+}
+
+
+TH1D* get_cumuhist_a(TFile* fin)
+{
+  // --- random number helper to prevent memory collisions with ROOT named objects...
+  double rand = gRandom->Rndm();
+  int helper = rand*10000;
+  // --- get the tprofiles
+  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34a");
+  TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
+  if ( ctp1f_for == NULL ) return NULL;
+  if ( ctp1f_two == NULL ) return NULL;
+  ctp1f_for->Rebin(rebin);
+  ctp1f_two->Rebin(rebin);
+  // --- convert to th1ds (to do math operations)
+  TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
+  TH1D* th1d_two = ctp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
+  // --- calc 222
+  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%d",helper)); // 2<2>^2       (for the 4p)
+  th1d_222->Multiply(th1d_two);
+  th1d_222->Scale(2);
+  // --- calc the cumulant
+  TH1D* th1d_cu4 = (TH1D*)th1d_for->Clone(Form("th1d_cu4_%d",helper)); // c{4} = <4> - 2<2>^2
+  th1d_cu4->Add(th1d_222,-1);
+  // --- return the cumulant
+  return th1d_cu4;
+}
+
+
+
+
+TH1D* get_cumuhist_b(TFile* fin)
+{
+  // --- random number helper to prevent memory collisions with ROOT named objects...
+  double rand = gRandom->Rndm();
+  int helper = rand*10000;
+  // --- get the tprofiles
+  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34b");
+  TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
   if ( ctp1f_for == NULL ) return NULL;
   if ( ctp1f_two == NULL ) return NULL;
   ctp1f_for->Rebin(rebin);
