@@ -23,6 +23,9 @@ star_v34.C | makes the v34 plot with comparison to STAR
 Macro | Description
 ----- | -----------
 checker_v3.C | compares the v3{2} and v3{2gap}
+reck.C | compare N/S combined vs separate for v2
+jeck.C | compare N/S combined vs separate for v3
+speck.C | compare N/S combined vs separate for v2 and v3 (combination of reck and jeck, should remove them)
 
 
 
