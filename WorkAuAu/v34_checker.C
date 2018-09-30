@@ -5,7 +5,6 @@ int rebin = 5;
 
 TH1D* get_cumuhist_ntrk(TFile*);
 TH1D* get_cumuhist(TFile*);
-TH1D* get_histv324(TFile*);
 
 void do_check(int);
 
@@ -47,9 +46,7 @@ void do_check(int flag)
   TFile* fileR = TFile::Open(Form("input/histos_%d.root",flag)); // reference
 
   TH1D* histR = get_cumuhist(fileR); // reference
-  TH1D* histS = get_histv324(fileR); // reference
   if ( histR == NULL ) { cout << "RECURSION HISTOGRAM MISSING!!! " << flag << endl; return; }
-  if ( histS == NULL ) cout << "SCALAR PRODUCT HISTOGRAM MISSING!!! " << flag << endl;
 
   const int nbins = histR->GetNbinsX();
 
@@ -278,24 +275,6 @@ TH1D* get_cumuhist(TFile* fin)
   return th1d_cu4;
 }
 
-TH1D* get_histv324(TFile* fin)
-{
-  // --- random number helper to prevent memory collisions with ROOT named objects...
-  double rand = gRandom->Rndm();
-  int helper = rand*10000;
-  // --- get the tprofiles
-  //TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_recursion_0_1");
-  TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
-  if ( ctp1f_two == NULL ) return NULL;
-  //ctp1f_two->Rebin(rebin); // maybe already rebinned above? need to add clones to prevent this
-  // --- convert to th1ds (to do math operations)
-  TH1D* th1d_two = ctp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
-  // --- calc 22
-  TH1D* th1d_22 = (TH1D*)th1d_two->Clone(Form("th1d_222_%d",helper)); // <2>^2
-  th1d_22->Multiply(th1d_two);
-  // --- return
-  return th1d_22;
-}
 
 
 
