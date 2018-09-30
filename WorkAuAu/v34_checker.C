@@ -73,6 +73,7 @@ void do_check(int flag, int type)
   double sysnorm_ec3[nbins];
   double hisysnorm_ec3[nbins];
   double losysnorm_ec3[nbins];
+  double scent[20]={2.5,7.5,12.5,17.5,22.5,27.5,32.5,37.5,42.5,47.5,52.5,57.5,62.5,67.5,72.5,77.5,82.5,87.5,92.5,97.5};
   double cent[nbins];
   double sys = 0.5;
   double hisys = 0.3;
@@ -114,12 +115,12 @@ void do_check(int flag, int type)
       losysnorm_ec3[i] = standard[i]*(1-losys);
     }
 
-  TGraph* tge_std = new TGraph(11,cent,standard);
+  TGraph* tge_std = new TGraph(11,scent,standard);
   tge_std->SetLineColor(kGray);
   tge_std->SetMarkerColor(kGray);
   tge_std->SetMarkerStyle(kOpenCircle);
-  TGraph* tge_sys_hi = new TGraph(11,cent,hisysnorm_ec3);
-  TGraph* tge_sys_lo = new TGraph(11,cent,losysnorm_ec3);
+  TGraph* tge_sys_hi = new TGraph(11,scent,hisysnorm_ec3);
+  TGraph* tge_sys_lo = new TGraph(11,scent,losysnorm_ec3);
   tge_sys_hi->SetLineColor(kBlack);
   tge_sys_hi->SetLineWidth(2);
   tge_sys_hi->SetLineStyle(1);
@@ -292,35 +293,6 @@ TH1D* get_cumuhist(TFile* fin)
 }
 
 
-TH1D* get_cumuhist_a(TFile* fin)
-{
-  // --- random number helper to prevent memory collisions with ROOT named objects...
-  double rand = gRandom->Rndm();
-  int helper = rand*10000;
-  // --- get the tprofiles
-  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34a");
-  TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
-  if ( ctp1f_for == NULL ) return NULL;
-  if ( ctp1f_two == NULL ) return NULL;
-  ctp1f_for->Rebin(rebin);
-  ctp1f_two->Rebin(rebin);
-  // --- convert to th1ds (to do math operations)
-  TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
-  TH1D* th1d_two = ctp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
-  // --- calc 222
-  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%d",helper)); // 2<2>^2       (for the 4p)
-  th1d_222->Multiply(th1d_two);
-  th1d_222->Scale(2);
-  // --- calc the cumulant
-  TH1D* th1d_cu4 = (TH1D*)th1d_for->Clone(Form("th1d_cu4_%d",helper)); // c{4} = <4> - 2<2>^2
-  th1d_cu4->Add(th1d_222,-1);
-  // --- return the cumulant
-  return th1d_cu4;
-}
-
-
-
-
 TH1D* get_cumuhist_b(TFile* fin)
 {
   // --- random number helper to prevent memory collisions with ROOT named objects...
@@ -343,6 +315,39 @@ TH1D* get_cumuhist_b(TFile* fin)
   // --- calc the cumulant
   TH1D* th1d_cu4 = (TH1D*)th1d_for->Clone(Form("th1d_cu4_%d",helper)); // c{4} = <4> - 2<2>^2
   th1d_cu4->Add(th1d_222,-1);
+  // --- return the cumulant
+  return th1d_cu4;
+}
+
+
+
+
+TH1D* get_cumuhist_a(TFile* fin)
+{
+  // --- random number helper to prevent memory collisions with ROOT named objects...
+  double rand = gRandom->Rndm();
+  int helper = rand*10000;
+  // --- get the tprofiles
+  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34a");
+  TProfile* ctp1f_twoaa = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_c32");
+  TProfile* ctp1f_twobb = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_c32");
+  if ( ctp1f_for == NULL ) return NULL;
+  if ( ctp1f_twoaa == NULL ) return NULL;
+  if ( ctp1f_twobb == NULL ) return NULL;
+  ctp1f_for->Rebin(rebin);
+  ctp1f_twoaa->Rebin(rebin);
+  ctp1f_twobb->Rebin(rebin);
+  // --- convert to th1ds (to do math operations)
+  TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
+  TH1D* th1d_twoaa = ctp1f_twoaa->ProjectionX(Form("th1d_twoaa_%d",helper)); // <2>
+  TH1D* th1d_twobb = ctp1f_twobb->ProjectionX(Form("th1d_twobb_%d",helper)); // <2>
+  // --- calc 222
+  TH1D* th1d_222aabb = (TH1D*)th1d_twoaa->Clone(Form("th1d_222aabb_%d",helper)); // 2<2>^2       (for the 4p)
+  th1d_222aabb->Multiply(th1d_twobb);
+  th1d_222aabb->Scale(2);
+  // --- calc the cumulant
+  TH1D* th1d_cu4 = (TH1D*)th1d_for->Clone(Form("th1d_cu4_%d",helper)); // c{4} = <4> - 2<2>^2
+  th1d_cu4->Add(th1d_222aabb,-1);
   // --- return the cumulant
   return th1d_cu4;
 }
@@ -456,7 +461,7 @@ void try_sys_files(TFile* fbase, TFile* feval, const char* systype)
   TProfile* for_eval = (TProfile*)feval->Get("centrality_recursion_0_3");
   TProfile* two_eval = (TProfile*)feval->Get("centrality_recursion_0_1");
 
-  //int rebin = 5;
+  rebin = 5;
 
   for_base->Rebin(rebin);
   two_base->Rebin(rebin);
