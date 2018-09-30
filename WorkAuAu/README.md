@@ -18,6 +18,14 @@ star_v34.C | makes the v34 plot with comparison to STAR
 
 
 
+# Additional plotting macros:
+
+Macro | Description
+----- | -----------
+checker_v3.C | compares the v3{2} and v3{2gap}
+
+
+
 # Supporting macros:
 
 Macro | Description

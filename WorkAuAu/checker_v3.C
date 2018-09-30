@@ -9,7 +9,9 @@ void checker_v3()
   //doit("12579");
   //doit("12587");
   doit("12634");
-  doit("12650");
+  //doit("12650");
+  //doit("13792");
+  doit("13799");
 }
 
 void doit(const char* handle)
