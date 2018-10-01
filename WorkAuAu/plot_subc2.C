@@ -17,6 +17,10 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
   bool iscent = true;
   bool isntrk = false;
 
+  TGraphAsymmErrors* tgaesys_c34 = NULL;
+  TGraphAsymmErrors* tgaesys_c34aabb = NULL;
+  TGraphAsymmErrors* tgaesys_c34abab = NULL;
+
   if ( harm == 3 )
     {
       // th1d_c24->Rebin(5);
@@ -31,6 +35,7 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
       th1d_c24->Scale(0.2);
       th1d_c24aabb->Scale(0.1);
       th1d_c24abab->Scale(0.1);
+      // --- clean out higher bins
       for ( int i = 0; i < th1d_c24aabb->GetNbinsX(); ++i )
         {
           double cent = th1d_c24aabb->GetBinCenter(i+1);
@@ -40,7 +45,56 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
               th1d_c24abab->SetBinContent(i+1,-999);
             }
         }
-    }
+      // now setup some TGraphAsymmErrors stuff for the systematics
+      const int nbins0 = th1d_c24->GetNbinsX();
+      const int nbins1 = th1d_c24aabb->GetNbinsX();
+      const int nbins2 = th1d_c24abab->GetNbinsX();
+      float cent0[nbins0];
+      float cent1[nbins1];
+      float cent2[nbins1];
+      float value0[nbins0];
+      float value1[nbins1];
+      float value2[nbins1];
+      float loerr0[nbins0];
+      float loerr1[nbins1];
+      float loerr2[nbins1];
+      float hierr0[nbins0];
+      float hierr1[nbins1];
+      float hierr2[nbins1];
+      // sys type0
+      for ( int i = 0; i < nbins0; ++i )
+        {
+          cent0[i] = th1d_c24->GetBinCenter(i+1);
+          value0[i] = th1d_c24->GetBinContent(i+1);
+          loerr0[i] = value0[i]*0.6; // use of all bins is intentional
+          hierr0[i] = value0[i]*0.3; // use of all bins is intentional
+        }
+      //tgaesys_c34 = new TGraphAsymmErrors(nbins0,cent0,value0,0,0,loerr0,hierr0);
+      tgaesys_c34 = new TGraphAsymmErrors(11,cent0,value0,0,0,loerr0,hierr0);
+      tgaesys_c34->SetFillColorAlpha(kBlack,0.35);
+      // sys type1
+      for ( int i = 0; i < nbins1; ++i )
+        {
+          cent1[i] = th1d_c24aabb->GetBinCenter(i+1);
+          value1[i] = th1d_c24aabb->GetBinContent(i+1);
+          loerr1[i] = value1[0]*0.6; // use of first bin is intentional
+          hierr1[i] = value1[0]*1.0; // use of first bin is intentional
+        }
+      //tgaesys_c34aabb = new TGraphAsymmErrors(nbins1,cent1,value1,0,0,loerr1,hierr1);
+      tgaesys_c34aabb = new TGraphAsymmErrors(4,cent1,value1,0,0,loerr1,hierr1);
+      tgaesys_c34aabb->SetFillColorAlpha(kRed,0.35);
+      // sys type2
+      for ( int i = 0; i < nbins2; ++i )
+        {
+          cent2[i] = th1d_c24abab->GetBinCenter(i+1);
+          value2[i] = th1d_c24abab->GetBinContent(i+1);
+          loerr2[i] = value2[0]*2.0; // use of first bin is intentional
+          hierr2[i] = value2[0]*6.0; // use of first bin is intentional
+        }
+      //tgaesys_c34aabb = new TGraphAsymmErrors(nbins2,cent2,value2,0,0,loerr2,hierr2);
+      tgaesys_c34abab = new TGraphAsymmErrors(6,cent2,value2,0,0,loerr2,hierr2);
+      tgaesys_c34abab->SetFillColorAlpha(kBlue,0.35);
+    } // end of check on harm == 3
   if ( harm == 2 )
     {
       for ( int i = 0; i < th1d_c24->GetNbinsX(); ++i )
@@ -112,6 +166,11 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
   //latt.DrawLatex(0.2, 0.71, "Sys. Uncert. 6%");
   //latt.DrawLatex(0.35, 0.21, "Sys. Uncert. 6%");
   th1d_c24->Draw("same ex0p");
+  if ( tgaesys_c34 != NULL )
+    {
+      tgaesys_c34->Draw("3");
+    }
+  else cout << "No systematics tgae available... " << tgaesys_c34 << endl;
   TLegend* leg24 = new TLegend(0.66,0.86,0.92,0.92);
   leg24->SetTextSize(0.05);
   leg24->SetFillStyle(0);
@@ -120,6 +179,10 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
   c1->Print(Form("FigsSubevents/cent_subevents_c%d4x01.png",harm));
   c1->Print(Form("FigsSubevents/cent_subevents_c%d4x01.pdf",harm));
   th1d_c24abab->Draw("same ex0p");
+  if ( tgaesys_c34abab != NULL )
+    {
+      tgaesys_c34abab->Draw("3");
+    }
   TLegend* leg24abab = new TLegend(0.66,0.80,0.92,0.86);
   leg24abab->SetTextSize(0.05);
   leg24abab->SetFillStyle(0);
@@ -128,6 +191,10 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
   c1->Print(Form("FigsSubevents/cent_subevents_c%d4x02.png",harm));
   c1->Print(Form("FigsSubevents/cent_subevents_c%d4x02.pdf",harm));
   th1d_c24aabb->Draw("same ex0p");
+  if ( tgaesys_c34aabb != NULL )
+    {
+      tgaesys_c34aabb->Draw("3");
+    }
   TLegend* leg24aabb = new TLegend(0.66,0.74,0.92,0.80);
   leg24aabb->SetTextSize(0.05);
   leg24aabb->SetFillStyle(0);
