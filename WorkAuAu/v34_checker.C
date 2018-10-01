@@ -299,7 +299,7 @@ TH1D* get_cumuhist_a(TFile* fin)
   double rand = gRandom->Rndm();
   int helper = rand*10000;
   // --- get the tprofiles
-  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34b");
+  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34a");
   TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
   if ( ctp1f_for == NULL ) return NULL;
   if ( ctp1f_two == NULL ) return NULL;
@@ -328,7 +328,7 @@ TH1D* get_cumuhist_b(TFile* fin)
   double rand = gRandom->Rndm();
   int helper = rand*10000;
   // --- get the tprofiles
-  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34a");
+  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34b");
   TProfile* ctp1f_twoab = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
   TProfile* ctp1f_twoaa = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_c32");
   TProfile* ctp1f_twobb = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_c32");
