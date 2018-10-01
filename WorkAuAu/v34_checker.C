@@ -293,7 +293,7 @@ TH1D* get_cumuhist(TFile* fin)
 }
 
 
-TH1D* get_cumuhist_b(TFile* fin)
+TH1D* get_cumuhist_a(TFile* fin)
 {
   // --- random number helper to prevent memory collisions with ROOT named objects...
   double rand = gRandom->Rndm();
@@ -322,32 +322,38 @@ TH1D* get_cumuhist_b(TFile* fin)
 
 
 
-TH1D* get_cumuhist_a(TFile* fin)
+TH1D* get_cumuhist_b(TFile* fin)
 {
   // --- random number helper to prevent memory collisions with ROOT named objects...
   double rand = gRandom->Rndm();
   int helper = rand*10000;
   // --- get the tprofiles
   TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34a");
+  TProfile* ctp1f_twoab = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
   TProfile* ctp1f_twoaa = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_c32");
   TProfile* ctp1f_twobb = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_c32");
   if ( ctp1f_for == NULL ) return NULL;
+  if ( ctp1f_twoab == NULL ) return NULL;
   if ( ctp1f_twoaa == NULL ) return NULL;
   if ( ctp1f_twobb == NULL ) return NULL;
   ctp1f_for->Rebin(rebin);
+  ctp1f_twoab->Rebin(rebin);
   ctp1f_twoaa->Rebin(rebin);
   ctp1f_twobb->Rebin(rebin);
   // --- convert to th1ds (to do math operations)
   TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
+  TH1D* th1d_twoab = ctp1f_twoab->ProjectionX(Form("th1d_twoab_%d",helper)); // <2>
   TH1D* th1d_twoaa = ctp1f_twoaa->ProjectionX(Form("th1d_twoaa_%d",helper)); // <2>
   TH1D* th1d_twobb = ctp1f_twobb->ProjectionX(Form("th1d_twobb_%d",helper)); // <2>
   // --- calc 222
-  TH1D* th1d_222aabb = (TH1D*)th1d_twoaa->Clone(Form("th1d_222aabb_%d",helper)); // 2<2>^2       (for the 4p)
-  th1d_222aabb->Multiply(th1d_twobb);
-  th1d_222aabb->Scale(2);
+  TH1D* th1d_221aabb = (TH1D*)th1d_twoaa->Clone(Form("th1d_221aabb_%d",helper)); // 2<2>^2       (for the 4p)
+  th1d_221aabb->Multiply(th1d_twobb); // (2aa)*(2bb)
+  TH1D* th1d_122abab = (TH1D*)th1d_twoaa->Clone(Form("th1d_122abab_%d",helper)); // 2<2>^2       (for the 4p)
+  th1d_122abab->Multiply(th1d_twoab); // (2ab)^2
   // --- calc the cumulant
   TH1D* th1d_cu4 = (TH1D*)th1d_for->Clone(Form("th1d_cu4_%d",helper)); // c{4} = <4> - 2<2>^2
-  th1d_cu4->Add(th1d_222aabb,-1);
+  th1d_cu4->Add(th1d_221aabb,-1);
+  th1d_cu4->Add(th1d_122abab,-1);
   // --- return the cumulant
   return th1d_cu4;
 }
