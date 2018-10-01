@@ -17,10 +17,14 @@ void jeck()
   // do_jeck(13720);
   // do_jeck(13726);
   // do_jeck(13737);
-  do_jeck(13798);
-  do_jeck(13799);
-  do_jeck(13841);
-  do_jeck(13847);
+  // do_jeck(13798);
+  // do_jeck(13841);
+  do_jeck(13799); // base
+  do_jeck(13847); // nhit
+  do_jeck(13872); // DCA
+  do_jeck(13897); // zvtx
+  do_jeck(13911); // chi2
+  do_jeck(13926); // dubl
 
 }
 
@@ -44,6 +48,71 @@ void do_jeck(int flag)
   TH1D* histN = get_cumuhistN(fileR); // combined
   if ( histN == NULL ) { cout << " HISTOGRAM MISSING!!! " << flag << endl; return; }
 
+
+
+
+
+  //double standard[nbins];
+  double norm_c3[nbins];
+  double norm_ec3[nbins];
+  double sysnorm_ec3[nbins];
+  double hisysnorm_ec3[nbins];
+  double losysnorm_ec3[nbins];
+  //double scent[20]={2.5,7.5,12.5,17.5,22.5,27.5,32.5,37.5,42.5,47.5,52.5,57.5,62.5,67.5,72.5,77.5,82.5,87.5,92.5,97.5};
+  double scent[20]={2.0,7.0,12.0,17.0,22.0,27.0,32.0,37.0,42.0,47.0,52.0,57.0,62.0,67.0,72.0,77.0,82.0,87.0,92.0,97.0};
+  double cent[nbins];
+  double sys = 0.5;
+  double hisys = 0.4;
+  double losys = 0.3;
+  double standard[20]={
+    3.64513e-08,
+    6.44798e-08,
+    8.97388e-08,
+    1.22304e-07,
+    1.76018e-07,
+    1.93017e-07,
+    2.46064e-07,
+    1.93137e-07,
+    2.00649e-07,
+    5.17558e-07,
+    2.90058e-07,
+    1.28054e-06,
+    3.39121e-06,
+    2.16037e-06,
+    -1.87409e-05,
+    -6.14957e-05,
+    -0.000221997,
+    -0.000185939,
+    -5.84767e-05,
+    0};
+  for ( int i = 0; i < nbins; ++i )
+    {
+      cent[i] = histN->GetBinCenter(i+1);
+      norm_c3[i] = histN->GetBinContent(i+1);
+      // if ( flag == 13799 )
+      //   {
+      //     cout << cent[i] << " " << norm_c3[i] << endl;
+      //   }
+      norm_ec3[i] = histN->GetBinError(i+1);
+      sysnorm_ec3[i] = standard[i]*sys;
+      // hisysnorm_ec3[i] = standard[i]+sysnorm_ec3[i];
+      // losysnorm_ec3[i] = standard[i]-sysnorm_ec3[i];
+      hisysnorm_ec3[i] = standard[i]*(1+hisys);
+      losysnorm_ec3[i] = standard[i]*(1-losys);
+    }
+
+  TGraph* tge_std = new TGraph(11,scent,standard);
+  tge_std->SetLineColor(kGray);
+  tge_std->SetMarkerColor(kGray);
+  tge_std->SetMarkerStyle(kOpenCircle);
+  TGraph* tge_sys_hi = new TGraph(11,scent,hisysnorm_ec3);
+  TGraph* tge_sys_lo = new TGraph(11,scent,losysnorm_ec3);
+  tge_sys_hi->SetLineColor(kBlack);
+  tge_sys_hi->SetLineWidth(2);
+  tge_sys_hi->SetLineStyle(1);
+  tge_sys_lo->SetLineColor(kBlack);
+  tge_sys_lo->SetLineWidth(2);
+  tge_sys_lo->SetLineStyle(1);
 
 
 
@@ -79,11 +148,11 @@ void do_jeck(int flag)
   histS->SetLineColor(kBlue);
   histS->SetMarkerColor(kBlue);
   histS->SetMarkerStyle(kFullCircle);
-  histS->Draw("ex0p same");
+  //histS->Draw("ex0p same");
   histN->SetLineColor(kRed);
   histN->SetMarkerColor(kRed);
   histN->SetMarkerStyle(kFullCircle);
-  //histN->Draw("ex0p same");
+  histN->Draw("ex0p same");
   TH1D* histNS = (TH1D*)histN->Clone("histNS");
   histNS->Add(histS);
   histNS->Scale(0.5);
@@ -101,8 +170,8 @@ void do_jeck(int flag)
   //leg->AddEntry(histR,"Recursion","p");
   leg->AddEntry(histC,"N+S combined","p");
   //leg->AddEntry(histNS,"N+S averaged","p");
-  //leg->AddEntry(histN,"North only","p");
-  leg->AddEntry(histS,"South only","p");
+  leg->AddEntry(histN,"North only","p");
+  //leg->AddEntry(histS,"South only","p");
   leg->SetTextSize(0.05);
   leg->Draw();
   // TLegend* leg = new TLegend(0.18,0.73,0.38,0.93);
@@ -116,6 +185,11 @@ void do_jeck(int flag)
   line->Draw();
   c1->Print(Form("STAR/jeck_%d_c34.png",flag));
   c1->Print(Form("STAR/jeck_%d_c34.pdf",flag));
+  tge_sys_hi->Draw("l");
+  tge_sys_lo->Draw("l");
+  tge_std->Draw("p");
+  c1->Print(Form("STAR/heck_%d_c34.png",flag));
+  c1->Print(Form("STAR/heck_%d_c34.pdf",flag));
 
   histN->Divide(histC);
   histN->SetMarkerColor(kBlack);
