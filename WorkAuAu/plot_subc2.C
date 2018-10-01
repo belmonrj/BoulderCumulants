@@ -39,7 +39,7 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
       for ( int i = 0; i < th1d_c24aabb->GetNbinsX(); ++i )
         {
           double cent = th1d_c24aabb->GetBinCenter(i+1);
-          if ( cent > 50 )
+          if ( cent > 40 ) // was 50 but maybe 40 is better...
             {
               th1d_c24aabb->SetBinContent(i+1,-999);
               th1d_c24abab->SetBinContent(i+1,-999);
@@ -77,7 +77,7 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
         {
           cent1[i] = th1d_c24aabb->GetBinCenter(i+1);
           value1[i] = th1d_c24aabb->GetBinContent(i+1);
-          loerr1[i] = value1[0]*0.6; // use of first bin is intentional
+          loerr1[i] = value1[0]*0.8; // use of first bin is intentional
           hierr1[i] = value1[0]*1.0; // use of first bin is intentional
         }
       //tgaesys_c34aabb = new TGraphAsymmErrors(nbins1,cent1,value1,0,0,loerr1,hierr1);
