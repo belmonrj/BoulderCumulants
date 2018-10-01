@@ -75,7 +75,8 @@ void do_check(int flag, int type)
   double sysnorm_ec3[nbins];
   double hisysnorm_ec3[nbins];
   double losysnorm_ec3[nbins];
-  double scent[20]={2.5,7.5,12.5,17.5,22.5,27.5,32.5,37.5,42.5,47.5,52.5,57.5,62.5,67.5,72.5,77.5,82.5,87.5,92.5,97.5};
+  //double scent[20]={2.5,7.5,12.5,17.5,22.5,27.5,32.5,37.5,42.5,47.5,52.5,57.5,62.5,67.5,72.5,77.5,82.5,87.5,92.5,97.5};
+  double scent[20]={2.0,7.0,12.0,17.0,22.0,27.0,32.0,37.0,42.0,47.0,52.0,57.0,62.0,67.0,72.0,77.0,82.0,87.0,92.0,97.0};
   double cent[nbins];
   double sys = 0.5;
   double hisys = 0.3;
@@ -334,8 +335,12 @@ TH1D* get_cumuhist(TFile* fin, int type)
                  tp1f_h3_two, tp1f_h3_2aa, tp1f_h3_2bb, tp1f_h3_2ab,
                  &hv34, &hv34aabb, &hv34abab, &hv32, &hv32ab,
                  &hc34, &hc34aabb, &hc34abab, &hc32, &hc32ab,
-                 rebin); // using global rebin doesn't work?
+                 1); // calc_subevents doesn't actually use rebin argument...
 
+  // will do rebinning here for now, should eventually fix calc_subevents
+  hc34->Rebin(rebin); hc34->Scale(1.0/rebin);
+  hc34aabb->Rebin(rebin); hc34aabb->Scale(1.0/rebin);
+  hc34abab->Rebin(rebin); hc34abab->Scale(1.0/rebin);
   if ( type == 1 ) return hc34aabb;
   if ( type == 2 ) return hc34abab;
   return NULL;
