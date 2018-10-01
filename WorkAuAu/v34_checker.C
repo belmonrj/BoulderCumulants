@@ -1,9 +1,11 @@
+#include "calc_subevents.C"
 #include "systematics_helper.C"
 
 int spec_rebin = 70;
 int rebin = 1;
 
 TH1D* get_cumuhist_ntrk(TFile*);
+TH1D* get_cumuhist(TFile*,int);
 TH1D* get_cumuhist(TFile*);
 TH1D* get_cumuhist_a(TFile*);
 TH1D* get_cumuhist_b(TFile*);
@@ -293,73 +295,52 @@ TH1D* get_cumuhist(TFile* fin)
 }
 
 
+
 TH1D* get_cumuhist_a(TFile* fin)
 {
-  // --- random number helper to prevent memory collisions with ROOT named objects...
-  double rand = gRandom->Rndm();
-  int helper = rand*10000;
-  // --- get the tprofiles
-  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34a");
-  TProfile* ctp1f_two = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
-  if ( ctp1f_for == NULL ) return NULL;
-  if ( ctp1f_two == NULL ) return NULL;
-  ctp1f_for->Rebin(rebin);
-  ctp1f_two->Rebin(rebin);
-  // --- convert to th1ds (to do math operations)
-  TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
-  TH1D* th1d_two = ctp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
-  // --- calc 222
-  TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%d",helper)); // 2<2>^2       (for the 4p)
-  th1d_222->Multiply(th1d_two);
-  th1d_222->Scale(2);
-  // --- calc the cumulant
-  TH1D* th1d_cu4 = (TH1D*)th1d_for->Clone(Form("th1d_cu4_%d",helper)); // c{4} = <4> - 2<2>^2
-  th1d_cu4->Add(th1d_222,-1);
-  // --- return the cumulant
-  return th1d_cu4;
+  return get_cumuhist(fin,1);
 }
-
 
 
 
 TH1D* get_cumuhist_b(TFile* fin)
 {
-  // --- random number helper to prevent memory collisions with ROOT named objects...
-  double rand = gRandom->Rndm();
-  int helper = rand*10000;
-  // --- get the tprofiles
-  TProfile* ctp1f_for = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34b");
-  TProfile* ctp1f_twoab = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
-  TProfile* ctp1f_twoaa = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_c32");
-  TProfile* ctp1f_twobb = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_c32");
-  if ( ctp1f_for == NULL ) return NULL;
-  if ( ctp1f_twoab == NULL ) return NULL;
-  if ( ctp1f_twoaa == NULL ) return NULL;
-  if ( ctp1f_twobb == NULL ) return NULL;
-  ctp1f_for->Rebin(rebin);
-  ctp1f_twoab->Rebin(rebin);
-  ctp1f_twoaa->Rebin(rebin);
-  ctp1f_twobb->Rebin(rebin);
-  // --- convert to th1ds (to do math operations)
-  TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
-  TH1D* th1d_twoab = ctp1f_twoab->ProjectionX(Form("th1d_twoab_%d",helper)); // <2>
-  TH1D* th1d_twoaa = ctp1f_twoaa->ProjectionX(Form("th1d_twoaa_%d",helper)); // <2>
-  TH1D* th1d_twobb = ctp1f_twobb->ProjectionX(Form("th1d_twobb_%d",helper)); // <2>
-  // --- calc 222
-  TH1D* th1d_221aabb = (TH1D*)th1d_twoaa->Clone(Form("th1d_221aabb_%d",helper)); // 2<2>^2       (for the 4p)
-  th1d_221aabb->Multiply(th1d_twobb); // (2aa)*(2bb)
-  TH1D* th1d_122abab = (TH1D*)th1d_twoaa->Clone(Form("th1d_122abab_%d",helper)); // 2<2>^2       (for the 4p)
-  th1d_122abab->Multiply(th1d_twoab); // (2ab)^2
-  // --- calc the cumulant
-  TH1D* th1d_cu4 = (TH1D*)th1d_for->Clone(Form("th1d_cu4_%d",helper)); // c{4} = <4> - 2<2>^2
-  th1d_cu4->Add(th1d_221aabb,-1);
-  th1d_cu4->Add(th1d_122abab,-1);
-  // --- return the cumulant
-  return th1d_cu4;
+  return get_cumuhist(fin,2);
 }
 
 
 
+TH1D* get_cumuhist(TFile* fin, int type)
+{
+
+  TProfile* tp1f_h3_for = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c34");
+  TProfile* tp1f_h3_4aabb = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34a");
+  TProfile* tp1f_h3_4abab = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c34b");
+  TProfile* tp1f_h3_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c32");
+  TProfile* tp1f_h3_2aa = (TProfile*)fin->Get("centrality_os_fvtxs_tracks_c32");
+  TProfile* tp1f_h3_2bb = (TProfile*)fin->Get("centrality_os_fvtxn_tracks_c32");
+  TProfile* tp1f_h3_2ab = (TProfile*)fin->Get("centrality_os_fvtxsfvtxn_tracks_c32");
+  TH1D* hv34 = NULL;
+  TH1D* hv34aabb = NULL;
+  TH1D* hv34abab = NULL;
+  TH1D* hv32 = NULL;
+  TH1D* hv32ab = NULL;
+  TH1D* hc34 = NULL;
+  TH1D* hc34aabb = NULL;
+  TH1D* hc34abab = NULL;
+  TH1D* hc32 = NULL;
+  TH1D* hc32ab = NULL;
+  calc_subevents(tp1f_h3_for, tp1f_h3_4aabb, tp1f_h3_4abab,
+                 tp1f_h3_two, tp1f_h3_2aa, tp1f_h3_2bb, tp1f_h3_2ab,
+                 &hv34, &hv34aabb, &hv34abab, &hv32, &hv32ab,
+                 &hc34, &hc34aabb, &hc34abab, &hc32, &hc32ab,
+                 rebin); // using global rebin doesn't work?
+
+  if ( type == 1 ) return hc34aabb;
+  if ( type == 2 ) return hc34abab;
+  return NULL;
+
+}
 
 void try_sys()
 {
