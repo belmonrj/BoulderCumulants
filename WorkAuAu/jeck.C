@@ -191,6 +191,91 @@ void do_jeck(int flag)
   c1->Print(Form("STAR/heck_%d_c34.png",flag));
   c1->Print(Form("STAR/heck_%d_c34.pdf",flag));
 
+
+
+  histC->GetXaxis()->SetRangeUser(0,53);
+  histC->SetMarkerStyle(kOpenCircle);
+  histC->SetMarkerColor(kBlack);
+  histC->SetLineColor(kBlack);
+
+  histN->GetXaxis()->SetRangeUser(0,45);
+  histN->SetMarkerStyle(kFullCircle);
+  histN->SetMarkerColor(kBlack);
+  histN->SetLineColor(kBlack);
+
+
+  const int nbins0 = histC->GetNbinsX();
+  const int nbins1 = histN->GetNbinsX();
+  float cent0[nbins0];
+  float cent1[nbins1];
+  float value0[nbins0];
+  float value1[nbins1];
+  float loerr0[nbins0];
+  float loerr1[nbins1];
+  float hierr0[nbins0];
+  float hierr1[nbins1];
+  // sys comb
+  for ( int i = 0; i < nbins0; ++i )
+    {
+      cent0[i] = histC->GetBinCenter(i+1);
+      value0[i] = histC->GetBinContent(i+1);
+      loerr0[i] = value0[i]*0.6;
+      hierr0[i] = value0[i]*0.3;
+    }
+  TGraphAsymmErrors* tgaesys_comb = new TGraphAsymmErrors(11,cent0,value0,0,0,loerr0,hierr0);
+  tgaesys_comb->SetFillColorAlpha(kBlack,0.35);
+  // sys nort
+  for ( int i = 0; i < nbins1; ++i )
+    {
+      cent1[i] = histN->GetBinCenter(i+1);
+      value1[i] = histN->GetBinContent(i+1);
+      loerr1[i] = value1[i]*0.3;
+      hierr1[i] = value1[i]*0.4;
+    }
+  TGraphAsymmErrors* tgaesys_nort = new TGraphAsymmErrors(9,cent1,value1,0,0,loerr1,hierr1);
+  tgaesys_nort->SetFillColorAlpha(kBlack,0.35);
+
+
+  // --- "new" normal
+  ymin = -1e-7;
+  ymax = 5e-7;
+  if ( hdummy ) delete hdummy;
+  hdummy = new TH2D("hdummy","",1,xmin,xmax,1,ymin,ymax);
+  hdummy->Draw();
+  hdummy->GetYaxis()->SetTitle(Form("c_{3}{4}"));
+  hdummy->GetYaxis()->SetTitleOffset(1.25);
+  hdummy->GetXaxis()->SetTitle("Centrality (%)");
+  TLatex* tex_phenix = new TLatex(0.2,0.778,"PHENIX");
+  tex_phenix->SetTextSize(0.05);
+  tex_phenix->SetNDC();
+  tex_phenix->Draw();
+  TLatex* tex_tracks = new TLatex(0.2,0.83,"h^{#pm} 1<|#eta|<3");
+  tex_tracks->SetTextSize(0.05);
+  tex_tracks->SetNDC();
+  tex_tracks->Draw();
+  TLatex* tex_system = new TLatex(0.2,0.882,"Au+Au #sqrt{s_{NN}} = 200 GeV");
+  tex_system->SetTextSize(0.05);
+  tex_system->SetNDC();
+  tex_system->Draw();
+  histC->Draw("ex0p same");
+  histN->Draw("ex0p same");
+  TLegend* leg34 = new TLegend(0.60,0.76,0.92,0.92);
+  leg34->SetTextSize(0.05);
+  leg34->SetFillStyle(0);
+  leg34->AddEntry(histC,"Combined arms","p");
+  leg34->AddEntry(histN,"Single arm","p");
+  leg34->Draw();
+  line->Draw();
+  tgaesys_comb->Draw("3");
+  tgaesys_nort->Draw("3");
+  c1->Print(Form("STAR/neck_%d_c34.png",flag));
+  c1->Print(Form("STAR/neck_%d_c34.pdf",flag));
+
+
+
+
+  // --- now do the ratio
+
   histN->Divide(histC);
   histN->SetMarkerColor(kBlack);
   histN->SetLineColor(kBlack);
@@ -289,4 +374,3 @@ TH1D* get_cumuhist(TProfile* ctp1f_for, TProfile* ctp1f_two)
   // --- return the cumulant
   return th1d_cu4;
 }
-
