@@ -203,6 +203,77 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
   c1->Print(Form("FigsSubevents/cent_subevents_c%d4x03.png",harm));
   c1->Print(Form("FigsSubevents/cent_subevents_c%d4x03.pdf",harm));
 
+  if ( harm == 3 )
+  {
+  float star_cent[6] = {2.5,7.5,15,25,35,45};
+  float star_v34[6] = {-0.00156,
+                       0.00549,
+                       0.000938,
+                       0.00728,
+                       -0.0346,
+                       -0.0362};
+  float star_ev34[6] = {0.004,
+                        0.0058,
+                        0.0069,
+                        0.012,
+                        0.026,
+                        0.057};
+  TGraphErrors* tge_norm = new TGraphErrors(6,star_cent,star_v34,0,star_ev34);
+  float star_c34[6];
+  float star_ec34[6];
+  for ( int i = 0; i < 6; ++i )
+    {
+      star_c34[i] = -star_v34[i]*1e-6;
+      star_ec34[i] = star_ev34[i]*1e-6;
+      //cout << star_c34[i] << " " << star_ec34[i] << endl;
+    }
+  TGraphErrors* tge_star = new TGraphErrors(6,star_cent,star_c34,0,star_ec34);
+  tge_star->SetLineColor(kBlack);
+  tge_star->SetMarkerColor(kBlack);
+  tge_star->SetMarkerStyle(kFullStar);
+  tge_star->SetMarkerSize(2.5);
+  tge_star->Draw("pz");
+  TLegend* leg = new TLegend(0.66,0.68,0.92,0.74);
+  leg->SetTextSize(0.05);
+  leg->SetFillStyle(0);
+  leg->AddEntry(tge_star,"STAR |#eta|<1","p");
+  leg->Draw();
+  c1->Print(Form("FigsSubevents/cent_subevents_c%d4x04.png",harm));
+  c1->Print(Form("FigsSubevents/cent_subevents_c%d4x04.pdf",harm));
+  // ---
+  ymin = -1e-7;
+  ymax = 1.5e-7;
+  delete empty;
+  empty = new TH2D("empty","",1,xmin,xmax,1,ymin,ymax);
+  empty->Draw();
+  if ( iscent ) empty->GetXaxis()->SetTitle("Centrality (%)");
+  if ( isntrk ) empty->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  empty->GetYaxis()->SetTitle(Form("c_{%d}{4}",harm));
+  empty->GetYaxis()->SetTitleOffset(1.2);
+  line->Draw();
+  tex_phenix->Draw();
+  tex_tracks->Draw();
+  tex_system->Draw();
+  th1d_c24->Draw("same ex0p");
+  th1d_c24abab->Draw("same ex0p");
+  th1d_c24aabb->Draw("same ex0p");
+  tgaesys_c34->Draw("3");
+  tgaesys_c34abab->Draw("3");
+  tgaesys_c34aabb->Draw("3");
+  tge_star->Draw("pz");
+  delete leg;
+  leg = new TLegend(0.66,0.18,0.92,0.42);
+  leg->SetTextSize(0.05);
+  leg->SetFillStyle(0);
+  leg->AddEntry(th1d_c24,Form("c_{%d}{4}",harm),"p");
+  leg->AddEntry(th1d_c24abab,Form("c_{%d}{4}_{ab|ab}",harm),"p");
+  leg->AddEntry(th1d_c24aabb,Form("c_{%d}{4}_{aa|bb}",harm),"p");
+  leg->AddEntry(tge_star,"STAR |#eta|<1","p");
+  leg->Draw();
+  c1->Print(Form("FigsSubevents/cent_subevents_c%d4x05.png",harm));
+  c1->Print(Form("FigsSubevents/cent_subevents_c%d4x05.pdf",harm));
+  }
+
   delete empty;
   delete c1;
 
