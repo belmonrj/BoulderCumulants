@@ -4,7 +4,8 @@ void find_cut()
   TCanvas* c1 = new TCanvas("c1","");
   c1->SetMargin(0.12,0.12,0.12,0.08); // LRBT
 
-  TFile* file = TFile::Open("../input/cumulants_Run14AuAu200.root");
+  //TFile* file = TFile::Open("../input/cumulants_Run14AuAu200.root");
+  TFile* file = TFile::Open("../input/histos_14051.root");
   TH2D* histo = (TH2D*)file->Get("th2d_nfvtxt_bbcsumratio");
 
   histo->RebinX(10);
