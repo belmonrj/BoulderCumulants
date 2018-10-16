@@ -76,7 +76,11 @@ the 117* series have incomplete statistics due to serious taxi problems
 13916 no double track cut, no q-vector recentering (file is suspiciously small but histograms seem to be filled)
 13926 no double track cut, with q-vector recentering (file is suspiciously small but histograms seem to be filled)
 
-13976 standard baseline, trying pro.109 again
+13976 attempt at standard baseline, trying pro.109 again, but with mistake
+14051 discovered mistake here and in 13976
+
+14063 standard baseline, trying pro.109 again (again...)
+
 
 
 
