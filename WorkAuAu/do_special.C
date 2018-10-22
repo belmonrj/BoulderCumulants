@@ -11,6 +11,9 @@ void do_special()
 
   // --- get the file; soft link to latest stable analysis with default cuts
   TFile* fin = TFile::Open("input/cumulants_Run14AuAu200.root");
+  //TFile* fin = TFile::Open("input/histos_13799.root");
+  //TFile* fin = TFile::Open("input/histos_14063.root");
+  //TFile* fin = TFile::Open("input/histos_14076.root");
 
   // --- get the k-p correlator histograms from the file
   TProfile* eit_cent = (TProfile*)fin->Get("centrality_recursion_0_6");
