@@ -272,6 +272,15 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
   leg->Draw();
   c1->Print(Form("FigsSubevents/cent_subevents_c%d4x05.png",harm));
   c1->Print(Form("FigsSubevents/cent_subevents_c%d4x05.pdf",harm));
+  TLatex latt;
+  latt.SetNDC();
+  latt.SetTextSize(0.05);
+  latt.SetTextAlign(11);
+  latt.DrawLatex(0.2, 0.2, "(a)");
+  c1->Print(Form("FigsSubevents/cent_subevents_c%d4x06.png",harm));
+  c1->Print(Form("FigsSubevents/cent_subevents_c%d4x06.pdf",harm));
+  c1->Print(Form("FigsSubevents/cent_c34substar.png"));
+  c1->Print(Form("FigsSubevents/cent_c34substar.pdf"));
   }
 
   delete empty;

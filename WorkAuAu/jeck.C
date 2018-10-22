@@ -19,12 +19,12 @@ void jeck()
   // do_jeck(13737);
   // do_jeck(13798);
   // do_jeck(13841);
-  do_jeck(13799); // base
   do_jeck(13847); // nhit
   do_jeck(13872); // DCA
   do_jeck(13897); // zvtx
   do_jeck(13911); // chi2
   do_jeck(13926); // dubl
+  do_jeck(13799); // base
 
 }
 
@@ -270,8 +270,18 @@ void do_jeck(int flag)
   tgaesys_nort->Draw("3");
   c1->Print(Form("STAR/neck_%d_c34.png",flag));
   c1->Print(Form("STAR/neck_%d_c34.pdf",flag));
-
-
+  TLatex latt;
+  latt.SetNDC();
+  latt.SetTextSize(0.05);
+  latt.SetTextAlign(11);
+  latt.DrawLatex(0.2, 0.2, "(b)");
+  c1->Print(Form("STAR/nneck_%d_c34.png",flag));
+  c1->Print(Form("STAR/nneck_%d_c34.pdf",flag));
+  if ( flag == 13799 )
+  {
+  c1->Print(Form("STAR/cent_c34arm.png"));
+  c1->Print(Form("STAR/cent_c34arm.pdf"));
+  }
 
 
   // --- now do the ratio
