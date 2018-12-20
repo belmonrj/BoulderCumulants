@@ -60,4 +60,51 @@ void get_subevents()
   //plot_subv2(hv34, hv34aabb, hv34abab, hv32, hv32ab);
   plot_subc2(hc34, hc34aabb, hc34abab, 3);
 
+  ofstream fout("Figure6.dat");
+  for ( int i = 0; i < hv22->GetNbinsX(); ++i )
+    {
+      fout
+        << hv22->GetBinCenter(i+1)-0.5 << " "
+        << hv22->GetBinContent(i+1) << " "
+        << hv22->GetBinError(i+1) << " "
+        << 0.06*hv22->GetBinContent(i+1) << "\n";
+    }
+  fout << endl;
+  for ( int i = 0; i < hv22ab->GetNbinsX(); ++i )
+    {
+      fout
+        << hv22ab->GetBinCenter(i+1)-0.5 << " "
+        << hv22ab->GetBinContent(i+1) << " "
+        << hv22ab->GetBinError(i+1) << " "
+        << 0.06*hv22ab->GetBinContent(i+1) << "\n";
+    }
+  fout << endl;
+  for ( int i = 0; i < hv24->GetNbinsX(); ++i )
+    {
+      fout
+        << hv24->GetBinCenter(i+1)-0.5 << " "
+        << hv24->GetBinContent(i+1) << " "
+        << hv24->GetBinError(i+1) << " "
+        << 0.06*hv24->GetBinContent(i+1) << "\n";
+    }
+  fout << endl;
+  for ( int i = 0; i < hv24abab->GetNbinsX(); ++i )
+    {
+      fout
+        << hv24abab->GetBinCenter(i+1)-0.5 << " "
+        << hv24abab->GetBinContent(i+1) << " "
+        << hv24abab->GetBinError(i+1) << " "
+        << 0.06*hv24abab->GetBinContent(i+1) << "\n";
+    }
+  fout << endl;
+  for ( int i = 0; i < hv24aabb->GetNbinsX(); ++i )
+    {
+      fout
+        << hv24aabb->GetBinCenter(i+1)-0.5 << " "
+        << hv24aabb->GetBinContent(i+1) << " "
+        << hv24aabb->GetBinError(i+1) << " "
+        << 0.06*hv24aabb->GetBinContent(i+1) << "\n";
+    }
+  fout << endl;
+
 }

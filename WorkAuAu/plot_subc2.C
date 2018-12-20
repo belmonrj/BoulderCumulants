@@ -94,6 +94,59 @@ void plot_subc2(TH1D* th1d_c24, TH1D* th1d_c24aabb, TH1D* th1d_c24abab, int harm
       //tgaesys_c34aabb = new TGraphAsymmErrors(nbins2,cent2,value2,0,0,loerr2,hierr2);
       tgaesys_c34abab = new TGraphAsymmErrors(6,cent2,value2,0,0,loerr2,hierr2);
       tgaesys_c34abab->SetFillColorAlpha(kBlue,0.35);
+      //th1d_c24->Rebin(5);
+      //th1d_c24aabb->Rebin(10);
+      //th1d_c24abab->Rebin(10);
+      //TGraphAsymmErrors* tgaesys_c34 = NULL;
+      //TGraphAsymmErrors* tgaesys_c34aabb = NULL;
+      //TGraphAsymmErrors* tgaesys_c34abab = NULL;
+      // const int nbins1 = th1d_c24aabb->GetNbinsX();
+      // const int nbins2 = th1d_c24abab->GetNbinsX();
+      ofstream fout("Figure10a.dat");
+      // c34
+      for ( int i = 0; i < nbins0; ++i )
+        {
+          fout
+            << th1d_c24->GetBinCenter(i+1)+0.5 << " "
+            << th1d_c24->GetBinContent(i+1) << " "
+            << th1d_c24->GetBinError(i+1) << " ";
+          double x, y, exl, exh, eyl, eyh;
+          exl = tgaesys_c34->GetErrorXlow(i);
+          exh = tgaesys_c34->GetErrorXhigh(i);
+          eyl = tgaesys_c34->GetErrorYlow(i);
+          eyh = tgaesys_c34->GetErrorYhigh(i);
+          fout << eyl << " " << eyh << endl;
+        }
+      fout << endl;
+      // c34abab
+      for ( int i = 0; i < nbins2; ++i )
+        {
+          fout
+            << th1d_c24abab->GetBinCenter(i+1)+0.5 << " "
+            << th1d_c24abab->GetBinContent(i+1) << " "
+            << th1d_c24abab->GetBinError(i+1) << " ";
+          double x, y, exl, exh, eyl, eyh;
+          exl = tgaesys_c34abab->GetErrorXlow(i);
+          exh = tgaesys_c34abab->GetErrorXhigh(i);
+          eyl = tgaesys_c34abab->GetErrorYlow(i);
+          eyh = tgaesys_c34abab->GetErrorYhigh(i);
+          fout << eyl << " " << eyh << endl;
+        }
+      fout << endl;
+      // c34aabb
+      for ( int i = 0; i < nbins1; ++i )
+        {
+          fout
+            << th1d_c24aabb->GetBinCenter(i+1)+0.5 << " "
+            << th1d_c24aabb->GetBinContent(i+1) << " "
+            << th1d_c24aabb->GetBinError(i+1) << " ";
+          double x, y, exl, exh, eyl, eyh;
+          exl = tgaesys_c34aabb->GetErrorXlow(i);
+          exh = tgaesys_c34aabb->GetErrorXhigh(i);
+          eyl = tgaesys_c34aabb->GetErrorYlow(i);
+          eyh = tgaesys_c34aabb->GetErrorYhigh(i);
+          fout << eyl << " " << eyh << endl;
+        }
     } // end of check on harm == 3
   if ( harm == 2 )
     {

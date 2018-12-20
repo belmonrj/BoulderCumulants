@@ -19,11 +19,12 @@ void jeck()
   // do_jeck(13737);
   // do_jeck(13798);
   // do_jeck(13841);
-  do_jeck(13847); // nhit
-  do_jeck(13872); // DCA
-  do_jeck(13897); // zvtx
-  do_jeck(13911); // chi2
-  do_jeck(13926); // dubl
+
+  // do_jeck(13847); // nhit
+  // do_jeck(13872); // DCA
+  // do_jeck(13897); // zvtx
+  // do_jeck(13911); // chi2
+  // do_jeck(13926); // dubl
   do_jeck(13799); // base
 
 }
@@ -281,6 +282,34 @@ void do_jeck(int flag)
   {
   c1->Print(Form("STAR/cent_c34arm.png"));
   c1->Print(Form("STAR/cent_c34arm.pdf"));
+  ofstream fout("Figure10b.dat");
+  for ( int i = 0; i < histC->GetNbinsX(); ++i )
+    {
+      fout
+        << histC->GetBinCenter(i+1)+0.5 << " "
+        << histC->GetBinContent(i+1) << " "
+        << histC->GetBinError(i+1) << " ";
+      double x, y, exl, exh, eyl, eyh;
+      exl = tgaesys_comb->GetErrorXlow(i);
+      exh = tgaesys_comb->GetErrorXhigh(i);
+      eyl = tgaesys_comb->GetErrorYlow(i);
+      eyh = tgaesys_comb->GetErrorYhigh(i);
+      fout << eyl << " " << eyh << endl;
+    }
+  fout << endl;
+  for ( int i = 0; i < histN->GetNbinsX(); ++i )
+    {
+      fout
+        << histN->GetBinCenter(i+1)+0.5 << " "
+        << histN->GetBinContent(i+1) << " "
+        << histN->GetBinError(i+1) << " ";
+      double x, y, exl, exh, eyl, eyh;
+      exl = tgaesys_nort->GetErrorXlow(i);
+      exh = tgaesys_nort->GetErrorXhigh(i);
+      eyl = tgaesys_nort->GetErrorYlow(i);
+      eyh = tgaesys_nort->GetErrorYhigh(i);
+      fout << eyl << " " << eyh << endl;
+    }
   }
 
 

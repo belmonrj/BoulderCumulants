@@ -18,6 +18,16 @@ void get_sigma()
 
   cout << "All done! Have a nice day!" << endl;
 
+  ofstream fout("Figure8.dat");
+  for ( int i = 0; i < hreturn->GetNbinsX(); ++i )
+    {
+      fout
+        << hreturn->GetBinCenter(i+1)-0.5 << " "
+        << hreturn->GetBinContent(i+1) << " "
+        << hreturn->GetBinError(i+1) << " "
+        << 0.02*hreturn->GetBinContent(i+1) << "\n";
+    }
+
 }
 
 
