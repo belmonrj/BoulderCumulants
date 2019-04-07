@@ -176,6 +176,79 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
       centrality_os_corr_sin3[0][iharm] = new TProfile(Form("centrality_os_fvtxc_tracks_sin%d3",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<sin(n(phi1-phi2-phi3))>>
     }
 
+  // --- nfvtxt
+
+  for ( int iharm = 2; iharm < 5; ++iharm )
+    {
+      // --------------------------------------------------------------------------------------------------------------------------
+      // --- without q-vector recentering
+      // ---
+      // --- cumulant histograms
+      // --- combined
+      nfvtxt_ac_cumu2[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_ac_cumu4[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      if ( iharm < 4 ) nfvtxt_ac_cumu6[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c%d%d",iharm,6),"",100, -0.5, 99.5, -1.1, 1.1);
+      if ( iharm < 3 ) nfvtxt_ac_cumu8[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_c%d%d",iharm,8),"",100, -0.5, 99.5, -1.1, 1.1);
+      // --- south
+      nfvtxt_ac_cumu2[1][iharm] = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_ac_cumu4[1][iharm] = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      // --- north
+      nfvtxt_ac_cumu2[2][iharm] = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_ac_cumu4[2][iharm] = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      // --- subevent histograms
+      nfvtxt_ac_sub2[iharm] = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_ac_sub4a[iharm] = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c%d%da",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_ac_sub4b[iharm] = new TProfile(Form("nfvtxt_ac_fvtxsfvtxn_tracks_c%d%db",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      // --- correction histograms
+      // --- combined
+      nfvtxt_ac_corr_cos1[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_cos%d1",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<cos(n(phi1))>>
+      nfvtxt_ac_corr_sin1[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_sin%d1",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<sin(n(phi1))>>
+      nfvtxt_ac_corr_cos2[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_cossum%d2",iharm),"",100, -0.5, 99.5, -1.1, 1.1);   // --- <<cos(n(phi1+phi2))>>
+      nfvtxt_ac_corr_sin2[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_sinsum%d2",iharm),"",100, -0.5, 99.5, -1.1, 1.1);   // --- <<sin(n(phi1+phi2))>>
+      nfvtxt_ac_corr_cos3[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_cos%d3",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<cos(n(phi1-phi2-phi3))>>
+      nfvtxt_ac_corr_sin3[0][iharm] = new TProfile(Form("nfvtxt_ac_fvtxc_tracks_sin%d3",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<sin(n(phi1-phi2-phi3))>>
+      // --- south
+      nfvtxt_ac_corr_cos1[1][iharm] = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cos%d1",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<cos(n(phi1))>>
+      nfvtxt_ac_corr_sin1[1][iharm] = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_sin%d1",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<sin(n(phi1))>>
+      nfvtxt_ac_corr_cos2[1][iharm] = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cossum%d2",iharm),"",100, -0.5, 99.5, -1.1, 1.1);   // --- <<cos(n(phi1+phi2))>>
+      nfvtxt_ac_corr_sin2[1][iharm] = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_sinsum%d2",iharm),"",100, -0.5, 99.5, -1.1, 1.1);   // --- <<sin(n(phi1+phi2))>>
+      nfvtxt_ac_corr_cos3[1][iharm] = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_cos%d3",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<cos(n(phi1-phi2-phi3))>>
+      nfvtxt_ac_corr_sin3[1][iharm] = new TProfile(Form("nfvtxt_ac_fvtxs_tracks_sin%d3",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<sin(n(phi1-phi2-phi3))>>
+      // --- south
+      nfvtxt_ac_corr_cos1[2][iharm] = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cos%d1",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<cos(n(phi1))>>
+      nfvtxt_ac_corr_sin1[2][iharm] = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_sin%d1",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<sin(n(phi1))>>
+      nfvtxt_ac_corr_cos2[2][iharm] = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cossum%d2",iharm),"",100, -0.5, 99.5, -1.1, 1.1);   // --- <<cos(n(phi1+phi2))>>
+      nfvtxt_ac_corr_sin2[2][iharm] = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_sinsum%d2",iharm),"",100, -0.5, 99.5, -1.1, 1.1);   // --- <<sin(n(phi1+phi2))>>
+      nfvtxt_ac_corr_cos3[2][iharm] = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_cos%d3",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<cos(n(phi1-phi2-phi3))>>
+      nfvtxt_ac_corr_sin3[2][iharm] = new TProfile(Form("nfvtxt_ac_fvtxn_tracks_sin%d3",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<sin(n(phi1-phi2-phi3))>>
+      // --------------------------------------------------------------------------------------------------------------------------
+      // --- with q-vector recentering
+      // ---
+      // --- cumulant histograms
+      // --- combined
+      nfvtxt_os_cumu2[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_os_cumu4[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      if ( iharm < 4 ) nfvtxt_os_cumu6[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_c%d%d",iharm,6),"",100, -0.5, 99.5, -1.1, 1.1);
+      if ( iharm < 3 ) nfvtxt_os_cumu8[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_c%d%d",iharm,8),"",100, -0.5, 99.5, -1.1, 1.1);
+      // --- south
+      nfvtxt_os_cumu2[1][iharm] = new TProfile(Form("nfvtxt_os_fvtxs_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_os_cumu4[1][iharm] = new TProfile(Form("nfvtxt_os_fvtxs_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      // --- north
+      nfvtxt_os_cumu2[2][iharm] = new TProfile(Form("nfvtxt_os_fvtxn_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_os_cumu4[2][iharm] = new TProfile(Form("nfvtxt_os_fvtxn_tracks_c%d%d",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      // --- subevent histograms
+      nfvtxt_os_sub2[iharm] = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c%d%d",iharm,2),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_os_sub4a[iharm] = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c%d%da",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      nfvtxt_os_sub4b[iharm] = new TProfile(Form("nfvtxt_os_fvtxsfvtxn_tracks_c%d%db",iharm,4),"",100, -0.5, 99.5, -1.1, 1.1);
+      // --- correction histograms
+      // --- combined
+      nfvtxt_os_corr_cos1[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_cos%d1",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<cos(n(phi1))>>
+      nfvtxt_os_corr_sin1[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_sin%d1",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<sin(n(phi1))>>
+      nfvtxt_os_corr_cos2[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_cossum%d2",iharm),"",100, -0.5, 99.5, -1.1, 1.1);   // --- <<cos(n(phi1+phi2))>>
+      nfvtxt_os_corr_sin2[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_sinsum%d2",iharm),"",100, -0.5, 99.5, -1.1, 1.1);   // --- <<sin(n(phi1+phi2))>>
+      nfvtxt_os_corr_cos3[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_cos%d3",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<cos(n(phi1-phi2-phi3))>>
+      nfvtxt_os_corr_sin3[0][iharm] = new TProfile(Form("nfvtxt_os_fvtxc_tracks_sin%d3",iharm),"",100, -0.5, 99.5, -1.1, 1.1);      // --- <<sin(n(phi1-phi2-phi3))>>
+    }
 
 
 

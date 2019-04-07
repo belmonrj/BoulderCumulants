@@ -1047,6 +1047,74 @@ int BoulderCumulants::EventStuff()
   centrality_ac_cumu6[0][2]->Fill(centrality,ac_fvtxc_tracks_six);
   //centrality_ac_cumu8[0][2]->Fill(centrality,eightRecursion.Re());
 
+  // --------------------------------------------------------- //
+  // --- nfvtxt
+  // --------------
+
+  // --- south only
+  nfvtxt_ac_cumu2[1][2]->Fill(nfvtxt,ac_fvtxs_tracks_qq2);
+  nfvtxt_ac_corr_cos1[1][2]->Fill(nfvtxt,ac_fvtxs_tracks_qx2/ac_fvtxs_tracks_qw);
+  nfvtxt_ac_corr_sin1[1][2]->Fill(nfvtxt,ac_fvtxs_tracks_qy2/ac_fvtxs_tracks_qw);
+  nfvtxt_ac_corr_cos2[1][2]->Fill(nfvtxt,ac_fvtxs_tracks_cossum22);
+  nfvtxt_ac_corr_sin2[1][2]->Fill(nfvtxt,ac_fvtxs_tracks_sinsum22);
+  nfvtxt_ac_corr_cos3[1][2]->Fill(nfvtxt,ac_fvtxs_tracks_cos23);
+  nfvtxt_ac_corr_sin3[1][2]->Fill(nfvtxt,ac_fvtxs_tracks_sin23);
+  nfvtxt_ac_cumu2[1][3]->Fill(nfvtxt,ac_fvtxs_tracks_qq3);
+  nfvtxt_ac_corr_cos1[1][3]->Fill(nfvtxt,ac_fvtxs_tracks_qx3/ac_fvtxs_tracks_qw);
+  nfvtxt_ac_corr_sin1[1][3]->Fill(nfvtxt,ac_fvtxs_tracks_qy3/ac_fvtxs_tracks_qw);
+  nfvtxt_ac_corr_cos2[1][3]->Fill(nfvtxt,ac_fvtxs_tracks_cossum32);
+  nfvtxt_ac_corr_sin2[1][3]->Fill(nfvtxt,ac_fvtxs_tracks_sinsum32);
+  nfvtxt_ac_corr_cos3[1][3]->Fill(nfvtxt,ac_fvtxs_tracks_cos33);
+  nfvtxt_ac_corr_sin3[1][3]->Fill(nfvtxt,ac_fvtxs_tracks_sin33);
+  // --- north only
+  nfvtxt_ac_cumu2[2][2]->Fill(nfvtxt,ac_fvtxn_tracks_qq2);
+  nfvtxt_ac_corr_cos1[2][2]->Fill(nfvtxt,ac_fvtxn_tracks_qx2/ac_fvtxn_tracks_qw);
+  nfvtxt_ac_corr_sin1[2][2]->Fill(nfvtxt,ac_fvtxn_tracks_qy2/ac_fvtxn_tracks_qw);
+  nfvtxt_ac_corr_cos2[2][2]->Fill(nfvtxt,ac_fvtxn_tracks_cossum22);
+  nfvtxt_ac_corr_sin2[2][2]->Fill(nfvtxt,ac_fvtxn_tracks_sinsum22);
+  nfvtxt_ac_corr_cos3[2][2]->Fill(nfvtxt,ac_fvtxn_tracks_cos23);
+  nfvtxt_ac_corr_sin3[2][2]->Fill(nfvtxt,ac_fvtxn_tracks_sin23);
+  nfvtxt_ac_cumu2[2][3]->Fill(nfvtxt,ac_fvtxn_tracks_qq3);
+  nfvtxt_ac_corr_cos1[2][3]->Fill(nfvtxt,ac_fvtxn_tracks_qx3/ac_fvtxn_tracks_qw);
+  nfvtxt_ac_corr_sin1[2][3]->Fill(nfvtxt,ac_fvtxn_tracks_qy3/ac_fvtxn_tracks_qw);
+  nfvtxt_ac_corr_cos2[2][3]->Fill(nfvtxt,ac_fvtxn_tracks_cossum32);
+  nfvtxt_ac_corr_sin2[2][3]->Fill(nfvtxt,ac_fvtxn_tracks_sinsum32);
+  nfvtxt_ac_corr_cos3[2][3]->Fill(nfvtxt,ac_fvtxn_tracks_cos33);
+  nfvtxt_ac_corr_sin3[2][3]->Fill(nfvtxt,ac_fvtxn_tracks_sin33);
+  // --- combined
+  nfvtxt_ac_cumu2[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_qq2);
+  nfvtxt_ac_corr_cos1[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_qx2/ac_fvtxc_tracks_qw);
+  nfvtxt_ac_corr_sin1[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_qy2/ac_fvtxc_tracks_qw);
+  nfvtxt_ac_corr_cos2[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_cossum22);
+  nfvtxt_ac_corr_sin2[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_sinsum22);
+  nfvtxt_ac_corr_cos3[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_cos23);
+  nfvtxt_ac_corr_sin3[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_sin23);
+  nfvtxt_ac_cumu2[0][3]->Fill(nfvtxt,ac_fvtxc_tracks_qq3);
+  nfvtxt_ac_corr_cos1[0][3]->Fill(nfvtxt,ac_fvtxc_tracks_qx3/ac_fvtxc_tracks_qw);
+  nfvtxt_ac_corr_sin1[0][3]->Fill(nfvtxt,ac_fvtxc_tracks_qy3/ac_fvtxc_tracks_qw);
+  nfvtxt_ac_corr_cos2[0][3]->Fill(nfvtxt,ac_fvtxc_tracks_cossum32);
+  nfvtxt_ac_corr_sin2[0][3]->Fill(nfvtxt,ac_fvtxc_tracks_sinsum32);
+  nfvtxt_ac_corr_cos3[0][3]->Fill(nfvtxt,ac_fvtxc_tracks_cos33);
+  nfvtxt_ac_corr_sin3[0][3]->Fill(nfvtxt,ac_fvtxc_tracks_sin33);
+  // --- scalar product
+  nfvtxt_ac_sub2[2]->Fill(nfvtxt,ac_fvtxsfvtxn_tracks_qq2);
+  nfvtxt_ac_sub2[3]->Fill(nfvtxt,ac_fvtxsfvtxn_tracks_qq3);
+  // --- four particle
+  nfvtxt_ac_cumu4[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_qqqq24);
+  nfvtxt_ac_cumu4[0][3]->Fill(nfvtxt,ac_fvtxc_tracks_qqqq34);
+  nfvtxt_ac_cumu4[1][2]->Fill(nfvtxt,ac_fvtxs_tracks_qqqq24);
+  nfvtxt_ac_cumu4[1][3]->Fill(nfvtxt,ac_fvtxs_tracks_qqqq34);
+  nfvtxt_ac_cumu4[2][2]->Fill(nfvtxt,ac_fvtxn_tracks_qqqq24);
+  nfvtxt_ac_cumu4[2][3]->Fill(nfvtxt,ac_fvtxn_tracks_qqqq34);
+  // --- four particle 2sub
+  nfvtxt_ac_sub4a[2]->Fill(nfvtxt,answer_c24a);
+  nfvtxt_ac_sub4b[2]->Fill(nfvtxt,ac_fvtxs_tracks_qq2*ac_fvtxn_tracks_qq2);
+  nfvtxt_ac_sub4a[3]->Fill(nfvtxt,answer_c34a);
+  nfvtxt_ac_sub4b[3]->Fill(nfvtxt,ac_fvtxs_tracks_qq3*ac_fvtxn_tracks_qq3);
+  // --- six particle
+  nfvtxt_ac_cumu6[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_six);
+  //nfvtxt_ac_cumu8[0][2]->Fill(nfvtxt,eightRecursion.Re());
+
   if ( _verbosity > 2 )
     {
       cout << "Mcos2phi " << ac_fvtxc_tracks_qx2 << " " << Qvector[2][1].Re()  << endl;
@@ -1254,6 +1322,50 @@ int BoulderCumulants::EventStuff()
   // --- six particle
   centrality_os_cumu6[0][2]->Fill(centrality,os_fvtxc_tracks_six);
   //centrality_os_cumu8[0][2]->Fill(centrality,eightRecursion.Re());
+
+  // --------------------------------------------------------- //
+  // --- nfvtxt
+  // --------------
+
+  // --- south only
+  nfvtxt_os_cumu2[1][2]->Fill(nfvtxt,os_fvtxs_tracks_qq2);
+  nfvtxt_os_cumu2[1][3]->Fill(nfvtxt,os_fvtxs_tracks_qq3);
+  // --- north only
+  nfvtxt_os_cumu2[2][2]->Fill(nfvtxt,os_fvtxn_tracks_qq2);
+  nfvtxt_os_cumu2[2][3]->Fill(nfvtxt,os_fvtxn_tracks_qq3);
+  // --- combined
+  nfvtxt_os_cumu2[0][2]->Fill(nfvtxt,os_fvtxc_tracks_qq2);
+  nfvtxt_os_corr_cos1[0][2]->Fill(nfvtxt,os_fvtxc_tracks_qx2/os_fvtxc_tracks_qw);
+  nfvtxt_os_corr_sin1[0][2]->Fill(nfvtxt,os_fvtxc_tracks_qy2/os_fvtxc_tracks_qw);
+  nfvtxt_os_corr_cos2[0][2]->Fill(nfvtxt,os_fvtxc_tracks_cossum22);
+  nfvtxt_os_corr_sin2[0][2]->Fill(nfvtxt,os_fvtxc_tracks_sinsum22);
+  nfvtxt_os_corr_cos3[0][2]->Fill(nfvtxt,os_fvtxc_tracks_cos23);
+  nfvtxt_os_corr_sin3[0][2]->Fill(nfvtxt,os_fvtxc_tracks_sin23);
+  nfvtxt_os_cumu2[0][3]->Fill(nfvtxt,os_fvtxc_tracks_qq3);
+  nfvtxt_os_corr_cos1[0][3]->Fill(nfvtxt,os_fvtxc_tracks_qx3/os_fvtxc_tracks_qw);
+  nfvtxt_os_corr_sin1[0][3]->Fill(nfvtxt,os_fvtxc_tracks_qy3/os_fvtxc_tracks_qw);
+  nfvtxt_os_corr_cos2[0][3]->Fill(nfvtxt,os_fvtxc_tracks_cossum32);
+  nfvtxt_os_corr_sin2[0][3]->Fill(nfvtxt,os_fvtxc_tracks_sinsum32);
+  nfvtxt_os_corr_cos3[0][3]->Fill(nfvtxt,os_fvtxc_tracks_cos33);
+  nfvtxt_os_corr_sin3[0][3]->Fill(nfvtxt,os_fvtxc_tracks_sin33);
+  // --- scalar product
+  nfvtxt_os_sub2[2]->Fill(nfvtxt,os_fvtxsfvtxn_tracks_qq2);
+  nfvtxt_os_sub2[3]->Fill(nfvtxt,os_fvtxsfvtxn_tracks_qq3);
+  // --- four particle
+  nfvtxt_os_cumu4[0][2]->Fill(nfvtxt,os_fvtxc_tracks_qqqq24);
+  nfvtxt_os_cumu4[0][3]->Fill(nfvtxt,os_fvtxc_tracks_qqqq34);
+  nfvtxt_os_cumu4[1][2]->Fill(nfvtxt,os_fvtxs_tracks_qqqq24);
+  nfvtxt_os_cumu4[1][3]->Fill(nfvtxt,os_fvtxs_tracks_qqqq34);
+  nfvtxt_os_cumu4[2][2]->Fill(nfvtxt,os_fvtxn_tracks_qqqq24);
+  nfvtxt_os_cumu4[2][3]->Fill(nfvtxt,os_fvtxn_tracks_qqqq34);
+  // --- four particle 2sub
+  nfvtxt_os_sub4a[2]->Fill(nfvtxt,answer_c24a);
+  nfvtxt_os_sub4b[2]->Fill(nfvtxt,os_fvtxs_tracks_qq2*os_fvtxn_tracks_qq2);
+  nfvtxt_os_sub4a[3]->Fill(nfvtxt,answer_c34a);
+  nfvtxt_os_sub4b[3]->Fill(nfvtxt,os_fvtxs_tracks_qq3*os_fvtxn_tracks_qq3);
+  // --- six particle
+  nfvtxt_os_cumu6[0][2]->Fill(nfvtxt,os_fvtxc_tracks_six);
+  //nfvtxt_os_cumu8[0][2]->Fill(nfvtxt,eightRecursion.Re());
 
   if ( _verbosity > 1000 )
     {
