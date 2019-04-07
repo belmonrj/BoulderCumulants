@@ -132,6 +132,37 @@ void doit(const char* handle)
   c1->Print(Form("FigsWork/v32andfold.pdf"));
   c1->Print(Form("FigsWork/v32andfold.png"));
 
+  ofstream fout("Figure9.dat");
+  for ( int i = 0; i < th1d_os_v3G->GetNbinsX(); ++i )
+    {
+      fout
+        << th1d_os_v3G->GetBinCenter(i+1)+0.5 << " "
+        << th1d_os_v3G->GetBinContent(i+1) << " "
+        << th1d_os_v3G->GetBinError(i+1) << " "
+        << gv3_sys->GetBinError(i+1) << endl;
+    }
+  fout << endl;
+  for ( int i = 0; i < tgae_v32->GetN(); ++i )
+    {
+      double x, y, exl, exh, eyl, eyh;
+      tgae_v32->GetPoint(i,x,y);
+      exl = tgae_v32->GetErrorXlow(i);
+      exh = tgae_v32->GetErrorXhigh(i);
+      eyl = tgae_v32->GetErrorYlow(i);
+      eyh = tgae_v32->GetErrorYhigh(i);
+      fout
+        << x << " "
+        << y << " "
+        << eyl << " "
+        << eyh << " ";
+      eyl = tgae_sys_v32->GetErrorYlow(i);
+      eyh = tgae_sys_v32->GetErrorYhigh(i);
+      fout
+        << eyl << " "
+        << eyh << "\n";
+    }
+  fout.close();
+
   // tgae_v3m->SetMarkerStyle(kFullCircle);
   // tgae_v3m->Draw("p");
   // tgae_sys_v3m->SetFillColorAlpha(kBlack,0.35);
@@ -230,4 +261,3 @@ void doit(const char* handle)
   delete c1;
 
 }
-

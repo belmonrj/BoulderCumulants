@@ -65,4 +65,42 @@ void do_special()
   // --- now do a special plot with all 5...
   plot_special(v28,v26,v24,v22,hv22ab,"cent");
 
+  ofstream fout("Figure7.dat");
+  for ( int i = 0; i < hv22ab->GetNbinsX(); ++i )
+    {
+      fout
+        << hv22ab->GetBinCenter(i+1)-0.5 << " "
+        << hv22ab->GetBinContent(i+1) << " "
+        << hv22ab->GetBinError(i+1) << " "
+        << 0.06*hv22ab->GetBinContent(i+1) << "\n";
+    }
+  fout << endl;
+  for ( int i = 0; i < v24->GetNbinsX(); ++i )
+    {
+      fout
+        << v24->GetBinCenter(i+1)-0.5 << " "
+        << v24->GetBinContent(i+1) << " "
+        << v24->GetBinError(i+1) << " "
+        << 0.06*v24->GetBinContent(i+1) << "\n";
+    }
+  fout << endl;
+  for ( int i = 0; i < v26->GetNbinsX(); ++i )
+    {
+      fout
+        << v26->GetBinCenter(i+1)-0.5 << " "
+        << v26->GetBinContent(i+1) << " "
+        << v26->GetBinError(i+1) << " "
+        << 0.06*v26->GetBinContent(i+1) << "\n";
+    }
+  fout << endl;
+  for ( int i = 0; i < v28->GetNbinsX(); ++i )
+    {
+      fout
+        << v28->GetBinCenter(i+1)-0.5 << " "
+        << v28->GetBinContent(i+1) << " "
+        << v28->GetBinError(i+1) << " "
+        << 0.06*v28->GetBinContent(i+1) << "\n";
+    }
+  fout << endl;
+
 }
