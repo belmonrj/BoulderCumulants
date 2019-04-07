@@ -234,6 +234,36 @@ class BoulderCumulants: public SubsysReco
   TProfile* centrality_os_sub4b[5];
 
 
+  // --- nfvtxt stuff
+
+  TProfile* nfvtxt_ac_cumu2[3][5];
+  TProfile* nfvtxt_ac_cumu4[3][5];
+  TProfile* nfvtxt_ac_cumu6[3][5];
+  TProfile* nfvtxt_ac_cumu8[3][5];
+  TProfile* nfvtxt_os_cumu2[3][5];
+  TProfile* nfvtxt_os_cumu4[3][5];
+  TProfile* nfvtxt_os_cumu6[3][5];
+  TProfile* nfvtxt_os_cumu8[3][5];
+  TProfile* nfvtxt_ac_corr_cos1[3][5];
+  TProfile* nfvtxt_ac_corr_sin1[3][5];
+  TProfile* nfvtxt_ac_corr_cos2[3][5];
+  TProfile* nfvtxt_ac_corr_sin2[3][5];
+  TProfile* nfvtxt_ac_corr_cos3[3][5];
+  TProfile* nfvtxt_ac_corr_sin3[3][5];
+  TProfile* nfvtxt_os_corr_cos1[3][5];
+  TProfile* nfvtxt_os_corr_sin1[3][5];
+  TProfile* nfvtxt_os_corr_cos2[3][5];
+  TProfile* nfvtxt_os_corr_sin2[3][5];
+  TProfile* nfvtxt_os_corr_cos3[3][5];
+  TProfile* nfvtxt_os_corr_sin3[3][5];
+  TProfile* nfvtxt_ac_sub2[5];
+  TProfile* nfvtxt_ac_sub4a[5];
+  TProfile* nfvtxt_ac_sub4b[5];
+  TProfile* nfvtxt_os_sub2[5];
+  TProfile* nfvtxt_os_sub4a[5];
+  TProfile* nfvtxt_os_sub4b[5];
+
+
 
   // --- event plane decorrelation stuff
   TProfile* tp1f_special_fvtx_tracks_ab[8];
