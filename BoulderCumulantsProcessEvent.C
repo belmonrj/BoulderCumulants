@@ -460,12 +460,12 @@ int BoulderCumulants::EventRecursion()
           // Qoffset[h][p] = TComplex( Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][0][h], Qvector[0][1].Re()*qvoff_nfvtxt[nfvtxt][1][h] );
           // Qvector[h][p] -= Qoffset[h][p];
           // --- north
-          //Qoffset_north[h][p] = TComplex( Qvector_north[0][1].Re()*qvoff_nfvtxt_north[nfvtxt][0][h], Qvector_north[0][1].Re()*qvoff_nfvtxt_north[nfvtxt][1][h] );
-          Qoffset_north[h][p] = TComplex( Qvector_north[0][1].Re()*qvoff_cent_north[icent][0][h], Qvector_north[0][1].Re()*qvoff_cent_north[icent][1][h] );
+          Qoffset_north[h][p] = TComplex( Qvector_north[0][1].Re()*qvoff_nfvtxt_north[nfvtxt][0][h], Qvector_north[0][1].Re()*qvoff_nfvtxt_north[nfvtxt][1][h] );
+          //Qoffset_north[h][p] = TComplex( Qvector_north[0][1].Re()*qvoff_cent_north[icent][0][h], Qvector_north[0][1].Re()*qvoff_cent_north[icent][1][h] );
           Qvector_north[h][p] -= Qoffset_north[h][p];
           // --- south
-          //Qoffset_south[h][p] = TComplex( Qvector_south[0][1].Re()*qvoff_nfvtxt_south[nfvtxt][0][h], Qvector_south[0][1].Re()*qvoff_nfvtxt_south[nfvtxt][1][h] );
-          Qoffset_south[h][p] = TComplex( Qvector_south[0][1].Re()*qvoff_cent_south[icent][0][h], Qvector_south[0][1].Re()*qvoff_cent_south[icent][1][h] );
+          Qoffset_south[h][p] = TComplex( Qvector_south[0][1].Re()*qvoff_nfvtxt_south[nfvtxt][0][h], Qvector_south[0][1].Re()*qvoff_nfvtxt_south[nfvtxt][1][h] );
+          //Qoffset_south[h][p] = TComplex( Qvector_south[0][1].Re()*qvoff_cent_south[icent][0][h], Qvector_south[0][1].Re()*qvoff_cent_south[icent][1][h] );
           Qvector_south[h][p] -= Qoffset_south[h][p];
           // --- add up north and south to get combined that's been recentered arm-by-arm
           Qvector[h][p] = Qvector_north[h][p] + Qvector_south[h][p];
