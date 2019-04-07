@@ -1,4 +1,8 @@
-# Quick script
+# BoulderCumulants
+
+
+
+## Quick script
 
 Script | Description
 ------ | -----------
@@ -6,7 +10,7 @@ analysis.sh | runs the four macros below (important plotting macros)
 
 
 
-# Important plotting macros:
+## Important plotting macros:
 
 Macro | Description
 ----- | -----------
@@ -18,7 +22,7 @@ star_v34.C | makes the v34 plot with comparison to STAR
 
 
 
-# Additional plotting macros:
+## Additional plotting macros:
 
 Macro | Description
 ----- | -----------
@@ -29,7 +33,7 @@ speck.C | compare N/S combined vs separate for v2 and v3 (combination of reck an
 
 
 
-# Supporting macros:
+## Supporting macros:
 
 Macro | Description
 ----- | -----------
@@ -42,7 +46,7 @@ plot_subcomp.C | same as plot_recomp but for the subevents
 
 
 
-# Systematics macros:
+## Systematics macros:
 
 Macro | Description
 ----- | -----------
