@@ -64,12 +64,17 @@ void new_simple()
   // --- correction terms
   th1d_cos1_squared->Multiply(th1d_cos1_squared);
   th1d_sin1_squared->Multiply(th1d_sin1_squared);
+  th1d_cos1_north_south->Multiply(th1d_cos1_south);
+  th1d_sin1_north_south->Multiply(th1d_sin1_south);
   // --- apply correction to cumulant
   th1d_c22one->Add(th1d_cos1_squared,-1.0);
   th1d_c22one->Add(th1d_sin1_squared,-1.0);
+  th1d_c22gap->Add(th1d_cos1_north_south,-1.0);
+  th1d_c22gap->Add(th1d_sin1_north_south,-1.0);
 
   // --- Step 6: calcualte v2 from cumulant
   TH1D* th1d_v22one = hsqrt(th1d_c22one);
+  TH1D* th1d_v22gap = hsqrt(th1d_c22gap);
 
   // --- Step 7: make a plot or two
   TCanvas* c1 = new TCanvas("c1","");
@@ -79,6 +84,9 @@ void new_simple()
   th1d_v22one->SetMaximum(0.13999);
   th1d_v22one->GetXaxis()->SetRangeUser(0.00001,49.9999);
   th1d_v22one->Draw("ex0p");
+  th1d_v22gap->SetMarkerStyle(kFullDiamond);
+  th1d_v22gap->SetMarkerColor(kMagenta+2);
+  th1d_v22gap->Draw("ex0p same");
   c1->Print("check_v22.png");
 
 }
