@@ -1,3 +1,5 @@
+#include "../WorkAuAu/hsqrt.C"
+
 void new_simple()
 {
 
@@ -51,12 +53,12 @@ void new_simple()
   //TH1D* th1d_cov = tp1f_cov->ProjectionX("th1d_cov");
 
   // --- Step 4: make some clones
-  TH1D* th1d_c22one = th1d_two->Clone("th1d_c22one");
-  TH1D* th1d_c22gap = th1d_G_two->Clone("th1d_c22gap");
-  TH1D* th1d_cos1_squared = th1d_cos1->Clone("th1d_cos1_squared");
-  TH1D* th1d_sin1_squared = th1d_sin1->Clone("th1d_sin1_squared");
-  TH1D* th1d_cos1_north_south = th1d_cos1_north->Clone("th1d_cos1_north_south");
-  TH1D* th1d_sin1_north_south = th1d_sin1_north->Clone("th1d_sin1_north_south");
+  TH1D* th1d_c22one = (TH1D*)th1d_two->Clone("th1d_c22one");
+  TH1D* th1d_c22gap = (TH1D*)th1d_G_two->Clone("th1d_c22gap");
+  TH1D* th1d_cos1_squared = (TH1D*)th1d_cos1->Clone("th1d_cos1_squared");
+  TH1D* th1d_sin1_squared = (TH1D*)th1d_sin1->Clone("th1d_sin1_squared");
+  TH1D* th1d_cos1_north_south = (TH1D*)th1d_cos1_north->Clone("th1d_cos1_north_south");
+  TH1D* th1d_sin1_north_south = (TH1D*)th1d_sin1_north->Clone("th1d_sin1_north_south");
 
   // --- Step 5: calculate the cumulants
   // --- correction terms
@@ -67,6 +69,16 @@ void new_simple()
   th1d_c22one->Add(th1d_sin1_squared,-1.0);
 
   // --- Step 6: calcualte v2 from cumulant
+  TH1D* th1d_v22one = hsqrt(th1d_c22one);
 
+  // --- Step 7: make a plot or two
+  TCanvas* c1 = new TCanvas("c1","");
+  th1d_v22one->SetMarkerStyle(kFullCircle);
+  th1d_v22one->SetMarkerColor(kRed);
+  th1d_v22one->SetMinimum(0.0);
+  th1d_v22one->SetMaximum(0.13999);
+  th1d_v22one->GetXaxis()->SetRangeUser(0.00001,49.9999);
+  th1d_v22one->Draw("ex0p");
+  c1->Print("check_v22.png");
 
 }
