@@ -7,34 +7,8 @@ TFile* fout;
 void process_cumulants()
 {
 
-  fout = TFile::Open("all_cumulants_out.root","recreate");
-  // do_process("Run16dAu200",1);
+  fout = TFile::Open("cumulants_out.root","recreate");
   do_process("Run16dAu200",2);
-  // do_process("Run16dAu200",5);
-  // do_process("Run16dAu200",10);
-  // do_process("Run16dAu62",1);
-  // do_process("Run16dAu62",2);
-  // do_process("Run16dAu62",5);
-  // do_process("Run16dAu62",10);
-  // do_process("Run16dAu39",1);
-  // do_process("Run16dAu39",2);
-  // do_process("Run16dAu39",5);
-  // do_process("Run16dAu39",10);
-  // do_process("Run16dAu20",1);
-  // do_process("Run16dAu20",2);
-  // do_process("Run16dAu20",5);
-  // do_process("Run16dAu20",10);
-  // do_process("Run15pAu200",1);
-  // do_process("Run15pAu200",2);
-  // do_process("Run15pAu200",5);
-  // do_process("Run15pAu200",10);
-  //  do_process("Run14HeAu200",1);
-  do_process("Run14HeAu200",2);
-  // do_process("Run14HeAu200",5);
-  // do_process("Run14HeAu200",10);
-  // // do_process("Run14AuAu200",1);
-  // // do_process("Run14AuAu200",10);
-  // // do_process("Run14AuAu200",20);
   fout->Close();
 }
 
@@ -42,7 +16,8 @@ void do_process(const char* type, int rebin)
 {
 
   // --- get the file with the cumulants (considering making a function with a flag to take the collision system)
-  TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
+  //TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
+  TFile* fin = TFile::Open(Form("temp.root"));
 
   // --- get the histograms from the file
   TProfile* tp1f_four = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
