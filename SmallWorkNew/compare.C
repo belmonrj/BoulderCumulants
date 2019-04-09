@@ -1,6 +1,8 @@
 void compare()
 {
 
+  const int nmax = 50;
+
   TCanvas* c1 = new TCanvas("c1","");
 
   // ---
@@ -40,5 +42,36 @@ void compare()
 
   c1->Print("oldnew_file_compare_four.png");
 
+  // ---
+
+  double counts1[nmax];
+  double counts2[nmax];
+  double ratio[nmax];
+  double num[nmax];
+  for ( int i = 0; i < nmax; ++i )
+    {
+      counts1[i] = tp1f_four1->GetBinEntries(i+1);
+      counts2[i] = tp1f_four2->GetBinEntries(i+1);
+      ratio[i] = counts1[i]/counts2[i];
+      num[i] = tp1f_four1->GetBinCenter(i+1);
+    }
+
+  TGraph* tg1 = new TGraph(nmax,num,counts1);
+  TGraph* tg2 = new TGraph(nmax,num,counts2);
+  TGraph* tgR = new TGraph(nmax,num,ratio);
+
+  TH2D* hdummy = new TH2D("hummy","",1,0.0,num[nmax-1],1,0.1,3e7);
+  hdummy->Draw();
+  hdummy->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  hdummy->GetYaxis()->SetTitle("Number of events");
+  tg1->SetLineColor(kRed);
+  tg1->Draw("l");
+  tg2->Draw("l");
+  delete leg;
+  leg = new TLegend(0.68,0.68,0.88,0.88);
+  leg->AddEntry(tg1,"old, good file","l");
+  leg->AddEntry(tg2,"new file","l");
+  leg->Draw();
+  c1->Print("oldnew_file_compare_mult.png");
 }
 
