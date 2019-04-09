@@ -68,10 +68,21 @@ void compare()
   tg1->Draw("l");
   tg2->Draw("l");
   delete leg;
-  leg = new TLegend(0.68,0.68,0.88,0.88);
-  leg->AddEntry(tg1,"old, good file","l");
-  leg->AddEntry(tg2,"new file","l");
+  leg = new TLegend(0.68,0.28,0.88,0.48);
+  leg->AddEntry(tg2,"old, good file","l");
+  leg->AddEntry(tg1,"new file","l");
   leg->Draw();
+  c1->SetLogy();
   c1->Print("oldnew_file_compare_mult.png");
+
+  delete hdummy;
+  hdummy = new TH2D("hummy","",1,0.0,num[nmax-1],1,1e-3,1e3);
+  hdummy->Draw();
+  hdummy->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  hdummy->GetYaxis()->SetTitle("Number of events, new/old");
+  tgR->SetLineColor(kRed);
+  tgR->Draw("l");
+  c1->SetLogy();
+  c1->Print("oldnew_file_compare_multratio.png");
 }
 
