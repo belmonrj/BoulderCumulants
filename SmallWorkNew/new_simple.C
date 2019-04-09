@@ -14,7 +14,8 @@ void new_simple()
 
   // --- Step 1: open the root file with the histograms in it
   //TFile* fin = TFile::Open("temp.root");
-  TFile* fin = TFile::Open("improved_20170517-2216.root"); // checking against an old file
+  //TFile* fin = TFile::Open("improved_20170517-2216.root"); // checking against an old file
+  TFile* fin = TFile::Open("tree_temp.root"); // checking against an old file
 
   // --- Step 2: get the TProfile histograms from the root file
   // --- 2-particle correlator
