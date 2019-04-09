@@ -19,7 +19,8 @@ void do_process(const char* type, int rebin)
 
   // --- get the file with the cumulants (considering making a function with a flag to take the collision system)
   //TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
-  TFile* fin = TFile::Open(Form("temp.root"));
+  //TFile* fin = TFile::Open(Form("temp.root"));
+  TFile* fin = TFile::Open("improved_20170517-2216.root"); // checking against an old file
 
   // --- get the histograms from the file
   TProfile* tp1f_four = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
