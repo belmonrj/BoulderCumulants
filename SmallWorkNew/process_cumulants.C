@@ -15,6 +15,8 @@ void process_cumulants()
 void do_process(const char* type, int rebin)
 {
 
+  TCanvas* c1 = new TCanvas("c1","");
+
   // --- get the file with the cumulants (considering making a function with a flag to take the collision system)
   //TFile* fin = TFile::Open(Form("input/cumulants_%s.root",type));
   TFile* fin = TFile::Open(Form("temp.root"));
