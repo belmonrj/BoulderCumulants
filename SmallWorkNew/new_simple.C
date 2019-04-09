@@ -1,5 +1,14 @@
 #include "../WorkAuAu/hsqrt.C"
 
+
+
+double calc_corr_four(double,double,double,double,double,double,double,double);
+
+
+TH1D* get_corr_four(TH1D*,TH1D*,TH1D*,TH1D*,TH1D*,TH1D*,TH1D*,TH1D*);
+
+
+
 void new_simple()
 {
 
@@ -59,6 +68,9 @@ void new_simple()
   TH1D* th1d_sin1_squared = (TH1D*)th1d_sin1->Clone("th1d_sin1_squared");
   TH1D* th1d_cos1_north_south = (TH1D*)th1d_cos1_north->Clone("th1d_cos1_north_south");
   TH1D* th1d_sin1_north_south = (TH1D*)th1d_sin1_north->Clone("th1d_sin1_north_south");
+  // --- 4p clones ...
+  TH1D* th1d_c24one = (TH1D*)th1d_four->Clone("th1d_c24one");
+  TH1D* th1d_222one = (TH1D*)th1d_two->Clone("th1d_222one");
 
   // --- Step 5: calculate the cumulants
   // --- correction terms
@@ -71,10 +83,27 @@ void new_simple()
   th1d_c22one->Add(th1d_sin1_squared,-1.0);
   th1d_c22gap->Add(th1d_cos1_north_south,-1.0);
   th1d_c22gap->Add(th1d_sin1_north_south,-1.0);
+  // --- 4-particle cumulant
+  th1d_222one->Multiply(th1d_222one);
+  th1d_222one->Scale(2.0);
+  th1d_c24one->Add(th1d_222one,-1.0);
+  // --- 4-particle corrections
+  //TH1D* get_corr_four(TH1D* hfour, TH1D* htwo, TH1D* hcos1, TH1D* hsin1, TH1D* hcossum2, TH1D* hsinsum2, TH1D* hcos3, TH1D* hsin3)
+  TH1D* th1d_c24cor = get_corr_four(th1d_four,th1d_two,th1d_cos1,th1d_sin1,th1d_cossum2,th1d_sinsum2,th1d_cos3,th1d_sin3);
 
-  // --- Step 6: calcualte v2 from cumulant
+  // --- Step 6: calculate v2 from cumulant
   TH1D* th1d_v22one = hsqrt(th1d_c22one);
   TH1D* th1d_v22gap = hsqrt(th1d_c22gap);
+  // --- this is a weird approach but let's try it...
+  TH1D* th1d_v244 = (TH1D*)th1d_c24one->Clone("th1d_v244");
+  th1d_v244->Scale(-1.0);
+  TH1D* th1d_v242 = hsqrt(th1d_v244);
+  TH1D* th1d_v24one = hsqrt(th1d_v242);
+  // --- this is also weird, but let's try it
+  TH1D* th1d_v244c = (TH1D*)th1d_c24cor->Clone("th1d_v244c");
+  th1d_v244c->Scale(-1.0);
+  TH1D* th1d_v242c = hsqrt(th1d_v244c);
+  TH1D* th1d_v24cor = hsqrt(th1d_v242c);
 
   // --- Step 7: make a plot or two
   TCanvas* c1 = new TCanvas("c1","");
@@ -87,6 +116,54 @@ void new_simple()
   th1d_v22gap->SetMarkerStyle(kFullDiamond);
   th1d_v22gap->SetMarkerColor(kMagenta+2);
   th1d_v22gap->Draw("ex0p same");
+  // th1d_v24one->SetMarkerStyle(kFullSquare);
+  // th1d_v24one->SetMarkerColor(kBlue);
+  // th1d_v24one->Draw("ex0p same");
+  th1d_v24cor->SetMarkerStyle(kFullSquare);
+  th1d_v24cor->SetMarkerColor(kBlue);
+  th1d_v24cor->Draw("ex0p same");
   c1->Print("check_v22.png");
 
 }
+
+
+
+TH1D* get_corr_four(TH1D* hfour, TH1D* htwo, TH1D* hcos1, TH1D* hsin1, TH1D* hcossum2, TH1D* hsinsum2, TH1D* hcos3, TH1D* hsin3)
+{
+  TH1D* giveback = (TH1D*)hfour->Clone(hfour->GetName());
+  for ( int i = 0; i < giveback->GetNbinsX(); ++i )
+    {
+      double four = hfour->GetBinContent(i+1);
+      double two = htwo->GetBinContent(i+1);
+      double cos1 = hcos1->GetBinContent(i+1);
+      double sin1 = hsin1->GetBinContent(i+1);
+      double cossum2 = hcossum2->GetBinContent(i+1);
+      double sinsum2 = hsinsum2->GetBinContent(i+1);
+      double cos3 = hcos3->GetBinContent(i+1);
+      double sin3 = hsin3->GetBinContent(i+1);
+      double corr_c24 = calc_corr_four(four,two,cos1,sin1,cossum2,sinsum2,cos3,sin3);
+      giveback->SetBinContent(i+1,corr_c24);
+      double efour = hfour->GetBinError(i+1);
+      double error = (efour/four)*corr_c24;
+      giveback->SetBinError(i+1,error);
+    }
+  return giveback;
+}
+
+
+
+double calc_corr_four(double four, double two, double cos1, double sin1, double cossum2, double sinsum2, double cos3, double sin3)
+{
+  double uncorr = four - 2*two*two;
+  double corr_term1 = 4*cos1*cos3;
+  double corr_term2 = 4*sin1*sin3;
+  double corr_term3 = cossum2*cossum2;
+  double corr_term4 = sinsum2*sinsum2;
+  double corr_term5 = 4*cossum2*(cos1*cos1 - sin1*sin1);
+  double corr_term6 = 8*sinsum2*sin1*cos1;
+  double corr_term7 = 8*two*(cos1*cos1 + sin1*sin1);
+  double corr_term8 = 6*(cos1*cos1 + sin1*sin1)*(cos1*cos1 + sin1*sin1);
+  double result = uncorr - corr_term1 + corr_term2 - corr_term3 - corr_term4 + corr_term5 + corr_term6 + corr_term7 - corr_term8;
+  return result;
+}
+
