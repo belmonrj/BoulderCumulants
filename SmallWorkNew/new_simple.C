@@ -1,4 +1,5 @@
 #include "../WorkAuAu/hsqrt.C"
+#include "../WorkAuAu/calc_subevents.C"
 
 
 
@@ -16,7 +17,8 @@ void new_simple()
   // --- Step 1: open the root file with the histograms in it
   //TFile* fin = TFile::Open("temp.root");
   //TFile* fin = TFile::Open("improved_20170517-2216.root"); // checking against an old file
-  TFile* fin = TFile::Open("tree_temp.root"); // checking against an old file
+  //TFile* fin = TFile::Open("tree_temp.root");
+  TFile* fin = TFile::Open("tree_new.root");
 
   // --- Step 2: get the TProfile histograms from the root file
   // --- 2-particle correlator
@@ -118,6 +120,39 @@ void new_simple()
   th1d_v24cor->SetMarkerColor(kBlue);
   th1d_v24cor->Draw("ex0p same");
   c1->Print("check_v22.png");
+
+  // --- from AuAu code
+  TProfile* tp1f_for = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c24");
+  TProfile* tp1f_4aabb = (TProfile*)fin->Get("nfvtxt_ac_fvtxsfvtxn_tracks_c24a");
+  TProfile* tp1f_4abab = (TProfile*)fin->Get("nfvtxt_ac_fvtxsfvtxn_tracks_c24b");
+  //TProfile* tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
+  tp1f_two = (TProfile*)fin->Get("nfvtxt_ac_fvtxc_tracks_c22");
+  TProfile* tp1f_2aa = (TProfile*)fin->Get("nfvtxt_ac_fvtxs_tracks_c22");
+  TProfile* tp1f_2bb = (TProfile*)fin->Get("nfvtxt_ac_fvtxn_tracks_c22");
+  TProfile* tp1f_2ab = (TProfile*)fin->Get("nfvtxt_ac_fvtxsfvtxn_tracks_c22");
+  TH1D* hv24 = NULL;
+  TH1D* hv24aabb = NULL;
+  TH1D* hv24abab = NULL;
+  TH1D* hv22 = NULL;
+  TH1D* hv22ab = NULL;
+  TH1D* hc24 = NULL;
+  TH1D* hc24aabb = NULL;
+  TH1D* hc24abab = NULL;
+  TH1D* hc22 = NULL;
+  TH1D* hc22ab = NULL;
+  calc_subevents(tp1f_for, tp1f_4aabb, tp1f_4abab,
+                 tp1f_two, tp1f_2aa, tp1f_2bb, tp1f_2ab,
+                 &hv24, &hv24aabb, &hv24abab, &hv22, &hv22ab,
+                 &hc24, &hc24aabb, &hc24abab, &hc22, &hc22ab,
+                 1);
+
+  hv24aabb->SetMarkerStyle(kOpenSquare);
+  hv24aabb->SetMarkerColor(kBlack);
+  hv24aabb->Draw("ex0p same");
+  hv24abab->SetMarkerStyle(kOpenCircle);
+  hv24abab->SetMarkerColor(kBlack);
+  hv24abab->Draw("ex0p same");
+  c1->Print("check_v22_addsub.png");
 
 }
 
