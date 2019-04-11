@@ -7,6 +7,7 @@ double calc_corr_four(double,double,double,double,double,double,double,double);
 
 TH1D* get_corr_four(TH1D*,TH1D*,TH1D*,TH1D*,TH1D*,TH1D*,TH1D*,TH1D*);
 
+TH1D* get_v24(TH1D*,TH1D*,TH1D*);
 
 
 void new_simple()
@@ -96,16 +97,8 @@ void new_simple()
   // --- Step 6: calculate v2 from cumulant
   TH1D* th1d_v22one = hsqrt(th1d_c22one);
   TH1D* th1d_v22gap = hsqrt(th1d_c22gap);
-  // --- this is a weird approach but let's try it...
-  TH1D* th1d_v244 = (TH1D*)th1d_c24one->Clone("th1d_v244");
-  th1d_v244->Scale(-1.0);
-  TH1D* th1d_v242 = hsqrt(th1d_v244);
-  TH1D* th1d_v24one = hsqrt(th1d_v242);
-  // --- this is also weird, but let's try it
-  TH1D* th1d_v244c = (TH1D*)th1d_c24cor->Clone("th1d_v244c");
-  th1d_v244c->Scale(-1.0);
-  TH1D* th1d_v242c = hsqrt(th1d_v244c);
-  TH1D* th1d_v24cor = hsqrt(th1d_v242c);
+  TH1D* th1d_v24one = get_v24(th1d_c24one,th1d_four,th1d_two);
+  TH1D* th1d_v24cor = get_v24(th1d_c24cor,th1d_four,th1d_two);
 
   // --- Step 7: make a plot or two
   TCanvas* c1 = new TCanvas("c1","");
@@ -118,7 +111,7 @@ void new_simple()
   th1d_v22gap->SetMarkerStyle(kFullDiamond);
   th1d_v22gap->SetMarkerColor(kMagenta+2);
   th1d_v22gap->Draw("ex0p same");
-  // th1d_v24one->SetMarkerStyle(kFullSquare);
+  // th1d_v24one->SetMarkerStyle(kOpenSquare);
   // th1d_v24one->SetMarkerColor(kBlue);
   // th1d_v24one->Draw("ex0p same");
   th1d_v24cor->SetMarkerStyle(kFullSquare);
@@ -169,3 +162,25 @@ double calc_corr_four(double four, double two, double cos1, double sin1, double 
   return result;
 }
 
+TH1D* get_v24(TH1D* th1d_c24, TH1D* th1d_for, TH1D* th1d_two)
+{
+  TH1D* th1d_v24 = (TH1D*)th1d_c24->Clone(Form("%s",th1d_c24->GetName()));
+  for ( int i = 0; i < th1d_c24->GetNbinsX(); ++i )
+    {
+      double c24 = th1d_c24->GetBinContent(i+1);
+      double v24 = -9999;
+      double two = th1d_two->GetBinContent(i+1);
+      double etwo = th1d_two->GetBinError(i+1);
+      double four = th1d_for->GetBinContent(i+1);
+      double efour = th1d_for->GetBinError(i+1);
+      double ev24 = 0;
+      if ( c24 < 0 && four != 0 )
+        {
+          v24 = pow(-c24,(1.0/4.0)); // v2{4} = -c2{4}^{(1/4)}
+          ev24 = (1.0/pow(-c24,0.75))*sqrt((two*two*etwo*etwo)+(0.0625*efour*efour));
+        }
+      th1d_v24->SetBinContent(i+1,v24);
+      th1d_v24->SetBinError(i+1,ev24);
+    }
+  return th1d_v24;
+}
