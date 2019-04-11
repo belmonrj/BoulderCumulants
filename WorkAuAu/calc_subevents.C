@@ -23,11 +23,22 @@ void calc_subevents(const TProfile* tp1f_for, const TProfile* tp1f_4aabb, const 
   double rand = gRandom->Rndm();
   int helper = rand*10000;
 
-  TH1D* th1d_2aa = tp1f_2aa->ProjectionX(Form("th1d_2aa_%d",helper));
-  TH1D* th1d_2bb = tp1f_2bb->ProjectionX(Form("th1d_2bb_%d",helper));
-  TH1D* th1d_2ab = tp1f_2ab->ProjectionX(Form("th1d_2ab_%d",helper));
-  TH1D* th1d_4aabb = tp1f_4aabb->ProjectionX(Form("th1d_4aabb_%d",helper));
-  TH1D* th1d_4abab = tp1f_4abab->ProjectionX(Form("th1d_4abab_%d",helper));
+  TProfile* ctp1f_2aa = (TProfile*)tp1f_2aa->Clone(Form("ctp1f_2aa_%d",helper));
+  TProfile* ctp1f_2bb = (TProfile*)tp1f_2bb->Clone(Form("ctp1f_2bb_%d",helper));
+  TProfile* ctp1f_2ab = (TProfile*)tp1f_2ab->Clone(Form("ctp1f_2ab_%d",helper));
+  TProfile* ctp1f_4aabb = (TProfile*)tp1f_4aabb->Clone(Form("ctp1f_4aabb_%d",helper));
+  TProfile* ctp1f_4abab = (TProfile*)tp1f_4abab->Clone(Form("ctp1f_4abab_%d",helper));
+  ctp1f_2aa->Rebin(rebin);
+  ctp1f_2bb->Rebin(rebin);
+  ctp1f_2ab->Rebin(rebin);
+  ctp1f_4aabb->Rebin(rebin);
+  ctp1f_4abab->Rebin(rebin);
+
+  TH1D* th1d_2aa = ctp1f_2aa->ProjectionX(Form("th1d_2aa_%d",helper));
+  TH1D* th1d_2bb = ctp1f_2bb->ProjectionX(Form("th1d_2bb_%d",helper));
+  TH1D* th1d_2ab = ctp1f_2ab->ProjectionX(Form("th1d_2ab_%d",helper));
+  TH1D* th1d_4aabb = ctp1f_4aabb->ProjectionX(Form("th1d_4aabb_%d",helper));
+  TH1D* th1d_4abab = ctp1f_4abab->ProjectionX(Form("th1d_4abab_%d",helper));
 
   TH1D* th1d_222aa = (TH1D*)th1d_2aa->Clone(Form("th1d_222aa_%d",helper));
   TH1D* th1d_222bb = (TH1D*)th1d_2bb->Clone(Form("th1d_222bb_%d",helper));
