@@ -145,7 +145,7 @@ void new_simple()
                  tp1f_two, tp1f_2aa, tp1f_2bb, tp1f_2ab,
                  &hv24, &hv24aabb, &hv24abab, &hv22, &hv22ab,
                  &hc24, &hc24aabb, &hc24abab, &hc22, &hc22ab,
-                 2);
+                 5);
 
   hv24aabb->SetMarkerStyle(kOpenSquare);
   hv24aabb->SetMarkerColor(kBlack);
