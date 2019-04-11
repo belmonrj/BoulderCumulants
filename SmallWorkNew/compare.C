@@ -7,8 +7,9 @@ void compare()
 
   // ---
 
-  TFile* fin1 = TFile::Open("temp.root");
+  //TFile* fin1 = TFile::Open("temp.root");
   //TFile* fin1 = TFile::Open("tree_temp.root");
+  TFile* fin1 = TFile::Open("tree_new.root");
   TFile* fin2 = TFile::Open("improved_20170517-2216.root"); // checking against an old file
 
   TProfile* tp1f_two1 = (TProfile*)fin1->Get("nfvtxt_ac_fvtxc_tracks_c22");
@@ -23,7 +24,7 @@ void compare()
   leg->AddEntry(tp1f_two1,"new file","l");
   leg->Draw();
 
-  c1->Print("oldnew_file_compare_c22.png");
+  c1->Print("figs/oldnew_file_compare_c22.png");
 
   // ---
 
@@ -40,7 +41,7 @@ void compare()
   leg->AddEntry(tp1f_four1,"new file","l");
   leg->Draw();
 
-  c1->Print("oldnew_file_compare_four.png");
+  c1->Print("figs/oldnew_file_compare_four.png");
 
   // ---
 
@@ -73,7 +74,7 @@ void compare()
   leg->AddEntry(tg1,"new file","l");
   leg->Draw();
   c1->SetLogy();
-  c1->Print("oldnew_file_compare_mult.png");
+  c1->Print("figs/oldnew_file_compare_mult.png");
 
   delete hdummy;
   hdummy = new TH2D("hummy","",1,0.0,num[nmax-1],1,1e-3,1e3);
@@ -83,6 +84,6 @@ void compare()
   tgR->SetLineColor(kRed);
   tgR->Draw("l");
   c1->SetLogy();
-  c1->Print("oldnew_file_compare_multratio.png");
+  c1->Print("figs/oldnew_file_compare_multratio.png");
 }
 
