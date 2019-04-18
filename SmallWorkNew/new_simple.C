@@ -155,6 +155,9 @@ void new_simple()
   hv24abab->Draw("ex0p same");
   c1->Print("check_v22_addsub.png");
 
+  hc24->Rebin(2);
+  hc24->Scale(0.5);
+
   TH2D* hdummy = new TH2D("hdummy","",1,0,49.999,1,-1e-3,1e-3);
   hdummy->Draw();
   hc24->SetMarkerStyle(kFullCircle);
