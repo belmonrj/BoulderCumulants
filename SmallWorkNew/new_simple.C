@@ -159,7 +159,11 @@ void new_simple()
   hc24->Scale(0.5);
 
   TH2D* hdummy = new TH2D("hdummy","",1,0,49.999,1,-1e-3,1e-3);
+  // hdummy->GetYaxis()->SetTitle("c_{2}{4}");
+  // hdummy->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   hdummy->Draw();
+  hdummy->GetYaxis()->SetTitle("c_{2}{4}");
+  hdummy->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   hc24->SetMarkerStyle(kFullCircle);
   hc24->SetMarkerColor(kBlack);
   hc24->Draw("ex0p same");
@@ -169,11 +173,25 @@ void new_simple()
   hc24abab->SetMarkerStyle(kOpenCircle);
   hc24abab->SetMarkerColor(kBlack);
   hc24abab->Draw("ex0p same");
+  TLegend* leg2 = new TLegend(0.18,0.81,0.38,0.88);
+  leg2->SetHeader("d+Au at #sqrt{s_{NN}} = 200 GeV");
+  leg2->Draw();
+  TLegend* leg = new TLegend(0.68,0.68,0.88,0.88);
+  leg->AddEntry(hc24,"c_{2}{4}","p");
+  leg->AddEntry(hc24abab,"c_{2}{4}_{ab|ab}","p");
+  leg->AddEntry(hc24aabb,"c_{2}{4}_{aa|bb}","p");
+  leg->SetFillStyle(0);
+  leg->Draw();
   c1->Print("check_c24_addsub.png");
 
   delete hdummy;
   hdummy = new TH2D("hdummy","",1,0,49.999,1,-2.5e-5,2.5e-5);
+  // hdummy->GetYaxis()->SetTitle("c_{2}{4}");
+  // hdummy->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
   hdummy->Draw();
+  hdummy->GetYaxis()->SetTitle("c_{2}{4}");
+  hdummy->GetXaxis()->SetTitle("N_{tracks}^{FVTX}");
+  hdummy->GetYaxis()->SetTitle("c_{2}{4}");
   hc24->SetMarkerStyle(kFullCircle);
   hc24->SetMarkerColor(kBlack);
   hc24->Draw("ex0p same");
@@ -183,6 +201,9 @@ void new_simple()
   hc24abab->SetMarkerStyle(kOpenCircle);
   hc24abab->SetMarkerColor(kBlack);
   hc24abab->Draw("ex0p same");
+  hdummy->GetYaxis()->SetTitle("c_{2}{4}");
+  leg2->Draw();
+  leg->Draw();
   c1->Print("check_c24_addsub_zoom.png");
 
 }
