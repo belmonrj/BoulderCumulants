@@ -155,6 +155,33 @@ void new_simple()
   hv24abab->Draw("ex0p same");
   c1->Print("check_v22_addsub.png");
 
+  TH2D* hdummy = new TH2D("hdummy","",1,0,49.999,1,-1e-3,1e-3);
+  hdummy->Draw();
+  hc24->SetMarkerStyle(kFullCircle);
+  hc24->SetMarkerColor(kBlack);
+  hc24->Draw("ex0p same");
+  hc24aabb->SetMarkerStyle(kOpenSquare);
+  hc24aabb->SetMarkerColor(kBlack);
+  hc24aabb->Draw("ex0p same");
+  hc24abab->SetMarkerStyle(kOpenCircle);
+  hc24abab->SetMarkerColor(kBlack);
+  hc24abab->Draw("ex0p same");
+  c1->Print("check_c24_addsub.png");
+
+  delete hdummy;
+  hdummy = new TH2D("hdummy","",1,0,49.999,1,-2.5e-5,2.5e-5);
+  hdummy->Draw();
+  hc24->SetMarkerStyle(kFullCircle);
+  hc24->SetMarkerColor(kBlack);
+  hc24->Draw("ex0p same");
+  hc24aabb->SetMarkerStyle(kOpenSquare);
+  hc24aabb->SetMarkerColor(kBlack);
+  hc24aabb->Draw("ex0p same");
+  hc24abab->SetMarkerStyle(kOpenCircle);
+  hc24abab->SetMarkerColor(kBlack);
+  hc24abab->Draw("ex0p same");
+  c1->Print("check_c24_addsub_zoom.png");
+
 }
 
 
