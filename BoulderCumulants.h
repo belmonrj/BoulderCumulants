@@ -9,6 +9,7 @@
 
 
 class dAuBES_utils;
+class DoubleInteractionUtil;
 class TFile;
 class TTree;
 class TH1D;
@@ -125,6 +126,7 @@ class BoulderCumulants: public SubsysReco
 
 
   dAuBES_utils* _utils;            ///< Utilities class
+  DoubleInteractionUtil* _diutil;            ///< Utilities class
   bool use_utils;
   std::string _collsys;
 
@@ -146,6 +148,7 @@ class BoulderCumulants: public SubsysReco
   int nfvtxt_south;
   int nfvtxt_north;
   int nfvtxt_raw;
+  float frac;
   unsigned int trigger_scaled;
   unsigned int trigger_live;
   float bc_x;

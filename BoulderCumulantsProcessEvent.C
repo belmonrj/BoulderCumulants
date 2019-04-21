@@ -119,6 +119,14 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       if ( _verbosity > 1 ) cout << "event passed utils check " << endl;
     }
 
+  // double interaction variable
+  if ( _verbosity > 1 ) cout << "address of double interaction utility " << _diutil << endl;
+  if ( _diutil )
+    {
+      frac = _diutil->calcFrac(topNode);
+    }
+  if ( _verbosity > 1 ) cout << "frac is " << frac << endl;
+
 
 
   //---------------------------------------------------------//

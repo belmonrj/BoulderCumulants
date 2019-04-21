@@ -14,6 +14,8 @@
 #include <getClass.h>
 #include <RunHeader.h>
 #include <dAuBES_utils.h>
+#include <DoubleInteractionUtil.h>
+
 
 
 
@@ -61,7 +63,7 @@ int BoulderCumulants::Init(PHCompositeNode *topNode)
     // shorttree -> Branch("fvtx_x", &FVTX_X, "fvtx_x/F");
     // shorttree -> Branch("fvtx_y", &FVTX_Y, "fvtx_y/F");
     // shorttree -> Branch("fvtx_z", &FVTX_Z, "fvtx_z/F");
-    // shorttree -> Branch("frac", &frac, "frac/F");
+    shorttree -> Branch("frac", &frac, "frac/F");
     shorttree -> Branch("bbc_qn", &bbc_qn, "bbc_qn/F");
     shorttree -> Branch("bbc_qs", &bbc_qs, "bbc_qs/F");
     // shorttree -> Branch("d_BBC_charge", &d_BBC_charge, "d_BBC_charge[128]/F");
@@ -359,6 +361,8 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
     {
       cout << "initializing uitls..." << _utils << endl;
       _utils = new dAuBES_utils(_collsys, true);
+      _diutil = new DoubleInteractionUtil();
+      _diutil->setBbcCalib(topNode);
       cout << "done initializing utils? " << _utils << endl;
     }
   // _utils->is_sim(_is_sim);
@@ -372,6 +376,7 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
 int BoulderCumulants::EndRun(PHCompositeNode *topNode)
 {
   if ( _utils ) delete _utils;
+  if ( _diutils ) delete _diutils;
   return EVENT_OK;
 }
 

@@ -28,6 +28,7 @@
 #include <TFvtxCompactTrkMap.h>
 #include <TFvtxCompactCoordMap.h>
 #include <dAuBES_utils.h>
+#include <DoubleInteractionUtil.h>
 
 
 
@@ -50,6 +51,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   _cut_nhit = 3;
   _cut_dca = 2.0;
   _utils = NULL;
+  _diutil = NULL;
   _collsys = "NULL";
 
   use_utils = true;
