@@ -6,6 +6,7 @@ void Run_BoulderCumulantsRun16(const char *outFile = "test_train_output.root")
   //-----------------//
 
   gSystem->Load("libdAuBES_utils.so");
+  gSystem->Load("libDoubleInteractionUtil.so");
   gSystem->Load("libBoulderCumulants.so");
   gSystem->ListLibraries();
 
@@ -24,6 +25,7 @@ void Run_BoulderCumulantsRun16(const char *outFile = "test_train_output.root")
 
   BoulderCumulants *sflow = new BoulderCumulants();
   sflow->set_output_filename(outFile);
+  sflow->set_create_ttree(false);
   sflow->Verbosity(0);
   se->registerSubsystem(sflow);
 
