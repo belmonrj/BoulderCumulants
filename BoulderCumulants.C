@@ -46,10 +46,11 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   _output_filename = "NULL";
   _output_file = NULL;
   do_double_track_cut = false;
-  _cut_zvtx = 10.0;
-  _cut_chi2 = 5.0;
-  _cut_nhit = 3;
-  _cut_dca = 2.0;
+  _cut_zvtx = default_cut_zvtx;
+  _cut_chi2 = default_cut_chi2;
+  _cut_nhit = default_cut_nhit;
+  _cut_frac = default_cut_frac;
+  _cut_dca = default_cut_dca;
   _utils = NULL;
   _diutil = NULL;
   _collsys = "NULL";
@@ -75,6 +76,7 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
   bc_y = -9999.9;
   vtx_z = -9999.9;
   zvtx = -9999.9;
+  frac = -9999.9;
 
   shorttree = NULL;
   bbc_qn = -9999.9;

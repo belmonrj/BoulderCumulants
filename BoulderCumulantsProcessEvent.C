@@ -127,7 +127,7 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       frac = _diutil->calcFrac(topNode);
     }
   if ( _verbosity > 1 ) cout << "frac is " << frac << endl;
-
+  if ( _diutil && frac < _frac_cut ) return EVENT_OK;
 
 
   //---------------------------------------------------------//

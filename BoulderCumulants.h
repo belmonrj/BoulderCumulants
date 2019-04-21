@@ -40,6 +40,7 @@ class BoulderCumulants: public SubsysReco
   void set_do_double_track_cut(bool b){do_double_track_cut = b;}
   void set_zvtxcut(double z){_cut_zvtx = z;}
   void set_chi2cut(double c){_cut_chi2 = c;}
+  void set_fraccut(double f){_cut_frac = f;}
   void set_dcacut(double d){_cut_dca = d;}
   void set_nhitcut(int n){_cut_nhit = n;}
 
@@ -93,6 +94,7 @@ class BoulderCumulants: public SubsysReco
 
   static const double default_cut_zvtx = 10.0;
   static const double default_cut_chi2 = 5.0;
+  static const double default_cut_frac = 0.95;
   static const double default_cut_dca = 2.0;
   static const int default_cut_nhit = 3;
 
@@ -120,6 +122,7 @@ class BoulderCumulants: public SubsysReco
 
   double _cut_zvtx;
   double _cut_chi2;
+  double _cut_frac;
   double _cut_dca;
   int _cut_nhit;
 
