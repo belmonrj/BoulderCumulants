@@ -361,12 +361,11 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
     {
       cout << "initializing uitls..." << _utils << endl;
       _utils = new dAuBES_utils(_collsys, true);
-      _diutil = new DoubleInteractionUtil();
-      _diutil->setBbcCalib(topNode);
       cout << "done initializing utils? " << _utils << endl;
     }
   // _utils->is_sim(_is_sim);
 
+  if ( _diutil) _diutil->setBbcCalib(topNode);
 
   return EVENT_OK;
 }
