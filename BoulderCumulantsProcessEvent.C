@@ -22,6 +22,7 @@
 #include <TFvtxCompactTrkMap.h>
 #include <TFvtxCompactCoordMap.h>
 #include <dAuBES_utils.h>
+#include <DoubleInteractionUtil.h>
 
 
 

@@ -376,7 +376,7 @@ int BoulderCumulants::InitRun(PHCompositeNode *topNode)
 int BoulderCumulants::EndRun(PHCompositeNode *topNode)
 {
   if ( _utils ) delete _utils;
-  if ( _diutils ) delete _diutils;
+  if ( _diutil ) delete _diutil;
   return EVENT_OK;
 }
 
