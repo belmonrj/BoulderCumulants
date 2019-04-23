@@ -246,6 +246,9 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
         }
     }
 
+  // ---
+  _diutil = new DoubleInteractionUtil();
+
 } // end of class constructor
 
 
@@ -253,4 +256,5 @@ BoulderCumulants::BoulderCumulants(): SubsysReco("BOULDERCUMULANTS")
 BoulderCumulants::~BoulderCumulants()
 {
   //if ( _utils ) delete _utils;
+  if ( _diutil ) delete _diutil;
 }
