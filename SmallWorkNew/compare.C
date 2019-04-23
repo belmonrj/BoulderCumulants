@@ -11,7 +11,8 @@ void compare()
   //TFile* fin1 = TFile::Open("tree_temp.root");
   //TFile* fin1 = TFile::Open("tree_new.root");
   TFile* fin1 = TFile::Open("new_histos.root");
-  TFile* fin2 = TFile::Open("improved_20170517-2216.root"); // checking against an old file
+  TFile* fin2 = TFile::Open("temp.root"); // checking against recent taxi pass
+  //TFile* fin2 = TFile::Open("improved_20170517-2216.root"); // checking against an old file
 
   TProfile* tp1f_two1 = (TProfile*)fin1->Get("nfvtxt_ac_fvtxc_tracks_c22");
   TProfile* tp1f_two2 = (TProfile*)fin2->Get("nfvtxt_ac_fvtxc_tracks_c22");
