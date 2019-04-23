@@ -94,7 +94,7 @@ class BoulderCumulants: public SubsysReco
 
   static const double default_cut_zvtx = 10.0;
   static const double default_cut_chi2 = 5.0;
-  static const double default_cut_frac = 0.95;
+  static const double default_cut_frac = 0.98;
   static const double default_cut_dca = 2.0;
   static const int default_cut_nhit = 3;
 
