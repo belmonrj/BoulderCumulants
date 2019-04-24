@@ -166,7 +166,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   bbc_z = vertex1.getZ();
   if ( bbc_z != bbc_z ) bbc_z = -9999; // reassign nan
 
-  if ( !use_utils && fabs(bbc_z) > _cut_zvtx ) return EVENT_OK;
+  //if ( !use_utils && fabs(bbc_z) > _cut_zvtx ) return EVENT_OK;
+  if ( fabs(bbc_z) > _cut_zvtx ) return EVENT_OK; // utils default appears to be 30, need to do a quick check now
 
   PHPoint fvtx_vertex = vertexes->get_Vertex("FVTX");
   FVTX_X = fvtx_vertex.getX();
