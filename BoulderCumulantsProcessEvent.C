@@ -281,20 +281,24 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       th2d_cent_nhits->Fill(centrality,nhits_special);
       th2d_cent_chisq->Fill(centrality,chisq);
 
-      // --- if it exists, use the utility class to make the track selections
-      if ( use_utils )
-        {
-          if ( _verbosity > 2 ) cout << "using utils to check if the track is ok " << endl;
-          if ( !_utils->is_fvtx_track_ok(fvtx_trk, zvtx) ) continue;
-          if ( _verbosity > 2 ) cout << "track pass utils " << endl;
-        }
-      // --- if it doesn't, make the cuts by hand
-      else
-        {
-          if ( fabs(DCA_x) > default_cut_dca || fabs(DCA_y) > default_cut_dca ) continue;
-          if ( nhits < default_cut_nhit ) continue;
-          if ( chisq > default_cut_chi2 ) continue;
-        }
+      // --- apply default cuts
+      if ( fabs(DCA_x) > default_cut_dca || fabs(DCA_y) > default_cut_dca ) continue;
+      if ( nhits < default_cut_nhit ) continue;
+      if ( chisq > default_cut_chi2 ) continue;
+      // // --- if it exists, use the utility class to make the track selections
+      // if ( use_utils )
+      //   {
+      //     if ( _verbosity > 2 ) cout << "using utils to check if the track is ok " << endl;
+      //     if ( !_utils->is_fvtx_track_ok(fvtx_trk, zvtx) ) continue;
+      //     if ( _verbosity > 2 ) cout << "track pass utils " << endl;
+      //   }
+      // // --- if it doesn't, make the cuts by hand
+      // else
+      //   {
+      //     if ( fabs(DCA_x) > default_cut_dca || fabs(DCA_y) > default_cut_dca ) continue;
+      //     if ( nhits < default_cut_nhit ) continue;
+      //     if ( chisq > default_cut_chi2 ) continue;
+      //   }
       // --- done with first loop, so fill after histos, push variables, and count total number of good tracks
       th2d_track_after_eta->Fill(centrality,eta);
       th2d_track_after_phi->Fill(centrality,phi);
