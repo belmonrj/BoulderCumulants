@@ -282,9 +282,11 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
       th2d_cent_chisq->Fill(centrality,chisq);
 
       // --- apply default cuts
+      if ( the == 0 ) continue; // bugged kalman track
       if ( fabs(DCA_x) > default_cut_dca || fabs(DCA_y) > default_cut_dca ) continue;
       if ( nhits < default_cut_nhit ) continue;
       if ( chisq > default_cut_chi2 ) continue;
+      if ( chisq < 0 ) continue; // should check whether this is really necessary
       // // --- if it exists, use the utility class to make the track selections
       // if ( use_utils )
       //   {
