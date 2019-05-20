@@ -156,8 +156,27 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   trigger_scaled = triggers->get_lvl1_trigscaled();
   trigger_live = triggers->get_lvl1_triglive();
 
-  if ( !use_utils && centrality < 0  ) return EVENT_OK;
-  if ( !use_utils && centrality > 99 ) return EVENT_OK;
+  if ( centrality < 0  ) return EVENT_OK;
+  if ( centrality > 99 ) return EVENT_OK;
+
+  // unsigned int trigger_FVTXNSBBCScentral = 0x00100000;
+  // unsigned int trigger_FVTXNSBBCS        = 0x00400000;
+  unsigned int trigger_BBCLL1narrowcent  = 0x00000008;
+  unsigned int trigger_BBCLL1narrow      = 0x00000010;
+
+  unsigned int accepted_triggers = 0;
+  accepted_triggers = trigger_BBCLL1narrowcent  | trigger_BBCLL1narrow;
+  // if ( energyflag == 200 ) accepted_triggers = trigger_BBCLL1narrowcent  | trigger_BBCLL1narrow;
+  // if ( energyflag == 62  ) accepted_triggers = trigger_BBCLL1narrowcent  | trigger_BBCLL1narrow;
+  // if ( energyflag == 20  ) accepted_triggers = trigger_FVTXNSBBCScentral | trigger_FVTXNSBBCS;
+  // if ( energyflag == 39  ) accepted_triggers = trigger_FVTXNSBBCScentral | trigger_FVTXNSBBCS;
+
+  unsigned int passes_trigger = trigger_scaled & accepted_triggers;
+  if ( passes_trigger == 0 )
+    {
+      if ( _verbosity > 1 ) cout << "trigger rejected" << endl;
+      return EVENT_OK;
+    }
 
 
 
@@ -1453,4 +1472,3 @@ int BoulderCumulants::EventStuff()
   return EVENT_OK;
 
 } // end of EventStuff
-
