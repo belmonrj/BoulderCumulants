@@ -34,6 +34,13 @@ void calc_subevents(const TProfile* tp1f_for, const TProfile* tp1f_4aabb, const 
   ctp1f_4aabb->Rebin(rebin);
   ctp1f_4abab->Rebin(rebin);
 
+  TProfile* ctp1f_for = (TProfile*)tp1f_for->Clone(Form("ctp1f_for_%d",helper));
+  TProfile* ctp1f_two = (TProfile*)tp1f_two->Clone(Form("ctp1f_two_%d",helper));
+  ctp1f_for->Rebin(rebin);
+  ctp1f_two->Rebin(rebin);
+  TH1D* th1d_for = ctp1f_for->ProjectionX(Form("th1d_for_%d",helper));
+  TH1D* th1d_two = ctp1f_two->ProjectionX(Form("th1d_two_%d",helper));
+
   TH1D* th1d_2aa = ctp1f_2aa->ProjectionX(Form("th1d_2aa_%d",helper));
   TH1D* th1d_2bb = ctp1f_2bb->ProjectionX(Form("th1d_2bb_%d",helper));
   TH1D* th1d_2ab = ctp1f_2ab->ProjectionX(Form("th1d_2ab_%d",helper));
@@ -113,12 +120,6 @@ void calc_subevents(const TProfile* tp1f_for, const TProfile* tp1f_4aabb, const 
     }
 
   // --------------------------------------------------------------------------------------------------------
-
-  // TProfile* tp1f_two = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c22");
-  // TProfile* tp1f_for = (TProfile*)fin->Get("centrality_os_fvtxc_tracks_c24");
-
-  TH1D* th1d_for = tp1f_for->ProjectionX(Form("th1d_for_%d",helper)); // <4>
-  TH1D* th1d_two = tp1f_two->ProjectionX(Form("th1d_two_%d",helper)); // <2>
 
   TH1D* th1d_222 = (TH1D*)th1d_two->Clone(Form("th1d_222_%d",helper)); // 2<2>^2
   th1d_222->Multiply(th1d_two);
