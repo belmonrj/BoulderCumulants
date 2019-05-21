@@ -7,8 +7,8 @@ void compare()
 
   // ---
 
-  //TFile* fin1 = TFile::Open("tree_old.root"); // first of the recent tree passes
-  //TFile* fin1 = TFile::Open("tree_new.root"); // second of the recent tree passes
+  //TFile* fin1 = TFile::Open("tree_20190409-1135.root"); // first of the recent tree passes
+  //TFile* fin1 = TFile::Open("tree_20190417-2119.root"); // second of the recent tree passes
   TFile* fin1 = TFile::Open("histos_14848.root"); // third of the recent taxi passes
   //TFile* fin1 = TFile::Open("histos_14778.root"); // third of the recent taxi passes
   //TFile* fin1 = TFile::Open("histos_14720.root"); // second of the recent taxi passes
