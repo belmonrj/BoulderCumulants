@@ -157,7 +157,8 @@ int BoulderCumulants::process_event(PHCompositeNode *topNode)
   trigger_live = triggers->get_lvl1_triglive();
 
   if ( centrality < 0  ) return EVENT_OK;
-  if ( centrality > 99 ) return EVENT_OK;
+  if ( centrality > 5  ) return EVENT_OK; // trying special cut
+  //if ( centrality > 99 ) return EVENT_OK;
 
   // unsigned int trigger_FVTXNSBBCScentral = 0x00100000;
   // unsigned int trigger_FVTXNSBBCS        = 0x00400000;
