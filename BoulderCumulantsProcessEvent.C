@@ -882,7 +882,7 @@ int BoulderCumulants::EventStuff()
 	}
     } // end third for loop over tracks
 
-
+  bool good_4_event = ( ntrack_south_inner > 0 ) && ( ntrack_south_outer > 0 ) && ( ntrack_north_inner > 0 ) && ( ntrack_north_outer > 0 ) ;
 
   //---------------------------------------------------------//
   //                 finished Get FVTX Tracks
@@ -1135,6 +1135,8 @@ int BoulderCumulants::EventStuff()
   // --- scalar product
   nfvtxt_ac_sub2[2]->Fill(nfvtxt,ac_fvtxsfvtxn_tracks_qq2);
   nfvtxt_ac_sub2[3]->Fill(nfvtxt,ac_fvtxsfvtxn_tracks_qq3);
+  if ( good_4_event ) // trying special cut
+  {
   // --- four particle
   nfvtxt_ac_cumu4[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_qqqq24);
   nfvtxt_ac_cumu4[0][3]->Fill(nfvtxt,ac_fvtxc_tracks_qqqq34);
@@ -1150,6 +1152,7 @@ int BoulderCumulants::EventStuff()
   // --- six particle
   nfvtxt_ac_cumu6[0][2]->Fill(nfvtxt,ac_fvtxc_tracks_six);
   //nfvtxt_ac_cumu8[0][2]->Fill(nfvtxt,eightRecursion.Re());
+  }
 
   if ( _verbosity > 2 )
     {
